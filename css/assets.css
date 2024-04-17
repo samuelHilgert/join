@@ -66,3 +66,27 @@ button:hover {
     width: 100px;
     height: auto;
 }
+
+.y-line-blue {
+    border-left: 3px solid #29ABE2;
+    height: 73px;
+}
+
+.y-line-grey {
+    border-left: 3px solid rgba(209, 209, 209, 1);
+    height: 100px;
+}
+
+.card {
+    display: flex;
+    flex: 1;
+    border-radius: 30px;
+    padding: 38px 76px;
+    background-color: rgba(255, 255, 255, 1);
+    margin: 10px;
+}
+
+.card-small {
+    padding: 38px 50px;
+    min-width:90px;
+}
