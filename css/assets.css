@@ -1,11 +1,25 @@
-input {
+.input-login {
     width: 422px;
     height: 48px;
     border-radius: 10px;
     border: 1px solid lightgray;
 }
 
-input::placeholder {
+.input-email {
+    background-image: url('../assets/img/mail.svg');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 24px;
+}
+
+.input-password {
+    background-image: url('../assets/img/lock.svg');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 24px;
+}
+
+.input-login::placeholder {
     padding-left: 20px;
     color: lightgray;
     font-size: 20px;
@@ -49,6 +63,6 @@ button:hover {
 }
 
 .logo {
-    width:100px;
-    height:auto;
+    width: 100px;
+    height: auto;
 }
