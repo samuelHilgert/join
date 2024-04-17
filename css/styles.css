@@ -15,8 +15,6 @@ body {
 }
 
 .login-form-container {
-    width: 652px;
-    height: 493px;
     border-radius: 20px;
 }
 
@@ -46,4 +44,9 @@ body {
     width: calc(100% - 232px);
     box-sizing: border-box;
     margin-top: 4px;
+}
+
+.legal-links a:hover {
+    color: #29ABE2;
+    font-weight: bold;
 }

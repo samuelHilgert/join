@@ -59,6 +59,16 @@ body {
     padding-left: 80px;
 }
 
+.pad-x-90 {
+    padding-right: 90px;
+    padding-left: 90px;
+}
+
+.pad-x-100 {
+    padding-right: 100px;
+    padding-left: 100px;
+}
+
 .pad-y {
     padding-top: 120px;
     padding-bottom: 120px;
