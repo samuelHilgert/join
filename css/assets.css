@@ -1,0 +1,11 @@
+input {
+    width: 422px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+}
+
+input::placeholder {
+    padding-left: 20px;
+    color: lightgray;
+}
