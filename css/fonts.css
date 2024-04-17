@@ -23,7 +23,15 @@ h2 {
     font-size: 73px;
 }
 
+h3 {
+    font-size: 64px;
+}
+
 h4 {
+    font-size: 47px;
+}
+
+h5 {
     height: 27px;
 }
 
@@ -39,4 +47,10 @@ a {
 .legal-links a:hover {
     color: #29ABE2;
     font-weight: bold;
+}
+
+#userName {
+    font-size: 64px;
+    color: rgba(41, 171, 226, 1);
+    font-weight:bold;
 }

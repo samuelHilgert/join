@@ -46,3 +46,17 @@ body {
     margin-top: 4px;
 }
 
+.summary-container {
+    width:100%;
+    box-sizing: border-box;
+}
+
+.summary {
+    display: flex;
+    width:67%;
+    flex-wrap: wrap;
+}
+
+.summary-welcome {
+    width:calc(100% - 67%);
+}
