@@ -1,6 +1,7 @@
 .input-login {
     width: 422px;
-    height: 48px;
+    height: auto;
+    padding: 22px 42px;
     border-radius: 10px;
     border: 1px solid lightgray;
 }
@@ -8,21 +9,23 @@
 .input-email {
     background-image: url('../assets/img/mail.svg');
     background-repeat: no-repeat;
-    background-position: right;
+    background-position-x: calc(100% - 20px);
+    background-position-y: 50%;
     background-size: 24px;
 }
 
 .input-password {
     background-image: url('../assets/img/lock.svg');
     background-repeat: no-repeat;
-    background-position: right;
+    background-position-x: calc(100% - 20px);
+    background-position-y: 50%;
     background-size: 24px;
 }
 
 .input-login::placeholder {
-    padding-left: 20px;
     color: lightgray;
     font-size: 20px;
+    line-height:24px;
 }
 
 #checkbox {
