@@ -17,3 +17,12 @@ body {
     font-family: "Inter";
     color: #000000;
 }
+
+h2 {
+    font-size:73px;
+}
+
+.text-underline {
+    border-top: 3px solid #29ABE2;
+    width:150px;
+}
