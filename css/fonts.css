@@ -40,8 +40,8 @@ h5 {
 }
 
 .text-underline {
+    width: 30%;
     border-top: 3px solid #29ABE2;
-    width: 150px;
 }
 
 a {
@@ -57,4 +57,19 @@ a {
     font-size: 64px;
     color: rgba(41, 171, 226, 1);
     font-weight: bold;
+}
+
+.link-style {
+    color: rgba(41, 171, 226, 1);
+    font-size: 16px;
+    font-weight: 400px;
+    text-decoration: none;
+}
+
+.link-style:visited {
+    text-decoration: none;
+}
+
+.link-style:hover {
+    text-decoration: underline;
 }
