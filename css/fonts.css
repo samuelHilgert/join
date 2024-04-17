@@ -35,3 +35,8 @@ h4 {
 a {
     cursor: pointer;
 }
+
+.legal-links a:hover {
+    color: #29ABE2;
+    font-weight: bold;
+}
