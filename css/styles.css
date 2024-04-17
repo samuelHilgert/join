@@ -1,0 +1,34 @@
+body {
+    height: 100vh;
+    width:100%;
+    padding:0;
+    margin:0;
+}
+
+.sidebar {
+    background-color: rgb(42, 53, 70);
+    height: 100%;
+    box-sizing: border-box;
+    width: 20%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.aot {
+    box-shadow: 1px 4px 4px rgb(233, 233, 233);
+    height: 80px;
+    width: calc(100% - 20%);
+    box-sizing: border-box;
+    margin-left:20%;
+}
+
+.main-container {
+    background-color: rgb(246,247,249);
+    min-height:calc(100vh - 84px);
+    height:auto;
+    margin-left:20%;
+    width: calc(100% - 20%);
+    box-sizing: border-box;
+    margin-top:4px;
+}
