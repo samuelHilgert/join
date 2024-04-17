@@ -23,6 +23,10 @@ h2 {
     font-size: 73px;
 }
 
+h4 {
+    height: 27px;
+}
+
 .text-underline {
     border-top: 3px solid #29ABE2;
     width: 150px;
