@@ -91,3 +91,8 @@ button:hover {
     min-width: 100px;
     max-width: 10px;
 }
+
+.summary-icon { 
+    width:65px;
+    height:65px;
+}
