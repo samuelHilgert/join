@@ -17,10 +17,12 @@ body {
     font-family: "Inter";
     color: #000000;
     font-size: 16px;
+    font-weight: normal;
 }
 
 h2 {
     font-size: 73px;
+    font-weight: bold;
 }
 
 h3 {
@@ -29,10 +31,12 @@ h3 {
 
 h4 {
     font-size: 47px;
+    font-weight: normal;
 }
 
 h5 {
-    height: 27px;
+    font-size: 27px;
+    font-weight: normal;
 }
 
 .text-underline {
@@ -52,5 +56,5 @@ a {
 #userName {
     font-size: 64px;
     color: rgba(41, 171, 226, 1);
-    font-weight:bold;
+    font-weight: bold;
 }

@@ -53,10 +53,10 @@ body {
 
 .summary {
     display: flex;
-    width:67%;
+    width:63%;
     flex-wrap: wrap;
 }
 
 .summary-welcome {
-    width:calc(100% - 67%);
+    width:calc(100% - 63%);
 }
