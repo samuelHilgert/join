@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join</title>
+    <title>Sign Up</title>
     <script src="./js/script.js"></script>
     <link rel="stylesheet" href="./css/standard.css">
     <link rel="stylesheet" href="./css/fonts.css">
@@ -15,14 +15,13 @@
 <body class="d_c_se_c pad-x-80 gap-30 pad-y-70">
     <div class="topline">
         <div><img class="logo" src="./assets/img/logo.svg" alt=""></div>
-        <div class="d_f_c_c gap-40">
-            <p>Not a Join user?</p>
-            <a class="btn" href="./signup.html">SignUp</a>
-        </div>
     </div>
 
-    <div class="login-form-container d_c_c_c bgC-white pad-y-40 pad-x-100">
-        <h2>Log in</h2>
+    <div class="login-form-container d_c_c_fs bgC-white pad-y-40 pad-x-100">
+        <div class="d_f_c_c gap-100">
+            <a class="a-style back-arrow" href="./index.html"><img src="./assets/img/arrow-left-line.svg"></a>
+            <h2>Sign up</h2>
+        </div>
         <div class="space-20"></div>
         <div class="d_f_c_c div-underline">
             <div class="text-underline"></div>
@@ -30,12 +29,14 @@
         <div class="space-30"></div>
         <form class="login-form d_c_c_c gap-50" action="">
             <div class="d_c_c_c gap-20">
+                <input class="input-login input-name" type="name" placeholder="Name" required>
                 <input class="input-login input-email" type="email" placeholder="Email" required>
                 <input class="input-login input-password" type="password" placeholder="Password" required>
+                <input class="input-login input-password" type="password" placeholder="Confirm Password" required>
             </div>
             <div class="d_f_c_c gap-20 pad-r-150">
-                <input type="checkbox" id="loginCheckbox" name="loginCheckbox">
-                <label for="checkbox">Remember me</label>
+                <input type="checkbox" id="signUpCheckbox" name="signUpCheckbox">
+                <label for="checkbox">I accept the <a class="a-style link-style" href="">Privacy policy</a></label>
             </div>
             <div class="d_f_c_c gap-20">
                 <button class="btn">Log in</button>
