@@ -66,6 +66,7 @@ body {
     height: 317px;
     gap: 4px;
     padding: 243px 0px 0px 0px;
+    box-sizing: border-box;
 }
 
 .sidebar-legal-element {
