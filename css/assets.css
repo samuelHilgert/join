@@ -22,6 +22,7 @@
   background-image: url("../assets/img/lock.svg");
 }
 
+.input-style-description::placeholder, 
 .input-login::placeholder {
   color: lightgray;
   font-size: 20px;
@@ -29,13 +30,19 @@
 }
 
 .input-style-description {
-  height: 120px;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 #loginCheckbox,
 #signUpCheckbox {
   width: 24px;
   height: 24px;
+}
+
+.input-prio {
+  width: auto;
+  padding: 22px 10px;
 }
 
 .btn {
@@ -115,19 +122,24 @@
   width: 100%;
 }
 
-.div-partingline {
+.div-parting {
   height: 100%;
-  width: 1px;
+}
+
+.div-partingline {
+  border-left: 3px solid red;
+  height: 200px;
+  box-sizing: border-box;
 }
 
 .drag-area-container {
-  width:100%;
+  width: 100%;
   box-sizing: border-box;
 }
 
 .drag-area {
   height: 200px;
-  width:220px;
+  width: 220px;
   background-color: rgba(0, 0, 0, 0.1);
   border: 1px dashed black;
   margin-bottom: 50px;
@@ -145,4 +157,7 @@
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
+}
+
+.box {
 }
