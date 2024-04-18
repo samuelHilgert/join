@@ -116,6 +116,24 @@ body {
     gap: 16px;
 }
 
+.aot-circle {
+    width: 56px;
+    height: 56px;
+    border: solid 3px rgba(42, 54, 71, 1);
+    border-radius: 559px;
+}
+
+.aot-inner-circle {
+    box-sizing: border-box;
+    width: 27.94px;
+    height: 14.24px;
+    top: 16.88px;
+    left: 10.03px;
+    color: rgba(41, 171, 226, 1);
+    font-size: 18px;
+    font-weight: 600;
+}
+
 .main-container {
     background-color: rgb(246, 247, 249);
     min-height: calc(100vh - 84px);
