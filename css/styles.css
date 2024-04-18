@@ -94,6 +94,8 @@ body {
     font-family: 'Inter';
     font-size: 20px;
     line-height: 24px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
 }
 
 .main-container {
