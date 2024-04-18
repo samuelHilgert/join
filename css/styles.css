@@ -157,7 +157,7 @@ body {
     width: calc(100% - 63%);
 }
 
-.contacts {
+.contact-wrapper {
     position: fixed;
     width: 456px;
     height: 928px;
@@ -170,6 +170,7 @@ body {
 .contact-btn-wrapper {
     width: 456px;
     height: 101px;
+    position: fixed;
 }
 
 .contact-btn {
@@ -177,4 +178,9 @@ body {
     height: 56px;
     padding: 12px 0px 12px 0px !important;
     gap: 16px;
+}
+
+.contact-btn-img {
+    height: 32px;
+    width: 32px;
 }
