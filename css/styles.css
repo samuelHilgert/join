@@ -205,3 +205,16 @@ header {
   height: 100%;
   box-sizing: border-box;
 }
+
+.search-div {
+  width: 50%;
+}
+
+.headline-board-columns { 
+  height: 30px;
+}
+
+.headline-board-columns img { 
+  height: 25px;
+  width:auto;
+}
