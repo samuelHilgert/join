@@ -112,6 +112,7 @@
 }
 
 .div-underline {
+<<<<<<< HEAD
   width: 100%;
 }
 
@@ -119,3 +120,34 @@
   height: 100%;
   width: 1px;
 }
+=======
+    width:100%;
+}
+
+.drag-area-container {
+    width:100%;
+    box-sizing: border-box;
+}
+
+.drag-area {
+    height: 200px;
+    width:220px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px dashed black;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.drag-area-highlight {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.todo {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+>>>>>>> f095fcf3f84dd5f59f567eb548d3e83d2973787e
