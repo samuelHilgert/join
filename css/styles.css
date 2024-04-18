@@ -33,6 +33,15 @@ body {
     height: 121.97px;
 }
 
+.sidebar-menu {
+    color: white;
+}
+
+.sidebar-menu:hover {
+    background-color: #091931;
+    cursor: pointer;
+}
+
 .sidebar-icon {
     height: 30px;
     width: 30px;
