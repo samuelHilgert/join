@@ -45,6 +45,7 @@ body {
     font-weight: 400;
     line-height: 19.2px;
     font-family: 'Inter';
+    background-color:yellow;
 }
 
 .sidebar-links {
@@ -90,7 +91,12 @@ body {
     background-color: rgba(255, 255, 255, 1);
 }
 
-.aot-text {
+header {
+    width:100%;
+    box-sizing: border-box;
+}
+
+.header-text {
     font-family: 'Inter';
     font-size: 20px;
     line-height: 24px;
@@ -98,31 +104,31 @@ body {
     color: rgba(0, 0, 0, 1);
 }
 
-.aot-symbols {
+.header-symbols {
     width: 104px;
     height: 56px;
     box-sizing: border-box;
     gap: 16px;
 }
 
-.aot-icon-one {
+.header-icon-one {
     width: 32px;
     height: 32px;
 }
 
-.aot-icon-two {
+.header-icon-two {
     gap: 16px;
     display: flex;
 }
 
-.aot-circle {
+.header-circle {
     width: 56px;
     height: 56px;
     border: solid 3px rgba(42, 54, 71, 1);
     border-radius: 50%;
 }
 
-.aot-inner-circle {
+.header-inner-circle {
     box-sizing: border-box;
     width: 27.94px;
     left: 10.03px;
