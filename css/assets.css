@@ -1,4 +1,4 @@
-.input-login {
+.input-style {
     width: 422px;
     height: auto;
     padding: 22px 42px;
@@ -26,6 +26,10 @@
     color: lightgray;
     font-size: 20px;
     line-height: 24px;
+}
+
+.input-style-description {
+    height:150px;
 }
 
 #loginCheckbox,
