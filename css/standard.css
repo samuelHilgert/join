@@ -69,12 +69,24 @@ body {
   padding-left: 100px;
 }
 
+.pad-r-40 {
+  padding-right: 40px;
+}
+
+.pad-r-60 {
+  padding-right: 60px;
+}
+
 .pad-r-80 {
   padding-right: 80px;
 }
 
 .pad-r-150 {
   padding-right: 150px;
+}
+
+.pad-l-80 {
+  padding-left: 80px;
 }
 
 .pad-l-90 {
@@ -245,6 +257,18 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.d_f_se_fs {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.d_f_sb_fs {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .d_f_fs_c {
