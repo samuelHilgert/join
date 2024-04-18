@@ -27,6 +27,31 @@
                 <h2>Board</h2>
             </div>
         </div>
+        <div class="drag-area-container d_f_fs_c gap-20">
+            <div>
+                <p>Todo</p>
+                <div class="drag-area" id="open" ondrop="moveTo('open')" ondragleave="removeHighlight('open')"
+                    ondragover="allowDrop(event); highlight('open')"></div>
+            </div>
+
+            <div>
+                <p>In progress</p>
+                <div class="drag-area" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')"
+                    ondragover="allowDrop(event); highlight('closed')"></div>
+            </div>
+
+            <div>
+                <p>Await feedback</p>
+                <div class="drag-area" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')"
+                    ondragover="allowDrop(event); highlight('closed')"></div>
+            </div>
+
+            <div>
+                <p>Done</p>
+                <div class="drag-area" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')"
+                    ondragover="allowDrop(event); highlight('closed')"></div>
+            </div>
+        </div>
     </div>
 
 </body>
