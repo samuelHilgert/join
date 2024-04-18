@@ -14,8 +14,19 @@ body {
   width: 100%;
 }
 
+.form-sign-up {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .login-form-container {
+  width: 70%;
   border-radius: 20px;
+}
+
+.form-div {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .sidebar {
@@ -190,7 +201,7 @@ header {
 }
 
 .add-task-form-container {
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
 }

@@ -69,12 +69,20 @@ body {
   padding-left: 100px;
 }
 
-.pad-l-90 {
-  padding-left: 90px;
+.pad-r-80 {
+padding-right:80px;
 }
 
 .pad-r-150 {
   padding-right: 150px;
+}
+
+.pad-l-90 {
+  padding-left: 90px;
+}
+
+.pad-l-40 {
+  padding-left:40px;
 }
 
 .pad-y {
