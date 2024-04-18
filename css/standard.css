@@ -170,6 +170,10 @@ body {
     height: 80px;
 }
 
+.gap-8 {
+    gap: 8px;
+}
+
 .gap-10 {
     gap: 10px;
 }
@@ -226,6 +230,13 @@ body {
     align-items: center;
 }
 
+.d_f_sb_c_c {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
 .d_f_se_c {
     display: flex;
     justify-content: space-evenly;
@@ -254,6 +265,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+}
+
+.d_c_c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .d_c_c_c {
