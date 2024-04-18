@@ -260,6 +260,12 @@ body {
     align-items: flex-end;
 }
 
+.d_c_c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .d_c_c_c {
     display: flex;
     flex-direction: column;
