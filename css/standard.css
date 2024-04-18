@@ -314,6 +314,13 @@ body {
   align-items: space-evenly;
 }
 
+.d_c_sb_c {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .bgC-white {
   background-color: white;
 }
