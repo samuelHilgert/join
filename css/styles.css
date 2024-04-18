@@ -1,194 +1,194 @@
 body {
-    height: 100vh;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    background-color: rgb(246, 247, 249);
-    box-sizing: border-box;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(246, 247, 249);
+  box-sizing: border-box;
 }
 
 .topline {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .login-form-container {
-    border-radius: 20px;
+  border-radius: 20px;
 }
 
 .sidebar {
-    background-color: rgb(42, 53, 70);
-    height: 100%;
-    box-sizing: border-box;
-    width: 232px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
-    padding: 64px 0px 64px 0px;
+  background-color: rgb(42, 53, 70);
+  height: 100%;
+  box-sizing: border-box;
+  width: 232px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  padding: 64px 0px 64px 0px;
 }
 
 .sidebar-logo {
-    width: 100.03px;
-    height: 121.97px;
+  width: 100.03px;
+  height: 121.97px;
 }
 
 .sidebar-menu {
-    color: white;
-    width: 232px;
-    height: 46px;
-    padding: 8px 56px 8px 56px;
-    box-sizing: border-box;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19.2px;
-    font-family: 'Inter';
+  color: white;
+  width: 232px;
+  height: 46px;
+  padding: 8px 56px 8px 56px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+  font-family: "Inter";
 }
 
 .sidebar-links {
-    height: 229px;
-    gap: 15px;
+  height: 229px;
+  gap: 15px;
 }
 
 .sidebar-menu:hover {
-    background-color: #091931;
-    cursor: pointer;
+  background-color: #091931;
+  cursor: pointer;
 }
 
 .sidebar-icon {
-    height: 30px;
-    width: 30px;
+  height: 30px;
+  width: 30px;
 }
 
 .sidebar-legal {
-    height: 317px;
-    gap: 4px;
-    box-sizing: border-box;
+  height: 317px;
+  gap: 4px;
+  box-sizing: border-box;
+  padding: 243px 0px 0px 0px;
 }
 
 .sidebar-legal-element {
-    width: 121px;
-    height: 35px;
-    padding: 8px;
-    gap: 8px;
-    color: rgba(168, 168, 168, 1);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19.2px;
-    box-sizing: border-box;
+  width: 121px;
+  height: 35px;
+  padding: 8px;
+  gap: 8px;
+  color: rgba(168, 168, 168, 1);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+  box-sizing: border-box;
 }
 
 .aot {
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-    height: 96px;
-    max-width: 1440px;
-    box-sizing: border-box;
-    padding: 20px 40px 20px 348px;
-    background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+  height: 96px;
+  max-width: 1440px;
+  box-sizing: border-box;
+  padding: 20px 40px 20px 348px;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 header {
-    width:100%;
-    box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .header-text {
-    font-family: 'Inter';
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 1);
+  font-family: "Inter";
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
 }
 
 .header-symbols {
-    width: 104px;
-    height: 56px;
-    box-sizing: border-box;
-    gap: 16px;
+  width: 104px;
+  height: 56px;
+  box-sizing: border-box;
+  gap: 16px;
 }
 
 .header-icon-one {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 .header-icon-two {
-    gap: 16px;
-    display: flex;
+  gap: 16px;
+  display: flex;
 }
 
 .header-circle {
-    width: 56px;
-    height: 56px;
-    border: solid 3px rgba(42, 54, 71, 1);
-    border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  border: solid 3px rgba(42, 54, 71, 1);
+  border-radius: 50%;
 }
 
 .header-inner-circle {
-    box-sizing: border-box;
-    width: 27.94px;
-    left: 10.03px;
-    color: rgba(41, 171, 226, 1);
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
+  box-sizing: border-box;
+  width: 27.94px;
+  left: 10.03px;
+  color: rgba(41, 171, 226, 1);
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
 }
 
 .main-container {
-    background-color: rgb(246, 247, 249);
-    min-height: calc(100vh - 84px);
-    height: auto;
-    margin-left: 232px;
-    width: calc(100% - 232px);
-    box-sizing: border-box;
-    margin-top: 4px;
+  background-color: rgb(246, 247, 249);
+  min-height: calc(100vh - 84px);
+  height: auto;
+  margin-left: 232px;
+  width: calc(100% - 232px);
+  box-sizing: border-box;
+  margin-top: 4px;
 }
 
 .summary-container {
-    width: 100%;
-    box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .summary {
-    display: flex;
-    width: 63%;
-    flex-wrap: wrap;
+  display: flex;
+  width: 63%;
+  flex-wrap: wrap;
 }
 
 .summary-welcome {
-    width: calc(100% - 63%);
+  width: calc(100% - 63%);
 }
 
 .contact-wrapper {
-    position: fixed;
-    width: 456px;
-    height: 928px;
-    top: 96px;
-    left: 232px;
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  width: 456px;
+  height: 928px;
+  top: 96px;
+  left: 232px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
 }
 
 .contact-btn-wrapper {
-    width: 456px;
-    height: 101px;
-    position: fixed;
+  width: 456px;
+  height: 101px;
+  position: fixed;
 }
 
 .contact-btn {
-    width: 352px;
-    height: 56px;
-    padding: 12px 0px 12px 0px !important;
-    gap: 16px;
+  width: 352px;
+  height: 56px;
+  padding: 12px 0px 12px 0px !important;
+  gap: 16px;
 }
 
 .contact-btn-img {
-    height: 32px;
-    width: 32px;
+  height: 32px;
+  width: 32px;
 }
 
 .contact-list {
-    
 }

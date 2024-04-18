@@ -1,40 +1,107 @@
 <!DOCTYPE html>
 <html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Task</title>
     <script src="./js/script.js"></script>
-    <link rel="stylesheet" href="./css/standard.css">
-    <link rel="stylesheet" href="./css/fonts.css">
-    <link rel="stylesheet" href="./css/assets.css">
-    <link rel="stylesheet" href="./css/styles.css">
-</head>
+    <link rel="stylesheet" href="./css/standard.css" />
+    <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/assets.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
 
-<body onload="init()">
-    <div class="sidebar">
-        <div class="d_c_c_c gap-30" include-html="../assets/templates/sidebar.html"></div>
-    </div>
+  <body onload="init()">
+    <div
+      class="sidebar d_c_sb_c"
+      include-html="../assets/templates/sidebar.html"
+    ></div>
 
     <div class="aot d_f_fs_c pad-x-80 bgC-white">
-        <header class="d_f_sb_c" include-html="../assets/templates/header.html"></header>
+      <header
+        class="d_f_sb_c"
+        include-html="../assets/templates/header.html"
+      ></header>
     </div>
 
     <div class="main-container d_c_c_fs pad-l-90 pad-y-50 gap-30">
-        <div class="d_f_c_c gap-30">
-            <div>
-                <h2>Add Task</h2>
+      <div class="d_f_c_c gap-30">
+        <div>
+          <h2>Add Task</h2>
+        </div>
+      </div>
+
+      <div style="display: flex">
+        <!--BLOCK 1-->
+
+        <div class="d_c_c_s gap-20">
+          <span>Title</span>
+          <input
+            class="input-style"
+            type="email"
+            placeholder="Enter a title"
+            required
+          />
+          <span>Description</span>
+          <input
+            class="input-style input-style-description"
+            type="text"
+            placeholder="Enter a Description"
+            required
+          />
+          <span>Assignet to</span>
+          <input class="input-style" type="email" placeholder="" required />
+        </div>
+
+        <!--LINE-->
+        <div class="div-partingline"></div>
+
+        <!--BLOCK 2-->
+
+        <div class="d_c_c_s gap-20">
+          <span>Due date</span>
+          <input
+            class="input-style"
+            type="datetime-local"
+            placeholder="Enter a title"
+            required
+          />
+          <div style="display: flex">
+            <div class="d_c_c_s">
+              <span>Prio</span>
+              <div>
+                <input
+                  class="input-style"
+                  type="email"
+                  placeholder=""
+                  required
+                />
+                <input
+                  class="input-style"
+                  type="email"
+                  placeholder=""
+                  required
+                />
+                <input
+                  class="input-style"
+                  type="email"
+                  placeholder=""
+                  required
+                />
+              </div>
             </div>
+          </div>
+          <span>Category</span>
+          <input class="input-style" type="email" placeholder="" required />
+          <span>Subtask</span>
+          <input
+            class="input-style"
+            type="email"
+            placeholder="Add new subtask"
+            required
+          />
         </div>
-
-        <div class="d_c_c_c gap-20">
-            <input class="input-style" type="email" placeholder="Email" required>
-            <input class="input-style input-style-description" type="text" placeholder="description" required>
-        </div>
-
+      </div>
     </div>
-
-</body>
-
+  </body>
 </html>
