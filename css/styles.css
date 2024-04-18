@@ -28,6 +28,11 @@ body {
     top: 0;
 }
 
+.sidebar-logo {
+    width: 100.03px;
+    height: 121.97px;
+}
+
 .aot {
     box-shadow: 1px 4px 4px rgb(233, 233, 233);
     height: 80px;
