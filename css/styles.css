@@ -33,6 +33,11 @@ body {
     height: 121.97px;
 }
 
+.sidebar-icon {
+    height: 30px;
+    width: 30px;
+}
+
 .aot {
     box-shadow: 1px 4px 4px rgb(233, 233, 233);
     height: 80px;
