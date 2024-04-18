@@ -19,35 +19,53 @@
         <header class="d_f_sb_c" include-html="../assets/templates/header.html"></header>
     </div>
 
-    <div class="main-container d_c_c_fs pad-l-90 pad-y-50 gap-30">
-        <div class="d_f_c_c gap-30">
-                <h2>Board</h2>
+    <div class="main-container d_c_fs_fs pad-x-80 pad-y-50 gap-30">
+        <div class="d_f_sb_c gap-30 width-max">
+            <h2>Board</h2>
+            <div class="search-div d_f_c_c gap-30">
                 <input class="input-style input-search" type="text" placeholder="Find Task" required>
                 <a class="btn" href="">Add task <img src="./assets/img/add.svg" alt=""></a>
+            </div>
         </div>
         <div class="drag-area-container d_f_fs_fs gap-20">
+
             <div class="d_c_c_fs gap-10">
-                <p>Todo</p>
-                <div class="drag-area d_c_c_c" id="open" ondrop="moveTo('open')" ondragleave="removeHighlight('open')" ondragover="allowDrop(event); highlight('open')"></div>
+                <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
+                    <p>To do</p>
+                    <img src="./assets/img/plus-button.svg" alt="">
+                </div>
+                <div class="drag-area d_c_fs_c" id="open" ondrop="moveTo('open')" ondragleave="removeHighlight('open')"
+                    ondragover="allowDrop(event); highlight('open')"></div>
             </div>
 
             <div class="d_c_c_fs gap-10">
-                <p>In progress</p>
-                <div class="drag-area d_c_c_c" id="inProgress" ondrop="moveTo('inProgress')" ondragleave="removeHighlight('inProgress')"
-                    ondragover="allowDrop(event); highlight('inProgress')"></div>
+                <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
+                    <p>In progress</p>
+                    <img src="./assets/img/plus-button.svg" alt="">
+                </div>
+                <div class="drag-area d_c_fs_c" id="inProgress" ondrop="moveTo('inProgress')"
+                    ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')">
+                </div>
             </div>
 
             <div class="d_c_c_fs gap-10">
-                <p>Await feedback</p>
-                <div class="drag-area d_c_c_c" id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragleave="removeHighlight('awaitFeedback')"
+                <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
+                    <p>Await feedback</p>
+                    <img src="./assets/img/plus-button.svg" alt="">
+                </div>
+                <div class="drag-area d_c_fs_c" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
+                    ondragleave="removeHighlight('awaitFeedback')"
                     ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
             </div>
 
             <div class="d_c_c_fs gap-10">
-                <p>Done</p>
-                <div class="drag-area d_c_c_c" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
+                <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
+                    <p>Done</p>
+                </div>
+                <div class="drag-area d_c_fs_c" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
                     ondragover="allowDrop(event); highlight('done')"></div>
             </div>
+
         </div>
     </div>
 
