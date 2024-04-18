@@ -25,6 +25,11 @@ async function includeHTML() {
     }
 }
 
+
+
+
+/************************ DRAG AND DROP TESTING BY SAMUEL ***************************/
+
 let todos = [{
     'id': 0,
     'title': 'Putzen',
@@ -85,3 +90,5 @@ function highlight(id) {
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
 }
+
+/************************************************************************************/
