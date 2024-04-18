@@ -230,6 +230,13 @@ body {
     align-items: center;
 }
 
+.d_f_sb_c_c {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
 .d_f_se_c {
     display: flex;
     justify-content: space-evenly;
