@@ -138,7 +138,7 @@
 }
 
 .drag-area {
-  height: 200px;
+  height: auto;
   width: 220px;
   background-color: rgba(0, 0, 0, 0.1);
   border: 1px dashed black;

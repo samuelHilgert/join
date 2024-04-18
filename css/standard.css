@@ -245,6 +245,12 @@ body {
   align-items: center;
 }
 
+.d_f_fs_fs {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .d_f_fe_c {
   display: flex;
   justify-content: flex-end;

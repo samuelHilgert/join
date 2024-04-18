@@ -140,7 +140,6 @@ header {
 .main-container {
   background-color: rgb(246, 247, 249);
   min-height: calc(100vh - 84px);
-  height: auto;
   margin-left: 232px;
   width: calc(100% - 232px);
   box-sizing: border-box;

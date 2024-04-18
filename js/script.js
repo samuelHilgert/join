@@ -32,22 +32,29 @@ async function includeHTML() {
 
 let todos = [{
     'id': 0,
-    'title': 'Putzen',
-    'category': 'open'
+    'title': 'Kochwelt Page & Recipe Recommender',
+    'category': 'inProgress'
 }, {
     'id': 1,
-    'title': 'Kochen',
-    'category': 'open'
+    'title': 'HTML Base Template Creation',
+    'category': 'awaitFeedback'
 }, {
     'id': 2,
-    'title': 'Einkaufen',
-    'category': 'closed'
+    'title': 'Daily Kochwelt Recipe',
+    'category': 'awaitFeedback'
+}, {
+    'id': 3,
+    'title': 'CSS Architecture Planning',
+    'category': 'done'
 }];
 
 let currentDraggedElement;
 
 function updateHTML() {
     let open = todos.filter(t => t['category'] == 'open');
+    let inProgress = todos.filter(t => t['category'] == 'inProgress');
+    let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
+    let done = todos.filter(t => t['category'] == 'done');
 
     document.getElementById('open').innerHTML = '';
 
@@ -56,13 +63,25 @@ function updateHTML() {
         document.getElementById('open').innerHTML += generateTodoHTML(element);
     }
 
-    let closed = todos.filter(t => t['category'] == 'closed');
+    document.getElementById('inProgress').innerHTML = '';
 
-    document.getElementById('closed').innerHTML = '';
+    for (let index = 0; index < inProgress.length; index++) {
+        const element = inProgress[index];
+        document.getElementById('inProgress').innerHTML += generateTodoHTML(element);
+    }
 
-    for (let index = 0; index < closed.length; index++) {
-        const element = closed[index];
-        document.getElementById('closed').innerHTML += generateTodoHTML(element);
+    document.getElementById('awaitFeedback').innerHTML = '';
+
+    for (let index = 0; index < awaitFeedback.length; index++) {
+        const element = awaitFeedback[index];
+        document.getElementById('awaitFeedback').innerHTML += generateTodoHTML(element);
+    }
+
+    document.getElementById('done').innerHTML = '';
+
+    for (let index = 0; index < done.length; index++) {
+        const element = done[index];
+        document.getElementById('done').innerHTML += generateTodoHTML(element);
     }
 }
 
