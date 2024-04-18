@@ -22,7 +22,7 @@ body {
     background-color: rgb(42, 53, 70);
     height: 100%;
     box-sizing: border-box;
-    width: 232px;
+    min-width: 232px;
     position: fixed;
     left: 0;
     top: 0;
