@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <script src="./js/script.js"></script>
+    <script src="./js/register.js"></script>
+    <!-- <script src="./js/storage.js"></script> -->
     <link rel="stylesheet" href="./css/standard.css">
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/assets.css">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
-
-<body class="d_c_se_c pad-x-80 gap-30 pad-y-70">
+<!-- onload="loadUsers()"  -->
+<body class="d_c_se_c pad-x-80 gap-30 pad-y-70" >
     <div class="topline">
         <div><img class="logo" src="./assets/img/logo.svg" alt=""></div>
     </div>
@@ -29,12 +31,12 @@
             <div class="text-underline"></div>
         </div>
         <div class="space-30"></div>
-        <form class="form-sign-up d_c_c_c gap-50 pad-x-40 pad-r-80" action="">
+        <form class="form-sign-up d_c_c_c gap-50 pad-x-40 pad-r-80" onsubmit="register(); return false;">
             <div class="form-div d_c_c_c gap-20">
-                <input class="input-style input-name" type="name" placeholder="Name" required>
-                <input class="input-style input-email" type="email" placeholder="Email" required>
-                <input class="input-style input-password" type="password" placeholder="Password" required>
-                <input class="input-style input-password" type="password" placeholder="Confirm Password" required>
+                <input class="input-style input-name" type="name" id="signUpName" placeholder="Name" required>
+                <input class="input-style input-email" type="email" id="email" placeholder="Email" required>
+                <input class="input-style input-password" type="password" id="password" placeholder="Password" required>
+                <input class="input-style input-password" type="password" id="confirmPassword" placeholder="Confirm Password" required>
             </div>
 
             <div class="d_f_c_c gap-20">
@@ -42,10 +44,13 @@
                 <label for="checkbox">I accept the <a class="a-style" href="./privacy-policy.html" target="_blank">Privacy Policy</a></label>
             </div>
             <div class="d_f_c_c gap-20">
-                <button class="btn">Log in</button>
+                <button class="btn" id="registerBtn">Log in</button>
                 <button class="btn btn-alt">Guest Log in</button>
             </div>
         </form>
+        <div class="width-max pad-r-60 pad-y-20">
+            <a class="btn" id="messageFormSignUp">Message</a>
+        </div>
     </div>
 
     <div class="legal-links d_f_c_c gap-40 pad-y-70">

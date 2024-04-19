@@ -257,3 +257,9 @@ li {
   margin-left:5px;
   box-sizing: border-box;
 }
+
+#messageFormSignUp {
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
