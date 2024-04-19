@@ -63,9 +63,18 @@ body {
   gap: 15px;
 }
 
-.sidebar-menu:hover {
+.sidebar-links .sidebar-menu:hover {
   background-color: #091931;
   cursor: pointer;
+}
+
+.sidebar-links .sidebar-menu:active,
+.sidebar-links .sidebar-menu:focus {
+  background-color: red;
+}
+
+.active {
+  background-color: red;
 }
 
 .sidebar-icon {
