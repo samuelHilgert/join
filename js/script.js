@@ -30,18 +30,20 @@ async function includeHTML() {
 // TEST FÜR SIDEBAR LINKS BACKGROUNDCOLOR
 
 function setBackgroundcolorSidebarLinks() {
-	const currentUrl = window.location.pathname;
-	const navLinks = getSidebarLinks();
-	navLinks.forEach((navLink) => {
-		const href = navLink.getAttribute('href');
-		if (currentUrl === href) {
-			navLink.classList.add('sidebar-bg-focus');
-		} else {
-			navLink.classList.remove('sidebar-bg-focus');
-		}
-	});
+    let currentPagePath = window.location.pathname;
+    document.querySelectorAll('.sidebar-links .sidebar-menu').forEach((link) => {
+        let isActive = new URL(link.href, document.baseURI).pathname === currentPagePath;
+        link.classList.toggle('sidebar-bg-focus', isActive);
+    });
 }
 
-function getSidebarLinks() {
-    return document.querySelectorAll('.sidebar-links .sidebar-menu');
-}
+document.addEventListener('DOMContentLoaded', function() {
+    setBackgroundcolorSidebarLinks(); // Setzen der Hintergrundfarbe beim Laden der Seite
+
+    // Ereignislistener für Klicks auf die Sidebar-Links hinzufügen
+    document.querySelectorAll('.sidebar-links .sidebar-menu').forEach((link) => {
+        link.addEventListener('click', function() {
+            setBackgroundcolorSidebarLinks(); // Setzen der Hintergrundfarbe nach einem Klick
+        });
+    });
+});
