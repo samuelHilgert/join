@@ -24,6 +24,18 @@ let contacts = [
         color: ""
     },
     {
+        name: "Leonie Maier",
+        mail: "leonie.maier@abc-construct.com",
+        phone: "+49 596 487 12",
+        color: ""
+    },
+    {
+        name: "Eva Grace",
+        mail: "eg@example.com",
+        phone: "+25 493448951",
+        color: ""
+    },
+    {
         name: "Anna Müller",
         mail: "anna.mueller@example.com",
         phone: "+43 789 878 566",
