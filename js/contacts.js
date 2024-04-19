@@ -12,7 +12,7 @@ let contacts = [
         color: ""
     },
     {
-        name: "John Walker",
+        name: "James Walker",
         mail: "jw@dreamlogistics.com",
         phone: "+49 64865155",
         color: ""
@@ -31,14 +31,26 @@ let contacts = [
     },
     {
         name: "Eva Grace",
-        mail: "eg@example.com",
+        mail: "eg@marinaclub.com",
         phone: "+25 493448951",
         color: ""
     },
     {
-        name: "Anna Müller",
-        mail: "anna.mueller@example.com",
-        phone: "+43 789 878 566",
+        name: "Paul Lee",
+        mail: "lee@lee-enterprises.com",
+        phone: "+97 947621654",
+        color: ""
+    },
+    {
+        name: "Olivia Shaun",
+        mail: "os@health-co.com",
+        phone: "+25 1648689446",
+        color: ""
+    },
+    {
+        name: "Bernd Hofmann",
+        mail: "hofmann@ib-bank.com",
+        phone: "+49 647 289 145",
         color: ""
     }
 ];
