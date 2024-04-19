@@ -32,14 +32,14 @@
         </div>
       </div>
 
-      <div class="add-task-form-container gap-20 d_f_fs_c">
+      <div class="add-task-form-container gap-40 d_f_fs_c">
         <!--BLOCK 1-->
 
         <div class="box d_c_c_s gap-30" style="width: 440px">
           <div class="d_c_c_s gap-10 width-100">
-            <span>Title</span>
+            <span>Title<span style="color: red">*</span></span>
             <input
-              class="input-style"
+              class="input-style input-login"
               type="email"
               placeholder="Enter a title"
               required
@@ -48,17 +48,19 @@
 
           <div class="d_c_c_s gap-10 width-100">
             <span>Description</span>
-            <input
+            <textarea
+              name=""
+              id=""
+              cols="30"
+              rows="2"
               class="input-style input-style-description"
-              type="text"
               placeholder="Enter a Description"
-              required
-            />
+            ></textarea>
           </div>
 
           <div class="d_c_c_s gap-10 width-100">
             <span>Assignet to</span>
-            <input class="input-style" type="email" placeholder="" required />
+            <input class="input-style" type="email" placeholder="" />
           </div>
         </div>
 
@@ -69,10 +71,10 @@
 
         <div class="box d_c_c_s gap-20" style="width: 440px">
           <div class="d_c_c_s gap-10 width-100">
-            <span>Due date</span>
+            <span>Due date<span style="color: red">*</span></span>
             <input
               class="input-style"
-              type="datetime-local"
+              type="date"
               placeholder="Enter a title"
               required
             />
@@ -81,38 +83,22 @@
             <div class="d_c_c_s gap-10 width-100">
               <span>Prio</span>
               <div class="d_f_c_c gap-20">
-                <input
-                  class="input-style input-prio"
-                  type="email"
-                  placeholder=""
-                  required
-                />
-                <input
-                  class="input-style input-prio"
-                  type="email"
-                  placeholder=""
-                  required
-                />
-                <input
-                  class="input-style input-prio"
-                  type="email"
-                  placeholder=""
-                  required
-                />
+                <button class="input-style input-prio">Urgent</button>
+                <button class="input-style input-prio">Medium</button>
+                <button class="input-style input-prio">Low</button>
               </div>
             </div>
           </div>
           <div class="d_c_c_s gap-10 width-100">
-            <span>Category</span>
+            <span>Category<span style="color: red">*</span></span>
             <input class="input-style" type="email" placeholder="" required />
           </div>
           <div class="d_c_c_s gap-10 width-100">
             <span>Subtask</span>
             <input
-              class="input-style"
+              class="input-style input-login"
               type="email"
               placeholder="Add new subtask"
-              required
             />
           </div>
         </div>

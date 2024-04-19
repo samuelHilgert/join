@@ -36,8 +36,7 @@
 }
 
 .input-style-description {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
 }
 
 #loginCheckbox,
@@ -168,8 +167,8 @@
 
 .div-partingline {
   height: 400px;
-  width: 1px;
-  background-color: darkgray;
+  width: 1.5px;
+  background-color: rgba(209, 209, 209, 1);
 }
 
 .drag-area-container {
