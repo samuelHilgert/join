@@ -218,11 +218,17 @@ header {
   width: 50%;
 }
 
-.headline-board-columns { 
+.headline-board-columns {
   height: 30px;
 }
 
-.headline-board-columns img { 
+.headline-board-columns img {
   height: 25px;
-  width:auto;
+  width: auto;
+}
+
+.legal-arrow {
+  position: fixed;
+  padding-top: 30px;
+  right: 60px;
 }

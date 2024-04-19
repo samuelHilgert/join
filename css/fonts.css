@@ -36,7 +36,20 @@ h4 {
 
 h5 {
     font-size: 27px;
-    font-weight: normal;
+    line-height: 32.4 px;
+    font-weight:700;
+}
+
+h6 {
+    font-size: 16px;
+    line-height: 19.2 px;
+    font-weight:400;
+}
+
+h7 {
+    font-size: 20px;
+    line-height: 24 px;
+    font-weight:700;
 }
 
 .text-underline {

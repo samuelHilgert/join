@@ -398,6 +398,10 @@ body {
   background-color: rgb(237, 232, 230);
 }
 
+.scale-x {
+  transform: scaleX(-1);
+}
+
 .list-style {
   list-style: none;
   padding-inline-start: 0;
