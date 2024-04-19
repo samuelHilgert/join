@@ -68,6 +68,10 @@ body {
   cursor: pointer;
 }
 
+.sidebar-bg-focus {
+  background-color: #091931;
+}
+
 .sidebar-menu:active {
   background-color: #091931;
 }
