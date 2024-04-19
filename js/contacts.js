@@ -52,5 +52,11 @@ let contacts = [
         mail: "hofmann@ib-bank.com",
         phone: "+49 647 289 145",
         color: ""
+    },
+    {
+        name: "Volker Richter",
+        mail: "richter@cv-systems.com",
+        phone: "+63 349 555 479",
+        color: ""
     }
 ];
