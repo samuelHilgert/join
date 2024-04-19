@@ -60,5 +60,3 @@ let contacts = [
         color: ""
     }
 ];
-
-//TEST
