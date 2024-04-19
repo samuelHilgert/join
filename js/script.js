@@ -5,7 +5,7 @@
 async function init() {
     await includeHTML();
     setBackgroundcolorSidebarLinks();
-    updateHTML();
+    //updateHTML();
     }
 
 /**
@@ -24,4 +24,26 @@ async function includeHTML() {
             element.innerHTML = 'Page not found'; // wenn nicht gefunden, Ausgabe Fehlermeldung text
         }
     }
+}
+
+
+// TEST FÜR SIDEBAR LINKS
+function setBackgroundcolorSidebarLinks() {
+    let url = window.location.pathname;
+    let sidebarLinks = getSidebarLinks();
+
+    sidebarLinks.forEach((sidebarLink) => {
+        let href = sidebarLink.getAttribute('href');
+        if (url === href) {
+            sidebarLink.classList.add('sidebar-bg-focus');
+            console.log('TEST');
+        } else {
+            sidebarLink.classList.remove('sidebar-bg-focus');
+        }
+    });
+}
+
+
+function getSidebarLinks() {
+    return document.querySelectorAll('sidebar-links .sidebar-menu');
 }
