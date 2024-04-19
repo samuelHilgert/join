@@ -4,6 +4,7 @@
  */
 async function init() {
     await includeHTML();
+    setBackgroundcolorSidebarLinks();
     updateHTML();
     }
 
