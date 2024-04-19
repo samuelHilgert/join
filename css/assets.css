@@ -48,6 +48,10 @@
 .input-prio {
   padding: 22px 10px;
 }
+.input-prio:hover {
+  cursor: pointer;
+  box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
+}
 
 .btn {
   display: flex;
@@ -99,6 +103,7 @@
 
 .clear-btn:hover {
   border-color: #29abe2;
+  box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
 #btnBoard {
