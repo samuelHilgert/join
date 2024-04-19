@@ -47,7 +47,6 @@
 }
 
 .input-prio {
-  width: auto;
   padding: 22px 10px;
 }
 
@@ -118,7 +117,7 @@
   }
 }
 
-.index-logo { 
+.index-logo {
   width: 400px;
   height: 500px;
 }
@@ -172,9 +171,9 @@
 }
 
 .div-partingline {
-  border-left: 3px solid red;
-  height: 200px;
-  box-sizing: border-box;
+  height: 400px;
+  width: 1px;
+  background-color: darkgray;
 }
 
 .drag-area-container {
