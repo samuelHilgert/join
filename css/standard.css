@@ -190,6 +190,10 @@ body {
   height: 80px;
 }
 
+.gap-8 {
+  gap: 8px;
+}
+
 .gap-10 {
   gap: 10px;
 }
@@ -394,6 +398,10 @@ body {
   background-color: rgb(237, 232, 230);
 }
 
+.scale-x {
+  transform: scaleX(-1);
+}
+
 .list-style {
   list-style: none;
   padding-inline-start: 0;
@@ -404,4 +412,8 @@ body {
 .width-max {
   width: 100%;
   box-sizing: border-box;
+}
+
+.width-100 {
+  width: 100%;
 }

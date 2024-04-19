@@ -36,8 +36,7 @@
 }
 
 .input-style-description {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
 }
 
 #loginCheckbox,
@@ -47,7 +46,6 @@
 }
 
 .input-prio {
-  width: auto;
   padding: 22px 10px;
 }
 
@@ -83,6 +81,60 @@
   border: 1px solid #29abe2;
   color: #29abe2;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+#btnBoard {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 16px;
+  background-color: rgba(0, 56, 255, 1);
+  color: white;
+  line-height: 19.2px;
+  border: none;
+  text-wrap: nowrap;
+  font-size:16px;
+  font-weight:400;
+}
+
+.animation-container {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.logo-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(0, 0);
+  animation: moveLogo 2s 1 forwards, shrinkLogo 0.7s 1 forwards;
+  /* Zwei Animationen kombinieren */
+  animation-delay: 0.5s;
+  /* Pause von 1 Sekunde vor Beginn der Animation */
+}
+
+.move {
+  position: absolute;
+}
+
+@keyframes moveLogo {
+  to {
+    top: -120px;
+    left: -76px;
+  }
+}
+
+@keyframes shrinkLogo {
+  to {
+    transform: translate(0, 0) scale(0.25);
+    /* Verkleinere das Logo auf die Hälfte */
+  }
+}
+
+.index-logo {
+  width: 400px;
+  height: 500px;
 }
 
 .logo {
@@ -134,19 +186,14 @@
 }
 
 .div-partingline {
-  border-left: 3px solid red;
-  height: 200px;
-  box-sizing: border-box;
-}
-
-.drag-area-container {
-  width: 100%;
-  box-sizing: border-box;
+  height: 400px;
+  width: 1.5px;
+  background-color: rgba(209, 209, 209, 1);
 }
 
 .drag-area {
   height: 900px;
-  width: 200px;
+  width: 220px;
   padding: 0 20px;
   margin-bottom: 50px;
   /* 
@@ -167,7 +214,46 @@
   border-radius: 12px;
   padding: 10px;
   margin: 10px;
-  height:200px;
-  width:100%;
+  height: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.todo p {
+  color: rgba(168, 168, 168, 1);
+  font-size: 16px;
+}
+
+ol li::marker {
+  font-size: 27px;
+  line-height: 32.4px;
+  font-weight: 700;
+}
+
+li {
+  margin: 20px 0;
+}
+
+.progress {
+  border-radius:8px;
+  background-color: rgb(230, 230, 230);
+  width:50%;
+  margin-right:5px;
+  box-sizing: border-box;
+}
+
+.progress-bar {
+  height: 10px;
+  border-radius:8px;
+  background-color: rgb(230, 230, 230);
+}
+
+.progress-bar.blue {
+  background-color: rgba(69, 137, 255, 1);
+}
+
+.statusText {
+  width:50%;
+  margin-left:5px;
   box-sizing: border-box;
 }
