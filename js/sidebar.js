@@ -2,25 +2,24 @@
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    var sidebarLinks = document.querySelectorAll(".sidebar-menu");
+    // Suchen Sie nach dem Element mit der ID 'sidebar-sum'
+    var sidebarSum = document.getElementById("sidebar-sum");
 
-    sidebarLinks.forEach(function(link) {
-        link.addEventListener("click", function(event) {
-            // Speichern Sie den Index des geklickten Links im localStorage
-            localStorage.setItem("activeLink", Array.from(sidebarLinks).indexOf(this));
+    // Überprüfen Sie, ob das Element existiert, bevor Sie die Event-Handler anhängen
+    if (sidebarSum) {
+        // Fügen Sie einen Event-Listener hinzu, um den :active-Status beim Klicken beizubehalten
+        sidebarSum.addEventListener("click", function() {
+            // Fügen Sie die Klasse .sidebar-bg-focus hinzu
+            this.classList.add("sidebar-bg-focus");
+
+            // Speichern Sie den :active-Status im localStorage
+            localStorage.setItem("sidebarActive", "sidebar-sum");
         });
-    });
-});
+    }
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    var activeLinkIndex = localStorage.getItem("activeLink");
-    if (activeLinkIndex !== null) {
-        var sidebarLinks = document.querySelectorAll(".sidebar-menu");
-        sidebarLinks.forEach(function(link, index) {
-            if (index.toString() === activeLinkIndex) {
-                link.classList.add("active");
-            }
-        });
+    // Überprüfen Sie, ob der :active-Status im localStorage gespeichert ist und setzen Sie ihn beim Laden der Seite zurück
+    var activeLink = localStorage.getItem("sidebarActive");
+    if (activeLink) {
+        document.getElementById(activeLink).classList.add("sidebar-bg-focus");
     }
 });
