@@ -190,6 +190,10 @@ body {
   height: 80px;
 }
 
+.gap-8 {
+  gap: 8px;
+}
+
 .gap-10 {
   gap: 10px;
 }
