@@ -27,7 +27,7 @@ async function includeHTML() {
 }
 
 
-// TEST FÜR SIDEBAR LINKS
+// TEST FÜR SIDEBAR LINKS BACKGROUNDCOLOR
 
 function setBackgroundcolorSidebarLinks() {
 	const currentUrl = window.location.pathname;
