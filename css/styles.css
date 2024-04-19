@@ -63,18 +63,13 @@ body {
   gap: 15px;
 }
 
-.sidebar-links .sidebar-menu:hover {
-  background-color: #091931;
+.sidebar-menu:hover {
+  background-color: #2a3e59;
   cursor: pointer;
 }
 
-.sidebar-links .sidebar-menu:active,
-.sidebar-links .sidebar-menu:focus {
-  background-color: red;
-}
-
-.active {
-  background-color: red;
+.sidebar-menu:active {
+  background-color: #091931;
 }
 
 .sidebar-icon {
@@ -99,6 +94,10 @@ body {
   font-weight: 400;
   line-height: 19.2px;
   box-sizing: border-box;
+}
+
+.sidebar-legal-element:hover {
+  color: #29abe2;
 }
 
 .aot {
