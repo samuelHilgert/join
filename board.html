@@ -29,15 +29,15 @@
                 <a class="btn" href="">Add task <img src="./assets/img/add.svg" alt=""></a>
             </div>
         </div>
-        <div class="drag-area-container d_f_fs_fs gap-20">
+        <div class="drag-area-container d_f_fs_fs gap-20 width-max">
 
             <div class="d_c_c_fs gap-10">
                 <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
                     <p>To do</p>
                     <img src="./assets/img/plus-button.svg" alt="">
                 </div>
-                <div class="drag-area d_c_fs_c" id="open" ondrop="moveTo('open')" ondragleave="removeHighlight('open')"
-                    ondragover="allowDrop(event); highlight('open')"></div>
+                <div class="drag-area d_c_fs_c" id="todoCol" ondrop="moveTo('todoCol')" ondragleave="removeHighlight('todoCol')"
+                    ondragover="allowDrop(event); highlight('todoCol')"></div>
             </div>
 
             <div class="d_c_c_fs gap-10">

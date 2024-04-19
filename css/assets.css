@@ -95,24 +95,27 @@
   top: 50%;
   left: 50%;
   transform: translate(0, 0);
-  animation: moveLogo 2s 1 forwards, shrinkLogo 0.7s 1 forwards; /* Zwei Animationen kombinieren */
-  animation-delay: 0.5s; /* Pause von 1 Sekunde vor Beginn der Animation */
+  animation: moveLogo 2s 1 forwards, shrinkLogo 0.7s 1 forwards;
+  /* Zwei Animationen kombinieren */
+  animation-delay: 0.5s;
+  /* Pause von 1 Sekunde vor Beginn der Animation */
 }
 
 .move {
-  position:absolute;
+  position: absolute;
 }
 
 @keyframes moveLogo {
   to {
-      top: -120px;
-      left: -76px;
+    top: -120px;
+    left: -76px;
   }
 }
 
 @keyframes shrinkLogo {
   to {
-    transform: translate(0, 0) scale(0.25); /* Verkleinere das Logo auf die Hälfte */
+    transform: translate(0, 0) scale(0.25);
+    /* Verkleinere das Logo auf die Hälfte */
   }
 }
 
@@ -175,14 +178,9 @@
   background-color: rgba(209, 209, 209, 1);
 }
 
-.drag-area-container {
-  width: 100%;
-  box-sizing: border-box;
-}
-
 .drag-area {
   height: 900px;
-  width: 200px;
+  width: 220px;
   padding: 0 20px;
   margin-bottom: 50px;
   /* 
@@ -208,6 +206,11 @@
   box-sizing: border-box;
 }
 
+.todo p {
+  color: rgba(168, 168, 168, 1);
+  font-size: 16px;
+}
+
 ol li::marker {
   font-size: 27px;
   line-height: 32.4px;
@@ -216,4 +219,28 @@ ol li::marker {
 
 li {
   margin: 20px 0;
+}
+
+.progress {
+  border-radius:8px;
+  background-color: rgb(230, 230, 230);
+  width:50%;
+  margin-right:5px;
+  box-sizing: border-box;
+}
+
+.progress-bar {
+  height: 10px;
+  border-radius:8px;
+  background-color: rgb(230, 230, 230);
+}
+
+.progress-bar.blue {
+  background-color: rgba(69, 137, 255, 1);
+}
+
+.statusText {
+  width:50%;
+  margin-left:5px;
+  box-sizing: border-box;
 }
