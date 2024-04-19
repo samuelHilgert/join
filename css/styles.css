@@ -193,7 +193,6 @@ header {
 .contact-btn-wrapper {
   width: 456px;
   height: 101px;
-  position: fixed;
 }
 
 .contact-btn {
@@ -206,6 +205,10 @@ header {
 .contact-btn-img {
   height: 32px;
   width: 32px;
+}
+
+.contact-list-wrapper {
+  width: 352px;
 }
 
 .add-task-form-container {
