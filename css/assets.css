@@ -94,23 +94,27 @@
 
 .logo-animation {
   position: absolute;
-  top: 20%;
-  left: 40%;
+  top: 50%;
+  left: 50%;
   transform: translate(0, 0);
   animation: moveLogo 2s 1 forwards, shrinkLogo 0.7s 1 forwards; /* Zwei Animationen kombinieren */
   animation-delay: 0.5s; /* Pause von 1 Sekunde vor Beginn der Animation */
 }
 
+.move {
+  position:absolute;
+}
+
 @keyframes moveLogo {
   to {
-      top: -130px;
-      left: -100px;
+      top: -120px;
+      left: -78px;
   }
 }
 
 @keyframes shrinkLogo {
   to {
-    transform: translate(0, 0) scale(0.3); /* Verkleinere das Logo auf die Hälfte */
+    transform: translate(0, 0) scale(0.25); /* Verkleinere das Logo auf die Hälfte */
   }
 }
 
