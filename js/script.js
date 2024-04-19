@@ -5,7 +5,7 @@
 async function init() {
     await includeHTML();
     setBackgroundcolorSidebarLinks();
-    updateHTML();
+    updateHTML(); // load tasks in board.html
     }
 
 /**
