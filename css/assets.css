@@ -85,6 +85,16 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
+.logo-animation {
+  animation: moveLogo 2s infinite alternate; /* Name der Animation, Dauer, Wiederholung und Richtung */
+}
+
+@keyframes moveLogo {
+  to {
+      transform: translate(-50px, -50px); /* Bewegung nach links oben */
+  }
+}
+
 .logo {
   width: 100px;
   height: auto;
