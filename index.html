@@ -19,8 +19,20 @@
             <image xlink:href="./assets/img/logo.svg" class="index-logo" />
         </svg>
     </div>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let logoAnimation = document.querySelector('.logo-animation');
 
+            logoAnimation.addEventListener('animationend', function() {
+                // Weiterleitung zur login.html-Seite
+                setTimeout(forward, 1000);
+            });
+        });
+
+        function forward() {
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 
 </html>
