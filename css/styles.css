@@ -239,6 +239,7 @@ header {
 
 .contact-circle {
   border-radius: 50%;
+  background-color: green;
   height: 42px;
   width: 42px;
 }

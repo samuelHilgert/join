@@ -66,15 +66,17 @@ let profileCircleColors = ['teal', 'paleturquoise', 'violet', 'slategrey', 'dark
 
 
 function setRandomColor() {
-    
+    let contactCircles = document.querySelectorAll('.contact-circle');
+    contactCircles.forEach(circle => {
+        let randomColor = getRandomColor();
+        circle.style.backgroundColor = randomColor;
+    });
 }
 
 
 function getRandomColor() {
     let randomColor = Math.floor(Math.random() * profileCircleColors.length);
-    let color = profileCircleColors[randomColor];
-
-    return color;
+    return profileCircleColors[randomColor];
 }
 
 

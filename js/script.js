@@ -6,6 +6,7 @@ async function init() {
     await includeHTML();
     setBackgroundcolorSidebarLinks();
     //updateHTML(); // load tasks in board.html
+    setRandomColor(); 
     }
 
 /**
