@@ -6,7 +6,7 @@ async function init() {
     await includeHTML();
     // setBackgroundcolorSidebarLinks(); // FUNKTION FUNKTIONIERT NOCH NICHT //
     setRandomColor(); 
-    updateHTML(); // load tasks in board.html
+    //updateHTML(); // load tasks in board.html
     }
 
 /**
