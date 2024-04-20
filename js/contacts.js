@@ -63,3 +63,19 @@ let contacts = [
 
 
 let profileCircleColors = ['teal', 'paleturquoise', 'violet', 'slategrey', 'darksalmon', 'orange', 'navy', 'indigo', 'lightpink', 'skyblue', 'forestgreen', 'tan', 'darkkhaki'];
+
+
+function setRandomColor() {
+    
+}
+
+
+function getRandomColor() {
+    let randomColor = Math.floor(Math.random() * profileCircleColors.length);
+    let color = profileCircleColors[randomColor];
+
+    return color;
+}
+
+
+
