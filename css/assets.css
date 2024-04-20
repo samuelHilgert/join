@@ -53,6 +53,23 @@
   box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
+.input-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
 .btn {
   display: flex;
   justify-content: center;
@@ -282,7 +299,7 @@ li {
 }
 
 #messageFormSignUp {
-  display:none;
-  justify-content:center;
-  align-items:center;
+  display: none;
+  justify-content: center;
+  align-items: center;
 }
