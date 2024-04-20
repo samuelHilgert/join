@@ -1,3 +1,5 @@
+// contacts = Array mit Testkontakten -> diese müssen später noch im Backend angelegt werden
+
 let contacts = [
     {
         name: "Anna Müller",
