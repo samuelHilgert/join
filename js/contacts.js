@@ -61,19 +61,42 @@ let contacts = [
     }
 ];
 
+let profileCircleColors = [
+    'teal',
+    'lightseagreen',
+    'violet',
+    'slategrey',
+    'darksalmon',
+    'orange',
+    'navy',
+    'indigo',
+    'lightpink',
+    'skyblue',
+    'forestgreen',
+    'tan',
+    'darkkhaki'
+];
 
-let profileCircleColors = ['teal', 'paleturquoise', 'violet', 'slategrey', 'darksalmon', 'orange', 'navy', 'indigo', 'lightpink', 'skyblue', 'forestgreen', 'tan', 'darkkhaki'];
 
-
+/**
+ * This function checks if the contact circle already has a backgroundcolor and, if not, sets a random backgroundcolor 
+ * 
+ */
 function setRandomColor() {
     let contactCircles = document.querySelectorAll('.contact-circle');
     contactCircles.forEach(circle => {
-        let randomColor = getRandomColor();
-        circle.style.backgroundColor = randomColor;
+        if (!circle.style.backgroundColor) {
+            let randomColor = getRandomColor();
+            circle.style.backgroundColor = randomColor;
+        }
     });
 }
 
 
+/**
+ * This is a function to choose a random color from the "profileCircleColors"-array
+ * @returns - returns a randomly selected background color from the array
+ */
 function getRandomColor() {
     let randomColor = Math.floor(Math.random() * profileCircleColors.length);
     return profileCircleColors[randomColor];
