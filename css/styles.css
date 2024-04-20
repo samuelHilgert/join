@@ -235,6 +235,14 @@ header {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  border-radius: 10px;
+  color: rgba(0, 0, 0, 1);
+}
+
+.contact-small:hover {
+  background-color: rgba(42, 54, 71, 1);
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
 }
 
 .contact-circle {
@@ -257,7 +265,6 @@ header {
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
-  color: rgba(0, 0, 0, 1);
 }
 
 .contact-mail {
@@ -271,6 +278,7 @@ header {
 .parting-line {
   border: 1px solid rgba(209, 209, 209, 1);
   width: 352px;
+  margin-bottom: 5px;
 }
 
 .add-task-form-container {

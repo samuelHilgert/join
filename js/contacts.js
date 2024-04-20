@@ -76,7 +76,7 @@ let profileCircleColors = [
     'skyblue',
     'forestgreen',
     'tan',
-    'darkkhaki'
+    'green'
 ];
 
 
