@@ -23,14 +23,7 @@ async function register() {
     if (checkbox === true) {
         if (userPassword === userConfirmPsassword) {
             registerSuccess = true;
-            users.push({
-                name: signUpName.value,
-                email: email.value,
-                password: password.value
-            });
-            /*  
-            await setItem('users', JSON.stringify(users));
-            */
+            pushUserData();
             // Weiterleitung zu login.html 
             // windows.location.href = './login.html?msg=Du hast dich erfolgreich registriert' // queryParameter 
             showMessage();
@@ -48,6 +41,17 @@ async function register() {
         showMessage();
     }
 
+}
+
+function pushUserData() {
+    users.push({
+        name: signUpName.value,
+        email: email.value,
+        password: password.value
+    });
+    /*  
+    await setItem('users', JSON.stringify(users));
+    */
 }
 
 function resetForm() {
