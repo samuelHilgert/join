@@ -68,7 +68,7 @@ let profileCircleColors = [
     'lightseagreen',
     'violet',
     'slategrey',
-    'darksalmon',
+    'crimson',
     'orange',
     'navy',
     'indigo',

@@ -189,11 +189,15 @@ header {
   left: 232px;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
+  overflow-y: scroll;
 }
 
 .contact-btn-wrapper {
   width: 456px;
   height: 101px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .contact-btn {
@@ -247,7 +251,6 @@ header {
 
 .contact-circle {
   border-radius: 50%;
-  background-color: green;
   height: 42px;
   width: 42px;
 }
