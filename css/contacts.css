@@ -210,3 +210,25 @@
     font-size: 16px;
     color: rgba(42, 54, 71, 1);
   }
+
+  .mail-phone-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .span-thick {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19.2px;
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .contact-phone {
+    font-family: 'Inter';
+    font-size: 16px;
+    line-height: 19.2px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+  }
