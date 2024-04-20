@@ -4,9 +4,9 @@
  */
 async function init() {
     await includeHTML();
-    // setBackgroundcolorSidebarLinks(); // FUNKTION FUNKTIONIER NOCH NICHT //
-    //updateHTML(); // load tasks in board.html
+    // setBackgroundcolorSidebarLinks(); // FUNKTION FUNKTIONIERT NOCH NICHT //
     setRandomColor(); 
+    updateHTML(); // load tasks in board.html
     }
 
 /**

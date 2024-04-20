@@ -255,6 +255,7 @@ header {
 
 .contact-circle {
   border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 1);
   height: 42px;
   width: 42px;
 }
