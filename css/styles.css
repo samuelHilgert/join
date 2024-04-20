@@ -368,6 +368,13 @@ header {
   fill: rgba(42, 54, 71, 1);
 }
 
+.contact-header-span {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(42, 54, 71, 1);
+}
+
 .add-task-form-container {
   width: 100%;
   height: 100%;
