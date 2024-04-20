@@ -241,6 +241,14 @@ header {
   width: 42px;
 }
 
+.contact-circle-letters {
+  font-family: 'Inter';
+  font-size: 14px;
+  line-height: 14.4px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+}
+
 .parting-line {
   border: 1px solid rgba(209, 209, 209, 1);
   width: 352px;
