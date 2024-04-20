@@ -6,6 +6,13 @@ function openDropdownContacts() {
 
   for (let i = 0; i < contacts.length; i++) {
     const element = contacts[i];
-    dropdownDiv.innerHTML += `<div>hallo</div>`;
+    dropdownDiv.innerHTML += ` <div class="contact-small">
+    <div class="contact-circle d_f_c_c">
+        <div class="contact-circle-letters">FG</div>
+    </div>
+    <div class="contact-name-mail">
+        <div class="contact-name">${element.name}</div>
+    </div>
+</div>`;
   }
 }
