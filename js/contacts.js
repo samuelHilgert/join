@@ -79,18 +79,22 @@ let profileCircleColors = [
     'green'
 ];
 
+let lastColor = null;
+
 
 /**
- * This function checks if the contact circle already has a backgroundcolor and, if not, sets a random backgroundcolor 
+ * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has the same backgroundcolor - in this case, another color is picked
  * 
  */
 function setRandomColor() {
     let contactCircles = document.querySelectorAll('.contact-circle');
     contactCircles.forEach(circle => {
-        if (!circle.style.backgroundColor) {
-            let randomColor = getRandomColor();
-            circle.style.backgroundColor = randomColor;
-        }
+        let randomColor;
+        do {
+            randomColor = getRandomColor();
+        } while (randomColor === lastColor); // Schleife, bis eine neue Farbe gefunden wird
+        circle.style.backgroundColor = randomColor;
+        lastColor = randomColor; // Aktualisiere die zuletzt ausgewählte Farbe
     });
 }
 
