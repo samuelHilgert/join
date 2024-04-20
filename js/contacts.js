@@ -113,4 +113,5 @@ function openContactInfo() {
     let contact = document.getElementById('testID');
     contact.classList.add('contact-small-active');
     contact.classList.add('contact-small-active:hover');
+    // classlists need to be removed again by clicking on another contact
 }
