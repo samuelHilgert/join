@@ -252,11 +252,15 @@ header {
   cursor: pointer;
 }
 
-/*.contact-small:hover {
+.contact-small-active { /* FOR CLICKED CONTACT ONLY */
   background-color: rgba(42, 54, 71, 1);
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 1) !important;
+} 
+
+.contact-small-active:hover { /* FOR CLICKED CONTACT ONLY */
   cursor: pointer;
-}*/ /* FOR CLICKED CONTACT ONLY */
+  background-color: rgba(42, 54, 71, 1)
+}
 
 .contact-circle {
   border-radius: 50%;

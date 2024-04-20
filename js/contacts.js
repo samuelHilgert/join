@@ -110,5 +110,7 @@ function getRandomColor() {
 
 
 function openContactInfo() {
-    test
+    let contact = document.getElementById('testID');
+    contact.classList.add('contact-small-active');
+    contact.classList.add('contact-small-active:hover');
 }
