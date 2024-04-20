@@ -109,4 +109,6 @@ function getRandomColor() {
 }
 
 
-
+function openContactInfo() {
+    test
+}
