@@ -260,6 +260,14 @@ header {
   color: rgba(0, 0, 0, 1);
 }
 
+.contact-mail {
+  font-family: 'Inter';
+  font-size: 16px;
+  line-height: 19.2px;
+  font-weight: 400;
+  color: rgba(0, 124, 238, 1);
+}
+
 .parting-line {
   border: 1px solid rgba(209, 209, 209, 1);
   width: 352px;

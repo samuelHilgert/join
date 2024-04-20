@@ -60,3 +60,6 @@ let contacts = [
         color: ""
     }
 ];
+
+
+let profileCircleColors = ['teal', 'paleturquoise', 'violet', 'slategrey', 'darksalmon', 'orange', 'navy', 'indigo', 'lightpink', 'skyblue', 'forestgreen', 'tan', 'darkkhaki'];
