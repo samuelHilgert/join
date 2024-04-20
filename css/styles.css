@@ -248,10 +248,15 @@ header {
 }
 
 .contact-small:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+/*.contact-small:hover {
   background-color: rgba(42, 54, 71, 1);
   color: rgba(255, 255, 255, 1);
   cursor: pointer;
-}
+}*/ /* FOR CLICKED CONTACT ONLY */
 
 .contact-circle {
   border-radius: 50%;
@@ -320,7 +325,7 @@ header {
 }
 
 .contact-info {
-  width: 40%;
+  width: 500px;
   height: 364px;
   position: fixed;
   left: 750px;
@@ -330,9 +335,11 @@ header {
 }
 
 .contact-card-header {
-  width: 100%;
+  width: 500px;
   height: 120px;
   gap: 54px;
+  display: flex;
+  align-items: center;
 }
 
 .circle-big {
@@ -350,7 +357,6 @@ header {
 
 .contact-card-header-text {
   height: 88px;
-  width: 70%;
   font-family: 'Inter';
   font-size: 47px;
   font-weight: 500;
@@ -366,6 +372,13 @@ header {
   height: 24px;
   width: 24px;
   fill: rgba(42, 54, 71, 1);
+}
+
+.header-icons-wrapper:hover .contact-header-svg,
+.header-icons-wrapper:hover .contact-header-span {
+  fill: rgba(41, 171, 226, 1);
+  color: rgba(41, 171, 226, 1);
+  cursor: pointer;
 }
 
 .contact-header-span {
