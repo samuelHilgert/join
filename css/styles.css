@@ -228,11 +228,17 @@ header {
 }
 
 .contact-small {
-
+  height: 78px;
+  width: 352px;
+  gap: 35px;
+  padding: 15px 24px 15px 24px;
 }
 
 .contact-circle {
-  
+  border-radius: 50%;
+  background-color: orange;
+  height: 42px;
+  width: 42px;
 }
 
 .parting-line {
