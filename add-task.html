@@ -12,20 +12,20 @@
     <link rel="stylesheet" href="./css/assets.css" />
     <link rel="stylesheet" href="./css/styles.css" />
     <style>
-      .custom-input {
+      .input-dropdown {
         position: relative;
         display: inline-block;
       }
 
-      .custom-input input[type="text"] {
-        padding-right: 30px; /* Platz für das Bild einfügen */
-      }
-
-      .custom-input .dropdown-icon {
+      .dropdown-icon {
         position: absolute;
         top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
+        right: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        width: 20px;
         cursor: pointer;
       }
     </style>
@@ -77,14 +77,12 @@
             ></textarea>
           </div>
 
-          <div class="d_c_c_s gap-10 width-100 custom-input">
+          <div class="d_c_c_s gap-10 width-100 input-dropdown">
             <span>Assignet to</span>
-            <input class="input-style" type="email" placeholder="" />
-            <img
-              src="assets/img/arrow-dropdown.png"
-              alt="Arrow Down"
-              class="dropdown-icon"
-            />
+            <input class="input-style" type="text" placeholder="" />
+            <div class="dropdown-icon">
+              <img src="assets/img/arrow_drop_down.png" alt="Arrow Down" />
+            </div>
           </div>
         </div>
 
