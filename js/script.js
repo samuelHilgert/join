@@ -4,7 +4,8 @@
  */
 async function init() {
     await includeHTML();
-    setBackgroundcolorSidebarLinks();
+    // setBackgroundcolorSidebarLinks(); // FUNKTION FUNKTIONIERT NOCH NICHT //
+    setRandomColor(); 
     updateHTML(); // load tasks in board.html
     }
 
@@ -27,23 +28,3 @@ async function includeHTML() {
 }
 
 
-// TEST FÜR SIDEBAR LINKS BACKGROUNDCOLOR
-
-function setBackgroundcolorSidebarLinks() {
-    let currentPagePath = window.location.pathname;
-    document.querySelectorAll('.sidebar-links .sidebar-menu').forEach((link) => {
-        let isActive = new URL(link.href, document.baseURI).pathname === currentPagePath;
-        link.classList.toggle('sidebar-bg-focus', isActive);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    setBackgroundcolorSidebarLinks(); // Setzen der Hintergrundfarbe beim Laden der Seite
-
-    // Ereignislistener für Klicks auf die Sidebar-Links hinzufügen
-    document.querySelectorAll('.sidebar-links .sidebar-menu').forEach((link) => {
-        link.addEventListener('click', function() {
-            setBackgroundcolorSidebarLinks(); // Setzen der Hintergrundfarbe nach einem Klick
-        });
-    });
-});

@@ -142,6 +142,10 @@ body {
   padding-bottom: 80px;
 }
 
+.pad-top-100 {
+  padding-top: 100px;
+}
+
 .space-1 {
   height: 1px;
 }
@@ -196,6 +200,10 @@ body {
 
 .gap-10 {
   gap: 10px;
+}
+
+.gap-15 {
+  gap: 15px;
 }
 
 .gap-20 {
