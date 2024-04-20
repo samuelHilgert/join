@@ -320,12 +320,13 @@ header {
 }
 
 .contact-info {
-  width: 30%;
+  width: 40%;
   height: 364px;
   position: fixed;
   left: 750px;
   top: 311px;
   gap: 21px;
+  display: flex;
 }
 
 .contact-card-header {
@@ -345,6 +346,26 @@ header {
   font-family: 'Inter';
   font-size: 47px;
   font-weight: 500;
+}
+
+.contact-card-header-text {
+  height: 88px;
+  width: 70%;
+  font-family: 'Inter';
+  font-size: 47px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+}
+
+.contact-card-header-icons {
+  height: 24px;
+  margin-top: 8px;
+}
+
+.contact-header-svg {
+  height: 24px;
+  width: 24px;
+  fill: rgba(42, 54, 71, 1);
 }
 
 .add-task-form-container {
