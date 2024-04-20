@@ -94,7 +94,7 @@ function setRandomColor() {
             randomColor = getRandomColor();
         } while (randomColor === lastColor); // Schleife, bis eine neue Farbe gefunden wird
         circle.style.backgroundColor = randomColor;
-        lastColor = randomColor; // Aktualisiere die zuletzt ausgewählte Farbe
+        lastColor = randomColor; 
     });
 }
 
