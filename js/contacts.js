@@ -119,3 +119,36 @@ function openContactInfo() {
     contact.classList.add('contact-small-active:hover');
     // classlists need to be removed again when clicking on another contact
 }
+
+
+function renderContactList() {
+
+}
+
+
+/**
+ * This function adds new contacts to the contacts-array after sorting them in alphabetical order by using sort & localeCompare
+ * 
+ * @param {string} contact - function-internal placeholder for the contact to be added to the function
+ */
+function addContactToArray(contact) {
+    contacts.push(contact);
+    contacts.sort((a, b) => { 
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        
+        return nameA.localeCompare(nameB);
+    });
+}
+
+// CONTACT EXAMPLE FOR TESTING THE addContactToArray FUNCTION
+const newContact = {
+    name: "Xen Johnson",
+    mail: "xen.johnson@example.com",
+    phone: "+1234567890",
+    color: ""
+};
+
+
+// CONSOLE LOG FOR TESTING THE addContactToArray FUNCTION
+console.log(contacts);
