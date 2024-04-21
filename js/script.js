@@ -4,7 +4,7 @@
  */
 async function init() {
     await includeHTML();
-    renderSummary();
+    await renderSummary();
     addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
     renderContactList();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
