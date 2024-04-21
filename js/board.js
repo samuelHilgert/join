@@ -32,7 +32,7 @@ let todos = [{
 
 let currentDraggedElement;
 
-function updateHTML() {
+function renderBoardCards() {
     let todoCol = todos.filter(t => t['category'] == 'todoCol');
     let inProgress = todos.filter(t => t['category'] == 'inProgress');
     let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
@@ -74,7 +74,7 @@ function updateHTML() {
         document.getElementById('done').innerHTML += generateTodoHTML(element);
         updateProgressBar(elementId);
     }
-
+/*
     document.getElementById('label').innerHTML = '';
 
     for (let index = 0; index < label.length; index++) {
@@ -88,7 +88,7 @@ function updateHTML() {
         if (element['label'] === 'Technical Task') {
             document.getElementById('btnBoard').style.backgroundColor = 'rgba(31, 215, 193, 1)';
         }
-    }
+    }*/
 }
 
 function startDragging(id) {
@@ -135,7 +135,7 @@ function allowDrop(ev) {
 
 function moveTo(category) {
     todos[currentDraggedElement]['category'] = category;
-    updateHTML();
+    renderBoardCards();
 }
 
 function highlight(id) {
