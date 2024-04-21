@@ -1,4 +1,6 @@
 let users = [];
+let registerSuccess = false;
+let checkbox = false;
 
 /*
 async function loadUsers() {
@@ -9,45 +11,51 @@ async function loadUsers() {
     }
 }*/
 
-let registerSuccess = false;
-let checkbox = false;
-
 async function register() {
     registerBtn.disabled = true; // registerBtn ist die id vom button Absenden
-    let userPassword = document.getElementById('password').value;
-    let userConfirmPsassword = document.getElementById('confirmPassword').value;
+    checkboxClicked();
+}
+
+/*
+function checkboxClicked() {
+    if (checkbox === true) {
+
+        
+    } else {
+
+        showMessage();
+    }
+}
+*/
+
+function checkboxClicked() {
     if (signUpCheckbox.checked) {
         checkbox = true;
-        console.log('checkbox wurde geklickt ' + checkbox);
-
-        if (checkbox === true) {
-            if (userPassword === userConfirmPsassword) {
-                registerSuccess = true;
-                pushUserData();
-                // Weiterleitung zu login.html 
-                // windows.location.href = './login.html?msg=Du hast dich erfolgreich registriert' // queryParameter 
-                showMessage();
-                resetForm();
-            }
-            else {
-                registerBtn.disabled = false;
-                registerSuccess = false;
-                password.value = '';
-                confirmPassword.value = '';
-                showMessage();
-            }
-        } else {
-            showMessage();
-        }
-
+        signUpPasswordsMatched();
     } else {
-        checkbox = false;
-        console.log('checkbox wurde nicht geklickt ' + checkbox);
-        showMessage();
-        password.value = '';
-        confirmPassword.value = '';
-        registerBtn.disabled = false;
+        signUpErrorReset();
+        showSignUpMessage();
     }
+}
+    
+function signUpPasswordsMatched() {
+    if (password.value === confirmPassword.value) {
+        registerSuccess = true;
+        pushUserData();
+        showSignUpMessage();
+        resetSingUpForm();
+        setTimeout(backToLogin, 800);
+    }
+    else {
+        signUpErrorReset();
+        showSignUpMessage();
+    }
+}
+
+function signUpErrorReset() {
+    password.value = '';
+    confirmPassword.value = '';
+    registerBtn.disabled = false;
 }
 
 function pushUserData() {
@@ -56,14 +64,26 @@ function pushUserData() {
         email: email.value,
         password: password.value
     });
-        
-}
-    
     /*  
-    await setItem('users', JSON.stringify(users));
+    await setItem('users', JSON.stringify(users)); 
     */
-   
-function resetForm() {
+}
+
+function showSignUpMessage() {
+    let messageFormSignUp = document.getElementById('messageFormSignUp');
+    messageFormSignUp.style.display = 'flex';
+    if (registerSuccess === true) {
+        messageFormSignUp.innerHTML = 'You Signed Up successfully';
+    }
+    if (checkbox === false) {
+        messageFormSignUp.innerHTML = 'You must accept the privacy policy';
+    }
+    if (registerSuccess === false && checkbox === true) {
+        messageFormSignUp.innerHTML = 'The passwords do not match';
+    }
+}
+
+function resetSingUpForm() {
     signUpName.value = '';
     email.value = '';
     password.value = '';
@@ -73,21 +93,10 @@ function resetForm() {
     checkbox = false;
 }
 
-
-function showMessage() {
-    let messageFormSignUp = document.getElementById('messageFormSignUp');
-    if (registerSuccess === true) {
-        messageFormSignUp.style.display = 'flex';
-        messageFormSignUp.innerHTML = 'You Signed Up successfully';
-    }  
-    if (checkbox === false) {
-        messageFormSignUp.style.display = 'flex';
-        messageFormSignUp.innerHTML = 'You must accept the privacy policy';
-    }
-    if (registerSuccess === false && checkbox === true) {
-        messageFormSignUp.style.display = 'flex';
-        messageFormSignUp.innerHTML = 'The passwords do not match';
-        // messageFormSignUp.style.display = 'none';
-    }
-} 
-
+/**
+ * This function returns the user to login.html with a success message in the URL
+ * 
+ */
+function backToLogin() {
+    window.location.href = './login.html?msg=Du hast dich erfolgreich registriert'; // queryParameter 
+}
