@@ -2,6 +2,8 @@ let users = [];
 let registerSuccess = false;
 let checkbox = false;
 let emailExist = false;
+let messageDisplayTime = 2000;
+
 
 /**
  * This function loads all already registered users from remote server
@@ -33,7 +35,8 @@ async function checkboxClicked() {
         checkbox = true;
         await checkEmailExist();
     } else {
-        setTimeout(signUpErrorReset, 2000);
+        signUpErrorReset();
+        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
     }
 }
@@ -46,7 +49,8 @@ async function checkEmailExist() {
     if (users.some(user => user.email === registerEmail.value)) {
         emailExist = true;
         registerEmail.value = '';
-        setTimeout(signUpErrorReset, 2000);
+        signUpErrorReset();
+        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
     }
     else {
@@ -67,7 +71,8 @@ async function signUpPasswordsMatched() {
         setTimeout(backToLogin, 800);
     }
     else {
-        setTimeout(signUpErrorReset, 2000);
+        signUpErrorReset();
+        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
     }
 }
@@ -77,11 +82,18 @@ async function signUpPasswordsMatched() {
  * 
  */
 function signUpErrorReset() {
-    let messageFormSignUp = document.getElementById('messageFormSignUp');
-    messageFormSignUp.style.display = 'none';
     password.value = '';
     confirmPassword.value = '';
     registerBtn.disabled = false;
+}
+
+/**
+ * This function set message display to none
+ * 
+ */
+function messageDisplayNone() {
+    let messageFormSignUp = document.getElementById('messageFormSignUp');
+    messageFormSignUp.style.display = 'none';
 }
 
 /**
