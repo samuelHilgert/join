@@ -1,5 +1,4 @@
 // contacts = Array mit Testkontakten -> diese müssen später noch im Backend angelegt werden
-
 let contacts = [
     {
         name: "Anna Müller",
@@ -122,7 +121,26 @@ function openContactInfo() {
 
 
 function renderContactList() {
+    let contactList = document.getElementById('contactList');
+    contactList.innerHTML = '';
+    for (let i = 0; i < contacts.length; i++) {
+        const name = contacts[i]['name'];
+        const mail = contacts[i]['mail'];
+        contactList.innerHTML += renderContactListHTML(name, mail);
+    }
+}
 
+
+function renderContactListHTML(name, mail) {
+    return `<div class="contact-small" id="" onclick="openContactInfo()">
+    <div class="contact-circle d_f_c_c">
+        <div class="contact-circle-letters">AM</div>
+    </div>
+    <div class="contact-name-mail">
+        <div class="contact-name">${name}</div>
+        <div class="contact-mail">${mail}</div>
+    </div>
+</div>`;
 }
 
 
