@@ -1,6 +1,7 @@
 let users = [];
 let registerSuccess = false;
 let checkbox = false;
+let emailExist = false;
 
 /**
  * This function loads all already registered users from remote server
@@ -30,10 +31,26 @@ async function register() {
 async function checkboxClicked() {
     if (signUpCheckbox.checked) {
         checkbox = true;
-        await signUpPasswordsMatched();
+        await checkEmailExist();
     } else {
-        signUpErrorReset();
+        setTimeout(signUpErrorReset, 2000);
         showSignUpMessage();
+    }
+}
+
+/**
+ * This function checks whether email already exist
+ * 
+ */
+async function checkEmailExist() {
+    if (users.some(user => user.email === registerEmail.value)) {
+        emailExist = true;
+        registerEmail.value = '';
+        setTimeout(signUpErrorReset, 2000);
+        showSignUpMessage();
+    }
+    else {
+        await signUpPasswordsMatched();
     }
 }
 
@@ -50,7 +67,7 @@ async function signUpPasswordsMatched() {
         setTimeout(backToLogin, 800);
     }
     else {
-        signUpErrorReset();
+        setTimeout(signUpErrorReset, 2000);
         showSignUpMessage();
     }
 }
@@ -60,6 +77,8 @@ async function signUpPasswordsMatched() {
  * 
  */
 function signUpErrorReset() {
+    let messageFormSignUp = document.getElementById('messageFormSignUp');
+    messageFormSignUp.style.display = 'none';
     password.value = '';
     confirmPassword.value = '';
     registerBtn.disabled = false;
@@ -81,7 +100,7 @@ async function pushUserData() {
 function pushInArray() {
     users.push({
         name: signUpName.value,
-        email: email.value,
+        email: registerEmail.value,
         password: password.value
     });
 }
@@ -90,7 +109,6 @@ function pushInArray() {
  * The user data are passed on the remote server.
  * 
  */
-
 async function pushOnRemoteServer() {
     await setItem('users', JSON.stringify(users));
 }
@@ -111,6 +129,9 @@ function showSignUpMessage() {
     if (registerSuccess === false && checkbox === true) {
         messageFormSignUp.innerHTML = 'The passwords do not match';
     }
+    if (emailExist === true && checkbox === true) {
+        messageFormSignUp.innerHTML = 'This email already exists';
+    }
 }
 
 /**
@@ -119,7 +140,7 @@ function showSignUpMessage() {
  */
 function resetSingUpForm() {
     signUpName.value = '';
-    email.value = '';
+    registerEmail.value = '';
     password.value = '';
     confirmPassword.value = '';
     registerBtn.disabled = false;
