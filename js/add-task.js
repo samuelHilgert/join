@@ -63,7 +63,7 @@ function getPriorityFromButtonColor(button) {
 }
 
 // Funktion zum Einfärben des ausgewählten Buttons und Zurücksetzen der anderen Buttons
-function setPriority(prio) {
+function setPriority(prio = "medium-btn") {
   const buttons = document.querySelectorAll(".input-style.input-prio");
   buttons.forEach(function (btn) {
     btn.style.backgroundColor = ""; // Standardfarbe (keine Hintergrundfarbe)
