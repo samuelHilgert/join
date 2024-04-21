@@ -109,6 +109,10 @@ function getRandomColor() {
 }
 
 
+/**
+ * This function opens the detailed contact information by clicking on a contact in the contact list
+ * 
+ */
 function openContactInfo() {
     let contact = document.getElementById('testID');
     contact.classList.add('contact-small-active');
