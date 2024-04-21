@@ -17,8 +17,18 @@ function addTask() {
     category: category,
     subtask: [],
   };
-
   console.log(task.category);
+}
+
+function setPriority(prio) {
+  var button = document.getElementById(prio);
+  if (prio === "medium-btn") {
+    button.style.backgroundColor = "#FFA800"; // Hier änderst du die Hintergrundfarbe des Buttons
+  } else if (prio === "urgent-btn") {
+    button.style.backgroundColor = "#FF3D00";
+  } else if (prio === "low-btn") {
+    button.style.backgroundColor = "#7AE229";
+  }
 }
 
 function openDropdownContacts() {
