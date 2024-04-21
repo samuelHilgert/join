@@ -1,24 +1,66 @@
 let allTasks = [];
 
-function addTask() {
-  let title = document.getElementById("task-title").value;
-  let description = document.getElementById("task-description").value;
-  let assignedTo = document.getElementById("task-title").value;
-  let date = document.getElementById("task-date").value;
-  let prio = document.getElementById("task-date").value;
-  let category = document.getElementById("task-category").value;
+// Funktion zum Ermitteln der Priorität basierend auf der Hintergrundfarbe eines Buttons
+function getPriorityFromButtonColor(button) {
+  const backgroundColor = button.style.backgroundColor;
+  if (backgroundColor === "rgb(255, 168, 0)") {
+    return "medium";
+  } else if (backgroundColor === "rgb(255, 61, 0)") {
+    return "urgent";
+  } else if (backgroundColor === "rgb(122, 226, 41)") {
+    return "low";
+  } else {
+    return ""; // Standardwert, falls keine Priorität gefunden wird
+  }
+}
 
-  let task = {
+// Funktion zum Hinzufügen einer Aufgabe
+function addTask() {
+  const title = document.getElementById("task-title").value;
+  const description = document.getElementById("task-description").value;
+  const assignedTo = document.getElementById("task-title").value;
+  const date = document.getElementById("task-date").value;
+  const category = document.getElementById("task-category").value;
+
+  // Priorität basierend auf der Hintergrundfarbe der Buttons bestimmen
+  const mediumButton = document.getElementById("medium-btn");
+  const urgentButton = document.getElementById("urgent-btn");
+  const lowButton = document.getElementById("low-btn");
+
+  const prio =
+    getPriorityFromButtonColor(mediumButton) ||
+    getPriorityFromButtonColor(urgentButton) ||
+    getPriorityFromButtonColor(lowButton);
+
+  const task = {
     title: title,
     description: description,
     assignedTo: [],
     date: new Date(date).getTime(),
-    prio: [],
+    prio: prio,
     category: category,
     subtask: [],
   };
 
-  console.log(task.category);
+  allTasks.push(task); // Aufgabe zur Liste aller Aufgaben hinzufügen
+  console.log(task);
+}
+
+// Funktion zum Einfärben des ausgewählten Buttons und Zurücksetzen der anderen Buttons
+function setPriority(prio) {
+  const buttons = document.querySelectorAll(".input-style.input-prio");
+  buttons.forEach(function (btn) {
+    btn.style.backgroundColor = ""; // Standardfarbe (keine Hintergrundfarbe)
+  });
+
+  const button = document.getElementById(prio);
+  if (prio === "medium-btn") {
+    button.style.backgroundColor = "#FFA800";
+  } else if (prio === "urgent-btn") {
+    button.style.backgroundColor = "#FF3D00";
+  } else if (prio === "low-btn") {
+    button.style.backgroundColor = "#7AE229";
+  }
 }
 
 function openDropdownContacts() {
