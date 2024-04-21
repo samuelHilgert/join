@@ -160,3 +160,11 @@ function messageDisplayFormLogin() {
 function forwardToSummary() {
     window.location.href = `./summary.html?msg=Du hast dich erfolgreich angemeldet "${users[indexByEmail]['name']}"`; //queryParameter 
 }
+
+/**
+ * This function allows guest to login without registration before
+ * 
+ */
+function guestLogin() {
+    window.location.href = `./summary.html?msg=Du bist als Gast angemeldet`;
+}
