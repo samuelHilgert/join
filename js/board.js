@@ -135,7 +135,7 @@ function allowDrop(ev) {
 
 function moveTo(category) {
     todos[currentDraggedElement]['category'] = category;
-    updateHTML();
+    renderBoardCards();
 }
 
 function highlight(id) {
