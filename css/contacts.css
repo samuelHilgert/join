@@ -94,6 +94,11 @@
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
   }
+
+  .contact-name-mail-wrapper {
+    max-width: 70%;
+    line-break: auto;
+  }
   
   .contact-name {
     font-family: 'Inter';
