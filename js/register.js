@@ -2,14 +2,17 @@ let users = [];
 let registerSuccess = false;
 let checkbox = false;
 
-/*
+/**
+ * This function loads all already registered users from remote server
+ * 
+ */
 async function loadUsers() {
     try {
         users = JSON.parse(await getItem('users'));
-    } catch(e){
+    } catch (e) {
         console.error('Loading error:', e);
     }
-}*/
+}
 
 /**
  * This function checks the individual requirements for successful registration
@@ -17,31 +20,31 @@ async function loadUsers() {
  */
 async function register() {
     registerBtn.disabled = true; // registerBtn ist die id vom button Absenden
-    checkboxClicked();
+    await checkboxClicked();
 }
 
 /**
  * This function checks whether the checkbox was clicked by user
  * 
  */
-function checkboxClicked() {
+async function checkboxClicked() {
     if (signUpCheckbox.checked) {
         checkbox = true;
-        signUpPasswordsMatched();
+        await signUpPasswordsMatched();
     } else {
         signUpErrorReset();
         showSignUpMessage();
     }
 }
-    
+
 /**
  * This function checks whether the two passwords match
  * 
  */
-function signUpPasswordsMatched() {
+async function signUpPasswordsMatched() {
     if (password.value === confirmPassword.value) {
         registerSuccess = true;
-        pushUserData();
+        await pushUserData();
         showSignUpMessage();
         resetSingUpForm();
         setTimeout(backToLogin, 800);
@@ -66,9 +69,9 @@ function signUpErrorReset() {
  * If the login requirements are successful, the user data are passed to the "users" array.
  * 
  */
-function pushUserData() {
+async function pushUserData() {
     pushInArray();
-    // pushOnRemoteServer();
+    await pushOnRemoteServer();
 }
 
 /**
@@ -87,10 +90,10 @@ function pushInArray() {
  * The user data are passed on the remote server.
  * 
  */
-/*
-function pushOnRemoteServer() {
-    await setItem('users', JSON.stringify(users)); 
-}*/
+
+async function pushOnRemoteServer() {
+    await setItem('users', JSON.stringify(users));
+}
 
 /**
  * This function includes all output messages in the various cases of the register process.
