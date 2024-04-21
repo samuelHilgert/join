@@ -1,19 +1,13 @@
 /**
- * this is a function to initialize render functions 
+ * This is a function to initialize render functions 
  * 
  */
 async function init() {
     await includeHTML();
-    await renderSummary();
-    addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
-    renderContactList();
-    createUniqueContactId(); // adds a unique ID to very contact in contacts array
-    setRandomColor(); 
-    updateHTML(); // load tasks in board.html
-    }
+}
 
 /**
- * this is a function to include outsourced html elements
+ * This is a function to include outsourced html elements
  * 
  */
 async function includeHTML() {
@@ -29,5 +23,3 @@ async function includeHTML() {
         }
     }
 }
-
-

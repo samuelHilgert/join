@@ -98,6 +98,14 @@ let lastColor = null;
 let nextId = 1;
 
 
+function renderContacts() {
+addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
+renderContactList();
+createUniqueContactId(); // adds a unique ID to very contact in contacts array
+setRandomColor(); 
+}
+
+
 /**
  * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has the same backgroundcolor - in this case, another color is picked
  * 
