@@ -1,4 +1,5 @@
 let allTasks = [];
+let dropdownContact = [];
 
 // Funktion zum Hinzufügen einer Aufgabe
 function addTask() {
@@ -22,7 +23,7 @@ function addTask() {
   const task = {
     title: title,
     description: description,
-    assignedTo: "",
+    assignedTo: [dropdownContact],
     date: new Date(date).getTime(),
     prio: prio,
     category: category,
@@ -31,6 +32,7 @@ function addTask() {
 
   allTasks.push(task); // Aufgabe zur Liste aller Aufgaben hinzufügen
   console.log(task);
+  dropdownContact = [];
 }
 
 // Funktion zum Ermitteln der Priorität basierend auf der Hintergrundfarbe eines Buttons
@@ -75,7 +77,7 @@ function openDropdownContacts() {
     const element = contacts[i];
     dropdownDiv.innerHTML += `
     <div class="parting-line-dropdown"></div>
-    <div class="dropdown-contact" id='test${i}'onclick='chooseContact(${i})' >
+    <div class="dropdown-contact" id='test${i}'onclick='chooseContact(${i},"${element.name}")' >
       <div class="contact-circle d_f_c_c">
         <div class="contact-circle-letters">AM</div>
       </div>
@@ -86,7 +88,8 @@ function openDropdownContacts() {
     `;
   }
 }
-function chooseContact(i) {
+function chooseContact(i, name) {
   constElement = document.getElementById(`test${i}`);
   constElement.style.backgroundColor = "red";
+  dropdownContact.push(name);
 }
