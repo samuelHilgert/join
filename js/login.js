@@ -12,23 +12,23 @@ async function checkLoginAccess() {
 
 function iterateUsers() {
     if (successCheck()) {
-        console.log('Email UND Passwort korrekt');
         successEmail = true;
         successPassword = true;
         showLoginMessage();
+        // ZEIGE AN WAS NACH ERFOLGREICHEM LOGIN PASSIEREN SOLL 
     } else {
         if (emailNotFound()) {
             successEmail = false;
-            console.log('Email nicht gefunden');
             loginErrorReset();
             showLoginMessage();
+            setTimeout(messageDisplayFormLogin, messageDisplayTime);
         }
         if (onlyEmailCorrect()) {
             successEmail = true;
             successPassword = false;
-            console.log('Email korrekt ABER Passwort falsch');
             loginErrorReset();
             showLoginMessage();
+            setTimeout(messageDisplayFormLogin, messageDisplayTime);
         }
     }
 }
@@ -62,4 +62,13 @@ function showLoginMessage() {
     if (successEmail === true && successPassword === true) {
         messageFormLogin.innerHTML = 'login successfully';
     }
+}
+
+/**
+ * This function set message display to none
+ * 
+ */
+function messageDisplayFormLogin() {
+    let messageFormLogin = document.getElementById('messageFormLogin');
+    messageFormLogin.style.display = 'none';
 }
