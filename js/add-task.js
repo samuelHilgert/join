@@ -17,6 +17,7 @@ function addTask() {
   };
   allTasks.push(task);
   dropdownContact = [];
+  setItem("task", allTasks);
 }
 
 function readTaskInput() {
