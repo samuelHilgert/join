@@ -1,3 +1,27 @@
+let allTasks = [];
+
+function addTask() {
+  let title = document.getElementById("task-title").value;
+  let description = document.getElementById("task-description").value;
+  let assignedTo = document.getElementById("task-title").value;
+  let date = document.getElementById("task-date").value;
+  let prio = document.getElementById("task-date").value;
+  let category = document.getElementById("task-date").value;
+
+  let task = {
+    title: title,
+    description: description,
+    assignedTo: [],
+    date: new Date(date).getTime(),
+    prio: [],
+    category: [],
+    subtask: [],
+  };
+
+  allTasks.push(task);
+  console.log(task.date);
+}
+
 function openDropdownContacts() {
   let Dropdownmenu = document.getElementById("inputfield-dropdown");
   let dropdownArrow = document.getElementById("dropdown-arrow");
