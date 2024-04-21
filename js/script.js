@@ -4,8 +4,9 @@
  */
 async function init() {
     await includeHTML();
-    setRandomColor(); 
     addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
+    renderContactList();
+    setRandomColor(); 
     //updateHTML(); // load tasks in board.html
     }
 
