@@ -4,7 +4,8 @@ let contacts = [
         name: "Anna Müller",
         mail: "anna.mueller@strive.com",
         phone: "+43 789 878 566",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "Bernd Hofmann",
@@ -16,55 +17,64 @@ let contacts = [
         name: "Eva Grace",
         mail: "eg@marinaclub.com",
         phone: "+25 493448951",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "Frank Groß",
         mail: "groß@frank.de",
         phone: "+49 668463546",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "James Walker",
         mail: "jw@dreamlogistics.com",
         phone: "+49 64865155",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "Alex Maier",
         mail: "alex.maier@strive.com",
         phone: "+43 789 878 787",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "Leonie Maier",
         mail: "leonie.maier@abc-construct.com",
         phone: "+49 596 487 12",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "Max Baumgart",
         mail: "max@baumgart.de",
         phone: "+49 12 123 456",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "Olivia Shaun",
         mail: "os@health-co.com",
         phone: "+25 1648689446",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "Paul Lee",
         mail: "lee@lee-enterprises.com",
         phone: "+97 947621654",
-        color: ""
+        color: "",
+        id: ""
     },
     {
         name: "Volker Richter",
         mail: "richter@cv-systems.com",
         phone: "+63 349 555 479",
-        color: ""
+        color: "",
+        id: ""
     }
 ];
 
@@ -85,6 +95,7 @@ let profileCircleColors = [
 ];
 
 let lastColor = null;
+let nextId = 1;
 
 
 /**
@@ -111,6 +122,17 @@ function setRandomColor() {
 function getRandomColor() {
     let randomColor = Math.floor(Math.random() * profileCircleColors.length);
     return profileCircleColors[randomColor];
+}
+
+
+function createUniqueContactId() {
+    for (let i = 0; i < contacts.length; i++) {
+        if (!contacts[i]['id']) {
+            contacts[i]['id'] = nextId.toString();
+            nextId++;
+        }
+    }
+    console.log(contacts);
 }
 
 
@@ -198,7 +220,8 @@ const newContact = {
     name: "Xaver Johnson",
     mail: "x.johnson@example.com",
     phone: "+1234567890",
-    color: ""
+    color: "",
+    id: ""
 };
 
 

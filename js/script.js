@@ -6,6 +6,7 @@ async function init() {
     await includeHTML();
     addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
     renderContactList();
+    createUniqueContactId(); // adds a unique ID to very contact in contacts array
     setRandomColor(); 
     //updateHTML(); // load tasks in board.html
     }
