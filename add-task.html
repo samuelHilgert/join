@@ -65,27 +65,27 @@
           </div>
 
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
-            <span>Assignet to</span>
-            <div class="assignet-div">
-              <input
-                id="inputfield-dropdown"
-                class="input-style"
-                type="text"
-                placeholder=""
+            <span>Assigned to</span>
+            <input
+              oninput=""
+              id="task-subtask"
+              class="input-style input-login"
+              type="text"
+              placeholder="Select contacts to assign"
+            />
+
+            <div onclick="openDropdownContacts()" class="dropdown-icon">
+              <img
+                src="assets/img/arrow_drop_down.png"
+                alt="Arrow Down"
+                id="dropdown-arrow"
               />
-              <div onclick="openDropdownContacts()" class="dropdown-icon">
-                <img
-                  src="assets/img/arrow_drop_down.png"
-                  alt="Arrow Down"
-                  id="dropdown-arrow"
-                />
-              </div>
-              <div
-                id="dropdown-div"
-                class="d_c_c_fs"
-                style="display: none"
-              ></div>
             </div>
+            <div
+              id="dropdown-div"
+              class="subtask-div"
+              style="display: none"
+            ></div>
           </div>
         </div>
 
@@ -145,16 +145,23 @@
               <option value="technical_task">Technical Task</option>
             </select>
           </div>
+
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
             <span>Subtask</span>
             <input
+              id="task-subtask"
               class="input-style input-login"
               type="text"
               placeholder="Add new subtask"
             />
-            <div class="dropdown-icon">
-              <img src="assets/img/input-plus.png" alt="plus" />
+            <div id="dropdown-icon" class="dropdown-icon">
+              <img
+                onclick="changeIcons()"
+                src="assets/img/input-plus.png"
+                alt="plus"
+              />
             </div>
+            <div id="subtask-div" class="subtask-div"></div>
           </div>
         </div>
       </div>
@@ -166,9 +173,9 @@
         </div>
         <div class="d_f_c_c gap-15">
           <button class="clear-btn gap-10">
-            Clear<img src="assets/img/Vector.png" />
+            Clear<img src="assets/img/input-cross.png" />
           </button>
-          <button class="btn gap-10">
+          <button type="button" onclick="addTask()" class="btn gap-10">
             Create Task<img src="assets/img/check.png" />
           </button>
         </div>
