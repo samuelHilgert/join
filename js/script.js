@@ -8,7 +8,7 @@ async function init() {
     renderContactList();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
     setRandomColor(); 
-    //updateHTML(); // load tasks in board.html
+    updateHTML(); // load tasks in board.html
     }
 
 /**
