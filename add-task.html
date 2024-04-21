@@ -67,10 +67,11 @@
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
             <span>Assigned to</span>
             <input
+              oninput=""
               id="task-subtask"
               class="input-style input-login"
               type="text"
-              placeholder="Add new subtask"
+              placeholder="Select contacts to assign"
             />
 
             <div onclick="openDropdownContacts()" class="dropdown-icon">
@@ -153,10 +154,14 @@
               type="text"
               placeholder="Add new subtask"
             />
-            <div class="dropdown-icon">
-              <img src="assets/img/input-plus.png" alt="plus" />
+            <div id="dropdown-icon" class="dropdown-icon">
+              <img
+                onclick="changeIcons()"
+                src="assets/img/input-plus.png"
+                alt="plus"
+              />
             </div>
-            <div class="subtask-div"></div>
+            <div id="subtask-div" class="subtask-div"></div>
           </div>
         </div>
       </div>
@@ -168,9 +173,9 @@
         </div>
         <div class="d_f_c_c gap-15">
           <button class="clear-btn gap-10">
-            Clear<img src="assets/img/Vector.png" />
+            Clear<img src="assets/img/input-cross.png" />
           </button>
-          <button class="btn gap-10">
+          <button type="button" onclick="addTask()" class="btn gap-10">
             Create Task<img src="assets/img/check.png" />
           </button>
         </div>

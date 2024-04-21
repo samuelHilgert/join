@@ -3,6 +3,23 @@ let dropdownContact = [];
 
 // Funktion zum Hinzufügen einer Aufgabe
 function addTask() {
+  const taskInput = readTaskInput();
+  const prio = determinePriority();
+
+  const task = {
+    title: taskInput.title,
+    description: taskInput.description,
+    assignedTo: taskInput.assignedTo,
+    date: new Date(taskInput.date).getTime(),
+    prio: prio,
+    category: taskInput.category,
+    subtask: taskInput.subtask,
+  };
+  allTasks.push(task);
+  dropdownContact = [];
+}
+
+function readTaskInput() {
   const title = document.getElementById("task-title").value;
   const description = document.getElementById("task-description").value;
   const assignedTo = document.getElementById("task-title").value;
@@ -10,7 +27,17 @@ function addTask() {
   const category = document.getElementById("task-category").value;
   const subtask = document.getElementById("task-subtask").value;
 
-  // Priorität basierend auf der Hintergrundfarbe der Buttons bestimmen
+  return {
+    title: title,
+    description: description,
+    assignedTo: assignedTo,
+    date: date,
+    category: category,
+    subtask: subtask,
+  };
+}
+
+function determinePriority() {
   const mediumButton = document.getElementById("medium-btn");
   const urgentButton = document.getElementById("urgent-btn");
   const lowButton = document.getElementById("low-btn");
@@ -20,19 +47,7 @@ function addTask() {
     getPriorityFromButtonColor(urgentButton) ||
     getPriorityFromButtonColor(lowButton);
 
-  const task = {
-    title: title,
-    description: description,
-    assignedTo: [dropdownContact],
-    date: new Date(date).getTime(),
-    prio: prio,
-    category: category,
-    subtask: subtask,
-  };
-
-  allTasks.push(task); // Aufgabe zur Liste aller Aufgaben hinzufügen
-  console.log(task);
-  dropdownContact = [];
+  return prio;
 }
 
 // Funktion zum Ermitteln der Priorität basierend auf der Hintergrundfarbe eines Buttons
@@ -92,4 +107,19 @@ function chooseContact(i, name) {
   constElement = document.getElementById(`test${i}`);
   constElement.style.backgroundColor = "red";
   dropdownContact.push(name);
+}
+
+function changeIcons() {
+  let iconBox = document.getElementById("dropdown-icon");
+  iconBox.innerHTML = `
+  <img class='padding-10' src="assets/img/input-cross.png" alt="cross" />
+  <img onclick='addSubtask()' class='padding-10' src="assets/img/input-cross.png" alt="check" />
+  `;
+}
+
+function addSubtask() {
+  const subtask = document.getElementById("task-subtask").value;
+  const subtaskContainer = document.getElementById("subtask-div");
+  subtaskContainer.innerHTML += `<div><span>${subtask}</span></div>`;
+  console.log(subtask);
 }
