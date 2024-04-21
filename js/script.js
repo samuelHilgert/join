@@ -27,9 +27,3 @@ async function includeHTML() {
         }
     }
 }
-
-function disableSidebar() {
-    let headerSymbols = document.getElementById('headerSymbols');
-    headerSymbols.style.display = 'none';
-}
-
