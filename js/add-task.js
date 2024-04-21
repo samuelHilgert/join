@@ -6,7 +6,7 @@ function addTask() {
   let assignedTo = document.getElementById("task-title").value;
   let date = document.getElementById("task-date").value;
   let prio = document.getElementById("task-date").value;
-  let category = document.getElementById("task-date").value;
+  let category = document.getElementById("task-category").value;
 
   let task = {
     title: title,
@@ -14,12 +14,11 @@ function addTask() {
     assignedTo: [],
     date: new Date(date).getTime(),
     prio: [],
-    category: [],
+    category: category,
     subtask: [],
   };
 
-  allTasks.push(task);
-  console.log(task.date);
+  console.log(task.category);
 }
 
 function openDropdownContacts() {

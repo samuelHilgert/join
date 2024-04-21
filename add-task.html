@@ -126,16 +126,10 @@
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
             <span>Category<span style="color: red">*</span></span>
 
-            <select
-              class="input-style"
-              readonly
-              placeholder="select task category"
-            >
-              <option value="" disabled selected hidden>
-                Select task category
-              </option>
-              <option value="ed">User story</option>
-              <option value="rfdc">Technikal Task</option>
+            <select required id="task-category" class="input-style">
+              <option selected hidden>Select task category</option>
+              <option value="user_story">User Story</option>
+              <option value="technical_task">Technical Task</option>
             </select>
           </div>
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
