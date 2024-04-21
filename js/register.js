@@ -81,7 +81,7 @@ async function pushUserData() {
 function pushInArray() {
     users.push({
         name: signUpName.value,
-        email: email.value,
+        email: registerEmail.value,
         password: password.value
     });
 }
@@ -119,7 +119,7 @@ function showSignUpMessage() {
  */
 function resetSingUpForm() {
     signUpName.value = '';
-    email.value = '';
+    registerEmail.value = '';
     password.value = '';
     confirmPassword.value = '';
     registerBtn.disabled = false;

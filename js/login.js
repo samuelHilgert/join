@@ -1,55 +1,65 @@
+let successEmail = false;
+let successPassword = false;
+
 /**
  * This function is called when the login form is submitted, it checks whether the data matches the registration 
  * 
  */
-
-let successEmail = false;
-let successPassword = false;
-
 async function checkLoginAccess() {
     loginBtn.disabled = true; // registerBtn ist die id vom button Absenden
-    searchRegisterEmail();
-    searchRegisterPassword();
-    console.log('Email vorhanden: ' + successEmail);
-    console.log('Passwort vorhanden: ' + successEmail);
+    iterateUsers();
 }
 
-function searchRegisterEmail() {
-    for (let index = 0; index < users.length; index++) {
-        const usersEmail = users[index]['email'];
-        if (loginEmail.value === usersEmail) {
-            successEmail = true; 
+function iterateUsers() {
+    if (successCheck()) {
+        console.log('Email UND Passwort korrekt');
+        successEmail = true;
+        successPassword = true;
+        showLoginMessage();
+    } else {
+        if (emailNotFound()) {
+            successEmail = false;
+            console.log('Email nicht gefunden');
+            loginErrorReset();
+            showLoginMessage();
         }
-        else {
-            successEmail = false; 
+        if (onlyEmailCorrect()) {
+            successEmail = true;
+            successPassword = false;
+            console.log('Email korrekt ABER Passwort falsch');
+            loginErrorReset();
+            showLoginMessage();
         }
     }
 }
 
-function searchRegisterPassword() {
-    for (let index = 0; index < users.length; index++) {
-        const usersPassword = users[index]['password'];
-        if (loginPassword.value === usersPassword) {
-            successPassword = true; 
-        }
-        else {
-            successPassword = false; 
-        }
-    }
+function emailNotFound() {
+    return users.some(user => user.email !== loginEmail.value);
 }
 
-/*
+function successCheck() {
+    return users.some(user => user.email === loginEmail.value && user.password === loginPassword.value);
+}
+
+function onlyEmailCorrect() {
+    return users.some(user => user.email === loginEmail.value && user.password !== loginPassword.value);
+}
+
+function loginErrorReset() {
+    loginPassword.value = '';
+    loginBtn.disabled = false;
+}
+
 function showLoginMessage() {
     let messageFormLogin = document.getElementById('messageFormLogin');
     messageFormLogin.style.display = 'flex';
-    if (registerSuccess === true) {
-        messageFormLogin.innerHTML = 'You login was successfully';
+    if (successEmail === false && successPassword === false) {
+        messageFormLogin.innerHTML = 'email not found';
     }
-    if (checkbox === false) {
-        messageFormLogin.innerHTML = 'Your password is not correct!';
+    if (successPassword === false && successEmail === true) {
+        messageFormLogin.innerHTML = 'password is not correct!';
     }
-    if (registerSuccess === false && checkbox === true) {
-        messageFormLogin.innerHTML = 'The passwords do not match';
+    if (successEmail === true && successPassword === true) {
+        messageFormLogin.innerHTML = 'login successfully';
     }
 }
-*/
