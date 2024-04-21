@@ -169,7 +169,7 @@ function renderContactListHTML(firstLetter, firstLetterSurname, name, mail) {
         <div class="contact-circle d_f_c_c">
             <div class="contact-circle-letters">${firstLetter}${firstLetterSurname}</div>
         </div>
-        <div class="contact-name-mail">
+        <div class="contact-name-mail-wrapper">
             <div class="contact-name">${name}</div>
             <div class="contact-mail">${mail}</div>
         </div>
