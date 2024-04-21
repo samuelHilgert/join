@@ -1,19 +1,5 @@
 let allTasks = [];
 
-// Funktion zum Ermitteln der Priorität basierend auf der Hintergrundfarbe eines Buttons
-function getPriorityFromButtonColor(button) {
-  const backgroundColor = button.style.backgroundColor;
-  if (backgroundColor === "rgb(255, 168, 0)") {
-    return "medium";
-  } else if (backgroundColor === "rgb(255, 61, 0)") {
-    return "urgent";
-  } else if (backgroundColor === "rgb(122, 226, 41)") {
-    return "low";
-  } else {
-    return ""; // Standardwert, falls keine Priorität gefunden wird
-  }
-}
-
 // Funktion zum Hinzufügen einer Aufgabe
 function addTask() {
   const title = document.getElementById("task-title").value;
@@ -21,6 +7,7 @@ function addTask() {
   const assignedTo = document.getElementById("task-title").value;
   const date = document.getElementById("task-date").value;
   const category = document.getElementById("task-category").value;
+  const subtask = document.getElementById("task-subtask").value;
 
   // Priorität basierend auf der Hintergrundfarbe der Buttons bestimmen
   const mediumButton = document.getElementById("medium-btn");
@@ -35,15 +22,29 @@ function addTask() {
   const task = {
     title: title,
     description: description,
-    assignedTo: [],
+    assignedTo: "",
     date: new Date(date).getTime(),
     prio: prio,
     category: category,
-    subtask: [],
+    subtask: subtask,
   };
 
   allTasks.push(task); // Aufgabe zur Liste aller Aufgaben hinzufügen
   console.log(task);
+}
+
+// Funktion zum Ermitteln der Priorität basierend auf der Hintergrundfarbe eines Buttons
+function getPriorityFromButtonColor(button) {
+  const backgroundColor = button.style.backgroundColor;
+  if (backgroundColor === "rgb(255, 168, 0)") {
+    return "medium";
+  } else if (backgroundColor === "rgb(255, 61, 0)") {
+    return "urgent";
+  } else if (backgroundColor === "rgb(122, 226, 41)") {
+    return "low";
+  } else {
+    return ""; // Standardwert, falls keine Priorität gefunden wird
+  }
 }
 
 // Funktion zum Einfärben des ausgewählten Buttons und Zurücksetzen der anderen Buttons
@@ -74,7 +75,7 @@ function openDropdownContacts() {
     const element = contacts[i];
     dropdownDiv.innerHTML += `
     <div class="parting-line-dropdown"></div>
-    <div class="dropdown-contact">
+    <div class="dropdown-contact" id='test${i}'onclick='chooseContact(${i})' >
       <div class="contact-circle d_f_c_c">
         <div class="contact-circle-letters">AM</div>
       </div>
@@ -84,4 +85,8 @@ function openDropdownContacts() {
     </div>
     `;
   }
+}
+function chooseContact(i) {
+  constElement = document.getElementById(`test${i}`);
+  constElement.style.backgroundColor = "red";
 }
