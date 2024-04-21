@@ -132,15 +132,17 @@ function renderContactList() {
 
 
 function renderContactListHTML(name, mail) {
-    return `<div class="contact-small" id="" onclick="openContactInfo()">
-    <div class="contact-circle d_f_c_c">
-        <div class="contact-circle-letters">AM</div>
+    return `
+    <div class="contact-small" id="" onclick="openContactInfo()">
+        <div class="contact-circle d_f_c_c">
+            <div class="contact-circle-letters">AM</div>
+        </div>
+        <div class="contact-name-mail">
+            <div class="contact-name">${name}</div>
+            <div class="contact-mail">${mail}</div>
+        </div>
     </div>
-    <div class="contact-name-mail">
-        <div class="contact-name">${name}</div>
-        <div class="contact-mail">${mail}</div>
-    </div>
-</div>`;
+    `;
 }
 
 
