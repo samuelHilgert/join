@@ -1,7 +1,7 @@
 .input-style {
   width: 100%;
   height: auto;
-  padding: 22px 42px;
+  padding: 20px 24px;
   box-sizing: border-box;
   border-radius: 10px;
   border: 1px solid lightgray;
@@ -60,7 +60,7 @@
 
 .dropdown-icon {
   position: absolute;
-  top: 50%;
+  top: 40px;
   right: 12px;
   display: flex;
   justify-content: center;
