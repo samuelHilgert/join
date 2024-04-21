@@ -31,6 +31,12 @@ let contacts = [
         color: ""
     },
     {
+        name: "Alex Maier",
+        mail: "alex.maier@strive.com",
+        phone: "+43 789 878 787",
+        color: ""
+    },
+    {
         name: "Leonie Maier",
         mail: "leonie.maier@abc-construct.com",
         phone: "+49 596 487 12",
@@ -120,14 +126,38 @@ function openContactInfo() {
 }
 
 
+/**
+ * This function renders the contact list - therefor it iterates trough the contacts-array and checks, 
+ * if there is more than one name with the same first letter.
+ * In this case, the renderLetterAndPartingLine function is just rendered once for every first letter and not for every single contact
+ * 
+ */
 function renderContactList() {
     let contactList = document.getElementById('contactList');
     contactList.innerHTML = '';
+    let previousFirstLetter = null;
     for (let i = 0; i < contacts.length; i++) {
         const name = contacts[i]['name'];
         const mail = contacts[i]['mail'];
+        const firstLetter = name.charAt(0);
+        if (firstLetter !== previousFirstLetter) {
+            contactList.innerHTML += renderLetterAndPartinglineHTML(firstLetter);
+            previousFirstLetter = firstLetter;
+        }
         contactList.innerHTML += renderContactListHTML(name, mail);
     }
+}
+
+
+function renderLetterAndPartinglineHTML(firstLetter) {
+    return `
+    <div id="">
+        <div class="contact-letter gap-8">
+            <p>${firstLetter}</p>
+        </div>
+        <div class="parting-line"></div>
+    </div>
+    `;
 }
 
 
@@ -163,8 +193,8 @@ function addContactToArray(contact) {
 
 // CONTACT EXAMPLE FOR TESTING THE addContactToArray FUNCTION
 const newContact = {
-    name: "Xen Johnson",
-    mail: "xen.johnson@example.com",
+    name: "Xaver Johnson",
+    mail: "x.johnson@example.com",
     phone: "+1234567890",
     color: ""
 };
