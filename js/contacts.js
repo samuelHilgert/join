@@ -71,13 +71,13 @@ let contacts = [
 let profileCircleColors = [
     'teal',
     'lightseagreen',
-    'violet',
+    'purple',
     'slategrey',
     'crimson',
     'orange',
     'navy',
     'indigo',
-    'lightpink',
+    'fuchsia',
     'skyblue',
     'forestgreen',
     'tan',
@@ -127,9 +127,10 @@ function openContactInfo() {
 
 
 /**
- * This function renders the contact list - therefor it iterates trough the contacts-array and checks, 
+ * This function renders the contact list - therefore it iterates trough the contacts-array and checks, 
  * if there is more than one name with the same first letter.
- * In this case, the renderLetterAndPartingLine function is just rendered once for every first letter and not for every single contact
+ * In this case, the renderLetterAndPartingLine function is just rendered once for every first letter and not for every single contact.
+ * On top of that, the functions also gets the first letter of the surname with the help of split(), parting the names in the array after the blank space 
  * 
  */
 function renderContactList() {
@@ -140,11 +141,12 @@ function renderContactList() {
         const name = contacts[i]['name'];
         const mail = contacts[i]['mail'];
         const firstLetter = name.charAt(0);
+        const firstLetterSurname = name.split(' ')[1].charAt(0);
         if (firstLetter !== previousFirstLetter) {
             contactList.innerHTML += renderLetterAndPartinglineHTML(firstLetter);
             previousFirstLetter = firstLetter;
         }
-        contactList.innerHTML += renderContactListHTML(name, mail);
+        contactList.innerHTML += renderContactListHTML(firstLetter, firstLetterSurname, name, mail);
     }
 }
 
@@ -161,11 +163,11 @@ function renderLetterAndPartinglineHTML(firstLetter) {
 }
 
 
-function renderContactListHTML(name, mail) {
+function renderContactListHTML(firstLetter, firstLetterSurname, name, mail) {
     return `
     <div class="contact-small" id="" onclick="openContactInfo()">
         <div class="contact-circle d_f_c_c">
-            <div class="contact-circle-letters">AM</div>
+            <div class="contact-circle-letters">${firstLetter}${firstLetterSurname}</div>
         </div>
         <div class="contact-name-mail">
             <div class="contact-name">${name}</div>
