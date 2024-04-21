@@ -16,31 +16,38 @@ async function register() {
     registerBtn.disabled = true; // registerBtn ist die id vom button Absenden
     let userPassword = document.getElementById('password').value;
     let userConfirmPsassword = document.getElementById('confirmPassword').value;
-    if (signUpCheckbox) {
+    if (signUpCheckbox.checked) {
         checkbox = true;
-    }
+        console.log('checkbox wurde geklickt ' + checkbox);
 
-    if (checkbox === true) {
-        if (userPassword === userConfirmPsassword) {
-            registerSuccess = true;
-            pushUserData();
-            // Weiterleitung zu login.html 
-            // windows.location.href = './login.html?msg=Du hast dich erfolgreich registriert' // queryParameter 
+        if (checkbox === true) {
+            if (userPassword === userConfirmPsassword) {
+                registerSuccess = true;
+                pushUserData();
+                // Weiterleitung zu login.html 
+                // windows.location.href = './login.html?msg=Du hast dich erfolgreich registriert' // queryParameter 
+                showMessage();
+                resetForm();
+            }
+            else {
+                registerBtn.disabled = false;
+                registerSuccess = false;
+                password.value = '';
+                confirmPassword.value = '';
+                showMessage();
+            }
+        } else {
             showMessage();
-            resetForm();
         }
-        else {
-            registerBtn.disabled = false;
-            registerSuccess = false;
-            password.value = '';
-            confirmPassword.value = '';
-            showMessage();
-        }
+
     } else {
         checkbox = false;
+        console.log('checkbox wurde nicht geklickt ' + checkbox);
         showMessage();
+        password.value = '';
+        confirmPassword.value = '';
+        registerBtn.disabled = false;
     }
-
 }
 
 function pushUserData() {
@@ -49,11 +56,13 @@ function pushUserData() {
         email: email.value,
         password: password.value
     });
+        
+}
+    
     /*  
     await setItem('users', JSON.stringify(users));
     */
-}
-
+   
 function resetForm() {
     signUpName.value = '';
     email.value = '';
@@ -63,6 +72,7 @@ function resetForm() {
     registerSuccess = false;
     checkbox = false;
 }
+
 
 function showMessage() {
     let messageFormSignUp = document.getElementById('messageFormSignUp');
@@ -79,4 +89,5 @@ function showMessage() {
         messageFormSignUp.innerHTML = 'The passwords do not match';
         // messageFormSignUp.style.display = 'none';
     }
-}
+} 
+
