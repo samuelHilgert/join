@@ -8,14 +8,14 @@
     <title>Sign Up</title>
     <script src="./js/script.js"></script>
     <script src="./js/register.js"></script>
-    <!-- <script src="./js/storage.js"></script> -->
+    <script src="./js/storage.js"></script>
     <link rel="stylesheet" href="./css/standard.css">
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/assets.css">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
-<!-- onload="loadUsers()"  -->
-<body class="d_c_se_c pad-x-80 gap-30 pad-y-70" >
+
+<body class="d_c_se_c pad-x-80 gap-30 pad-y-70" onload="loadUsers()">
     <div class="topline">
         <div><img class="logo" src="./assets/img/logo.svg" alt=""></div>
     </div>
@@ -34,15 +34,15 @@
         <div class="space-30"></div>
         <form class="form-sign-up d_c_c_c gap-50 pad-x-40 pad-r-80" onsubmit="register(); return false;">
             <div class="form-div d_c_c_c gap-20">
-                <input class="input-style input-name" type="name" id="signUpName" placeholder="Name" required>
-                <input class="input-style input-email" type="email" id="email" placeholder="Email" required>
-                <input class="input-style input-password" type="password" id="password" placeholder="Password" required>
-                <input class="input-style input-password" type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <input class="input-style input-name" type="name" id="signUpName" placeholder="Name" pattern="[a-zA-Z]{3,} [a-zA-Z]{3,}" title="Vorname und Nachname müssen je aus mindestens 3 Buchstaben bestehen" required>
+                <input class="input-style input-email" type="email" id="registerEmail" placeholder="Email" required>
+                <input class="input-style input-password" type="password" id="password" minlength="5" placeholder="Password" required>
+                <input class="input-style input-password" type="password" id="confirmPassword" minlength="5" placeholder="Confirm Password" required>
             </div>
 
             <div class="d_f_c_c gap-20">
                 <input type="checkbox" id="signUpCheckbox" name="signUpCheckbox">
-                <label for="checkbox">I accept the <a class="a-style" href="./privacy-policy.html" target="_blank">Privacy Policy</a></label>
+                <label for="signUpCheckbox">I accept the <a class="a-style" href="./privacy-policy.html" target="_blank">Privacy Policy</a></label>
             </div>
             <div class="d_f_c_c gap-20">
                 <button class="btn" id="registerBtn">Log in</button>
