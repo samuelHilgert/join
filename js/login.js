@@ -1,5 +1,6 @@
 let successEmail = false;
 let successPassword = false;
+let indexByEmail;
 
 /**
  * This function is called when the login form is submitted, it checks whether the data matches the registration 
@@ -14,8 +15,11 @@ function iterateUsers() {
     if (successCheck()) {
         successEmail = true;
         successPassword = true;
+        indexByEmail = getUserId(loginEmail.value);
+        let userId = getUserId();
+        console.log(userId);
         showLoginMessage();
-        // ZEIGE AN WAS NACH ERFOLGREICHEM LOGIN PASSIEREN SOLL 
+        setTimeout(forwardToSummary, messageDisplayTime);
     } else {
         if (emailNotFound()) {
             successEmail = false;
@@ -45,6 +49,11 @@ function onlyEmailCorrect() {
     return users.some(user => user.email === loginEmail.value && user.password !== loginPassword.value);
 }
 
+function getUserId(loggedEmail) {
+    const index = users.findIndex(user => user.email === loggedEmail);
+    return index;
+}
+
 function loginErrorReset() {
     loginPassword.value = '';
     loginBtn.disabled = false;
@@ -71,4 +80,12 @@ function showLoginMessage() {
 function messageDisplayFormLogin() {
     let messageFormLogin = document.getElementById('messageFormLogin');
     messageFormLogin.style.display = 'none';
+}
+
+/**
+ * This function forwarding the user to summary.html with a success message in the URL
+ * 
+ */
+function forwardToSummary() {
+    window.location.href = `./summary.html?msg=Du hast dich erfolgreich angemeldet "${users[indexByEmail]['name']}"`; //queryParameter 
 }
