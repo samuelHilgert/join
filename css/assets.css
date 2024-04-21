@@ -303,3 +303,9 @@ li {
   justify-content: center;
   align-items: center;
 }
+
+#messageFormLogin {
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
