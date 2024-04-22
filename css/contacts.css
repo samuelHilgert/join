@@ -1,16 +1,18 @@
+.contact-page-wrapper {
+    display: flex;
+}
+
 .contact-wrapper {
-    position: fixed;
+    margin: 0 0 0 232px;
     width: 456px;
     height: calc(100vh - 96px);
-    top: 96px;
-    left: 232px;
     background-color: rgba(255, 255, 255, 1);
     box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
     overflow-y: scroll;
     scrollbar-color: rgba(168, 168, 168, 1) rgba(255, 255, 255, 1);
     scrollbar-width: thin;
     overflow-x: hidden;
-  }
+}
   
   .contact-btn-wrapper {
     width: 456px;
@@ -122,11 +124,9 @@
   }
   
   .contact-right {
-    width: 580px;
+    width: auto;
     height: 73px;
-    position: fixed;
-    top: 206px;
-    left: 743px;
+    margin: 110px 0 0 55px;
   }
   
   .contact-right-text-big {
@@ -152,7 +152,7 @@
   }
   
   .contact-info {
-    width: 50vw; /* HIER ABCHECKEN*/
+    width: auto; /* HIER ABCHECKEN*/
     height: 364px;
     position: fixed;
     left: 750px;
