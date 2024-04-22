@@ -1,5 +1,6 @@
 let allTasks = [];
 let dropdownContact = [];
+let subtasks = [];
 
 // Funktion zum Hinzufügen einer Aufgabe
 function addTask() {
@@ -13,7 +14,7 @@ function addTask() {
     date: new Date(taskInput.date).getTime(),
     prio: prio,
     category: taskInput.category,
-    subtask: taskInput.subtask,
+    subtask: subtasks,
   };
   allTasks.push(task);
   dropdownContact = [];
@@ -32,7 +33,6 @@ function readTaskInput() {
     description: description,
     date: date,
     category: category,
-    subtask: subtask,
   };
 }
 
@@ -120,17 +120,22 @@ function changeIcons() {
 }
 
 function addSubtask() {
-  const subtask = document.getElementById("subtask").value;
-  const subtaskContainer = document.getElementById("subtask-div");
-  subtaskContainer.innerHTML += `
-      <div class='d_f_sb_c pad-x-10'>
-          <span>${subtask}</span>
-          <div class='d_f_c_c gap-5'>
-              <img src="assets/img/pen_dark.svg" alt="pen" onclick="editSubtask(this)" />
-              <img src="assets/img/trash_dark.svg" alt="trash" onclick="deleteSubtask(this)" />
+  const subtaskInput = document.getElementById("subtask");
+  const subtaskValue = subtaskInput.value.trim(); // Trimmen Sie den Wert, um führende und nachfolgende Leerzeichen zu entfernen
+  if (subtaskValue !== "") {
+    subtasks.push(subtaskValue);
+    const subtaskContainer = document.getElementById("subtask-div");
+    subtaskContainer.innerHTML += `
+          <div class='d_f_sb_c pad-x-10'>
+              <span>${subtaskValue}</span>
+              <div class='d_f_c_c gap-5'>
+                  <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
+                  <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(this)" />
+              </div>
           </div>
-      </div>
-  `;
+      `;
+    subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
+  }
 }
 
 function editSubtask(element) {
