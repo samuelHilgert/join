@@ -152,7 +152,7 @@
   }
   
   .contact-info {
-    width: 500px;
+    width: 50vw; /* HIER ABCHECKEN*/
     height: 364px;
     position: fixed;
     left: 750px;
@@ -163,7 +163,6 @@
   }
   
   .contact-card-header {
-    width: 500px;
     height: 120px;
     gap: 54px;
     display: flex;
@@ -171,8 +170,8 @@
   }
   
   .circle-big {
-    width: 120px;
-    height: 120px;
+    width: 120px !important;
+    height: 120px !important;
     border-radius: 50%;
     border: 3px solid rgba(255, 255, 255, 1);
     background-color: teal;
@@ -184,11 +183,17 @@
   }
   
   .contact-card-header-text {
-    height: 88px;
+    height: auto;
     font-family: 'Inter';
     font-size: 47px;
     font-weight: 500;
     color: rgba(0, 0, 0, 1);
+  }
+
+  .contact-card-header-text-span {
+    width: 100%;
+    line-break: auto;
+    display: flex;
   }
   
   .contact-card-header-icons {
