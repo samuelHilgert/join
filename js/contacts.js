@@ -104,10 +104,10 @@ let nextId = 1;
 
 
 function renderContacts() {
-addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
-createUniqueContactId(); // adds a unique ID to very contact in contacts array
-renderContactList();
-setRandomColor(); 
+    addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
+    createUniqueContactId(); // adds a unique ID to very contact in contacts array
+    renderContactList();
+    setRandomColor();
 }
 
 
@@ -123,7 +123,7 @@ function setRandomColor() {
             randomColor = getRandomColor();
         } while (randomColor === lastColor); // Schleife, bis eine neue Farbe gefunden wird
         circle.style.backgroundColor = randomColor;
-        lastColor = randomColor; 
+        lastColor = randomColor;
     });
 }
 
@@ -192,16 +192,31 @@ function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) 
 
 
 /**
+ * this function combines all elements with the css class "contact-small" in the variable contacts. 
+ * Then a loop runs through contacts, where contact is a temporary variable that represents each individual element in the contacts list. 
+ * For each individual element in contacts, the two specified css-classes are removed 
+ * 
+ */
+function removeActiveClasslist() {
+    let contacts = document.querySelectorAll('.contact-small');
+    contacts.forEach(contact => {
+        contact.classList.remove('contact-small-active');
+        contact.classList.remove('contact-small-active:hover');
+    });
+}
+
+
+/**
  * This function opens the detailed contact information by clicking on a contact in the contact list
  * 
  * @param {string} contactId - ID of the clicked contact
  * 
  */
 function openContactInfo(contactId) {
+    removeActiveClasslist();
     let contact = document.getElementById(contactId);
     contact.classList.add('contact-small-active');
     contact.classList.add('contact-small-active:hover');
-    // classlists need to be removed again when clicking on another contact
 }
 
 
@@ -212,10 +227,10 @@ function openContactInfo(contactId) {
  */
 function addContactToArray(contact) {
     contacts.push(contact);
-    contacts.sort((a, b) => { 
+    contacts.sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
-        
+
         return nameA.localeCompare(nameB);
     });
 }
