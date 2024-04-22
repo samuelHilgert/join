@@ -42,7 +42,6 @@ select {
   height: 7rem;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: white;
 }
 
 .padding-10 {

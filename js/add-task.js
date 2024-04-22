@@ -9,7 +9,7 @@ function addTask() {
   const task = {
     title: taskInput.title,
     description: taskInput.description,
-    assignedTo: taskInput.assignedTo,
+    assignedTo: dropdownContact,
     date: new Date(taskInput.date).getTime(),
     prio: prio,
     category: taskInput.category,
@@ -17,20 +17,19 @@ function addTask() {
   };
   allTasks.push(task);
   dropdownContact = [];
+  setItem("task", allTasks);
 }
 
 function readTaskInput() {
   const title = document.getElementById("task-title").value;
   const description = document.getElementById("task-description").value;
-  const assignedTo = document.getElementById("task-title").value;
   const date = document.getElementById("task-date").value;
   const category = document.getElementById("task-category").value;
-  const subtask = document.getElementById("task-subtask").value;
+  const subtask = document.getElementById("subtask").value;
 
   return {
     title: title,
     description: description,
-    assignedTo: assignedTo,
     date: date,
     category: category,
     subtask: subtask,
@@ -65,7 +64,7 @@ function getPriorityFromButtonColor(button) {
 }
 
 // Funktion zum Einfärben des ausgewählten Buttons und Zurücksetzen der anderen Buttons
-function setPriority(prio) {
+function setPriority(prio = "medium-btn") {
   const buttons = document.querySelectorAll(".input-style.input-prio");
   buttons.forEach(function (btn) {
     btn.style.backgroundColor = ""; // Standardfarbe (keine Hintergrundfarbe)
@@ -118,7 +117,7 @@ function changeIcons() {
 }
 
 function addSubtask() {
-  const subtask = document.getElementById("task-subtask").value;
+  const subtask = document.getElementById("subtask").value;
   const subtaskContainer = document.getElementById("subtask-div");
   subtaskContainer.innerHTML += `<div><span>${subtask}</span></div>`;
   console.log(subtask);
