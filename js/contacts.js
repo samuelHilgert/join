@@ -195,12 +195,12 @@ function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) 
 }
 
 
-function renderContactInformationHTML(firstLetter, firstLetterSurname, name, mail, phone) {
+function renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, mail, phone) {
     return `
     <div class="contact-card-header">
-        <div class="circle-big d_f_c_c">${firstLetter}${firstLetterSurname}</div>
+        <div class="circle-big d_f_c_c" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
             <div class="contact-card-header-text gap-8">
-                Anna Müller
+                ${name}
             <div class="d_f_fs_c contact-card-header-icons gap-30">
                 <div class="d_f_c_c gap-8 header-icons-wrapper">
                     <svg class="contact-header-svg" xmlns="http://www.w3.org/2000/svg">
@@ -223,11 +223,11 @@ function renderContactInformationHTML(firstLetter, firstLetterSurname, name, mai
     <div class="mail-phone-wrapper gap-22">
         <div class="gap-15 mail-phone-wrapper">
             <span class="span-thick">Email</span>
-            <span class="contact-mail">anna.mueller@strive.com</span>
+            <span class="contact-mail">${mail}</span>
         </div>
         <div class="gap-15 mail-phone-wrapper">
             <span class="span-thick">Phone</span>
-            <span>+43 789 878 566</span>
+            <span>${phone}</span>
         </div>
     </div>
     `;
@@ -258,12 +258,18 @@ function removeActiveClasslist() {
  * 
  */
 function openContactInfo(contactId) {
-    let contactInfo = document.getElementById('contactInfo');
-    contactInfo.innerHTML = renderContactInformationHTML(firstLetter, firstLetterSurname, name, mail, phone);
-    removeActiveClasslist();
-    let contact = document.getElementById(contactId);
-    contact.classList.add('contact-small-active');
-    contact.classList.add('contact-small-active:hover');
+    let contact = contacts.find(contact => contact['id'] === contactId)
+    if (contact) {
+        const { name, mail, phone, color } = contact;
+        const firstLetter = name.charAt(0);
+        const firstLetterSurname = name.split(' ')[1].charAt(0);
+        let contactInfo = document.getElementById('contactInfo');
+        contactInfo.innerHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, mail, phone);
+        removeActiveClasslist();
+        let contactElement = document.getElementById(contactId);
+    contactElement.classList.add('contact-small-active');
+    contactElement.classList.add('contact-small-active:hover');
+    }
 }
 
 
