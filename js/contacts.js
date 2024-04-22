@@ -207,7 +207,9 @@ function removeActiveClasslist() {
 
 
 /**
- * This function opens the detailed contact information by clicking on a contact in the contact list
+ * This function opens the detailed contact information by clicking on a contact in the contact list 
+ * and adds two css-classes to the clicked element.
+ * Before doing so, the removeActiveClasslist function is executed.
  * 
  * @param {string} contactId - ID of the clicked contact
  * 
