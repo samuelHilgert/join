@@ -122,11 +122,29 @@ function changeIcons() {
 function addSubtask() {
   const subtask = document.getElementById("subtask").value;
   const subtaskContainer = document.getElementById("subtask-div");
-  subtaskContainer.innerHTML += `<div class='d_f_sb_c pad-x-10'><span>${subtask}</span>
-  <div class='d_f_c_c gap-5'>
-  <img src="assets/img/pen_dark.svg" alt="pen" />
-  <img src="assets/img/trash_dark.svg" alt="trash" /></div></div>`;
-  console.log(subtask);
+  subtaskContainer.innerHTML += `
+      <div class='d_f_sb_c pad-x-10'>
+          <span>${subtask}</span>
+          <div class='d_f_c_c gap-5'>
+              <img src="assets/img/pen_dark.svg" alt="pen" onclick="editSubtask(this)" />
+              <img src="assets/img/trash_dark.svg" alt="trash" onclick="deleteSubtask(this)" />
+          </div>
+      </div>
+  `;
+}
+
+function editSubtask(element) {
+  const subtaskText = element.parentNode.previousElementSibling;
+  const newText = prompt("Edit Subtask:", subtaskText.textContent);
+  if (newText !== null) {
+    subtaskText.textContent = newText;
+  }
+}
+
+function deleteSubtask(element) {
+  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskItem = element.parentNode.parentNode;
+  subtaskContainer.removeChild(subtaskItem);
 }
 
 function clearSubtaskInput() {}
