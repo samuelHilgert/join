@@ -47,3 +47,14 @@ select {
 .padding-10 {
   padding: 5px;
 }
+
+.width-440 {
+  width: 440px;
+}
+.urgent-btn-clicked {
+  padding: 20px 10px;
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  font-weight: 800;
+}
