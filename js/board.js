@@ -148,6 +148,7 @@ function removeHighlight(id) {
 
 function openBoardTaskPopup(elementId) {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
+    document.body.style.overflow = 'hidden'; 
     boardTaskPopup.style.display = 'flex';
     renderBoardTaskPopupContent(elementId);
 }
@@ -155,6 +156,7 @@ function openBoardTaskPopup(elementId) {
 function closeBoardTaskPopup() {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
     boardTaskPopup.style.display = 'none';
+    document.body.style.overflow = 'scroll'; 
 }
 
 
