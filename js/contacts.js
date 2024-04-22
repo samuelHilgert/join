@@ -91,26 +91,42 @@ let profileCircleColors = [
     'skyblue',
     'forestgreen',
     'tan',
-    'green'
+    'green',
+    'blue',
+    'indianred',
+    'seagreen',
+    'lightsteelblue',
+    'cadetblue'
 ];
 
-let lastColor = null;
 let nextId = 1;
 
 
+function renderContacts() {
+    addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
+    createUniqueContactId(); // adds a unique ID to very contact in contacts array
+    renderContactList();
+    setRandomColor();
+}
+
+
 /**
- * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has the same backgroundcolor - in this case, another color is picked
+ * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has 
+ * the same backgroundcolor - in this case, another color is picked. 
+ * The function also adds the randomly selected color to the contacts array.
  * 
  */
 function setRandomColor() {
+    let lastColor = null;
     let contactCircles = document.querySelectorAll('.contact-circle');
-    contactCircles.forEach(circle => {
+    contactCircles.forEach((circle, index) => {
         let randomColor;
         do {
             randomColor = getRandomColor();
         } while (randomColor === lastColor); // Schleife, bis eine neue Farbe gefunden wird
         circle.style.backgroundColor = randomColor;
-        lastColor = randomColor; 
+        lastColor = randomColor;
+        contacts[index]['color'] = randomColor;
     });
 }
 
@@ -122,29 +138,6 @@ function setRandomColor() {
 function getRandomColor() {
     let randomColor = Math.floor(Math.random() * profileCircleColors.length);
     return profileCircleColors[randomColor];
-}
-
-
-function createUniqueContactId() {
-    for (let i = 0; i < contacts.length; i++) {
-        if (!contacts[i]['id']) {
-            contacts[i]['id'] = nextId.toString();
-            nextId++;
-        }
-    }
-    console.log(contacts);
-}
-
-
-/**
- * This function opens the detailed contact information by clicking on a contact in the contact list
- * 
- */
-function openContactInfo() {
-    let contact = document.getElementById('testID');
-    contact.classList.add('contact-small-active');
-    contact.classList.add('contact-small-active:hover');
-    // classlists need to be removed again when clicking on another contact
 }
 
 
@@ -162,41 +155,57 @@ function renderContactList() {
     for (let i = 0; i < contacts.length; i++) {
         const name = contacts[i]['name'];
         const mail = contacts[i]['mail'];
+        const phone = contacts[i]['phone'];
+        const id = contacts[i]['id'];
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
         if (firstLetter !== previousFirstLetter) {
             contactList.innerHTML += renderLetterAndPartinglineHTML(firstLetter);
             previousFirstLetter = firstLetter;
         }
-        contactList.innerHTML += renderContactListHTML(firstLetter, firstLetterSurname, name, mail);
+        contactList.innerHTML += renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail);
     }
 }
 
 
-function renderLetterAndPartinglineHTML(firstLetter) {
-    return `
-    <div id="">
-        <div class="contact-letter gap-8">
-            <p>${firstLetter}</p>
-        </div>
-        <div class="parting-line"></div>
-    </div>
-    `;
+/**
+ * this function combines all elements with the css class "contact-small" in the variable contacts. 
+ * Then a loop runs through contacts, where contact is a temporary variable that represents each individual element in the contacts list. 
+ * For each individual element in contacts, the two specified css-classes are removed 
+ * 
+ */
+function removeActiveClasslist() {
+    let contacts = document.querySelectorAll('.contact-small');
+    contacts.forEach(contact => {
+        contact.classList.remove('contact-small-active');
+        contact.classList.remove('contact-small-active:hover');
+    });
 }
 
 
-function renderContactListHTML(firstLetter, firstLetterSurname, name, mail) {
-    return `
-    <div class="contact-small" id="" onclick="openContactInfo()">
-        <div class="contact-circle d_f_c_c">
-            <div class="contact-circle-letters">${firstLetter}${firstLetterSurname}</div>
-        </div>
-        <div class="contact-name-mail-wrapper">
-            <div class="contact-name">${name}</div>
-            <div class="contact-mail">${mail}</div>
-        </div>
-    </div>
-    `;
+/**
+ * This function first checks whether the ID of the clicked element matches the contactId. 
+ * Then, using the destructuring assignment method, the contacts-array is destructured to extract the values 
+ * of the properties color, name, mail & phone. 
+ * These constants are passed to the renderContactInformationHTML, which returns the HTML code.
+ * 
+ * 
+ * @param {string} contactId - ID of the clicked contact
+ * 
+ */
+function openContactInfo(contactId) {
+    let contact = contacts.find(contact => contact['id'] === contactId)
+    if (contact) {
+        const { name, mail, phone, color } = contact;
+        const firstLetter = name.charAt(0);
+        const firstLetterSurname = name.split(' ')[1].charAt(0);
+        let contactInfo = document.getElementById('contactInfo');
+        contactInfo.innerHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, mail, phone);
+        removeActiveClasslist();
+        let contactElement = document.getElementById(contactId);
+        contactElement.classList.add('contact-small-active');
+        contactElement.classList.add('contact-small-active:hover');
+    }
 }
 
 
@@ -207,12 +216,32 @@ function renderContactListHTML(firstLetter, firstLetterSurname, name, mail) {
  */
 function addContactToArray(contact) {
     contacts.push(contact);
-    contacts.sort((a, b) => { 
+    contacts.sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
-        
+
         return nameA.localeCompare(nameB);
     });
+}
+
+
+function addNewContact() {
+    let container = document.getElementById('addContactMask');
+    container.classList.remove('d-none');
+}
+
+
+/**
+ * This function gives each contact in the contacts-array a unique id, starting from 1
+ * 
+ */
+function createUniqueContactId() {
+    for (let i = 0; i < contacts.length; i++) {
+        if (!contacts[i]['id']) {
+            contacts[i]['id'] = nextId.toString();
+            nextId++;
+        }
+    }
 }
 
 // CONTACT EXAMPLE FOR TESTING THE addContactToArray FUNCTION
@@ -224,6 +253,3 @@ const newContact = {
     id: ""
 };
 
-
-// CONSOLE LOG FOR TESTING THE addContactToArray FUNCTION
-console.log(contacts);
