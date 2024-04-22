@@ -99,7 +99,6 @@ let profileCircleColors = [
     'cadetblue'
 ];
 
-let lastColor = null;
 let nextId = 1;
 
 
@@ -112,18 +111,22 @@ function renderContacts() {
 
 
 /**
- * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has the same backgroundcolor - in this case, another color is picked
+ * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has 
+ * the same backgroundcolor - in this case, another color is picked. 
+ * The function also adds the randomly selected color to the contacts array.
  * 
  */
 function setRandomColor() {
+    let lastColor = null;
     let contactCircles = document.querySelectorAll('.contact-circle');
-    contactCircles.forEach(circle => {
+    contactCircles.forEach((circle, index) => {
         let randomColor;
         do {
             randomColor = getRandomColor();
         } while (randomColor === lastColor); // Schleife, bis eine neue Farbe gefunden wird
         circle.style.backgroundColor = randomColor;
         lastColor = randomColor;
+        contacts[index]['color'] = randomColor;
     });
 }
 
