@@ -266,6 +266,7 @@
     background-color: rgba(42, 54, 71, 1);
     border-radius: 40px 0 0 40px;
     padding: 66px 48px;
+    gap: 12px;
   }
 
   .add-contact-container-right {
@@ -274,4 +275,9 @@
     border-radius: 0px 40px 40px 0px;
     padding: 66px 48px;
     background-color: rgba(255, 255, 255, 1);
+  }
+
+  .add-contact-img {
+    height: 66.48px;
+    width: 55.6px;
   }
