@@ -91,7 +91,12 @@ let profileCircleColors = [
     'skyblue',
     'forestgreen',
     'tan',
-    'green'
+    'green',
+    'blue',
+    'indianred',
+    'seagreen',
+    'lightsteelblue',
+    'cadetblue'
 ];
 
 let lastColor = null;
