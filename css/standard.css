@@ -194,6 +194,10 @@ body {
   height: 80px;
 }
 
+.gap-5 {
+  gap: 5px;
+}
+
 .gap-8 {
   gap: 8px;
 }
