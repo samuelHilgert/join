@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.contact-right-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .contact-wrapper {
     margin: 0 0 0 232px;
     width: 456px;
@@ -124,9 +129,9 @@
   }
   
   .contact-right {
-    width: auto;
     height: 73px;
     margin: 110px 0 0 55px;
+    display: flex;
   }
   
   .contact-right-text-big {
@@ -152,15 +157,12 @@
   }
   
   .contact-info {
-    width: auto; /* HIER ABCHECKEN*/
     height: 364px;
-    position: fixed;
-    left: 750px;
-    top: 311px;
     gap: 21px;
     display: flex;
     flex-direction: column;
-  }
+    margin: 110px 0 0 55px;
+}
   
   .contact-card-header {
     height: 120px;
