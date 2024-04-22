@@ -133,6 +133,10 @@ function getRandomColor() {
 }
 
 
+/**
+ * This function gives each contact in the contacts-array a unique id, starting from 1
+ * 
+ */
 function createUniqueContactId() {
     for (let i = 0; i < contacts.length; i++) {
         if (!contacts[i]['id']) {
