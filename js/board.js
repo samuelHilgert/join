@@ -44,7 +44,7 @@ function renderBoardCards() {
     for (let index = 0; index < todoCol.length; index++) {
         const element = todoCol[index];
         const elementId = element['id'];
-        document.getElementById('todoCol').innerHTML += generateTodoHTML(element);
+        document.getElementById('todoCol').innerHTML += generateTodoHTML(element, elementId);
         updateProgressBar(elementId);
     }
 
@@ -53,7 +53,7 @@ function renderBoardCards() {
     for (let index = 0; index < inProgress.length; index++) {
         const element = inProgress[index];
         const elementId = element['id'];
-        document.getElementById('inProgress').innerHTML += generateTodoHTML(element);
+        document.getElementById('inProgress').innerHTML += generateTodoHTML(element, elementId);
         updateProgressBar(elementId);
     }
 
@@ -62,7 +62,7 @@ function renderBoardCards() {
     for (let index = 0; index < awaitFeedback.length; index++) {
         const element = awaitFeedback[index];
         const elementId = element['id'];
-        document.getElementById('awaitFeedback').innerHTML += generateTodoHTML(element);
+        document.getElementById('awaitFeedback').innerHTML += generateTodoHTML(element, elementId);
         updateProgressBar(elementId);
     }
 
@@ -71,7 +71,7 @@ function renderBoardCards() {
     for (let index = 0; index < done.length; index++) {
         const element = done[index];
         const elementId = element['id'];
-        document.getElementById('done').innerHTML += generateTodoHTML(element);
+        document.getElementById('done').innerHTML += generateTodoHTML(element, elementId);
         updateProgressBar(elementId);
     }
 /*
@@ -95,8 +95,8 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTodoHTML(element) {
-    return `<div class="todo d_c_fs_fs gap-10" draggable="true" ondragstart="startDragging(${element['id']})">
+function generateTodoHTML(element, elementId) {
+    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${elementId})" draggable="true" ondragstart="startDragging(${element['id']})">
             <button class="d_f_c_c" id="btnBoard">${element['label']}</button>
             <h6><b>${element['title']}</b></h6>
             <p>${element['description']}</p>
@@ -144,4 +144,39 @@ function highlight(id) {
 
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
+}
+
+function openBoardTaskPopup(elementId) {
+    let boardTaskPopup = document.getElementById('boardTaskPopup');
+    boardTaskPopup.style.display = 'flex';
+    renderBoardTaskPopupContent(elementId);
+}
+
+function closeBoardTaskPopup() {
+    let boardTaskPopup = document.getElementById('boardTaskPopup');
+    boardTaskPopup.style.display = 'none';
+}
+
+
+function doNotClose(event) {
+    event.stopPropagation();
+}
+
+
+function renderBoardTaskPopupContent(elementId) {
+const todo = todos[elementId];
+console.log(todo);
+let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
+boardTaskPopupContent.innerHTML = `
+<div class="d_c_sb_fs gap-20 height-max">
+<button class="d_f_c_c" id="btnBoard">${todo['label']}</button>
+<h6><b>${todo['title']}</b></h6>
+<p>${todo['description']}</p>
+<p>Due date:</p>
+<p>Priority:</p>
+<p>Assigned To:</p>
+<p>Subtasks:</p>
+<div class="d_f_fe_fe width-max gap-20"><div>Delete</div><div>Edit</div></div>
+</div>
+`;
 }

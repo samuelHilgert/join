@@ -50,6 +50,7 @@
   font-size: 16px;
   background-color: white;
 }
+
 .input-prio:hover {
   cursor: pointer;
   box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
@@ -258,6 +259,7 @@
   margin: 10px;
   height: auto;
   width: 100%;
+  cursor: pointer;
   box-sizing: border-box;
 }
 
@@ -311,3 +313,34 @@ li {
   justify-content: center;
   align-items: center;
 }
+
+#boardTaskPopup {
+  display: none;
+}
+
+.board-task-popup {
+  background-color: rgba(255, 255, 255, 1);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.board-task-popup-container {
+  width: 30%;
+  height: 80%;
+  border-radius:30px;
+}
+
+.close-button-div:hover {
+background-color: rgb(240, 240, 240);
+border-radius: 50%;
+}
+
+.popup-close-button img {
+  cursor: pointer;
+}
+
+

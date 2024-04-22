@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./css/standard.css">
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/assets.css">
+    <link rel="stylesheet" href="./css/contacts.css">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
@@ -37,8 +38,8 @@
                     <p>To do</p>
                     <img src="./assets/img/plus-button.svg" alt="">
                 </div>
-                <div class="drag-area d_c_fs_c" id="todoCol" ondrop="moveTo('todoCol')" ondragleave="removeHighlight('todoCol')"
-                    ondragover="allowDrop(event); highlight('todoCol')"></div>
+                <div class="drag-area d_c_fs_c" id="todoCol" ondrop="moveTo('todoCol')"
+                    ondragleave="removeHighlight('todoCol')" ondragover="allowDrop(event); highlight('todoCol')"></div>
             </div>
 
             <div class="d_c_c_fs gap-10">
@@ -69,6 +70,17 @@
                     ondragover="allowDrop(event); highlight('done')"></div>
             </div>
 
+        </div>
+    </div>
+
+    <div class="d_c_c_c board-task-popup max-width bgC-black" id="boardTaskPopup">
+        <div class="d_c_fs_c board-task-popup-container bgC-white pad-y-40 pad-x-40 gap-30">
+            <div class="d_c_fs_fe popup-close-button width-max">
+                <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeBoardTaskPopup()">
+                    <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
+                </div>
+            </div>
+            <div class="d_c_sb_c height-max" id="boardTaskPopupContent"></div>
         </div>
     </div>
 
