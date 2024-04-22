@@ -65,7 +65,7 @@ function getPriorityFromButtonColor(button) {
 
 // Funktion zum Einfärben des ausgewählten Buttons und Zurücksetzen der anderen Buttons
 function setPriority(prio = "medium-btn") {
-  const buttons = document.querySelectorAll(".input-style.input-prio");
+  const buttons = document.querySelectorAll(".task-input-style.input-prio");
   buttons.forEach(function (btn) {
     btn.style.backgroundColor = ""; // Standardfarbe (keine Hintergrundfarbe)
   });
@@ -127,7 +127,7 @@ function addSubtask() {
     const subtaskContainer = document.getElementById("subtask-div");
     subtaskContainer.innerHTML += `
           <div class='d_f_sb_c pad-x-10'>
-              <span>${subtaskValue}</span>
+              <span><span style='color: red'>●</span> ${subtaskValue}</span>
               <div class='d_f_c_c gap-5'>
                   <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
                   <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(this)" />
