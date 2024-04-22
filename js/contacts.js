@@ -250,9 +250,11 @@ function removeActiveClasslist() {
 
 
 /**
- * This function opens the detailed contact information by clicking on a contact in the contact list 
- * and adds two css-classes to the clicked element.
- * Before doing so, the removeActiveClasslist function is executed.
+ * This function first checks whether the ID of the clicked element matches the contactId. 
+ * Then, using the destructuring assignment method, the contacts-array is destructured to extract the values 
+ * of the properties color, name, mail & phone. 
+ * These constants are passed to the renderContactInformationHTML, which returns the HTML code.
+ * 
  * 
  * @param {string} contactId - ID of the clicked contact
  * 
@@ -267,8 +269,8 @@ function openContactInfo(contactId) {
         contactInfo.innerHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, mail, phone);
         removeActiveClasslist();
         let contactElement = document.getElementById(contactId);
-    contactElement.classList.add('contact-small-active');
-    contactElement.classList.add('contact-small-active:hover');
+        contactElement.classList.add('contact-small-active');
+        contactElement.classList.add('contact-small-active:hover');
     }
 }
 
