@@ -58,3 +58,7 @@ select {
   color: white;
   font-weight: 800;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
