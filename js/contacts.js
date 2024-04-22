@@ -257,6 +257,8 @@ function removeActiveClasslist() {
  * 
  */
 function openContactInfo(contactId) {
+    let contactInfo = document.getElementById('contactInfo');
+    contactInfo.innerHTML = '';
     removeActiveClasslist();
     let contact = document.getElementById(contactId);
     contact.classList.add('contact-small-active');
