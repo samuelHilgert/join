@@ -100,8 +100,8 @@ let nextId = 1;
 
 function renderContacts() {
 addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
-renderContactList();
 createUniqueContactId(); // adds a unique ID to very contact in contacts array
+renderContactList();
 setRandomColor(); 
 }
 
@@ -134,33 +134,6 @@ function getRandomColor() {
 
 
 /**
- * This function gives each contact in the contacts-array a unique id, starting from 1
- * 
- */
-function createUniqueContactId() {
-    for (let i = 0; i < contacts.length; i++) {
-        if (!contacts[i]['id']) {
-            contacts[i]['id'] = nextId.toString();
-            nextId++;
-        }
-    }
-    console.log(contacts);
-}
-
-
-/**
- * This function opens the detailed contact information by clicking on a contact in the contact list
- * 
- */
-function openContactInfo() {
-    let contact = document.getElementById('testID');
-    contact.classList.add('contact-small-active');
-    contact.classList.add('contact-small-active:hover');
-    // classlists need to be removed again when clicking on another contact
-}
-
-
-/**
  * This function renders the contact list - therefore it iterates trough the contacts-array and checks, 
  * if there is more than one name with the same first letter.
  * In this case, the renderLetterAndPartingLine function is just rendered once for every first letter and not for every single contact.
@@ -174,20 +147,21 @@ function renderContactList() {
     for (let i = 0; i < contacts.length; i++) {
         const name = contacts[i]['name'];
         const mail = contacts[i]['mail'];
+        const id = contacts[i]['id'];
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
         if (firstLetter !== previousFirstLetter) {
             contactList.innerHTML += renderLetterAndPartinglineHTML(firstLetter);
             previousFirstLetter = firstLetter;
         }
-        contactList.innerHTML += renderContactListHTML(firstLetter, firstLetterSurname, name, mail);
+        contactList.innerHTML += renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail);
     }
 }
 
 
 function renderLetterAndPartinglineHTML(firstLetter) {
     return `
-    <div id="">
+    <div>
         <div class="contact-letter gap-8">
             <p>${firstLetter}</p>
         </div>
@@ -197,9 +171,9 @@ function renderLetterAndPartinglineHTML(firstLetter) {
 }
 
 
-function renderContactListHTML(firstLetter, firstLetterSurname, name, mail) {
+function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) {
     return `
-    <div class="contact-small" id="" onclick="openContactInfo()">
+    <div class="contact-small" id="${id}" onclick="openContactInfo('${id}')">
         <div class="contact-circle d_f_c_c">
             <div class="contact-circle-letters">${firstLetter}${firstLetterSurname}</div>
         </div>
@@ -209,6 +183,20 @@ function renderContactListHTML(firstLetter, firstLetterSurname, name, mail) {
         </div>
     </div>
     `;
+}
+
+
+/**
+ * This function opens the detailed contact information by clicking on a contact in the contact list
+ * 
+ * @param {string} contactId - ID of the clicked contact
+ * 
+ */
+function openContactInfo(contactId) {
+    let contact = document.getElementById(contactId);
+    contact.classList.add('contact-small-active');
+    contact.classList.add('contact-small-active:hover');
+    // classlists need to be removed again when clicking on another contact
 }
 
 
@@ -225,6 +213,21 @@ function addContactToArray(contact) {
         
         return nameA.localeCompare(nameB);
     });
+}
+
+
+/**
+ * This function gives each contact in the contacts-array a unique id, starting from 1
+ * 
+ */
+function createUniqueContactId() {
+    for (let i = 0; i < contacts.length; i++) {
+        if (!contacts[i]['id']) {
+            contacts[i]['id'] = nextId.toString();
+            nextId++;
+        }
+    }
+    console.log(contacts);
 }
 
 // CONTACT EXAMPLE FOR TESTING THE addContactToArray FUNCTION
