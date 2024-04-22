@@ -155,6 +155,7 @@ function renderContactList() {
     for (let i = 0; i < contacts.length; i++) {
         const name = contacts[i]['name'];
         const mail = contacts[i]['mail'];
+        const phone = contacts[i]['phone'];
         const id = contacts[i]['id'];
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
@@ -194,10 +195,10 @@ function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) 
 }
 
 
-function renderContactInformationHTML() {
+function renderContactInformationHTML(firstLetter, firstLetterSurname, name, mail, phone) {
     return `
     <div class="contact-card-header">
-        <div class="circle-big d_f_c_c">AM</div>
+        <div class="circle-big d_f_c_c">${firstLetter}${firstLetterSurname}</div>
             <div class="contact-card-header-text gap-8">
                 Anna Müller
             <div class="d_f_fs_c contact-card-header-icons gap-30">
@@ -258,7 +259,7 @@ function removeActiveClasslist() {
  */
 function openContactInfo(contactId) {
     let contactInfo = document.getElementById('contactInfo');
-    contactInfo.innerHTML = '';
+    contactInfo.innerHTML = renderContactInformationHTML(firstLetter, firstLetterSurname, name, mail, phone);
     removeActiveClasslist();
     let contact = document.getElementById(contactId);
     contact.classList.add('contact-small-active');
