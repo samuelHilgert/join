@@ -27,7 +27,7 @@
     <div class="contact-page-wrapper">
         <div class="contact-wrapper">
             <div class="contact-btn-wrapper d_f_c_c">
-                <button class="btn contact-btn d_f_c_c">
+                <button class="btn contact-btn d_f_c_c" onclick="addNewContact()">
                     Add new Contact
                     <img class="contact-btn-img" src="./assets/img/person_add.svg" alt="">
                 </button>
@@ -35,8 +35,6 @@
             </div>
             <div class="contact-list-wrapper" id="contactList"></div>
         </div>
-
-    
 
         <div class="contact-right-wrapper">
             <div class="contact-right gap-30">
@@ -47,6 +45,14 @@
             <div class="contact-info" id="contactInfo"></div>
         </div>
     </div>
+
+    <div id="addContactMask" class="add-contact-container-wrapper d_f_c_c d-none">
+        <div class="add-contact-container">
+            <div class="add-contact-container-left"></div>
+            <div class="add-contact-container-right"></div>
+        </div>
+    </div>
+
 </body>
 
 </html>

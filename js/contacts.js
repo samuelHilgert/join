@@ -225,6 +225,12 @@ function addContactToArray(contact) {
 }
 
 
+function addNewContact() {
+    let container = document.getElementById('addContactMask');
+    container.classList.remove('d-none');
+}
+
+
 /**
  * This function gives each contact in the contacts-array a unique id, starting from 1
  * 
