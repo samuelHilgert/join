@@ -178,7 +178,16 @@ boardTaskPopupContent.innerHTML = `
 <p>Priority:</p>
 <p>Assigned To:</p>
 <p>Subtasks:</p>
-<div class="d_f_fe_fe width-max gap-20"><div>Delete</div><div>Edit</div></div>
+<div class="d_f_fe_c width-max gap-20">
+    <div class="delete-style d_f_c_c gap-10">
+    <img src="./assets/img/delete.svg" alt="">
+    <p>Delete</p>
+    </div>
+    <div class="edit-style d_f_c_c gap-10">
+    <img src="./assets/img/edit.svg" alt="">
+    Edit
+    </div>
+    </div>
 </div>
 `;
 }

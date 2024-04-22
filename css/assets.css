@@ -343,4 +343,8 @@ border-radius: 50%;
   cursor: pointer;
 }
 
-
+.edit-style:hover,
+.delete-style:hover {
+  color: #29ABE2;
+  cursor:pointer;
+}
