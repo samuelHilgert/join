@@ -62,3 +62,12 @@ select {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.input-spacer {
+  height: 22px;
+  border: 1px solid #ccc;
+}
+
+.padding-right-36 {
+  padding-right: 36px;
+}

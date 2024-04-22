@@ -111,14 +111,22 @@ function chooseContact(i, name) {
 function changeIcons() {
   let iconBox = document.getElementById("dropdown-icon");
   iconBox.innerHTML = `
-  <img class='padding-10' src="assets/img/input-cross.png" alt="cross" />
-  <img onclick='addSubtask()' class='padding-10' src="assets/img/input-cross.png" alt="check" />
+  <div class="d_f_c_c gap-5 padding-right-36">
+  <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
+  <div class='input-spacer'></div>
+  <img onclick='addSubtask()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
+</div>
   `;
 }
 
 function addSubtask() {
   const subtask = document.getElementById("subtask").value;
   const subtaskContainer = document.getElementById("subtask-div");
-  subtaskContainer.innerHTML += `<div><span>${subtask}</span></div>`;
+  subtaskContainer.innerHTML += `<div class='d_f_sb_c pad-x-10'><span>${subtask}</span>
+  <div class='d_f_c_c gap-5'>
+  <img src="assets/img/pen_dark.svg" alt="pen" />
+  <img src="assets/img/trash_dark.svg" alt="trash" /></div></div>`;
   console.log(subtask);
 }
+
+function clearSubtaskInput() {}
