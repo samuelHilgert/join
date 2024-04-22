@@ -315,9 +315,7 @@
     border-radius: 50%;
     height: 33px;
     width: 33px;
-    position: relative;
-    top: 50px;
-    left: 50px;
+    margin-top: -8px;
   }
 
   .add-contact-container-right-img-wrapper:hover {
