@@ -84,7 +84,7 @@
   
   .contact-small-active:hover { /* FOR CLICKED CONTACT ONLY */
     cursor: pointer;
-    background-color: rgba(42, 54, 71, 1)
+    background-color: rgba(42, 54, 71, 1);
   }
   
   .contact-circle {
@@ -243,4 +243,35 @@
     line-height: 19.2px;
     font-weight: 400;
     color: rgba(0, 0, 0, 1);
+  }
+
+  .add-contact-container-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .add-contact-container {
+    display: flex;
+    margin: 50px;
+    width: 100%;
+  }
+
+  .add-contact-container-left {
+    height: 594px;
+    width: 40%;
+    background-color: rgba(42, 54, 71, 1);
+    border-radius: 40px 0 0 40px;
+    padding: 66px 48px;
+  }
+
+  .add-contact-container-right {
+    height: 594px;
+    width: 60%;
+    border-radius: 0px 40px 40px 0px;
+    padding: 66px 48px;
+    background-color: rgba(255, 255, 255, 1);
   }
