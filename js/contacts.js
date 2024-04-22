@@ -252,7 +252,6 @@ function createUniqueContactId() {
             nextId++;
         }
     }
-    console.log(contacts);
 }
 
 // CONTACT EXAMPLE FOR TESTING THE addContactToArray FUNCTION
@@ -264,6 +263,3 @@ const newContact = {
     id: ""
 };
 
-
-// CONSOLE LOG FOR TESTING THE addContactToArray FUNCTION
-console.log(contacts);
