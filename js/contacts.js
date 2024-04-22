@@ -194,6 +194,11 @@ function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) 
 }
 
 
+function renderContactInformationHTML() {
+
+}
+
+
 /**
  * this function combines all elements with the css class "contact-small" in the variable contacts. 
  * Then a loop runs through contacts, where contact is a temporary variable that represents each individual element in the contacts list. 
