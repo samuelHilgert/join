@@ -43,7 +43,9 @@
 
         <div class="box d_c_c_s gap-30 width-460" style="margin-bottom: 115px">
           <div class="d_c_c_s gap-10 width-100">
-            <span>Title<span style="color: red">*</span></span>
+            <span class="font-size-20"
+              >Title<span style="color: red">*</span></span
+            >
             <input
               id="task-title"
               class="task-input-style input-login"
@@ -53,7 +55,7 @@
           </div>
 
           <div class="d_c_c_s gap-10 width-100">
-            <span>Description</span>
+            <span class="font-size-20">Description</span>
             <textarea
               id="task-description"
               name=""
@@ -66,7 +68,7 @@
           </div>
 
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
-            <span>Assigned to</span>
+            <span class="font-size-20">Assigned to</span>
             <input
               onclick="openDropdownContacts()"
               id="task-subtask"
@@ -97,17 +99,19 @@
 
         <div class="box d_c_c_s gap-20 width-460">
           <div class="d_c_c_s gap-10 width-100">
-            <span>Due date<span style="color: red">*</span></span>
+            <span class="font-size-20"
+              >Due date<span style="color: red">*</span></span
+            >
             <input
               id="task-date"
-              class="task-input-style"
+              class="task-input-style due-date-field"
               type="date"
               placeholder="DD / MM / YYYY"
             />
           </div>
           <div style="display: flex">
             <div class="d_c_c_s gap-10">
-              <span>Prio</span>
+              <span class="font-size-20">Prio</span>
               <div class="d_f_c_c gap-20" style="width: 460px">
                 <button
                   type="button"
@@ -138,7 +142,9 @@
           </div>
 
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
-            <span>Category<span style="color: red">*</span></span>
+            <span class="font-size-20"
+              >Category<span style="color: red">*</span></span
+            >
 
             <select required id="task-category" class="input-style">
               <option selected hidden>Select task category</option>
@@ -148,7 +154,7 @@
           </div>
 
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
-            <span>Subtask</span>
+            <span class="font-size-20">Subtask</span>
             <input
               onclick="changeIcons()"
               id="subtask"

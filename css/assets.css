@@ -35,30 +35,10 @@
   line-height: 24px;
 }
 
-.input-style-description {
-  padding-bottom: 80px;
-}
-
 #loginCheckbox,
 #signUpCheckbox {
   width: 24px;
   height: 24px;
-}
-
-.input-dropdown {
-  position: relative;
-}
-
-.dropdown-icon {
-  position: absolute;
-  top: 48px;
-  right: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20px;
-  width: 20px;
-  cursor: pointer;
 }
 
 .btn {

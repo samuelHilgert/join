@@ -103,3 +103,38 @@ select {
   cursor: pointer;
   box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
 }
+
+.due-date-field {
+  position: relative;
+  background-image: url(/assets/img/event.png);
+  background-repeat: no-repeat;
+}
+
+.due-date-field::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer; /* Stelle sicher, dass der Cursor als Zeiger angezeigt wird */
+}
+
+.dropdown-icon {
+  position: absolute;
+  top: 50px;
+  right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.input-dropdown {
+  position: relative;
+}
+
+.input-style-description {
+  padding-bottom: 80px;
+}
+
+.font-size-20 {
+  font-size: 20px;
+}
