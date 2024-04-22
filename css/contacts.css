@@ -307,17 +307,21 @@
   }
 
   .add-contact-container-right-img {
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
   }
 
   .add-contact-container-right-img-wrapper {
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 33px;
+    width: 33px;
+    position: relative;
+    top: 50px;
+    left: 50px;
   }
 
   .add-contact-container-right-img-wrapper:hover {
     background-color: rgb(240, 240, 240);
-    cursor: pointer;
+    cursor: 
+    pointer;
   }
