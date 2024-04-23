@@ -226,14 +226,27 @@ function addContactToArray(contact) {
 
 
 function addNewContact() {
+    let addContactContainer = document.getElementById('addContactContainer');
     let container = document.getElementById('addContactMask');
+    addContactContainer.classList.remove('animation-out');
+    addContactContainer.classList.add('animation-in');
     container.classList.remove('d-none');
 }
 
-
 function closeAddContactForm() {
-    let container = document.getElementById('addContactMask');
-    container.classList.add('d-none');
+    let addContactMask = document.getElementById('addContactMask');
+    let addContactContainer = document.getElementById('addContactContainer');
+    addContactContainer.classList.add('animation-out');
+
+    // Adds event listener for the animationend event
+    addContactContainer.addEventListener('animationend', function animationEndHandler() {
+        // Removes the animation-in class and adds the d-none class
+        addContactContainer.classList.remove('animation-in');
+        addContactMask.classList.add('d-none');
+
+        // Removes event listener to avoid unnecessary use
+        addContactContainer.removeEventListener('animationend', animationEndHandler);
+    });
 }
 
 
