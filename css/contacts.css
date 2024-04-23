@@ -330,6 +330,14 @@
     display: flex;
   }
 
+  .btn-wrapper {
+    display: flex;
+    gap: 24px;
+    margin-top: 36px;
+  }
+
   .contact-form {
-    
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
