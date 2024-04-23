@@ -74,21 +74,21 @@ function renderBoardCards() {
         document.getElementById('done').innerHTML += generateTodoHTML(element, elementId);
         updateProgressBar(elementId);
     }
-/*
-    document.getElementById('label').innerHTML = '';
-
-    for (let index = 0; index < label.length; index++) {
-        const element = label[index];
-        const elementId = element['id'];
-        document.getElementById('label').innerHTML += generateTodoHTML(element);
-        updateProgressBar(elementId);
-        if (element['label'] === 'User Story') {
-            document.getElementById('btnBoard').style.backgroundColor = 'rgba(0, 56, 255, 1)';
-        }
-        if (element['label'] === 'Technical Task') {
-            document.getElementById('btnBoard').style.backgroundColor = 'rgba(31, 215, 193, 1)';
-        }
-    }*/
+    /*
+        document.getElementById('label').innerHTML = '';
+    
+        for (let index = 0; index < label.length; index++) {
+            const element = label[index];
+            const elementId = element['id'];
+            document.getElementById('label').innerHTML += generateTodoHTML(element);
+            updateProgressBar(elementId);
+            if (element['label'] === 'User Story') {
+                document.getElementById('btnBoard').style.backgroundColor = 'rgba(0, 56, 255, 1)';
+            }
+            if (element['label'] === 'Technical Task') {
+                document.getElementById('btnBoard').style.backgroundColor = 'rgba(31, 215, 193, 1)';
+            }
+        }*/
 }
 
 function startDragging(id) {
@@ -146,32 +146,15 @@ function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
-function openBoardTaskPopup(elementId) {
-    let boardTaskPopup = document.getElementById('boardTaskPopup');
-    document.body.style.overflow = 'hidden'; 
-    boardTaskPopup.style.display = 'flex';
-    renderBoardTaskPopupContent(elementId);
-}
-
-function closeBoardTaskPopup() {
-    let boardTaskPopup = document.getElementById('boardTaskPopup');
-    let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');
-    boardAddTaskPopup.style.display = 'none';
-    boardTaskPopup.style.display = 'none';
-    document.body.style.overflow = 'scroll'; 
-}
-
-
 function doNotClose(event) {
     event.stopPropagation();
 }
 
-
 function renderBoardTaskPopupContent(elementId) {
-const todo = todos[elementId];
-console.log(todo);
-let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
-boardTaskPopupContent.innerHTML = `
+    const todo = todos[elementId];
+    console.log(todo);
+    let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
+    boardTaskPopupContent.innerHTML = `
 <div class="d_c_sb_fs gap-20 height-max">
 <button class="d_f_c_c" id="btnBoard">${todo['label']}</button>
 <h6><b>${todo['title']}</b></h6>
@@ -196,6 +179,63 @@ boardTaskPopupContent.innerHTML = `
 
 function openBoardAddTaskPopup() {
     let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');
-    document.body.style.overflow = 'hidden'; 
+    let container = document.getElementById('boardAddTaskPopupContainer');
     boardAddTaskPopup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    moveContainerIn(container);
 }
+
+function moveContainerIn(container) {
+    container.classList.remove('outside'); 
+    container.classList.remove('animation-out'); 
+    container.classList.add('centered'); 
+    container.classList.add('animation-in'); 
+}
+
+function closeBoardAddTaskPopup() {
+    let popup = document.getElementById('boardAddTaskPopup');
+    let container = document.getElementById('boardAddTaskPopupContainer');
+    moveContainerOut(container);
+    setTimeout(function() {
+        displayNonePopup(popup);
+    }, 500);
+    document.body.style.overflow = 'scroll';
+}
+
+function moveContainerOut(container) {
+    container.classList.remove('centered'); 
+    container.classList.remove('animation-in'); 
+    container.classList.add('outside'); 
+    container.classList.add('animation-out'); 
+}
+
+function displayNonePopup(popup) {
+    popup.style.display = 'none';
+}
+
+function openBoardTaskPopup(elementId) {
+    let boardTaskPopup = document.getElementById('boardTaskPopup');
+    let container = document.getElementById('boardTaskPopupContainer');
+    document.body.style.overflow = 'hidden';
+    boardTaskPopup.style.display = 'flex';
+    moveContainerIn(container);
+    renderBoardTaskPopupContent(elementId);
+}
+
+function closeBoardTaskPopup() {
+    let popup = document.getElementById('boardTaskPopup');
+    let container = document.getElementById('boardTaskPopupContainer');
+    moveContainerOut(container);
+    setTimeout(function() {
+        displayNonePopup(popup);
+    }, 500);
+    document.body.style.overflow = 'scroll';
+}
+
+
+
+
+
+
+
+

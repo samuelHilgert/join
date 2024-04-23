@@ -306,12 +306,15 @@ li {
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
 }
 
 .board-task-popup-container {
   width: 30%;
   height: 80%;
   border-radius: 30px;
+  position: absolute;
+  z-index: 9999;
 }
 
 .close-button-div:hover {
@@ -338,4 +341,15 @@ li {
   height: 80%;
   overflow: scroll;
   border-radius: 30px;
+  position: absolute;
+  z-index: 9999;
 }
+
+.centered {
+  text-align:center;
+}
+
+.outside {
+  right: 0;
+}
+
