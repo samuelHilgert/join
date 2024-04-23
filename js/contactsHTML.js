@@ -27,7 +27,7 @@ function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) 
 
 function renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, mail, phone) {
     return `
-    <div class="contact-info-wrapper animation-in">
+    <div class="contact-info-wrapper">
         <div class="contact-card-header">
             <div class="circle-big d_f_c_c" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
             <div class="contact-card-header-text gap-8">

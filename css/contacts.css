@@ -159,39 +159,17 @@
     line-height: 32.4px;
 }
 
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
 .contact-info-wrapper {
-    /*position: absolute;
-    right: -100%;
-    transition: right 0.1s ease;*/
-}
-
-.animation.out {
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in-out;
-    animation-delay: 0s;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-    animation-name: slide-out-right;
-    animation-timeline: auto;
-    animation-range-start: normal;
-
-}
-
-.animation-in {
-    position: absolute;
-    right: -100%;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in-out;
-    animation-delay: 0s;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-    animation-name: slide-in-right;
-    animation-timeline: auto;
-    animation-range-start: normal;
+    animation: slideInRight 0.5s ease-in-out forwards;
 }
 
 .contact-info {
