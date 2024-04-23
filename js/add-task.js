@@ -172,4 +172,19 @@ function deleteSubtask(element) {
   subtaskContainer.removeChild(subtaskItem);
 }
 
-function clearSubtaskInput() {}
+// Diese Funktion überträgt den Text der angeklickten Kategorie in das Inputfeld
+function chooseCategory(category) {
+  document.getElementById("task-category").value = category.innerText;
+}
+
+function toggleCategoryDiv() {
+  var categoryDiv = document.getElementById("category-div");
+  if (
+    categoryDiv.style.display === "none" ||
+    categoryDiv.style.display === ""
+  ) {
+    categoryDiv.style.display = "flex";
+  } else {
+    categoryDiv.style.display = "none";
+  }
+}

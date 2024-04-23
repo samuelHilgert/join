@@ -145,16 +145,39 @@
             </div>
           </div>
 
-          <div class="d_c_c_s gap-10 width-100 input-dropdown">
+          <div class="d_c_c_s gap-10 width-100">
             <span class="font-size-20"
               >Category<span style="color: red">*</span></span
             >
-
-            <select required id="task-category" class="input-style">
-              <option selected hidden>Select task category</option>
-              <option value="user_story">User Story</option>
-              <option value="technical_task">Technical Task</option>
-            </select>
+            <div class="input-category width-100">
+              <input
+                id="task-category"
+                class="task-input-style input-login"
+                type="text"
+                placeholder="Select task category"
+                readonly
+                onclick="toggleCategoryDiv()"
+              />
+              <div class="category-icon" onclick="toggleCategoryDiv()">
+                <img
+                  src="assets/img/arrow_drop_down.png"
+                  alt="Arrow Down"
+                  class="category-icon"
+                />
+              </div>
+            </div>
+            <div id="category-div" class="category-div" style="display: none">
+              <span
+                class="task-category"
+                onclick="chooseCategory(this), toggleCategoryDiv()"
+                >Technical Task</span
+              >
+              <span
+                class="task-category"
+                onclick="chooseCategory(this), toggleCategoryDiv()"
+                >User Story</span
+              >
+            </div>
           </div>
 
           <div class="d_c_c_s gap-10 width-100 input-dropdown">

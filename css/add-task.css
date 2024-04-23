@@ -18,18 +18,43 @@
   margin-top: 3px;
 }
 
-select {
-  width: 200px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  appearance: none; /* Entfernt das Standard-Styling */
-  background-image: url(""); /* Pfad zum Bild */
-  background-repeat: no-repeat;
-  background-position: right 10px center; /* Position des Bildes */
-  background-size: 8px !important; /* Größe des Bildes */
-  padding-right: 30px; /* Platz für das Bild */
+.category-div {
+  position: absolute;
+  z-index: 1; /* Stelle sicher, dass die div über anderen Inhalten liegt */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  height: 118px;
+  width: 460px;
+  margin-top: 213px;
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+}
+
+.task-category {
+  font-size: 24px;
+  padding: 16px 24px;
+  width: 100%;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.task-category:hover {
+  background-color: #f6f7f8;
+}
+
+.input-category {
+  position: relative;
+}
+
+.category-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px; /* Anpassen der rechten Ausrichtung */
+  transform: translateY(-50%);
   cursor: pointer;
 }
 
