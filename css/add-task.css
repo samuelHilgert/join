@@ -48,8 +48,8 @@ select {
   padding: 5px;
 }
 
-.width-440 {
-  width: 440px;
+.width-460 {
+  width: 460px;
 }
 .urgent-btn-clicked {
   padding: 20px 10px;
@@ -70,4 +70,97 @@ select {
 
 .padding-right-36 {
   padding-right: 36px;
+}
+
+.task-input-style {
+  font-size: 24px;
+  width: 100%;
+  height: auto;
+  padding: 16px 24px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 20px);
+  background-position-y: 50%;
+  background-size: 24px;
+}
+
+.height-130 {
+  height: 130px;
+}
+
+.prio-btn-padding {
+  padding: 18px 12px;
+}
+
+.input-prio {
+  padding: 18px 20px;
+  background-color: white;
+}
+
+.input-prio:hover {
+  cursor: pointer;
+  box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
+}
+
+.due-date-field {
+  position: relative;
+  background-image: url(/assets/img/event.png);
+  background-repeat: no-repeat;
+}
+
+.due-date-field::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer; /* Stelle sicher, dass der Cursor als Zeiger angezeigt wird */
+}
+
+.dropdown-icon {
+  position: absolute;
+  top: 55px;
+  right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.input-dropdown {
+  position: relative;
+}
+
+.input-style-description {
+  padding-bottom: 80px;
+}
+
+.font-size-20 {
+  font-size: 20px;
+}
+
+.color-white {
+  color: white;
+}
+
+.active-prio-btn-urgent {
+  background-color: #ff3d00;
+  color: white;
+  font-weight: 700;
+}
+
+.active-prio-btn-medium {
+  background-color: #ffa800;
+  color: white;
+  font-weight: 700;
+}
+
+.active-prio-btn-low {
+  background-color: #7ae229;
+  color: white;
+  font-weight: 700;
+}
+
+.filter-prio-btn {
+  filter: invert(100%) brightness(10);
 }

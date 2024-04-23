@@ -1,9 +1,11 @@
+
 /**
  * This is a function to initialize render functions 
  * 
  */
 async function init() {
     await includeHTML();
+    getCurrentlySidebarLink();
 }
 
 /**

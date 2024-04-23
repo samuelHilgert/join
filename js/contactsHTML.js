@@ -27,8 +27,9 @@ function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) 
 
 function renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, mail, phone) {
     return `
-    <div class="contact-card-header">
-        <div class="circle-big d_f_c_c" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
+    <div class="animation-in">
+        <div class="contact-card-header">
+            <div class="circle-big d_f_c_c" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
             <div class="contact-card-header-text gap-8">
                 <span class="contact-card-header-text-span">${name}</span>
                 <div class="d_f_fs_c contact-card-header-icons gap-30">
@@ -49,16 +50,16 @@ function renderContactInformationHTML(color, firstLetter, firstLetterSurname, na
                 </div>
             </div>
         </div>
-    </div>
-    <span class="contact-name pad-y-20">Contact Information</span>
-    <div class="mail-phone-wrapper gap-22">
-        <div class="gap-15 mail-phone-wrapper">
-            <span class="span-thick">Email</span>
-            <span class="contact-mail">${mail}</span>
-        </div>
-        <div class="gap-15 mail-phone-wrapper">
-            <span class="span-thick">Phone</span>
-            <span>${phone}</span>
+        <span class="contact-name d_f pad-y-20">Contact Information</span>
+        <div class="mail-phone-wrapper gap-22">
+            <div class="gap-15 mail-phone-wrapper">
+                <span class="span-thick">Email</span>
+                <span class="contact-mail">${mail}</span>
+            </div>
+            <div class="gap-15 mail-phone-wrapper">
+                <span class="span-thick">Phone</span>
+                <span>${phone}</span>
+            </div>
         </div>
     </div>
     `;

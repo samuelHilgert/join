@@ -3,6 +3,10 @@
   scroll-behavior: smooth;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   /* max-width: 1440px; */
   max-width: 1920px;
@@ -254,6 +258,10 @@ body {
   text-align: center;
 }
 
+.d_f {
+  display: flex;
+}
+
 .d_f_c_c {
   display: flex;
   justify-content: center;
@@ -470,5 +478,4 @@ body {
 .d-none {
   display: none;
 }
-
 
