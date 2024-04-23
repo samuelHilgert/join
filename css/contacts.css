@@ -357,3 +357,8 @@
     display: flex;
     margin-top: -33px;
   }
+
+  .close-contact-btn {
+    position: relative;
+    z-index: 10;
+  }
