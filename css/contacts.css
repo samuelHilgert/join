@@ -168,8 +168,21 @@
     }
 }
 
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
 .animation-in {
     animation: slideInRight 0.5s ease-in-out forwards;
+}
+
+.animation-out {
+    animation: slideOutRight 0.5s ease-in-out forwards;
 }
 
 .contact-info {
