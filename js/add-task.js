@@ -21,30 +21,12 @@ function addTask() {
   // setItem("task", allTasks);
 }
 
-function determinePriority() {
-  let prio = "medium"; // Standardpriorität
-
-  // Überprüfe die Klasse jedes Buttons, um die ausgewählte Priorität zu bestimmen
-  const urgentBtn = document.getElementById("urgent-btn");
-  const mediumBtn = document.getElementById("medium-btn");
-  const lowBtn = document.getElementById("low-btn");
-
-  if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
-    prio = "urgent";
-  } else if (lowBtn.classList.contains("active-prio-btn-low")) {
-    prio = "low";
-  }
-
-  return prio;
-}
-
 function readTaskInput() {
   const title = document.getElementById("task-title").value;
   const description = document.getElementById("task-description").value;
   const date = document.getElementById("task-date").value;
   const category = document.getElementById("task-category").value;
   const subtask = document.getElementById("subtask").value;
-
   return {
     title: title,
     description: description,
@@ -53,36 +35,58 @@ function readTaskInput() {
   };
 }
 
+//Return Value from Priority!
+function determinePriority() {
+  let prio = "medium"; // Standardpriorität
+  const urgentBtn = document.getElementById("urgent-btn");
+  const mediumBtn = document.getElementById("medium-btn");
+  const lowBtn = document.getElementById("low-btn");
+  if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
+    prio = "urgent";
+  } else if (lowBtn.classList.contains("active-prio-btn-low")) {
+    prio = "low";
+  }
+  return prio;
+}
+
+//Change Prio Btn colors!
 function setPriority(btnId) {
-  // Alle Buttons
+  removeActiveClasses();
+  setActiveClasses(btnId);
+}
+
+function removeActiveClasses() {
   const buttons = ["urgent-btn", "medium-btn", "low-btn"];
-
-  // Entferne für alle Buttons die aktive Klasse
-  buttons.forEach((btn) => {
-    document.getElementById(btn).classList.remove("active-prio-btn-urgent");
-    document.getElementById(btn).classList.remove("active-prio-btn-medium");
-    document.getElementById(btn).classList.remove("active-prio-btn-low");
+  buttons.forEach((button) => {
+    const buttonElement = document.getElementById(button);
+    buttonElement.classList.remove(
+      "active-prio-btn-urgent",
+      "active-prio-btn-medium",
+      "active-prio-btn-low"
+    );
+    buttonElement.querySelector("img").classList.remove("filter-prio-btn");
   });
+}
 
-  // Setze die entsprechende Klasse für den geklickten Button
+function setActiveClasses(btnId) {
+  const clickedButton = document.getElementById(btnId);
+  const buttonImg = clickedButton.querySelector("img");
+
   switch (btnId) {
     case "urgent-btn":
-      document.getElementById(btnId).classList.add("active-prio-btn-urgent");
+      clickedButton.classList.add("active-prio-btn-urgent");
+      buttonImg.classList.add("filter-prio-btn");
       break;
     case "medium-btn":
-      document.getElementById(btnId).classList.add("active-prio-btn-medium");
+      clickedButton.classList.add("active-prio-btn-medium");
       break;
     case "low-btn":
-      document.getElementById(btnId).classList.add("active-prio-btn-low");
+      clickedButton.classList.add("active-prio-btn-low");
+      buttonImg.classList.add("filter-prio-btn");
       break;
     default:
       break;
   }
-}
-
-function setDefaultPriority() {
-  // Setze Medium-Button als Standard-Priorität
-  document.getElementById("medium-btn").classList.add("active-prio-btn-medium");
 }
 
 function openDropdownContacts() {
@@ -141,6 +145,17 @@ function addSubtask() {
       `;
     subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
   }
+}
+
+function changeIcons() {
+  let iconBox = document.getElementById("dropdown-icon");
+  iconBox.innerHTML = `
+  <div class="d_f_c_c gap-5 padding-right-36">
+  <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
+  <div class='input-spacer'></div>
+  <img onclick='addSubtask()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
+</div>
+  `;
 }
 
 function editSubtask(element) {

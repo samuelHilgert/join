@@ -160,3 +160,7 @@ select {
   color: white;
   font-weight: 700;
 }
+
+.filter-prio-btn {
+  filter: invert(100%) brightness(10);
+}

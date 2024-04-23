@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="./css/add-task.css" />
   </head>
 
-  <body onload="init(), setDefaultPriority()">
+  <body onload="init()">
     <div
       class="sidebar d_c_sb_c"
       include-html="../assets/templates/sidebar.html"
@@ -136,7 +136,10 @@
                   id="low-btn"
                   class="task-input-style input-prio d_f_c_c gap-10"
                 >
-                  Low<img src="assets/img/prio-low.svg" />
+                  Low<img
+                    class="filter-btn-low"
+                    src="assets/img/prio-low.svg"
+                  />
                 </button>
               </div>
             </div>
