@@ -139,6 +139,10 @@
   color: #29ABE2;
 }
 
+.clear-btn:hover svg.contact-header-svg {
+  fill: #29ABE2;
+}
+
 #btnBoard {
   cursor: pointer;
   border-radius: 8px;
