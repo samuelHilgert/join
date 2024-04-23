@@ -155,6 +155,8 @@ function openBoardTaskPopup(elementId) {
 
 function closeBoardTaskPopup() {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
+    let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');
+    boardAddTaskPopup.style.display = 'none';
     boardTaskPopup.style.display = 'none';
     document.body.style.overflow = 'scroll'; 
 }
@@ -190,4 +192,10 @@ boardTaskPopupContent.innerHTML = `
     </div>
 </div>
 `;
+}
+
+function openBoardAddTaskPopup() {
+    let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');
+    document.body.style.overflow = 'hidden'; 
+    boardAddTaskPopup.style.display = 'flex';
 }

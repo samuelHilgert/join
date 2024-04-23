@@ -1,0 +1,162 @@
+<div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-40 gap-30">
+    <div class="d_c_fs_fe popup-close-button width-max">
+        <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeBoardTaskPopup()">
+            <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
+        </div>
+    </div>
+        <form class="d_c_sb_c height-max">
+            <div class="d_f_c_c gap-30">
+              <div>
+                <h2 class="d_f_c_c">Add Task</h2>
+              </div>
+            </div>
+      
+            <div class="add-task-form-container gap-40 d_f_fs_c">
+              <!--BLOCK 1-->
+      
+              <div class="box d_c_c_s gap-30 width-440" style="margin-bottom: 115px">
+                <div class="d_c_c_s gap-10 width-100">
+                  <span>Title<span style="color: red">*</span></span>
+                  <input
+                    id="task-title"
+                    class="input-style input-login"
+                    type="text"
+                    placeholder="Enter a title"
+                  />
+                </div>
+      
+                <div class="d_c_c_s gap-10 width-100">
+                  <span>Description</span>
+                  <textarea
+                    id="task-description"
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="2"
+                    class="input-style input-style-description"
+                    placeholder="Enter a Description"
+                  ></textarea>
+                </div>
+      
+                <div class="d_c_c_s gap-10 width-100 input-dropdown">
+                  <span>Assigned to</span>
+                  <input
+                    onclick="openDropdownContacts()"
+                    id="task-subtask"
+                    class="input-style input-login cursor-pointer"
+                    type="text"
+                    placeholder="Select contacts to assign"
+                  />
+      
+                  <div onclick="openDropdownContacts()" class="dropdown-icon">
+                    <img
+                      src="assets/img/arrow_drop_down.png"
+                      alt="Arrow Down"
+                      id="dropdown-arrow"
+                    />
+                  </div>
+                  <div
+                    id="dropdown-div"
+                    class="subtask-div"
+                    style="display: none"
+                  ></div>
+                </div>
+              </div>
+      
+              <!--LINE-->
+              <div class="div-partingline"></div>
+      
+              <!--BLOCK 2-->
+      
+              <div class="box d_c_c_s gap-20 width-440">
+                <div class="d_c_c_s gap-10 width-100">
+                  <span>Due date<span style="color: red">*</span></span>
+                  <input
+                    id="task-date"
+                    class="input-style"
+                    type="date"
+                    placeholder="DD / MM / YYYY"
+                  />
+                </div>
+                <div style="display: flex">
+                  <div class="d_c_c_s gap-10">
+                    <span>Prio</span>
+                    <div class="d_f_c_c gap-20" style="width: 440px">
+                      <button
+                        type="button"
+                        onclick="setPriority('urgent-btn')"
+                        id="urgent-btn"
+                        class="input-style input-prio d_f_c_c gap-10"
+                      >
+                        Urgent<img src="assets/img/arrow-higher.png" />
+                      </button>
+                      <button
+                        type="button"
+                        onclick="setPriority('medium-btn')"
+                        id="medium-btn"
+                        class="input-style input-prio d_f_c_c gap-10"
+                      >
+                        Medium<img src="assets/img/equal.png" />
+                      </button>
+                      <button
+                        type="button"
+                        onclick="setPriority('low-btn')"
+                        id="low-btn"
+                        class="input-style input-prio d_f_c_c gap-10"
+                      >
+                        Low<img src="assets/img/arrow-lower.png" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="d_c_c_s gap-10 width-100 input-dropdown">
+                  <span>Category<span style="color: red">*</span></span>
+      
+                  <select required id="task-category" class="input-style">
+                    <option selected hidden>Select task category</option>
+                    <option value="user_story">User Story</option>
+                    <option value="technical_task">Technical Task</option>
+                  </select>
+                </div>
+      
+                <div class="d_c_c_s gap-10 width-100 input-dropdown">
+                  <span>Subtask</span>
+                  <input
+                    onclick="changeIcons()"
+                    id="subtask"
+                    class="input-style input-login"
+                    type="text"
+                    placeholder="Add new subtask"
+                  />
+                  <div id="dropdown-icon" class="dropdown-icon">
+                    <img
+                      onclick="changeIcons()"
+                      src="assets/img/input-plus.png"
+                      alt="plus"
+                    />
+                  </div>
+                  <div id="subtask-div" class="subtask-div"></div>
+                </div>
+              </div>
+            </div>
+      
+            <!--bottom-box-->
+            <div class="d_f_sb_c pad-top-100" style="width: 960px">
+              <div>
+                <span><span style="color: red">*</span>This field is required</span>
+              </div>
+              <div class="d_f_c_c gap-15">
+                <button class="clear-btn gap-10">Clear
+                  <svg class="contact-header-svg" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                          d="M12 13.4L7.10005 18.3C6.91672 18.4834 6.68338 18.575 6.40005 18.575C6.11672 18.575 5.88338 18.4834 5.70005 18.3C5.51672 18.1167 5.42505 17.8834 5.42505 17.6C5.42505 17.3167 5.51672 17.0834 5.70005 16.9L10.6 12L5.70005 7.10005C5.51672 6.91672 5.42505 6.68338 5.42505 6.40005C5.42505 6.11672 5.51672 5.88338 5.70005 5.70005C5.88338 5.51672 6.11672 5.42505 6.40005 5.42505C6.68338 5.42505 6.91672 5.51672 7.10005 5.70005L12 10.6L16.9 5.70005C17.0834 5.51672 17.3167 5.42505 17.6 5.42505C17.8834 5.42505 18.1167 5.51672 18.3 5.70005C18.4834 5.88338 18.575 6.11672 18.575 6.40005C18.575 6.68338 18.4834 6.91672 18.3 7.10005L13.4 12L18.3 16.9C18.4834 17.0834 18.575 17.3167 18.575 17.6C18.575 17.8834 18.4834 18.1167 18.3 18.3C18.1167 18.4834 17.8834 18.575 17.6 18.575C17.3167 18.575 17.0834 18.4834 16.9 18.3L12 13.4Z" />
+                  </svg>
+              </button>
+                <button type="button" onclick="addTask()" class="btn gap-10">
+                  Create Task<img src="assets/img/check.png" />
+                </button>
+              </div>
+            </div>
+          </form>
+</div>
