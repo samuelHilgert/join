@@ -1,7 +1,7 @@
 
     <img class="sidebar-logo" src="../../assets/img/logo2.png" alt="Logo">
 
-    <div class="sidebar-links d_c_c_c width-max">
+    <div class="sidebar-links d_c_c_c width-max" id="sidebarLinks">
         <a class="d_f_fs_c gap-8 sidebar-menu width-max" href="../../summary.html" id="sidebar-sum">
             <img class="sidebar-icon" src="../../assets/img/summary_grey.svg" alt="Icon Summary">
             <p>Summary</p>
@@ -21,6 +21,6 @@
     </div>
 
     <div class="sidebar-legal d_c_c_c width-max ">
-        <a class="sidebar-legal-element d_f_fs_c width-max" href="../../privacy-policy.html">Privacy Policy</a>
-        <a class="sidebar-legal-element d_f_fs_c width-max" href="../../legal-notice.html">Legal Notice</a>
+        <a class="sidebar-legal-element d_f_fs_c width-max" onclick="openSidebarLegalLink('privacy-policy')">Privacy Policy</a>
+        <a class="sidebar-legal-element d_f_fs_c width-max" onclick="openSidebarLegalLink('legal-notice')">Legal Notice</a>
     </div>

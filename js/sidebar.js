@@ -73,17 +73,40 @@ function getCurrentlySidebarLink() {
         position = 3;
         changeBgColorSidebarLink(position);
     }
+    if (currentUrl.indexOf('external') !== -1) {
+        let sidebarLinks = document.getElementById('sidebarLinks');
+        sidebarLinks.style.display = 'none';
+    }
     if (currentUrl.indexOf('privacy-policy') !== -1) {
-        let legalSidebar = document.getElementsByClassName(' sidebar-legal-element')[0]; 
-        legalSidebar.style.backgroundColor = 'rgba(9, 25, 49, 1)';   
+        let legalSidebar = document.getElementsByClassName(' sidebar-legal-element')[0];
+        legalSidebar.style.backgroundColor = 'rgba(9, 25, 49, 1)';
+        let headerSymbols = document.getElementById('headerSymbols');
+        headerSymbols.style.display = 'none';
     }
     if (currentUrl.indexOf('legal-notice') !== -1) {
-        let legalSidebar = document.getElementsByClassName('sidebar-legal-element')[1]; 
-        legalSidebar.style.backgroundColor = 'rgba(9, 25, 49, 1)';   
+        let legalSidebar = document.getElementsByClassName('sidebar-legal-element')[1];
+        legalSidebar.style.backgroundColor = 'rgba(9, 25, 49, 1)';
+        let headerSymbols = document.getElementById('headerSymbols');
+        headerSymbols.style.display = 'none';
     }
 }
 
 function changeBgColorSidebarLink(position) {
-    let sidebarMenu = document.getElementsByClassName('sidebar-menu')[position]; 
+    let sidebarMenu = document.getElementsByClassName('sidebar-menu')[position];
     sidebarMenu.style.backgroundColor = 'rgba(9, 25, 49, 1)';
+}
+
+function openSidebarLegalLink(link) {
+    let currentUrl = window.location.href;
+    if (currentUrl.indexOf('external') !== -1) {
+        console.log('Ja');
+        let url = `./${link}.html`;
+        let targetUrl = url + '?external';
+        window.location.href = targetUrl;
+    }
+    else {
+        let targetUrl = `./${link}.html`;
+        window.location.href = targetUrl;
+    }
+    
 }

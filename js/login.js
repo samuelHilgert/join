@@ -168,3 +168,9 @@ function forwardToSummary() {
 function guestLogin() {
     window.location.href = `./summary.html?msg=Du bist als Gast angemeldet`;
 }
+
+function openExternalLink(link) {
+    let url = `./${link}.html`;
+    let targetUrl = url + '?external';
+    window.open(targetUrl, '_blank');
+}
