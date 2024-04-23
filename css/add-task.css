@@ -85,6 +85,9 @@ select {
   background-position-y: 50%;
   background-size: 24px;
 }
+.task-input-style::placeholder {
+  font-size: 24px;
+}
 
 .height-130 {
   height: 130px;
@@ -133,6 +136,11 @@ select {
 
 .input-style-description {
   padding-bottom: 80px;
+  font-family: "Inter";
+}
+.input-style-description::placeholder {
+  font-size: 24px;
+  padding-top: 3px;
 }
 
 .font-size-20 {

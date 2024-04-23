@@ -208,10 +208,10 @@
 }
 
 .div-partingline {
-  height: 440px;
+  height: 490px;
   width: 1px;
   background-color: rgba(209, 209, 209, 1);
-  margin-bottom: 70px;
+  margin-bottom: 100px;
 }
 
 .drag-area {
