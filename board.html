@@ -28,7 +28,7 @@
             <h2>Board</h2>
             <div class="search-div d_f_c_c gap-30">
                 <input class="input-style input-search" type="text" placeholder="Find Task" required>
-                <a class="btn" onclick="openBoardAddTaskPopup()">Add task <img src="./assets/img/add.svg" alt=""></a>
+                <a class="btn" onclick="openBoardAddTaskPopup(event)">Add task <img src="./assets/img/add.svg" alt=""></a>
             </div>
         </div>
         <div class="drag-area-container d_f_fs_fs gap-20 width-max">
@@ -73,8 +73,8 @@
         </div>
     </div>
 
-    <div class="d_c_c_c board-task-popup max-width bgC-black" id="boardTaskPopup">
-        <div class="d_c_fs_c board-task-popup-container bgC-white pad-y-40 pad-x-40 gap-30">
+    <div class="d_c_c_c board-task-popup width-max" id="boardTaskPopup">
+        <div class="d_c_fs_c board-task-popup-container bgC-white pad-y-40 pad-x-40 gap-30" id="boardTaskPopupContainer">
             <div class="d_c_fs_fe popup-close-button width-max">
                 <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeBoardTaskPopup()">
                     <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <div class="d_c_c_c board-task-popup max-width bgC-black" include-html="../assets/templates/add-task.html" id="boardAddTaskPopup"></div>
+    <div class="d_c_c_c board-task-popup width-max" include-html="../assets/templates/add-task.html" id="boardAddTaskPopup"></div>
 
 </body>
 

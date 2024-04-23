@@ -1,0 +1,14 @@
+
+# Verbieten aller rechtlichen Seiten 
+
+User-agent: *
+Disallow: /add-task.html
+Disallow: /board.html
+Disallow: /contacts.html
+Disallow: /help.html
+Disallow: /index.html
+Disallow: /legal-notice.html
+Disallow: /login.html
+Disallow: /privacy-policy.html
+Disallow: /signup.html
+Disallow: /summary.html
