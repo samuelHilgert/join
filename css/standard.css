@@ -254,6 +254,10 @@ body {
   text-align: center;
 }
 
+.d_f {
+  display: flex;
+}
+
 .d_f_c_c {
   display: flex;
   justify-content: center;
@@ -470,5 +474,4 @@ body {
 .d-none {
   display: none;
 }
-
 
