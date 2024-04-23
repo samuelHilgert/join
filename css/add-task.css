@@ -138,3 +138,25 @@ select {
 .font-size-20 {
   font-size: 20px;
 }
+
+.color-white {
+  color: white;
+}
+
+.active-prio-btn-urgent {
+  background-color: #ff3d00;
+  color: white;
+  font-weight: 700;
+}
+
+.active-prio-btn-medium {
+  background-color: #ffa800;
+  color: white;
+  font-weight: 700;
+}
+
+.active-prio-btn-low {
+  background-color: #7ae229;
+  color: white;
+  font-weight: 700;
+}

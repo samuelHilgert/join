@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="./css/add-task.css" />
   </head>
 
-  <body onload="init(), setPriority()">
+  <body onload="init(), setDefaultPriority()">
     <div
       class="sidebar d_c_sb_c"
       include-html="../assets/templates/sidebar.html"
@@ -120,15 +120,15 @@
                   id="urgent-btn"
                   class="task-input-style input-prio d_f_c_c gap-10"
                 >
-                  Urgent<img src="assets/img/arrow-higher.png" />
+                  Urgent<img src="assets/img/prio-urgent.svg" />
                 </button>
                 <button
                   type="button"
                   onclick="setPriority('medium-btn')"
                   id="medium-btn"
-                  class="task-input-style input-prio d_f_c_c gap-10"
+                  class="task-input-style input-prio d_f_c_c gap-10 active-prio-btn-medium"
                 >
-                  Medium<img src="assets/img/equal.png" />
+                  Medium<img src="assets/img/prio-medium.svg" />
                 </button>
                 <button
                   type="button"
@@ -136,7 +136,7 @@
                   id="low-btn"
                   class="task-input-style input-prio d_f_c_c gap-10"
                 >
-                  Low<img src="assets/img/arrow-lower.png" />
+                  Low<img src="assets/img/prio-low.svg" />
                 </button>
               </div>
             </div>

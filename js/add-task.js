@@ -18,7 +18,24 @@ function addTask() {
   };
   allTasks.push(task);
   dropdownContact = [];
-  setItem("task", allTasks);
+  // setItem("task", allTasks);
+}
+
+function determinePriority() {
+  let prio = "medium"; // Standardpriorität
+
+  // Überprüfe die Klasse jedes Buttons, um die ausgewählte Priorität zu bestimmen
+  const urgentBtn = document.getElementById("urgent-btn");
+  const mediumBtn = document.getElementById("medium-btn");
+  const lowBtn = document.getElementById("low-btn");
+
+  if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
+    prio = "urgent";
+  } else if (lowBtn.classList.contains("active-prio-btn-low")) {
+    prio = "low";
+  }
+
+  return prio;
 }
 
 function readTaskInput() {
@@ -36,48 +53,36 @@ function readTaskInput() {
   };
 }
 
-function determinePriority() {
-  const mediumButton = document.getElementById("medium-btn");
-  const urgentButton = document.getElementById("urgent-btn");
-  const lowButton = document.getElementById("low-btn");
+function setPriority(btnId) {
+  // Alle Buttons
+  const buttons = ["urgent-btn", "medium-btn", "low-btn"];
 
-  const prio =
-    getPriorityFromButtonColor(mediumButton) ||
-    getPriorityFromButtonColor(urgentButton) ||
-    getPriorityFromButtonColor(lowButton);
-
-  return prio;
-}
-
-// Funktion zum Ermitteln der Priorität basierend auf der Hintergrundfarbe eines Buttons
-function getPriorityFromButtonColor(button) {
-  const backgroundColor = button.style.backgroundColor;
-  if (backgroundColor === "rgb(255, 168, 0)") {
-    return "medium";
-  } else if (backgroundColor === "rgb(255, 61, 0)") {
-    return "urgent";
-  } else if (backgroundColor === "rgb(122, 226, 41)") {
-    return "low";
-  } else {
-    return ""; // Standardwert, falls keine Priorität gefunden wird
-  }
-}
-
-// Funktion zum Einfärben des ausgewählten Buttons und Zurücksetzen der anderen Buttons
-function setPriority(prio = "medium-btn") {
-  const buttons = document.querySelectorAll(".task-input-style.input-prio");
-  buttons.forEach(function (btn) {
-    btn.style.backgroundColor = ""; // Standardfarbe (keine Hintergrundfarbe)
+  // Entferne für alle Buttons die aktive Klasse
+  buttons.forEach((btn) => {
+    document.getElementById(btn).classList.remove("active-prio-btn-urgent");
+    document.getElementById(btn).classList.remove("active-prio-btn-medium");
+    document.getElementById(btn).classList.remove("active-prio-btn-low");
   });
 
-  const button = document.getElementById(prio);
-  if (prio === "medium-btn") {
-    button.style.backgroundColor = "#FFA800";
-  } else if (prio === "urgent-btn") {
-    button.style.backgroundColor = "#FF3D00";
-  } else if (prio === "low-btn") {
-    button.style.backgroundColor = "#7AE229";
+  // Setze die entsprechende Klasse für den geklickten Button
+  switch (btnId) {
+    case "urgent-btn":
+      document.getElementById(btnId).classList.add("active-prio-btn-urgent");
+      break;
+    case "medium-btn":
+      document.getElementById(btnId).classList.add("active-prio-btn-medium");
+      break;
+    case "low-btn":
+      document.getElementById(btnId).classList.add("active-prio-btn-low");
+      break;
+    default:
+      break;
   }
+}
+
+function setDefaultPriority() {
+  // Setze Medium-Button als Standard-Priorität
+  document.getElementById("medium-btn").classList.add("active-prio-btn-medium");
 }
 
 function openDropdownContacts() {
