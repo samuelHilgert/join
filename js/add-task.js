@@ -18,7 +18,7 @@ function addTask() {
   };
   allTasks.push(task);
   dropdownContact = [];
-  setItem("task", allTasks);
+  // setItem("task", allTasks);
 }
 
 function readTaskInput() {
@@ -27,7 +27,6 @@ function readTaskInput() {
   const date = document.getElementById("task-date").value;
   const category = document.getElementById("task-category").value;
   const subtask = document.getElementById("subtask").value;
-
   return {
     title: title,
     description: description,
@@ -36,47 +35,57 @@ function readTaskInput() {
   };
 }
 
+//Return Value from Priority!
 function determinePriority() {
-  const mediumButton = document.getElementById("medium-btn");
-  const urgentButton = document.getElementById("urgent-btn");
-  const lowButton = document.getElementById("low-btn");
-
-  const prio =
-    getPriorityFromButtonColor(mediumButton) ||
-    getPriorityFromButtonColor(urgentButton) ||
-    getPriorityFromButtonColor(lowButton);
-
+  let prio = "medium"; // Standardpriorität
+  const urgentBtn = document.getElementById("urgent-btn");
+  const mediumBtn = document.getElementById("medium-btn");
+  const lowBtn = document.getElementById("low-btn");
+  if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
+    prio = "urgent";
+  } else if (lowBtn.classList.contains("active-prio-btn-low")) {
+    prio = "low";
+  }
   return prio;
 }
 
-// Funktion zum Ermitteln der Priorität basierend auf der Hintergrundfarbe eines Buttons
-function getPriorityFromButtonColor(button) {
-  const backgroundColor = button.style.backgroundColor;
-  if (backgroundColor === "rgb(255, 168, 0)") {
-    return "medium";
-  } else if (backgroundColor === "rgb(255, 61, 0)") {
-    return "urgent";
-  } else if (backgroundColor === "rgb(122, 226, 41)") {
-    return "low";
-  } else {
-    return ""; // Standardwert, falls keine Priorität gefunden wird
-  }
+//Change Prio Btn colors!
+function setPriority(btnId) {
+  removeActiveClasses();
+  setActiveClasses(btnId);
 }
 
-// Funktion zum Einfärben des ausgewählten Buttons und Zurücksetzen der anderen Buttons
-function setPriority(prio = "medium-btn") {
-  const buttons = document.querySelectorAll(".task-input-style.input-prio");
-  buttons.forEach(function (btn) {
-    btn.style.backgroundColor = ""; // Standardfarbe (keine Hintergrundfarbe)
+function removeActiveClasses() {
+  const buttons = ["urgent-btn", "medium-btn", "low-btn"];
+  buttons.forEach((button) => {
+    const buttonElement = document.getElementById(button);
+    buttonElement.classList.remove(
+      "active-prio-btn-urgent",
+      "active-prio-btn-medium",
+      "active-prio-btn-low"
+    );
+    buttonElement.querySelector("img").classList.remove("filter-prio-btn");
   });
+}
 
-  const button = document.getElementById(prio);
-  if (prio === "medium-btn") {
-    button.style.backgroundColor = "#FFA800";
-  } else if (prio === "urgent-btn") {
-    button.style.backgroundColor = "#FF3D00";
-  } else if (prio === "low-btn") {
-    button.style.backgroundColor = "#7AE229";
+function setActiveClasses(btnId) {
+  const clickedButton = document.getElementById(btnId);
+  const buttonImg = clickedButton.querySelector("img");
+
+  switch (btnId) {
+    case "urgent-btn":
+      clickedButton.classList.add("active-prio-btn-urgent");
+      buttonImg.classList.add("filter-prio-btn");
+      break;
+    case "medium-btn":
+      clickedButton.classList.add("active-prio-btn-medium");
+      break;
+    case "low-btn":
+      clickedButton.classList.add("active-prio-btn-low");
+      buttonImg.classList.add("filter-prio-btn");
+      break;
+    default:
+      break;
   }
 }
 
@@ -136,6 +145,17 @@ function addSubtask() {
       `;
     subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
   }
+}
+
+function changeIcons() {
+  let iconBox = document.getElementById("dropdown-icon");
+  iconBox.innerHTML = `
+  <div class="d_f_c_c gap-5 padding-right-36">
+  <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
+  <div class='input-spacer'></div>
+  <img onclick='addSubtask()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
+</div>
+  `;
 }
 
 function editSubtask(element) {
