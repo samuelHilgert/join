@@ -168,7 +168,7 @@
     }
 }
 
-.contact-info-wrapper {
+.animation-in {
     animation: slideInRight 0.5s ease-in-out forwards;
 }
 
