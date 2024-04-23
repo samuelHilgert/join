@@ -73,9 +73,17 @@ function getCurrentlySidebarLink() {
         position = 3;
         changeBgColorSidebarLink(position);
     }
+    if (currentUrl.indexOf('privacy-policy') !== -1) {
+        let legalSidebar = document.getElementsByClassName(' sidebar-legal-element')[0]; 
+        legalSidebar.style.backgroundColor = 'rgba(9, 25, 49, 1)';   
+    }
+    if (currentUrl.indexOf('legal-notice') !== -1) {
+        let legalSidebar = document.getElementsByClassName('sidebar-legal-element')[1]; 
+        legalSidebar.style.backgroundColor = 'rgba(9, 25, 49, 1)';   
+    }
 }
 
 function changeBgColorSidebarLink(position) {
-    let sidebarMenu = document.getElementsByClassName('sidebar-menu')[position]; // Zugriff auf das erste Element in der Sammlung
+    let sidebarMenu = document.getElementsByClassName('sidebar-menu')[position]; 
     sidebarMenu.style.backgroundColor = 'rgba(9, 25, 49, 1)';
 }
