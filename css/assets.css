@@ -23,6 +23,10 @@
   background-image: url("../assets/img/lock.svg");
 }
 
+.input-phone {
+  background-image: url("../assets/img/phone.svg");
+}
+
 .input-search {
   background-image: url("../assets/img/search-icon-with-line.svg");
   background-size: 40px;
@@ -58,6 +62,14 @@
 
 .input-dropdown {
   position: relative;
+}
+
+.input-font {
+  font-size: 20px;
+  font-family: 'Inter';
+  font-weight: 400;
+  color: rgba(209, 209, 209, 1);
+  line-height: 24px;
 }
 
 .dropdown-icon {
@@ -118,11 +130,18 @@
   border-width: 1px;
   border-color: #2a3647;
   text-wrap: nowrap;
+  background-color: rgba(255, 255, 255, 1);
+  color: rgba(42, 54, 71, 1);
 }
 
 .clear-btn:hover {
   border-color: #29abe2;
   box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
+  color: #29ABE2;
+}
+
+.clear-btn:hover svg.contact-header-svg {
+  fill: #29ABE2;
 }
 
 #btnBoard {

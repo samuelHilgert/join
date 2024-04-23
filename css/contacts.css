@@ -256,6 +256,7 @@
 
   .add-contact-container {
     display: flex;
+    justify-content: center;
     margin: 50px;
     width: 100%;
   }
@@ -263,6 +264,7 @@
   .add-contact-container-left {
     height: 594px;
     width: 40%;
+    max-width: 576px;
     background-color: rgba(42, 54, 71, 1);
     border-radius: 40px 0 0 40px;
     padding: 66px 48px;
@@ -274,6 +276,7 @@
   .add-contact-container-right {
     height: 594px;
     width: 60%;
+    max-width: 864px;
     border-radius: 0px 40px 40px 0px;
     padding: 66px 48px;
     background-color: rgba(255, 255, 255, 1);
@@ -321,4 +324,41 @@
   .add-contact-container-right-img-wrapper:hover {
     background-color: rgb(240, 240, 240);
     cursor: pointer;
+  }
+
+  .add-contact-container-right-bottom {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+  }
+
+  .btn-wrapper {
+    display: flex;
+    gap: 24px;
+    margin-top: 36px;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .contact-grey-svg {
+    height: 120px;
+    width: 120px;
+  }
+
+  .add-contact-container-right-bottom-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    margin-top: -33px;
+  }
+
+  .close-contact-btn {
+    position: relative;
+    z-index: 10;
   }
