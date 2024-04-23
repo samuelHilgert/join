@@ -55,3 +55,9 @@ function hideHelpIcon() {
         helpIcon.style.display = 'none';
     }
 }
+
+function openExternalLink(link) {
+    let url = `./${link}.html`;
+    let targetUrl = url + '?external';
+    window.open(targetUrl, '_blank');
+}
