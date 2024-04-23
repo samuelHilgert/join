@@ -1,5 +1,6 @@
 let allTasks = [];
 let dropdownContact = [];
+let subtasks = [];
 
 // Funktion zum Hinzufügen einer Aufgabe
 function addTask() {
@@ -9,31 +10,29 @@ function addTask() {
   const task = {
     title: taskInput.title,
     description: taskInput.description,
-    assignedTo: taskInput.assignedTo,
+    assignedTo: dropdownContact,
     date: new Date(taskInput.date).getTime(),
     prio: prio,
     category: taskInput.category,
-    subtask: taskInput.subtask,
+    subtask: subtasks,
   };
   allTasks.push(task);
   dropdownContact = [];
+  setItem("task", allTasks);
 }
 
 function readTaskInput() {
   const title = document.getElementById("task-title").value;
   const description = document.getElementById("task-description").value;
-  const assignedTo = document.getElementById("task-title").value;
   const date = document.getElementById("task-date").value;
   const category = document.getElementById("task-category").value;
-  const subtask = document.getElementById("task-subtask").value;
+  const subtask = document.getElementById("subtask").value;
 
   return {
     title: title,
     description: description,
-    assignedTo: assignedTo,
     date: date,
     category: category,
-    subtask: subtask,
   };
 }
 
@@ -65,7 +64,7 @@ function getPriorityFromButtonColor(button) {
 }
 
 // Funktion zum Einfärben des ausgewählten Buttons und Zurücksetzen der anderen Buttons
-function setPriority(prio) {
+function setPriority(prio = "medium-btn") {
   const buttons = document.querySelectorAll(".input-style.input-prio");
   buttons.forEach(function (btn) {
     btn.style.backgroundColor = ""; // Standardfarbe (keine Hintergrundfarbe)
@@ -112,14 +111,45 @@ function chooseContact(i, name) {
 function changeIcons() {
   let iconBox = document.getElementById("dropdown-icon");
   iconBox.innerHTML = `
-  <img class='padding-10' src="assets/img/input-cross.png" alt="cross" />
-  <img onclick='addSubtask()' class='padding-10' src="assets/img/input-cross.png" alt="check" />
+  <div class="d_f_c_c gap-5 padding-right-36">
+  <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
+  <div class='input-spacer'></div>
+  <img onclick='addSubtask()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
+</div>
   `;
 }
 
 function addSubtask() {
-  const subtask = document.getElementById("task-subtask").value;
-  const subtaskContainer = document.getElementById("subtask-div");
-  subtaskContainer.innerHTML += `<div><span>${subtask}</span></div>`;
-  console.log(subtask);
+  const subtaskInput = document.getElementById("subtask");
+  const subtaskValue = subtaskInput.value.trim(); // Trimmen Sie den Wert, um führende und nachfolgende Leerzeichen zu entfernen
+  if (subtaskValue !== "") {
+    subtasks.push(subtaskValue);
+    const subtaskContainer = document.getElementById("subtask-div");
+    subtaskContainer.innerHTML += `
+          <div class='d_f_sb_c pad-x-10'>
+              <span>${subtaskValue}</span>
+              <div class='d_f_c_c gap-5'>
+                  <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
+                  <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(this)" />
+              </div>
+          </div>
+      `;
+    subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
+  }
 }
+
+function editSubtask(element) {
+  const subtaskText = element.parentNode.previousElementSibling;
+  const newText = prompt("Edit Subtask:", subtaskText.textContent);
+  if (newText !== null) {
+    subtaskText.textContent = newText;
+  }
+}
+
+function deleteSubtask(element) {
+  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskItem = element.parentNode.parentNode;
+  subtaskContainer.removeChild(subtaskItem);
+}
+
+function clearSubtaskInput() {}

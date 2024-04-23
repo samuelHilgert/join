@@ -46,8 +46,11 @@
 }
 
 .input-prio {
-  padding: 22px 10px;
+  padding: 20px 10px;
+  font-size: 16px;
+  background-color: white;
 }
+
 .input-prio:hover {
   cursor: pointer;
   box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
@@ -55,12 +58,11 @@
 
 .input-dropdown {
   position: relative;
-  display: inline-block;
 }
 
 .dropdown-icon {
   position: absolute;
-  top: 40px;
+  top: 48px;
   right: 12px;
   display: flex;
   justify-content: center;
@@ -226,9 +228,10 @@
 }
 
 .div-partingline {
-  height: 400px;
-  width: 1.5px;
+  height: 440px;
+  width: 1px;
   background-color: rgba(209, 209, 209, 1);
+  margin-bottom: 70px;
 }
 
 .drag-area {
@@ -256,6 +259,7 @@
   margin: 10px;
   height: auto;
   width: 100%;
+  cursor: pointer;
   box-sizing: border-box;
 }
 
@@ -308,4 +312,39 @@ li {
   display: none;
   justify-content: center;
   align-items: center;
+}
+
+#boardTaskPopup {
+  display: none;
+}
+
+.board-task-popup {
+  background-color: rgba(255, 255, 255, 1);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.board-task-popup-container {
+  width: 30%;
+  height: 80%;
+  border-radius:30px;
+}
+
+.close-button-div:hover {
+background-color: rgb(240, 240, 240);
+border-radius: 50%;
+}
+
+.popup-close-button img {
+  cursor: pointer;
+}
+
+.edit-style:hover,
+.delete-style:hover {
+  color: #29ABE2;
+  cursor:pointer;
 }

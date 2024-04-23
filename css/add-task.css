@@ -25,7 +25,7 @@ select {
   border-radius: 5px;
   font-size: 16px;
   appearance: none; /* Entfernt das Standard-Styling */
-  background-image: url("assets/img/arrow_drop_down.png"); /* Pfad zum Bild */
+  background-image: url(""); /* Pfad zum Bild */
   background-repeat: no-repeat;
   background-position: right 10px center; /* Position des Bildes */
   background-size: 8px !important; /* Größe des Bildes */
@@ -42,9 +42,32 @@ select {
   height: 7rem;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: white;
 }
 
 .padding-10 {
   padding: 5px;
+}
+
+.width-440 {
+  width: 440px;
+}
+.urgent-btn-clicked {
+  padding: 20px 10px;
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  font-weight: 800;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.input-spacer {
+  height: 22px;
+  border: 1px solid #ccc;
+}
+
+.padding-right-36 {
+  padding-right: 36px;
 }

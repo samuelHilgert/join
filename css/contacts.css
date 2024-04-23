@@ -1,16 +1,23 @@
+.contact-page-wrapper {
+    display: flex;
+}
+
+.contact-right-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .contact-wrapper {
-    position: fixed;
-    width: 456px;
+    margin: 0 0 0 232px;
+    min-width: 456px;
     height: calc(100vh - 96px);
-    top: 96px;
-    left: 232px;
     background-color: rgba(255, 255, 255, 1);
     box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
     overflow-y: scroll;
     scrollbar-color: rgba(168, 168, 168, 1) rgba(255, 255, 255, 1);
     scrollbar-width: thin;
     overflow-x: hidden;
-  }
+}
   
   .contact-btn-wrapper {
     width: 456px;
@@ -66,7 +73,7 @@
   }
   
   .contact-small:hover {
-    background-color: #f9f9f9;
+    background-color: rgb(240, 240, 240);
     cursor: pointer;
   }
   
@@ -77,7 +84,7 @@
   
   .contact-small-active:hover { /* FOR CLICKED CONTACT ONLY */
     cursor: pointer;
-    background-color: rgba(42, 54, 71, 1)
+    background-color: rgba(42, 54, 71, 1);
   }
   
   .contact-circle {
@@ -122,11 +129,9 @@
   }
   
   .contact-right {
-    width: 580px;
     height: 73px;
-    position: fixed;
-    top: 206px;
-    left: 743px;
+    margin: 110px 0 0 55px;
+    display: flex;
   }
   
   .contact-right-text-big {
@@ -152,18 +157,14 @@
   }
   
   .contact-info {
-    width: 500px;
     height: 364px;
-    position: fixed;
-    left: 750px;
-    top: 311px;
     gap: 21px;
     display: flex;
     flex-direction: column;
-  }
+    margin: 110px 0 0 55px;
+}
   
   .contact-card-header {
-    width: 500px;
     height: 120px;
     gap: 54px;
     display: flex;
@@ -171,8 +172,8 @@
   }
   
   .circle-big {
-    width: 120px;
-    height: 120px;
+    min-width: 120px;
+    min-height: 120px;
     border-radius: 50%;
     border: 3px solid rgba(255, 255, 255, 1);
     background-color: teal;
@@ -184,11 +185,17 @@
   }
   
   .contact-card-header-text {
-    height: 88px;
+    height: auto;
     font-family: 'Inter';
     font-size: 47px;
     font-weight: 500;
     color: rgba(0, 0, 0, 1);
+  }
+
+  .contact-card-header-text-span {
+    width: 100%;
+    line-break: auto;
+    display: flex;
   }
   
   .contact-card-header-icons {
@@ -236,4 +243,82 @@
     line-height: 19.2px;
     font-weight: 400;
     color: rgba(0, 0, 0, 1);
+  }
+
+  .add-contact-container-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .add-contact-container {
+    display: flex;
+    margin: 50px;
+    width: 100%;
+  }
+
+  .add-contact-container-left {
+    height: 594px;
+    width: 40%;
+    background-color: rgba(42, 54, 71, 1);
+    border-radius: 40px 0 0 40px;
+    padding: 66px 48px;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .add-contact-container-right {
+    height: 594px;
+    width: 60%;
+    border-radius: 0px 40px 40px 0px;
+    padding: 66px 48px;
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  .add-contact-img {
+    padding-top: 140px;
+    height: 66.48px;
+    width: 55.6px;
+  }
+
+  .horizontal-partingline {
+    border: 3px solid rgba(41, 171, 226, 1);
+    width: 90px;
+  }
+
+  .add-contact-span-big {
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Inter';
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 73.2px;
+  }
+
+  .add-contact-span-small {
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Inter';
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 32.4px;
+  }
+
+  .add-contact-container-right-img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .add-contact-container-right-img-wrapper {
+    border-radius: 50%;
+    height: 33px;
+    width: 33px;
+    margin-top: -8px;
+  }
+
+  .add-contact-container-right-img-wrapper:hover {
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
   }
