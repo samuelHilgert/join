@@ -91,7 +91,7 @@ let profileCircleColors = [
     'skyblue',
     'forestgreen',
     'tan',
-    'green',
+    'darkgreen',
     'blue',
     'indianred',
     'seagreen',
