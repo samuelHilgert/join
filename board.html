@@ -28,7 +28,7 @@
             <h2>Board</h2>
             <div class="search-div d_f_c_c gap-30">
                 <input class="input-style input-search" type="text" placeholder="Find Task" required>
-                <a class="btn" href="">Add task <img src="./assets/img/add.svg" alt=""></a>
+                <a class="btn" onclick="openBoardAddTaskPopup()">Add task <img src="./assets/img/add.svg" alt=""></a>
             </div>
         </div>
         <div class="drag-area-container d_f_fs_fs gap-20 width-max">
@@ -83,6 +83,8 @@
             <div class="d_c_sb_c height-max" id="boardTaskPopupContent"></div>
         </div>
     </div>
+
+    <div class="d_c_c_c board-task-popup max-width bgC-black" include-html="../assets/templates/add-task.html" id="boardAddTaskPopup"></div>
 
 </body>
 

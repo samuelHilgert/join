@@ -148,13 +148,17 @@ function removeHighlight(id) {
 
 function openBoardTaskPopup(elementId) {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
+    document.body.style.overflow = 'hidden'; 
     boardTaskPopup.style.display = 'flex';
     renderBoardTaskPopupContent(elementId);
 }
 
 function closeBoardTaskPopup() {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
+    let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');
+    boardAddTaskPopup.style.display = 'none';
     boardTaskPopup.style.display = 'none';
+    document.body.style.overflow = 'scroll'; 
 }
 
 
@@ -176,7 +180,22 @@ boardTaskPopupContent.innerHTML = `
 <p>Priority:</p>
 <p>Assigned To:</p>
 <p>Subtasks:</p>
-<div class="d_f_fe_fe width-max gap-20"><div>Delete</div><div>Edit</div></div>
+<div class="d_f_fe_c width-max gap-20">
+    <div class="delete-style d_f_c_c gap-10">
+    <img src="./assets/img/delete.svg" alt="">
+    <p>Delete</p>
+    </div>
+    <div class="edit-style d_f_c_c gap-10">
+    <img src="./assets/img/edit.svg" alt="">
+    Edit
+    </div>
+    </div>
 </div>
 `;
+}
+
+function openBoardAddTaskPopup() {
+    let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');
+    document.body.style.overflow = 'hidden'; 
+    boardAddTaskPopup.style.display = 'flex';
 }
