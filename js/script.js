@@ -6,6 +6,7 @@
 async function init() {
     await includeHTML();
     getCurrentlySidebarLink();
+    hideHelpIcon();
 }
 
 /**
@@ -38,5 +39,19 @@ function openHeaderPopupLinks() {
         let headerSymbolPopup = document.getElementById('headerSymbolPopup');
         headerSymbolPopup.style.display = 'none';
         headerOpenPopupClicked = false;
+    }
+}
+
+function openHelp() {
+    openHelpClicked = true;
+    let targetUrl = `./help.html`;
+    window.location.href = targetUrl;
+}
+
+function hideHelpIcon() {
+    let currentUrl = window.location.href;
+    if (currentUrl.indexOf('help') !== -1) {
+        let helpIcon = document.getElementById('helpIcon');
+        helpIcon.style.display = 'none';
     }
 }

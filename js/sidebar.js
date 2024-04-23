@@ -99,7 +99,6 @@ function changeBgColorSidebarLink(position) {
 function openSidebarLegalLink(link) {
     let currentUrl = window.location.href;
     if (currentUrl.indexOf('external') !== -1) {
-        console.log('Ja');
         let url = `./${link}.html`;
         let targetUrl = url + '?external';
         window.location.href = targetUrl;
