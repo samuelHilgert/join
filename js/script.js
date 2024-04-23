@@ -25,3 +25,18 @@ async function includeHTML() {
         }
     }
 }
+
+let headerOpenPopupClicked = false;
+
+function openHeaderPopupLinks() {
+    if (!headerOpenPopupClicked) {
+        let headerSymbolPopup = document.getElementById('headerSymbolPopup');
+        headerSymbolPopup.style.display = 'flex';
+        headerOpenPopupClicked = true;
+    }
+    else {
+        let headerSymbolPopup = document.getElementById('headerSymbolPopup');
+        headerSymbolPopup.style.display = 'none';
+        headerOpenPopupClicked = false;
+    }
+}

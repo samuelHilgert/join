@@ -353,3 +353,22 @@ li {
   right: 0;
 }
 
+#headerSymbolPopup {
+  display:none;
+  margin-right:20px;
+  background-color: rgba(42, 54, 71, 1);
+  border-radius: 20px 0px 20px 20px;
+  position:absolute;
+  right:0;
+  top:96px;
+  width:150px;
+  height:158px;
+  padding:10px;
+}
+
+.symbolPopupLink {
+padding: 4px 28px !important;
+white-space: nowrap;
+color: rgba(205, 205, 205, 1) !important;
+}
+
