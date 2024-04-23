@@ -364,6 +364,7 @@ li {
   width:150px;
   height:158px;
   padding:10px;
+  z-index:99999999;
 }
 
 .symbolPopupLink {
