@@ -18,6 +18,24 @@
   margin-top: 3px;
 }
 
+.assigned-div {
+  position: absolute;
+  z-index: 1; /* Stelle sicher, dass die div über anderen Inhalten liegt */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  height: 200px;
+  width: 460px;
+  margin-top: 297px;
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .category-div {
   position: absolute;
   z-index: 1; /* Stelle sicher, dass die div über anderen Inhalten liegt */
@@ -56,17 +74,6 @@
   right: 12px; /* Anpassen der rechten Ausrichtung */
   transform: translateY(-50%);
   cursor: pointer;
-}
-
-.subtask-div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding-top: 0.25rem;
-  width: 100%;
-  height: 7rem;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .padding-10 {
