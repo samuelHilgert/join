@@ -320,7 +320,7 @@ function editContact(contactId) {
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
         let wrapper = document.getElementById('editContactMask');
-        wrapper.innerHTML = renderEditContactHTML(color, firstLetter, firstLetterSurname, name, mail, phone);
+        wrapper.innerHTML = renderEditContactHTML(color, firstLetter, firstLetterSurname, name, mail, phone, contactId);
         let editContactContainer = document.getElementById('editContactContainer');
         wrapper.classList.remove('d-none');
         editContactContainer.classList.remove('animation-out');
@@ -356,5 +356,7 @@ function deleteContact(contactId) {
         });
         let contactInfo = document.getElementById('contactInfo');
         contactInfo.innerHTML = '';
+        let wrapper = document.getElementById('editContactMask');
+        wrapper.classList.add('d-none');
     }
 }
