@@ -309,7 +309,7 @@ function closeEditContactForm() {
     });
 }
 
-
+// Funktion noch um Bearbeitung von Kontakt erweitern
 function editContact(contactId) {
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
@@ -340,6 +340,18 @@ function createUniqueContactId() {
 }
 
 
-function deleteContact() {
-    
+function deleteContact(contactId) {
+    let index = contacts.findIndex(contact => contact['id'] === contactId);
+    if (index != -1) {
+        contacts.splice(index, 1);
+        renderContactList();
+        let contactCircles = document.querySelectorAll('.contact-circle'); // keeps the backgroundcolor of the circle
+        contactCircles.forEach((circle, index) => {
+            if (index >= index) { // If the index is greater than or equal to the index of the deleted contact
+                circle.style.backgroundColor = contacts[index]['color'];
+            }
+        });
+        let contactInfo = document.getElementById('contactInfo');
+        contactInfo.innerHTML = '';
+    }
 }
