@@ -1,80 +1,32 @@
-let todos = [{
-    'id': 0,
-    'label': 'User Story',
-    'title': 'Contact Form & Imprint',
-    'description': 'Create a contact form and imprint page...',
-    'category': 'backlog'
-}, {
-    'id': 1,
-    'label': 'User Story',
-    'title': 'Kochwelt Page & Recipe Recommender',
-    'description': 'Build start page with recipe recommendation...',
-    'category': 'inProgress'
-}, {
-    'id': 2,
-    'label': 'Technical Task',
-    'title': 'HTML Base Template Creation',
-    'description': 'Create reusable HTML base templates...',
-    'category': 'awaitFeedback'
-}, {
-    'id': 3,
-    'label': 'User Story',
-    'title': 'Daily Kochwelt Recipe',
-    'description': 'Implement daily recipe and portion calculator....',
-    'category': 'awaitFeedback'
-}, {
-    'id': 4,
-    'label': 'Technical Task',
-    'title': 'CSS Architecture Planning',
-    'description': 'Define CSS naming conventions and structure...',
-    'category': 'done'
-}];
+let tasks = [];
+let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 
 let currentDraggedElement;
 
-function renderBoardCards() {
-    let backlog = todos.filter(t => t['category'] == 'backlog');
-    let inProgress = todos.filter(t => t['category'] == 'inProgress');
-    let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
-    let done = todos.filter(t => t['category'] == 'done');
+async function renderBoardCards() {
+    let resp = await fetch('./JSON/user_tasks.json');
+    tasks = await resp.json();
+
+    for (let id = 0; id < categories.length; id++) {
+    const category = categories[id];
+    const categoriesBySameName = tasks.filter(t => t['category'] == category);
+    const taskDiv = document.getElementById(`${category}`); 
+    taskDiv.innerHTML = '';
+    renderFunction(categoriesBySameName, taskDiv, id);
+    }
+
+    function renderFunction(categoriesBySameName, taskDiv, id) {
+        for (let k = 0; k < categoriesBySameName.length; k++) {
+            const element = categoriesBySameName[k];
+            taskDiv.innerHTML += generateTodoHTML(element, id);
+            updateProgressBar(id);
+        }
+    }
+    
+}
+/* 
     let label = todos.filter(t => t['category'] == 'label');
 
-    document.getElementById('backlog').innerHTML = '';
-
-    for (let index = 0; index < backlog.length; index++) {
-        const element = backlog[index];
-        const elementId = element['id'];
-        document.getElementById('backlog').innerHTML += generateTodoHTML(element, elementId);
-        updateProgressBar(elementId);
-    }
-
-    document.getElementById('inProgress').innerHTML = '';
-
-    for (let index = 0; index < inProgress.length; index++) {
-        const element = inProgress[index];
-        const elementId = element['id'];
-        document.getElementById('inProgress').innerHTML += generateTodoHTML(element, elementId);
-        updateProgressBar(elementId);
-    }
-
-    document.getElementById('awaitFeedback').innerHTML = '';
-
-    for (let index = 0; index < awaitFeedback.length; index++) {
-        const element = awaitFeedback[index];
-        const elementId = element['id'];
-        document.getElementById('awaitFeedback').innerHTML += generateTodoHTML(element, elementId);
-        updateProgressBar(elementId);
-    }
-
-    document.getElementById('done').innerHTML = '';
-
-    for (let index = 0; index < done.length; index++) {
-        const element = done[index];
-        const elementId = element['id'];
-        document.getElementById('done').innerHTML += generateTodoHTML(element, elementId);
-        updateProgressBar(elementId);
-    }
-    /*
         document.getElementById('label').innerHTML = '';
     
         for (let index = 0; index < label.length; index++) {
@@ -89,22 +41,21 @@ function renderBoardCards() {
                 document.getElementById('btnBoard').style.backgroundColor = 'rgba(31, 215, 193, 1)';
             }
         }*/
-}
 
 function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTodoHTML(element, elementId) {
-    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${elementId})" draggable="true" ondragstart="startDragging(${element['id']})">
+function generateTodoHTML(element, id) {
+    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${id})" draggable="true" ondragstart="startDragging(${id})">
             <button class="d_f_c_c" id="btnBoard">${element['label']}</button>
             <h6><b>${element['title']}</b></h6>
             <p>${element['description']}</p>
             <div class="d_f_c_c width-max">
                 <div class="progress">
-                    <div class="progress-bar" id="progressBar${element['id']}"></div>
+                    <div class="progress-bar" id="progressBar${id}"></div>
                 </div>
-                <div class="statusText"><span id="currentTaskNumber${element['id']}">X</span>/<span id="">2</span><span>&nbsp;Subtasks</span></div>
+                <div class="statusText"><span id="currentTaskNumber${id}">X</span>/<span id="">2</span><span>&nbsp;Subtasks</span></div>
             </div>
             <div class="d_f_sb_c width-max">
             <div>
@@ -116,10 +67,10 @@ function generateTodoHTML(element, elementId) {
             </div>`;
 }
 
-function updateProgressBar(elementId) {
+function updateProgressBar(id) {
     let currentTaskStatus = 1;
-    document.getElementById(`currentTaskNumber${elementId}`).innerHTML = `${currentTaskStatus}`;
-    let progressBar = document.getElementById(`progressBar${elementId}`);
+    document.getElementById(`currentTaskNumber${id}`).innerHTML = `${currentTaskStatus}`;
+    let progressBar = document.getElementById(`progressBar${id}`);
     if (currentTaskStatus === 1) {
         progressBar.style.width = `50%`;
         progressBar.classList.add('blue');
@@ -129,30 +80,28 @@ function updateProgressBar(elementId) {
     }
 }
 
-function allowDrop(ev) {
-    ev.preventDefault();
+function allowDrop(event) {
+    event.preventDefault();
 }
 
-function moveTo(category) {
-    todos[currentDraggedElement]['category'] = category;
+async function moveTo(currentCategory) {
+    let test = tasks[currentDraggedElement]['category'] = currentCategory;
+    console.log(test);
+    console.log(currentCategory);
+    await saveChangesInJSON();
     renderBoardCards();
 }
 
-function highlight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
-}
-
-function removeHighlight(id) {
-    document.getElementById(id).classList.remove('drag-area-highlight');
+async function saveChangesInJSON() {
+// BRWOSER KANN NICHTS IN DAS .JSON DOC SPEICHERN; DAHER MIT REMOTE SERVER MACHEN
 }
 
 function doNotClose(event) {
     event.stopPropagation();
 }
 
-function renderBoardTaskPopupContent(elementId) {
-    const todo = todos[elementId];
-    console.log(todo);
+function renderBoardTaskPopupContent(id) {
+    const todo = tasks[id];
     let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
     boardTaskPopupContent.innerHTML = `
 <div class="d_c_sb_fs gap-20 height-max">
@@ -189,26 +138,26 @@ function closeBoardAddTaskPopup() {
     let popup = document.getElementById('boardAddTaskPopup');
     let container = document.getElementById('boardAddTaskPopupContainer');
     moveContainerOut(container);
-    setTimeout(function() {
+    setTimeout(function () {
         displayNonePopup(popup);
     }, 500);
     document.body.style.overflow = 'scroll';
 }
 
-function openBoardTaskPopup(elementId) {
+function openBoardTaskPopup(id) {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
     let container = document.getElementById('boardTaskPopupContainer');
     document.body.style.overflow = 'hidden';
     boardTaskPopup.style.display = 'flex';
     moveContainerIn(container);
-    renderBoardTaskPopupContent(elementId);
+    renderBoardTaskPopupContent(id);
 }
 
 function closeBoardTaskPopup() {
     let popup = document.getElementById('boardTaskPopup');
     let container = document.getElementById('boardTaskPopupContainer');
     moveContainerOut(container);
-    setTimeout(function() {
+    setTimeout(function () {
         displayNonePopup(popup);
     }, 500);
     document.body.style.overflow = 'scroll';
