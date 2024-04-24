@@ -225,6 +225,12 @@ function addContactToArray(contact) {
 }
 
 
+function editContact() {
+    let container = document.getElementById('addContactMask');
+    container.innerHTML = renderEditContactHTML();
+}
+
+
 function addNewContact() {
     let container = document.getElementById('addContactMask');
     container.innerHTML = renderAddContactContainerHTML();
