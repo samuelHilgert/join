@@ -2,7 +2,6 @@ let users = [];
 let registerSuccess = false;
 let checkbox = false;
 let emailExist = false;
-let messageDisplayTime = 2000;
 
 
 /**
@@ -21,23 +20,25 @@ async function loadUsers() {
  * This function checks the individual requirements for successful registration
  * 
  */
-async function register() {
+function register() {
+    let registerBtn = document.getElementById('registerBtn');
     registerBtn.disabled = true; // registerBtn ist die id vom button Absenden
-    await checkboxClicked();
+    checkboxClicked();
 }
 
 /**
  * This function checks whether the checkbox was clicked by user
  * 
  */
-async function checkboxClicked() {
+function checkboxClicked() {
     if (signUpCheckbox.checked) {
         checkbox = true;
-        await checkEmailExist();
+        checkEmailExist();
     } else {
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        messageDisplay();
+        hideMessageContainer();
+        signUpErrorReset();
     }
 }
 
@@ -45,16 +46,19 @@ async function checkboxClicked() {
  * This function checks whether email already exist
  * 
  */
-async function checkEmailExist() {
+function checkEmailExist() {
     if (users.some(user => user.email === registerEmail.value)) {
         emailExist = true;
         registerEmail.value = '';
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        messageDisplay();
+        hideMessageContainer();
+        signUpErrorReset();
+        // setTimeout(messageDisplayNone, messageDisplayTime);
+        //  showSignUpMessage();
     }
     else {
-        await signUpPasswordsMatched();
+        signUpPasswordsMatched();
     }
 }
 
@@ -62,18 +66,24 @@ async function checkEmailExist() {
  * This function checks whether the two passwords match
  * 
  */
-async function signUpPasswordsMatched() {
+function signUpPasswordsMatched() {
     if (password.value === confirmPassword.value) {
         registerSuccess = true;
-        await pushUserData();
+        pushUserData();
         showSignUpMessage();
+        messageDisplay();
+        hideMessageContainer();
         resetSingUpForm();
-        setTimeout(backToLogin, 800);
+        // showSignUpMessage();
+        // setTimeout(backToLogin, 800);
     }
     else {
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        messageDisplay();
+        hideMessageContainer();
+        resetSingUpForm();
+        // setTimeout(messageDisplayNone, messageDisplayTime);
+        // showSignUpMessage();
     }
 }
 
@@ -82,6 +92,7 @@ async function signUpPasswordsMatched() {
  * 
  */
 function signUpErrorReset() {
+    let registerBtn = document.getElementById('registerBtn');
     password.value = '';
     confirmPassword.value = '';
     registerBtn.disabled = false;
@@ -91,9 +102,22 @@ function signUpErrorReset() {
  * This function set message display to none
  * 
  */
-function messageDisplayNone() {
-    let messageFormSignUp = document.getElementById('messageFormSignUp');
-    messageFormSignUp.style.display = 'none';
+function messageDisplay() {
+    let messageContainer = document.getElementById('messageContainer');
+    let container = document.getElementById('messageFormSignUp');
+    messageContainer.style.display = 'flex';
+    container.style.display = 'flex';
+    moveContainerIn(container);
+    setTimeout(function () {
+        moveContainerOut(container);
+    }, 2000);
+}
+
+function hideMessageContainer() {
+    let messageContainer = document.getElementById('messageContainer');
+    let container = document.getElementById('messageFormSignUp');
+    // messageContainer.style.display = 'none';
+    // container.style.display = 'none';
 }
 
 /**
@@ -131,7 +155,7 @@ async function pushOnRemoteServer() {
  */
 function showSignUpMessage() {
     let messageFormSignUp = document.getElementById('messageFormSignUp');
-    messageFormSignUp.style.display = 'flex';
+
     if (registerSuccess === true) {
         messageFormSignUp.innerHTML = 'You Signed Up successfully';
     }
@@ -151,6 +175,7 @@ function showSignUpMessage() {
  * 
  */
 function resetSingUpForm() {
+    let registerBtn = document.getElementById('registerBtn');
     signUpName.value = '';
     registerEmail.value = '';
     password.value = '';
@@ -167,3 +192,5 @@ function resetSingUpForm() {
 function backToLogin() {
     window.location.href = './login.html?msg=Du hast dich erfolgreich registriert'; // queryParameter 
 }
+
+

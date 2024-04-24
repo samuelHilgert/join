@@ -185,13 +185,6 @@ function openBoardAddTaskPopup() {
     moveContainerIn(container);
 }
 
-function moveContainerIn(container) {
-    container.classList.remove('outside'); 
-    container.classList.remove('animation-out'); 
-    container.classList.add('centered'); 
-    container.classList.add('animation-in'); 
-}
-
 function closeBoardAddTaskPopup() {
     let popup = document.getElementById('boardAddTaskPopup');
     let container = document.getElementById('boardAddTaskPopupContainer');
@@ -200,17 +193,6 @@ function closeBoardAddTaskPopup() {
         displayNonePopup(popup);
     }, 500);
     document.body.style.overflow = 'scroll';
-}
-
-function moveContainerOut(container) {
-    container.classList.remove('centered'); 
-    container.classList.remove('animation-in'); 
-    container.classList.add('outside'); 
-    container.classList.add('animation-out'); 
-}
-
-function displayNonePopup(popup) {
-    popup.style.display = 'none';
 }
 
 function openBoardTaskPopup(elementId) {
