@@ -313,11 +313,8 @@ li {
   box-sizing: border-box;
 }
 
-#messageContainer {
+#signUpMessageContainer {
   display: none;
-}
-
-.message-container {
   position: absolute;
   bottom: -110px;
   right: 0;
@@ -332,14 +329,32 @@ li {
   box-sizing: border-box;
   position: absolute;
   z-index: 9999;
+}
+
+.centered {
   text-align: center;
-  background-color: aqua;
+}
+
+.outside {
+  right: 0;
+}
+
+#loginMessageContainer {
+  display: flex;
+  position: absolute;
+  bottom: 40px;
+  right: 0;
+  left: 0;
+  height: 80px;
 }
 
 #messageFormLogin {
-  display: none;
-  justify-content: center;
-  align-items: center;
+  display: flex;
+  width: auto;
+  height: auto;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 9999;
 }
 
 #boardTaskPopup {
@@ -391,14 +406,6 @@ li {
   border-radius: 30px;
   position: absolute;
   z-index: 9999;
-}
-
-.centered {
-  text-align: center;
-}
-
-.outside {
-  right: 0;
 }
 
 #headerSymbolPopup {
