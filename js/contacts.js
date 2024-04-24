@@ -300,12 +300,4 @@ function createUniqueContactId() {
     }
 }
 
-// CONTACT EXAMPLE FOR TESTING THE addContactToArray FUNCTION
-const newContact = {
-    name: "Xaver Johnson",
-    mail: "x.johnson@example.com",
-    phone: "+1234567890",
-    color: "",
-    id: ""
-};
 
