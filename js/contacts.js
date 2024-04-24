@@ -200,7 +200,7 @@ function openContactInfo(contactId) {
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
         let contactInfo = document.getElementById('contactInfo');
-        contactInfo.innerHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, mail, phone);
+        contactInfo.innerHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, contactId, mail, phone);
         removeActiveClasslist();
         let contactElement = document.getElementById(contactId);
         contactElement.classList.add('contact-small-active');
@@ -263,13 +263,19 @@ function closeEditContactForm() {
 }
 
 
-function editContact() {
-    let wrapper = document.getElementById('editContactMask');
-    wrapper.innerHTML = renderEditContactHTML();
-    let editContactContainer = document.getElementById('editContactContainer');
-    editContactContainer.classList.remove('animation-out');
-    editContactContainer.classList.add('animation-in');
-    wrapper.classList.remove('d-none');
+function editContact(contactId) {
+    let contact = contacts.find(contact => contact['id'] === contactId);
+    if (contact) {
+        const { name, mail, phone, color } = contact;
+        const firstLetter = name.charAt(0);
+        const firstLetterSurname = name.split(' ')[1].charAt(0);
+        let wrapper = document.getElementById('editContactMask');
+        wrapper.innerHTML = renderEditContactHTML(contactId, color, firstLetter, firstLetterSurname, name, mail, phone);
+        let editContactContainer = document.getElementById('editContactContainer');
+        wrapper.classList.remove('d-none');
+        editContactContainer.classList.remove('animation-out');
+        editContactContainer.classList.add('animation-in');
+    }
 }
 
 
