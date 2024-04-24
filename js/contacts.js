@@ -194,14 +194,18 @@ function removeActiveClasslist() {
  * @param {string} contactId - ID of the clicked contact
  * 
  */
-function openContactInfo(contactId) {
-    let contact = contacts.find(contact => contact['id'] === contactId)
+function openContactInfo(contactId, removeAnimation = false) { 
+    let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
         const { name, mail, phone, color } = contact;
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
         let contactInfo = document.getElementById('contactInfo');
-        contactInfo.innerHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, contactId, mail, phone);
+        let contactInfoHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, contactId, mail, phone);
+        if (removeAnimation) {
+            contactInfoHTML = contactInfoHTML.replace('class="animation-in"', '');
+        }
+        contactInfo.innerHTML = contactInfoHTML;
         removeActiveClasslist();
         let contactElement = document.getElementById(contactId);
         contactElement.classList.add('contact-small-active');
@@ -216,7 +220,7 @@ function contactSuccessAnimation() {
     container.classList.add('animation-in');
     setTimeout(() => {
         container.classList.add('d-none');
-    }, 1000);
+    }, 1800);
 }
 
 
@@ -248,7 +252,7 @@ function addContactToArray() {
     renderContactList();
     setRandomColor();
     contactSuccessAnimation();
-    openContactInfo(id);
+    openContactInfo(id, true); // true, because function should run without animation
 }
 
 
