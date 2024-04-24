@@ -210,7 +210,7 @@ function openContactInfo(contactId) {
 
 
 /**
- * This function adds new contacts to the contacts-array after sorting them in alphabetical order by using sort & localeCompare
+ * This function adds new contacts to the contacts-array and sorts the array in alphabetical order by using sort & localeCompare
  * 
  * @param {string} contact - function-internal placeholder for the contact to be added to the function
  */
