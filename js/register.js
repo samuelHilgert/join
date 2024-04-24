@@ -35,9 +35,10 @@ async function checkboxClicked() {
         checkbox = true;
         await checkEmailExist();
     } else {
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        await messageDisplay();
+        await hideMessageContainer();
+        signUpErrorReset();
     }
 }
 
@@ -49,9 +50,12 @@ async function checkEmailExist() {
     if (users.some(user => user.email === registerEmail.value)) {
         emailExist = true;
         registerEmail.value = '';
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        await messageDisplay();
+        await hideMessageContainer();
+        signUpErrorReset();
+       // setTimeout(messageDisplayNone, messageDisplayTime);
+      //  showSignUpMessage();
     }
     else {
         await signUpPasswordsMatched();
@@ -67,13 +71,19 @@ async function signUpPasswordsMatched() {
         registerSuccess = true;
         await pushUserData();
         showSignUpMessage();
+        await messageDisplay();
+        await hideMessageContainer();
         resetSingUpForm();
-        setTimeout(backToLogin, 800);
+        // showSignUpMessage();
+       // setTimeout(backToLogin, 800);
     }
     else {
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        await messageDisplay();
+        await hideMessageContainer();
+        resetSingUpForm();
+       // setTimeout(messageDisplayNone, messageDisplayTime);
+       // showSignUpMessage();
     }
 }
 
@@ -91,9 +101,22 @@ function signUpErrorReset() {
  * This function set message display to none
  * 
  */
-function messageDisplayNone() {
-    let messageFormSignUp = document.getElementById('messageFormSignUp');
-    messageFormSignUp.style.display = 'none';
+async function messageDisplay() {
+    let messageContainer = document.getElementById('messageContainer');
+    let container = document.getElementById('messageFormSignUp');
+    messageContainer.style.display = 'flex';
+    container.style.display = 'flex';
+    moveContainerIn(container);
+    setTimeout(function() {
+        moveContainerOut(container);
+    }, 2000);
+}
+
+async function hideMessageContainer() {
+    let messageContainer = document.getElementById('messageContainer');
+    let container = document.getElementById('messageFormSignUp');
+    // messageContainer.style.display = 'none';
+   // container.style.display = 'none';
 }
 
 /**
@@ -131,7 +154,7 @@ async function pushOnRemoteServer() {
  */
 function showSignUpMessage() {
     let messageFormSignUp = document.getElementById('messageFormSignUp');
-    messageFormSignUp.style.display = 'flex';
+
     if (registerSuccess === true) {
         messageFormSignUp.innerHTML = 'You Signed Up successfully';
     }
