@@ -32,6 +32,22 @@
   background-size: 40px;
 }
 
+.input-style::placeholder {
+  color: rgba(209, 209, 209, 1);
+  font-size: 20px;
+  font-family: 'Inter';
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.input-font {
+  font-size: 20px;
+  font-family: 'Inter';
+  font-weight: 400;
+  line-height: 24px;
+  color:rgba(0, 0, 0, 1);
+}
+
 .input-style-description::placeholder,
 .input-login::placeholder {
   color: lightgray;
