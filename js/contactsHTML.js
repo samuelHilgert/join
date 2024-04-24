@@ -122,11 +122,11 @@ function renderEditContactHTML(color, firstLetter, firstLetterSurname, name, mai
                 </div>
                 <div class="add-contact-container-right-bottom-wrapper">
                     <div class="add-contact-container-right-bottom">
-                        <div class="circle-big d_f_c_c" style="background-color:${color};">XX</div>
+                        <div class="circle-big d_f_c_c" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
                         <form class="contact-form">
-                            <input class="input-style input-name input-font" type="text" placeholder="Name" required>
-                            <input class="input-style input-email input-font" type="email" placeholder="Email" required>
-                            <input class="input-style input-phone input-font" type="text" placeholder="Phone" required>
+                            <input class="input-style input-name input-font placeholder-black" type="text" placeholder="${name}" required>
+                            <input class="input-style input-email input-font placeholder-black" type="email" placeholder="${mail}" required>
+                            <input class="input-style input-phone input-font placeholder-black" type="text" placeholder="${phone}" required>
                             <div class="btn-wrapper">
                                 <button class="clear-btn gap-10" onclick="closeAddContactForm()">Delete</button>
                                 <button type="button" class="btn gap-10">Save<img

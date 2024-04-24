@@ -40,6 +40,10 @@
   line-height: 24px;
 }
 
+.placeholder-black::placeholder {
+  color:rgba(0, 0, 0, 1);
+}
+
 .input-font {
   font-size: 20px;
   font-family: 'Inter';
