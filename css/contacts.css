@@ -392,3 +392,21 @@
     position: relative;
     z-index: 10;
 }
+
+.edit-contact-container-left {
+    height: 594px;
+    width: 40%;
+    max-width: 576px;
+    background-color: rgba(42, 54, 71, 1);
+    border-radius: 40px 0 0 40px;
+    padding: 66px 48px;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.edit-contact-img {
+    height: 66.48px;
+    width: 55.6px;
+}
