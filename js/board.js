@@ -3,23 +3,26 @@ let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 
 let currentDraggedElement;
 
-async function renderBoardCards() {
+async function loadExampleTasks() {
     let resp = await fetch('./JSON/user_tasks.json');
     tasks = await resp.json();
+    renderBoardCards();
+}
 
-    for (let id = 0; id < categories.length; id++) {
-    const category = categories[id];
+function renderBoardCards() {
+    for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
     const categoriesBySameName = tasks.filter(t => t['category'] == category);
     const taskDiv = document.getElementById(`${category}`); 
     taskDiv.innerHTML = '';
-    renderFunction(categoriesBySameName, taskDiv, id);
+    renderFunction(categoriesBySameName, taskDiv);
     }
 
-    function renderFunction(categoriesBySameName, taskDiv, id) {
+    function renderFunction(categoriesBySameName, taskDiv) {
         for (let k = 0; k < categoriesBySameName.length; k++) {
             const element = categoriesBySameName[k];
-            taskDiv.innerHTML += generateTodoHTML(element, id);
-            updateProgressBar(id);
+            taskDiv.innerHTML += generateTodoHTML(element);
+            updateProgressBar(element);
         }
     }
     
@@ -46,16 +49,16 @@ function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTodoHTML(element, id) {
-    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${id})" draggable="true" ondragstart="startDragging(${id})">
+function generateTodoHTML(element) {
+    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${element['id']})" draggable="true" ondragstart="startDragging(${element['id']})">
             <button class="d_f_c_c" id="btnBoard">${element['label']}</button>
             <h6><b>${element['title']}</b></h6>
             <p>${element['description']}</p>
             <div class="d_f_c_c width-max">
                 <div class="progress">
-                    <div class="progress-bar" id="progressBar${id}"></div>
+                    <div class="progress-bar" id="progressBar${element['id']}"></div>
                 </div>
-                <div class="statusText"><span id="currentTaskNumber${id}">X</span>/<span id="">2</span><span>&nbsp;Subtasks</span></div>
+                <div class="statusText"><span id="currentTaskNumber${element['id']}">X</span>/<span id="">2</span><span>&nbsp;Subtasks</span></div>
             </div>
             <div class="d_f_sb_c width-max">
             <div>
@@ -67,10 +70,10 @@ function generateTodoHTML(element, id) {
             </div>`;
 }
 
-function updateProgressBar(id) {
+function updateProgressBar(element) {
     let currentTaskStatus = 1;
-    document.getElementById(`currentTaskNumber${id}`).innerHTML = `${currentTaskStatus}`;
-    let progressBar = document.getElementById(`progressBar${id}`);
+    document.getElementById(`currentTaskNumber${element['id']}`).innerHTML = `${currentTaskStatus}`;
+    let progressBar = document.getElementById(`progressBar${element['id']}`);
     if (currentTaskStatus === 1) {
         progressBar.style.width = `50%`;
         progressBar.classList.add('blue');
@@ -84,17 +87,17 @@ function allowDrop(event) {
     event.preventDefault();
 }
 
-async function moveTo(currentCategory) {
-    let test = tasks[currentDraggedElement]['category'] = currentCategory;
-    console.log(test);
-    console.log(currentCategory);
-    await saveChangesInJSON();
+function moveTo(currentCategory) {
+    tasks[currentDraggedElement]['category'] = currentCategory;
+    // saveChangesInArray();
     renderBoardCards();
 }
+/*
+// ERST WICHTIG, WENN DATEN REMOTE HOCHGELADEN WERDEN, ALSO BEI USER TAKS NICHT BEI GUEST
+function saveChangesInArray() {
 
-async function saveChangesInJSON() {
-// BRWOSER KANN NICHTS IN DAS .JSON DOC SPEICHERN; DAHER MIT REMOTE SERVER MACHEN
 }
+*/
 
 function doNotClose(event) {
     event.stopPropagation();
