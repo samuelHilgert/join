@@ -2,7 +2,7 @@ let allTasks = [];
 let dropdownContact = [];
 let subtasks = [];
 
-// Funktion zum Hinzufügen einer Aufgabe
+// function to add the task
 function addTask() {
   const taskInput = readTaskInput();
   const prio = determinePriority();
@@ -21,6 +21,7 @@ function addTask() {
   // setItem("task", allTasks);
 }
 
+//get informations from input
 function readTaskInput() {
   const title = document.getElementById("task-title").value;
   const description = document.getElementById("task-description").value;
@@ -35,6 +36,42 @@ function readTaskInput() {
   };
 }
 
+//for the contacts at Assigned to section
+function openDropdownContacts() {
+  let Dropdownmenu = document.getElementById("inputfield-dropdown");
+  let dropdownArrow = document.getElementById("dropdown-arrow");
+  let dropdownDiv = document.getElementById("dropdown-div");
+  dropdownDiv.style.display =
+    dropdownDiv.style.display === "flex" ? "none" : "flex";
+
+  for (let i = 0; i < contacts.length; i++) {
+    const element = contacts[i];
+    dropdownDiv.innerHTML += `
+    <div class="parting-line-dropdown"></div>
+    <div class="dropdown-contact" id='test${i}'onclick='chooseContact(${i},"${element.name}")' >
+      <div class="contact-circle d_f_c_c">
+        <div class="contact-circle-letters">AM</div>
+      </div>
+      <div class="contact-name-mail">
+        <div class="contact-name">${element.name}</div>
+      </div>
+    </div>
+    `;
+  }
+}
+
+function chooseContact(i, name) {
+  constElement = document.getElementById(`test${i}`);
+  constElement.style.backgroundColor = "red";
+  dropdownContact.push(name);
+}
+
+//Change Prio Btn colors!
+function setPriority(btnId) {
+  removeActiveClasses();
+  setActiveClasses(btnId);
+}
+
 //Return Value from Priority!
 function determinePriority() {
   let prio = "medium"; // Standardpriorität
@@ -47,25 +84,6 @@ function determinePriority() {
     prio = "low";
   }
   return prio;
-}
-
-//Change Prio Btn colors!
-function setPriority(btnId) {
-  removeActiveClasses();
-  setActiveClasses(btnId);
-}
-
-function removeActiveClasses() {
-  const buttons = ["urgent-btn", "medium-btn", "low-btn"];
-  buttons.forEach((button) => {
-    const buttonElement = document.getElementById(button);
-    buttonElement.classList.remove(
-      "active-prio-btn-urgent",
-      "active-prio-btn-medium",
-      "active-prio-btn-low"
-    );
-    buttonElement.querySelector("img").classList.remove("filter-prio-btn");
-  });
 }
 
 function setActiveClasses(btnId) {
@@ -89,90 +107,20 @@ function setActiveClasses(btnId) {
   }
 }
 
-function openDropdownContacts() {
-  let Dropdownmenu = document.getElementById("inputfield-dropdown");
-  let dropdownArrow = document.getElementById("dropdown-arrow");
-  let dropdownDiv = document.getElementById("dropdown-div");
-  dropdownDiv.style.display =
-    dropdownDiv.style.display === "flex" ? "none" : "flex";
-
-  for (let i = 0; i < contacts.length; i++) {
-    const element = contacts[i];
-    dropdownDiv.innerHTML += `
-    <div class="parting-line-dropdown"></div>
-    <div class="dropdown-contact" id='test${i}'onclick='chooseContact(${i},"${element.name}")' >
-      <div class="contact-circle d_f_c_c">
-        <div class="contact-circle-letters">AM</div>
-      </div>
-      <div class="contact-name-mail">
-        <div class="contact-name">${element.name}</div>
-      </div>
-    </div>
-    `;
-  }
-}
-function chooseContact(i, name) {
-  constElement = document.getElementById(`test${i}`);
-  constElement.style.backgroundColor = "red";
-  dropdownContact.push(name);
+function removeActiveClasses() {
+  const buttons = ["urgent-btn", "medium-btn", "low-btn"];
+  buttons.forEach((button) => {
+    const buttonElement = document.getElementById(button);
+    buttonElement.classList.remove(
+      "active-prio-btn-urgent",
+      "active-prio-btn-medium",
+      "active-prio-btn-low"
+    );
+    buttonElement.querySelector("img").classList.remove("filter-prio-btn");
+  });
 }
 
-function changeIcons() {
-  let iconBox = document.getElementById("dropdown-icon");
-  iconBox.innerHTML = `
-  <div class="d_f_c_c gap-5 padding-right-36">
-  <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
-  <div class='input-spacer'></div>
-  <img onclick='addSubtask()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
-</div>
-  `;
-}
-
-function addSubtask() {
-  const subtaskInput = document.getElementById("subtask");
-  const subtaskValue = subtaskInput.value.trim(); // Trimmen Sie den Wert, um führende und nachfolgende Leerzeichen zu entfernen
-  if (subtaskValue !== "") {
-    subtasks.push(subtaskValue);
-    const subtaskContainer = document.getElementById("subtask-div");
-    subtaskContainer.innerHTML += `
-          <div class='d_f_sb_c pad-x-10'>
-              <span>●${subtaskValue}</span>
-              <div class='d_f_c_c gap-5'>
-                  <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
-                  <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(this)" />
-              </div>
-          </div>
-      `;
-    subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
-  }
-}
-
-function changeIcons() {
-  let iconBox = document.getElementById("dropdown-icon");
-  iconBox.innerHTML = `
-  <div class="d_f_c_c gap-5 padding-right-36">
-  <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
-  <div class='input-spacer'></div>
-  <img onclick='addSubtask()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
-</div>
-  `;
-}
-
-function editSubtask(element) {
-  const subtaskText = element.parentNode.previousElementSibling;
-  const newText = prompt("Edit Subtask:", subtaskText.textContent);
-  if (newText !== null) {
-    subtaskText.textContent = newText;
-  }
-}
-
-function deleteSubtask(element) {
-  const subtaskContainer = document.getElementById("subtask-div");
-  const subtaskItem = element.parentNode.parentNode;
-  subtaskContainer.removeChild(subtaskItem);
-}
-
-// Diese Funktion überträgt den Text der angeklickten Kategorie in das Inputfeld
+// for category section
 function chooseCategory(category) {
   document.getElementById("task-category").value = category.innerText;
 }
@@ -187,4 +135,52 @@ function toggleCategoryDiv() {
   } else {
     categoryDiv.style.display = "none";
   }
+}
+
+//for subtasks section
+function addSubtask() {
+  const subtaskInput = document.getElementById("subtask");
+  const subtaskValue = subtaskInput.value.trim(); // Trimmen Sie den Wert, um führende und nachfolgende Leerzeichen zu entfernen
+  if (subtaskValue !== "") {
+    subtasks.push(subtaskValue);
+    const subtaskContainer = document.getElementById("subtask-div");
+    subtaskContainer.innerHTML += `
+      <div class='d_f_sb_c pad-x-10'>
+        <span>●${subtaskValue}</span>
+        <div class='d_f_c_c gap-5'>
+          <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
+          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(this)" />
+        </div>
+      </div>
+    `;
+    subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
+    changeIcons(); // Icons zurücksetzen
+  }
+}
+
+function changeIcons() {
+  let iconBox = document.getElementById("dropdown-icon");
+  iconBox.innerHTML = `
+    <div class="d_f_c_c gap-5 padding-right-36">
+      <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
+      <div class='input-spacer'></div>
+      <img onclick='addSubtask(),clearSubtaskInput()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
+    </div>
+  `;
+}
+
+function clearSubtaskInput() {
+  let subtaskInput = document.getElementById("subtask");
+  subtaskInput.value = ""; // Leert das Eingabefeld
+  subtaskInput.blur(); // Entfernt den Fokus vom Eingabefeld
+  let iconBox = document.getElementById("dropdown-icon");
+  iconBox.innerHTML = `
+    <img onclick="changeIcons()" src="assets/img/input-plus.png" alt="plus" />
+  `;
+}
+
+function deleteSubtask(element) {
+  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskItem = element.parentNode.parentNode;
+  subtaskContainer.removeChild(subtaskItem);
 }
