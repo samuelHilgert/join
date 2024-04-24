@@ -11,7 +11,8 @@ let contacts = [
         name: "Bernd Hofmann",
         mail: "hofmann@ib-bank.com",
         phone: "+49 647 289 145",
-        color: ""
+        color: "",
+        id: "",
     },
     {
         name: "Eva Grace",
