@@ -6,6 +6,7 @@
 async function init() {
     await includeHTML();
     getCurrentlySidebarLink();
+    hideHelpIcon();
 }
 
 /**
@@ -24,4 +25,71 @@ async function includeHTML() {
             element.innerHTML = 'Page not found'; // wenn nicht gefunden, Ausgabe Fehlermeldung text
         }
     }
+}
+
+let headerOpenPopupClicked = false;
+
+function openHeaderPopupLinks() {
+    if (!headerOpenPopupClicked) {
+        let headerSymbolPopup = document.getElementById('headerSymbolPopup');
+        headerSymbolPopup.style.display = 'flex';
+        headerOpenPopupClicked = true;
+    }
+    else {
+        let headerSymbolPopup = document.getElementById('headerSymbolPopup');
+        headerSymbolPopup.style.display = 'none';
+        headerOpenPopupClicked = false;
+    }
+}
+
+function openHelp() {
+    openHelpClicked = true;
+    let targetUrl = `./help.html`;
+    window.location.href = targetUrl;
+}
+
+function hideHelpIcon() {
+    let currentUrl = window.location.href;
+    if (currentUrl.indexOf('help') !== -1) {
+        let helpIcon = document.getElementById('helpIcon');
+        helpIcon.style.display = 'none';
+    }
+}
+
+function openExternalLink(link) {
+    let url = `./${link}.html`;
+    let targetUrl = url + '?external';
+    window.open(targetUrl, '_blank');
+}
+
+function moveContainerIn(container) {
+    container.classList.remove('outside'); 
+    container.classList.remove('animation-out'); 
+    container.classList.add('centered'); 
+    container.classList.add('animation-in'); 
+}
+
+function moveContainerOut(container) {
+    container.classList.remove('centered'); 
+    container.classList.remove('animation-in'); 
+    container.classList.add('outside'); 
+    container.classList.add('animation-out'); 
+}
+
+function displayNonePopup(popup) {
+    popup.style.display = 'none';
+}
+
+function moveContainerUp(container) {
+    container.classList.remove('outside-down'); 
+    container.classList.remove('animation-down'); 
+    container.classList.add('centered-up'); 
+    container.classList.add('animation-up'); 
+}
+
+function moveContainerDown(container) {
+    container.classList.remove('centered-up'); 
+    container.classList.remove('animation-up'); 
+    container.classList.add('outside-down'); 
+    container.classList.add('animation-down'); 
 }

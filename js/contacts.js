@@ -11,7 +11,8 @@ let contacts = [
         name: "Bernd Hofmann",
         mail: "hofmann@ib-bank.com",
         phone: "+49 647 289 145",
-        color: ""
+        color: "",
+        id: "",
     },
     {
         name: "Eva Grace",
@@ -103,7 +104,8 @@ let nextId = 1;
 
 
 function renderContacts() {
-    addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
+    //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
+    sortContacts();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
     renderContactList();
     setRandomColor();
@@ -193,14 +195,18 @@ function removeActiveClasslist() {
  * @param {string} contactId - ID of the clicked contact
  * 
  */
-function openContactInfo(contactId) {
-    let contact = contacts.find(contact => contact['id'] === contactId)
+function openContactInfo(contactId, removeAnimation = false) { 
+    let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
         const { name, mail, phone, color } = contact;
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
         let contactInfo = document.getElementById('contactInfo');
-        contactInfo.innerHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, mail, phone);
+        let contactInfoHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, contactId, mail, phone);
+        if (removeAnimation) {
+            contactInfoHTML = contactInfoHTML.replace('class="animation-in"', '');
+        }
+        contactInfo.innerHTML = contactInfoHTML;
         removeActiveClasslist();
         let contactElement = document.getElementById(contactId);
         contactElement.classList.add('contact-small-active');
@@ -209,25 +215,65 @@ function openContactInfo(contactId) {
 }
 
 
-/**
- * This function adds new contacts to the contacts-array after sorting them in alphabetical order by using sort & localeCompare
- * 
- * @param {string} contact - function-internal placeholder for the contact to be added to the function
- */
-function addContactToArray(contact) {
-    contacts.push(contact);
+function contactSuccessAnimation() {
+    let container = document.getElementById('contactSuccessWrapper');
+    container.classList.remove('d-none');
+    container.classList.add('animation-in');
+    setTimeout(() => {
+        container.classList.add('d-none');
+    }, 1800);
+}
+
+
+function sortContacts() {
     contacts.sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
-
         return nameA.localeCompare(nameB);
     });
 }
 
 
-function addNewContact() {
-    let addContactContainer = document.getElementById('addContactContainer');
+function addContactToArray() {
+    let name = document.getElementById('inputAddContactName').value;
+    let mail = document.getElementById('inputAddContactMail').value;
+    let phone = document.getElementById('inputAddContactPhone').value;
+    let id = (nextId++).toString(); // generates new ID based on the length of the array, without checking the IDs of the existing contacts
+    let color = getRandomColor();
+    let contact = {
+        name: name, 
+        mail: mail,
+        phone: phone,
+        color: color, 
+        id: id
+    };
+    contacts.push(contact);
+    sortContacts();
+    closeAddContactFormWithoutAnimation();
+    renderContactList();
+    contactSuccessAnimation();
+    openContactInfo(id, true); // true, because function should run without animation
+    let contactCircles = document.querySelectorAll('.contact-circle');
+    contactCircles.forEach((circle, index) => {
+        circle.style.backgroundColor = contacts[index]['color'];
+    });
+}
+
+
+function validateAndAddContact(event) {
+    event.preventDefault(); // Prevents the default behavior of the form (automatic sending
+    let form = document.getElementById('contactForm'); // Validation of the input form data
+    if (!form.reportValidity()) { // Checking the validity of the form
+        return; // If the form is invalid, the standard error message is displayed
+    }
+    addContactToArray(); // contacted is added, if form is valid
+}
+
+
+function openAddNewContact() {
     let container = document.getElementById('addContactMask');
+    container.innerHTML = renderAddContactContainerHTML();
+    let addContactContainer = document.getElementById('addContactContainer');
     addContactContainer.classList.remove('animation-out');
     addContactContainer.classList.add('animation-in');
     container.classList.remove('d-none');
@@ -250,6 +296,40 @@ function closeAddContactForm() {
 }
 
 
+function closeAddContactFormWithoutAnimation() {
+    let addContactMask = document.getElementById('addContactMask');
+    addContactMask.classList.add('d-none');
+}
+
+
+function closeEditContactForm() {
+    let editContactMask = document.getElementById('editContactMask');
+    let editContactContainer = document.getElementById('editContactContainer');
+    editContactContainer.classList.add('animation-out');
+    editContactContainer.addEventListener('animationend', function animationEndHandler() {
+        editContactContainer.classList.remove('animation-in');
+        editContactMask.classList.add('d-none');
+        editContactContainer.removeEventListener('animationend', animationEndHandler);
+    });
+}
+
+// Funktion noch um Bearbeitung von Kontakt erweitern
+function editContact(contactId) {
+    let contact = contacts.find(contact => contact['id'] === contactId);
+    if (contact) {
+        const { name, mail, phone, color } = contact;
+        const firstLetter = name.charAt(0);
+        const firstLetterSurname = name.split(' ')[1].charAt(0);
+        let wrapper = document.getElementById('editContactMask');
+        wrapper.innerHTML = renderEditContactHTML(color, firstLetter, firstLetterSurname, name, mail, phone, contactId);
+        let editContactContainer = document.getElementById('editContactContainer');
+        wrapper.classList.remove('d-none');
+        editContactContainer.classList.remove('animation-out');
+        editContactContainer.classList.add('animation-in');
+    }
+}
+
+
 /**
  * This function gives each contact in the contacts-array a unique id, starting from 1
  * 
@@ -263,12 +343,21 @@ function createUniqueContactId() {
     }
 }
 
-// CONTACT EXAMPLE FOR TESTING THE addContactToArray FUNCTION
-const newContact = {
-    name: "Xaver Johnson",
-    mail: "x.johnson@example.com",
-    phone: "+1234567890",
-    color: "",
-    id: ""
-};
 
+function deleteContact(contactId) {
+    let index = contacts.findIndex(contact => contact['id'] === contactId);
+    if (index != -1) {
+        contacts.splice(index, 1);
+        renderContactList();
+        let contactCircles = document.querySelectorAll('.contact-circle'); // keeps the backgroundcolor of the circle
+        contactCircles.forEach((circle, index) => {
+            if (index >= index) { // If the index is greater than or equal to the index of the deleted contact
+                circle.style.backgroundColor = contacts[index]['color'];
+            }
+        });
+        let contactInfo = document.getElementById('contactInfo');
+        contactInfo.innerHTML = '';
+        let wrapper = document.getElementById('editContactMask');
+        wrapper.classList.add('d-none');
+    }
+}

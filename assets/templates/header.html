@@ -1,12 +1,18 @@
 
     <div class="header-text">Kanban Project Management Tool</div>
     <div class="header-symbols d_f_c_c" id="headerSymbols">
-        <a class="header-icon-one" href="../../help.html">
+        <a class="header-icon-one" id="helpIcon" onclick="openHelp()">
             <img src="../../assets/img/help.png" alt="Help-Icon">
         </a>
-        <a class="header-icon-two" href="#">
+        <a class="header-icon-two" onclick="openHeaderPopupLinks()">
             <div class="header-circle d_f_c_c">
                 <div class="header-inner-circle">XX</div>
             </div>
         </a>
+    </div>
+
+    <div class="d_c_c_c" id="headerSymbolPopup">
+        <a class="sidebar-menu d_f_fs_c width-max symbolPopupLink" href="../../privacy-policy.html">Privacy Policy</a>
+        <a class="sidebar-menu d_f_fs_c width-max symbolPopupLink" href="../../legal-notice.html">Legal Notice</a>
+        <a class="sidebar-menu d_f_fs_c width-max symbolPopupLink" href="../../login.html">Log out</a>
     </div>

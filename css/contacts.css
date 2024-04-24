@@ -178,11 +178,11 @@
 }
 
 .animation-in {
-    animation: slideInRight 0.5s ease-in-out forwards;
+    animation: slideInRight 0.3s ease-in-out forwards;
 }
 
 .animation-out {
-    animation: slideOutRight 0.5s ease-in-out forwards;
+    animation: slideOutRight 0.3s ease-in-out forwards;
 }
 
 .contact-info {
@@ -391,4 +391,39 @@
 .close-contact-btn {
     position: relative;
     z-index: 10;
+}
+
+.edit-contact-container-left {
+    height: 594px;
+    width: 40%;
+    max-width: 576px;
+    background-color: rgba(42, 54, 71, 1);
+    border-radius: 40px 0 0 40px;
+    padding: 66px 48px;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.edit-contact-img {
+    height: 66.48px;
+    width: 55.6px;
+}
+
+.contact-success {
+    border-radius: 20px;
+    background-color: rgba(42, 54, 71, 1);
+    height: 74px;
+    width: 326px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.contact-success-wrapper {
+    margin: 190px 0 0 55px;
 }

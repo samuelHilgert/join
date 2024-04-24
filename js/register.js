@@ -2,7 +2,7 @@ let users = [];
 let registerSuccess = false;
 let checkbox = false;
 let emailExist = false;
-let messageDisplayTime = 2000;
+let displayMessageTime = 2500;
 
 
 /**
@@ -21,24 +21,34 @@ async function loadUsers() {
  * This function checks the individual requirements for successful registration
  * 
  */
-async function register() {
+function register() {
+    let registerBtn = document.getElementById('registerBtn');
     registerBtn.disabled = true; // registerBtn ist die id vom button Absenden
-    await checkboxClicked();
+    checkboxClicked();
 }
 
 /**
  * This function checks whether the checkbox was clicked by user
  * 
  */
-async function checkboxClicked() {
+function checkboxClicked() {
+    let container = document.getElementById('messageFormSignUp');
     if (signUpCheckbox.checked) {
         checkbox = true;
-        await checkEmailExist();
+        checkEmailExist();
     } else {
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        messageDisplay(container);
+        moveContainerUp(container);
+        setTimeout(function () {
+            moveContainerDown(container);
+        }, 1500);
+        setTimeout(function () {
+            hideMessageContainer(container);
+        }, displayMessageTime);
+        signUpErrorReset();
     }
+
 }
 
 /**
@@ -46,15 +56,23 @@ async function checkboxClicked() {
  * 
  */
 async function checkEmailExist() {
+    let container = document.getElementById('messageFormSignUp');
     if (users.some(user => user.email === registerEmail.value)) {
         emailExist = true;
         registerEmail.value = '';
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        messageDisplay(container);
+        moveContainerUp(container);
+        setTimeout(function () {
+            moveContainerDown(container);
+        }, 1500);
+        setTimeout(function () {
+            hideMessageContainer(container);
+        }, displayMessageTime);
+        signUpErrorReset();
     }
     else {
-        await signUpPasswordsMatched();
+        signUpPasswordsMatched();
     }
 }
 
@@ -63,17 +81,32 @@ async function checkEmailExist() {
  * 
  */
 async function signUpPasswordsMatched() {
+    let container = document.getElementById('messageFormSignUp');
     if (password.value === confirmPassword.value) {
         registerSuccess = true;
-        await pushUserData();
+        pushUserData();
         showSignUpMessage();
+        messageDisplay(container);
+        moveContainerUp(container);
+        setTimeout(function () {
+            moveContainerDown(container);
+        }, 1500);
+        setTimeout(function () {
+            hideMessageContainer(container);
+        }, displayMessageTime);
         resetSingUpForm();
-        setTimeout(backToLogin, 800);
     }
     else {
-        signUpErrorReset();
-        setTimeout(messageDisplayNone, messageDisplayTime);
         showSignUpMessage();
+        messageDisplay(container);
+        moveContainerUp(container);
+        setTimeout(function () {
+            moveContainerDown(container);
+        }, 1500);
+        setTimeout(function () {
+            hideMessageContainer(container);
+        }, displayMessageTime);
+        resetSingUpForm();
     }
 }
 
@@ -82,6 +115,7 @@ async function signUpPasswordsMatched() {
  * 
  */
 function signUpErrorReset() {
+    let registerBtn = document.getElementById('registerBtn');
     password.value = '';
     confirmPassword.value = '';
     registerBtn.disabled = false;
@@ -91,9 +125,16 @@ function signUpErrorReset() {
  * This function set message display to none
  * 
  */
-function messageDisplayNone() {
-    let messageFormSignUp = document.getElementById('messageFormSignUp');
-    messageFormSignUp.style.display = 'none';
+function messageDisplay(container) {
+    let signUpMessageContainer = document.getElementById('signUpMessageContainer');
+    signUpMessageContainer.style.display = 'flex';
+    container.style.display = 'flex';
+}
+
+function hideMessageContainer(container) {
+    let signUpMessageContainer = document.getElementById('signUpMessageContainer');
+    signUpMessageContainer.style.display = 'none';
+    container.style.display = 'none';
 }
 
 /**
@@ -131,7 +172,7 @@ async function pushOnRemoteServer() {
  */
 function showSignUpMessage() {
     let messageFormSignUp = document.getElementById('messageFormSignUp');
-    messageFormSignUp.style.display = 'flex';
+
     if (registerSuccess === true) {
         messageFormSignUp.innerHTML = 'You Signed Up successfully';
     }
@@ -151,6 +192,7 @@ function showSignUpMessage() {
  * 
  */
 function resetSingUpForm() {
+    let registerBtn = document.getElementById('registerBtn');
     signUpName.value = '';
     registerEmail.value = '';
     password.value = '';
@@ -167,3 +209,5 @@ function resetSingUpForm() {
 function backToLogin() {
     window.location.href = './login.html?msg=Du hast dich erfolgreich registriert'; // queryParameter 
 }
+
+

@@ -18,30 +18,78 @@
   margin-top: 3px;
 }
 
-select {
-  width: 200px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  appearance: none; /* Entfernt das Standard-Styling */
-  background-image: url(""); /* Pfad zum Bild */
-  background-repeat: no-repeat;
-  background-position: right 10px center; /* Position des Bildes */
-  background-size: 8px !important; /* Größe des Bildes */
-  padding-right: 30px; /* Platz für das Bild */
+.assigned-div {
+  position: absolute;
+  z-index: 1; /* Stelle sicher, dass die div über anderen Inhalten liegt */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  height: 200px;
+  width: 460px;
+  margin-top: 297px;
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.category-div {
+  position: absolute;
+  z-index: 1; /* Stelle sicher, dass die div über anderen Inhalten liegt */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  height: 118px;
+  width: 460px;
+  margin-top: 213px;
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   cursor: pointer;
 }
 
 .subtask-div {
+  position: absolute;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding-top: 0.25rem;
-  width: 100%;
-  height: 7rem;
+  justify-content: start;
+  align-items: stretch;
+  height: 118px;
+  width: 460px;
+  margin-top: 242px;
+  gap: 10px;
+  cursor: pointer;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.task-category {
+  font-size: 24px;
+  padding: 16px 24px;
+  width: 100%;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.task-category:hover {
+  background-color: #f6f7f8;
+}
+
+.input-category {
+  position: relative;
+}
+
+.category-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px; /* Anpassen der rechten Ausrichtung */
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .padding-10 {
@@ -84,6 +132,9 @@ select {
   background-position-x: calc(100% - 20px);
   background-position-y: 50%;
   background-size: 24px;
+}
+.task-input-style::placeholder {
+  font-size: 24px;
 }
 
 .height-130 {
@@ -133,6 +184,11 @@ select {
 
 .input-style-description {
   padding-bottom: 80px;
+  font-family: "Inter";
+}
+.input-style-description::placeholder {
+  font-size: 24px;
+  padding-top: 3px;
 }
 
 .font-size-20 {
