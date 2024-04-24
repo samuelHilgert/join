@@ -313,48 +313,12 @@ li {
   box-sizing: border-box;
 }
 
-#signUpMessageContainer {
-  display: none;
-  position: absolute;
-  bottom: -110px;
-  right: 0;
-  left: 0;
-  height: 80px;
-}
-
-#messageFormSignUp {
-  display: none;
-  width: auto;
-  height: auto;
-  box-sizing: border-box;
-  position: absolute;
-  z-index: 9999;
-}
-
 .centered {
   text-align: center;
 }
 
 .outside {
   right: 0;
-}
-
-#loginMessageContainer {
-  display: flex;
-  position: absolute;
-  bottom: 40px;
-  right: 0;
-  left: 0;
-  height: 80px;
-}
-
-#messageFormLogin {
-  display: flex;
-  width: auto;
-  height: auto;
-  box-sizing: border-box;
-  position: absolute;
-  z-index: 9999;
 }
 
 #boardTaskPopup {
@@ -426,4 +390,76 @@ li {
   padding: 4px 28px !important;
   white-space: nowrap;
   color: rgba(205, 205, 205, 1) !important;
+}
+
+#loginMessageContainer {
+  display: none;
+  justify-content: center;
+  position: absolute;
+  bottom:-20%;
+  height:300px;
+  width:50%;
+  box-sizing: border-box;
+}
+
+#messageFormLogin {
+  display: none;
+  min-width: 50%;
+  height: auto;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 9999;
+}
+
+@keyframes slideTop {
+  from {
+      transform: translateY(100%);
+  }
+  to {
+      transform: translateY(0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+      transform: translateY(0);
+  }
+  to {
+      transform: translateY(100%);
+  }
+}
+
+.animation-up {
+  animation: slideTop 0.3s ease-in-out forwards;
+}
+
+.animation-down {
+  animation: slideOutDown 0.3s ease-in-out forwards;
+}
+
+.centered-up {
+  bottom:70%;
+}
+
+.outside-down {
+  bottom: 0;
+}
+
+#signUpMessageContainer {
+  display: none;
+  justify-content: center;
+  position: absolute;
+  bottom:-40%;
+  height:300px;
+  width:50%;
+  box-sizing: border-box;
+}
+
+#messageFormSignUp {
+  display: none;
+  min-width: 50%;
+  height: auto;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 9999;
 }

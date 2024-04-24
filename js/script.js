@@ -80,3 +80,16 @@ function displayNonePopup(popup) {
     popup.style.display = 'none';
 }
 
+function moveContainerUp(container) {
+    container.classList.remove('outside-down'); 
+    container.classList.remove('animation-down'); 
+    container.classList.add('centered-up'); 
+    container.classList.add('animation-up'); 
+}
+
+function moveContainerDown(container) {
+    container.classList.remove('centered-up'); 
+    container.classList.remove('animation-up'); 
+    container.classList.add('outside-down'); 
+    container.classList.add('animation-down'); 
+}
