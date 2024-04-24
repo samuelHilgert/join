@@ -340,3 +340,6 @@ function createUniqueContactId() {
 }
 
 
+function deleteContact() {
+    
+}
