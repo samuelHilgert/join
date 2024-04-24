@@ -33,7 +33,7 @@ function renderContactInformationHTML(color, firstLetter, firstLetterSurname, na
             <div class="contact-card-header-text gap-8">
                 <span class="contact-card-header-text-span">${name}</span>
                 <div class="d_f_fs_c contact-card-header-icons gap-30">
-                    <div class="d_f_c_c gap-8 header-icons-wrapper" onclick="">
+                    <div class="d_f_c_c gap-8 header-icons-wrapper" onclick="editContact()">
                         <svg class="contact-header-svg" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M5 19H6.4L15.025 10.375L13.625 8.975L5 17.6V19ZM19.3 8.925L15.05 4.725L16.45 3.325C16.8333 2.94167 17.3042 2.75 17.8625 2.75C18.4208 2.75 18.8917 2.94167 19.275 3.325L20.675 4.725C21.0583 5.10833 21.2583 5.57083 21.275 6.1125C21.2917 6.65417 21.1083 7.11667 20.725 7.5L19.3 8.925ZM17.85 10.4L7.25 21H3V16.75L13.6 6.15L17.85 10.4Z" />
@@ -94,7 +94,7 @@ function renderAddContactContainerHTML() {
                                             d="M12 13.4L7.10005 18.3C6.91672 18.4834 6.68338 18.575 6.40005 18.575C6.11672 18.575 5.88338 18.4834 5.70005 18.3C5.51672 18.1167 5.42505 17.8834 5.42505 17.6C5.42505 17.3167 5.51672 17.0834 5.70005 16.9L10.6 12L5.70005 7.10005C5.51672 6.91672 5.42505 6.68338 5.42505 6.40005C5.42505 6.11672 5.51672 5.88338 5.70005 5.70005C5.88338 5.51672 6.11672 5.42505 6.40005 5.42505C6.68338 5.42505 6.91672 5.51672 7.10005 5.70005L12 10.6L16.9 5.70005C17.0834 5.51672 17.3167 5.42505 17.6 5.42505C17.8834 5.42505 18.1167 5.51672 18.3 5.70005C18.4834 5.88338 18.575 6.11672 18.575 6.40005C18.575 6.68338 18.4834 6.91672 18.3 7.10005L13.4 12L18.3 16.9C18.4834 17.0834 18.575 17.3167 18.575 17.6C18.575 17.8834 18.4834 18.1167 18.3 18.3C18.1167 18.4834 17.8834 18.575 17.6 18.575C17.3167 18.575 17.0834 18.4834 16.9 18.3L12 13.4Z" />
                                     </svg>
                                 </button>
-                                <button type="button" class="btn gap-10">Create Task<img
+                                <button type="button" class="btn gap-10">Create Contact<img
                                         src="assets/img/check.png" /></button>
                             </div>
                         </form>
@@ -107,5 +107,5 @@ function renderAddContactContainerHTML() {
 
 
 function renderEditContactHTML() {
-    
+
 }

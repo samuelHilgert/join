@@ -225,12 +225,6 @@ function addContactToArray(contact) {
 }
 
 
-function editContact() {
-    let container = document.getElementById('addContactMask');
-    container.innerHTML = renderEditContactHTML();
-}
-
-
 function addNewContact() {
     let container = document.getElementById('addContactMask');
     container.innerHTML = renderAddContactContainerHTML();
@@ -254,6 +248,28 @@ function closeAddContactForm() {
         // Removes event listener to avoid unnecessary use
         addContactContainer.removeEventListener('animationend', animationEndHandler);
     });
+}
+
+
+function closeEditContactForm() {
+    let editContactMask = document.getElementById('editContactMask');
+    let editContactContainer = document.getElementById('editContactContainer');
+    editContactContainer.classList.add('animation-out');
+    editContactContainer.addEventListener('animationend', function animationEndHandler() {
+        editContactContainer.classList.remove('animation-in');
+        editContactMask.classList.add('d-none');
+        editContactContainer.removeEventListener('animationend', animationEndHandler);
+    });
+}
+
+
+function editContact() {
+    let container = document.getElementById('editContactMask');
+    //container.innerHTML = renderEditContactHTML();
+    let editContactContainer = document.getElementById('editContactContainer');
+    editContactContainer.classList.remove('animation-out');
+    editContactContainer.classList.add('animation-in');
+    container.classList.remove('d-none');
 }
 
 
