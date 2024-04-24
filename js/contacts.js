@@ -250,9 +250,22 @@ function addContactToArray() {
     sortContacts();
     closeAddContactFormWithoutAnimation();
     renderContactList();
-    setRandomColor();
     contactSuccessAnimation();
     openContactInfo(id, true); // true, because function should run without animation
+    let contactCircles = document.querySelectorAll('.contact-circle');
+    contactCircles.forEach((circle, index) => {
+        circle.style.backgroundColor = contacts[index]['color'];
+    });
+}
+
+
+function validateAndAddContact(event) {
+    event.preventDefault(); // Prevents the default behavior of the form (automatic sending
+    let form = document.getElementById('contactForm'); // Validation of the input form data
+    if (!form.reportValidity()) { // Checking the validity of the form
+        return; // If the form is invalid, the standard error message is displayed
+    }
+    addContactToArray(); // contacted is added, if form is valid
 }
 
 
@@ -299,7 +312,7 @@ function closeEditContactForm() {
     });
 }
 
-
+// Funktion noch um Bearbeitung von Kontakt erweitern
 function editContact(contactId) {
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
@@ -307,7 +320,7 @@ function editContact(contactId) {
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
         let wrapper = document.getElementById('editContactMask');
-        wrapper.innerHTML = renderEditContactHTML(color, firstLetter, firstLetterSurname, name, mail, phone);
+        wrapper.innerHTML = renderEditContactHTML(color, firstLetter, firstLetterSurname, name, mail, phone, contactId);
         let editContactContainer = document.getElementById('editContactContainer');
         wrapper.classList.remove('d-none');
         editContactContainer.classList.remove('animation-out');
@@ -330,3 +343,20 @@ function createUniqueContactId() {
 }
 
 
+function deleteContact(contactId) {
+    let index = contacts.findIndex(contact => contact['id'] === contactId);
+    if (index != -1) {
+        contacts.splice(index, 1);
+        renderContactList();
+        let contactCircles = document.querySelectorAll('.contact-circle'); // keeps the backgroundcolor of the circle
+        contactCircles.forEach((circle, index) => {
+            if (index >= index) { // If the index is greater than or equal to the index of the deleted contact
+                circle.style.backgroundColor = contacts[index]['color'];
+            }
+        });
+        let contactInfo = document.getElementById('contactInfo');
+        contactInfo.innerHTML = '';
+        let wrapper = document.getElementById('editContactMask');
+        wrapper.classList.add('d-none');
+    }
+}
