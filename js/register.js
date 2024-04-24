@@ -158,6 +158,16 @@ function pushInArray() {
     });
 }
 
+/*
+    {
+        "name": "Anna Müller",
+        "mail": "anna.mueller@strive.com",
+        "phone": "+43 789 878 566",
+        "color": "",
+        "id": ""
+    }
+*/
+
 /**
  * The user data are passed on the remote server.
  * 

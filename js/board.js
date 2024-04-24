@@ -3,7 +3,7 @@ let todos = [{
     'label': 'User Story',
     'title': 'Contact Form & Imprint',
     'description': 'Create a contact form and imprint page...',
-    'category': 'todoCol'
+    'category': 'backlog'
 }, {
     'id': 1,
     'label': 'User Story',
@@ -33,18 +33,18 @@ let todos = [{
 let currentDraggedElement;
 
 function renderBoardCards() {
-    let todoCol = todos.filter(t => t['category'] == 'todoCol');
+    let backlog = todos.filter(t => t['category'] == 'backlog');
     let inProgress = todos.filter(t => t['category'] == 'inProgress');
     let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
     let done = todos.filter(t => t['category'] == 'done');
     let label = todos.filter(t => t['category'] == 'label');
 
-    document.getElementById('todoCol').innerHTML = '';
+    document.getElementById('backlog').innerHTML = '';
 
-    for (let index = 0; index < todoCol.length; index++) {
-        const element = todoCol[index];
+    for (let index = 0; index < backlog.length; index++) {
+        const element = backlog[index];
         const elementId = element['id'];
-        document.getElementById('todoCol').innerHTML += generateTodoHTML(element, elementId);
+        document.getElementById('backlog').innerHTML += generateTodoHTML(element, elementId);
         updateProgressBar(elementId);
     }
 
