@@ -226,8 +226,9 @@ function addContactToArray(contact) {
 
 
 function addNewContact() {
-    let addContactContainer = document.getElementById('addContactContainer');
     let container = document.getElementById('addContactMask');
+    container.innerHTML = renderAddContactContainerHTML();
+    let addContactContainer = document.getElementById('addContactContainer');
     addContactContainer.classList.remove('animation-out');
     addContactContainer.classList.add('animation-in');
     container.classList.remove('d-none');
