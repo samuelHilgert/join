@@ -250,9 +250,12 @@ function addContactToArray() {
     sortContacts();
     closeAddContactFormWithoutAnimation();
     renderContactList();
-    setRandomColor();
     contactSuccessAnimation();
     openContactInfo(id, true); // true, because function should run without animation
+    let contactCircles = document.querySelectorAll('.contact-circle');
+    contactCircles.forEach((circle, index) => {
+        circle.style.backgroundColor = contacts[index]['color'];
+    });
 }
 
 
