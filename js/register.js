@@ -2,6 +2,7 @@ let users = [];
 let registerSuccess = false;
 let checkbox = false;
 let emailExist = false;
+let displayMessageTime = 2500;
 
 
 /**
@@ -31,31 +32,44 @@ function register() {
  * 
  */
 function checkboxClicked() {
+    let container = document.getElementById('messageFormSignUp');
     if (signUpCheckbox.checked) {
         checkbox = true;
         checkEmailExist();
     } else {
         showSignUpMessage();
-        messageDisplay();
-        hideMessageContainer();
+        messageDisplay(container);
+        moveContainerIn(container);
+        setTimeout(function () {
+            moveContainerOut(container);
+        }, 1500);
+        setTimeout(function () {
+            hideMessageContainer(container);
+        }, displayMessageTime);
         signUpErrorReset();
     }
+
 }
 
 /**
  * This function checks whether email already exist
  * 
  */
-function checkEmailExist() {
+async function checkEmailExist() {
+    let container = document.getElementById('messageFormSignUp');
     if (users.some(user => user.email === registerEmail.value)) {
         emailExist = true;
         registerEmail.value = '';
         showSignUpMessage();
-        messageDisplay();
-        hideMessageContainer();
+        messageDisplay(container);
+        moveContainerIn(container);
+        setTimeout(function () {
+            moveContainerOut(container);
+        }, 1500);
+        setTimeout(function () {
+            hideMessageContainer(container);
+        }, displayMessageTime);
         signUpErrorReset();
-        // setTimeout(messageDisplayNone, messageDisplayTime);
-        //  showSignUpMessage();
     }
     else {
         signUpPasswordsMatched();
@@ -66,24 +80,33 @@ function checkEmailExist() {
  * This function checks whether the two passwords match
  * 
  */
-function signUpPasswordsMatched() {
+async function signUpPasswordsMatched() {
+    let container = document.getElementById('messageFormSignUp');
     if (password.value === confirmPassword.value) {
         registerSuccess = true;
         pushUserData();
         showSignUpMessage();
-        messageDisplay();
-        hideMessageContainer();
+        messageDisplay(container);
+        moveContainerIn(container);
+        setTimeout(function () {
+            moveContainerOut(container);
+        }, 1500);
+        setTimeout(function () {
+            hideMessageContainer(container);
+        }, displayMessageTime);
         resetSingUpForm();
-        // showSignUpMessage();
-        // setTimeout(backToLogin, 800);
     }
     else {
         showSignUpMessage();
-        messageDisplay();
-        hideMessageContainer();
+        messageDisplay(container);
+        moveContainerIn(container);
+        setTimeout(function () {
+            moveContainerOut(container);
+        }, 1500);
+        setTimeout(function () {
+            hideMessageContainer(container);
+        }, displayMessageTime);
         resetSingUpForm();
-        // setTimeout(messageDisplayNone, messageDisplayTime);
-        // showSignUpMessage();
     }
 }
 
@@ -102,22 +125,16 @@ function signUpErrorReset() {
  * This function set message display to none
  * 
  */
-function messageDisplay() {
+function messageDisplay(container) {
     let messageContainer = document.getElementById('messageContainer');
-    let container = document.getElementById('messageFormSignUp');
     messageContainer.style.display = 'flex';
     container.style.display = 'flex';
-    moveContainerIn(container);
-    setTimeout(function () {
-        moveContainerOut(container);
-    }, 2000);
 }
 
-function hideMessageContainer() {
+function hideMessageContainer(container) {
     let messageContainer = document.getElementById('messageContainer');
-    let container = document.getElementById('messageFormSignUp');
-    // messageContainer.style.display = 'none';
-    // container.style.display = 'none';
+    messageContainer.style.display = 'none';
+    container.style.display = 'none';
 }
 
 /**

@@ -316,9 +316,6 @@ li {
 
 #messageContainer {
   display: none;
-}
-
-.message-container {
   position:absolute;
   bottom:-110px;
   right:0;
@@ -333,8 +330,14 @@ li {
   box-sizing: border-box;
   position: absolute;
   z-index: 9999;
-  text-align:center;
-  background-color: aqua;
+}
+
+.centered {
+  text-align: center;
+}
+
+.outside {
+  right: 0;
 }
 
 #messageFormLogin {
@@ -392,14 +395,6 @@ li {
   border-radius: 30px;
   position: absolute;
   z-index: 9999;
-}
-
-.centered {
-  text-align: center;
-}
-
-.outside {
-  right: 0;
 }
 
 #headerSymbolPopup {
