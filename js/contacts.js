@@ -104,6 +104,7 @@ let nextId = 1;
 
 function renderContacts() {
     //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
+    sortContacts();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
     renderContactList();
     setRandomColor();
@@ -209,6 +210,15 @@ function openContactInfo(contactId) {
 }
 
 
+function sortContacts() {
+    contacts.sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        return nameA.localeCompare(nameB);
+    });
+}
+
+
 function addContactToArray() {
     let name = document.getElementById('inputAddContactName').value;
     let mail = document.getElementById('inputAddContactMail').value;
@@ -223,12 +233,9 @@ function addContactToArray() {
         id: id
     };
     contacts.push(contact);
-    contacts.sort((a, b) => {
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-
-        return nameA.localeCompare(nameB);
-    });
+    sortContacts();
+    closeAddContactForm();
+    renderContactList();
     console.log(contacts);
 }
 
