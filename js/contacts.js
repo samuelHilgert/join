@@ -103,7 +103,7 @@ let nextId = 1;
 
 
 function renderContacts() {
-    addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
+    //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
     renderContactList();
     setRandomColor();
@@ -209,12 +209,19 @@ function openContactInfo(contactId) {
 }
 
 
-/**
- * This function adds new contacts to the contacts-array and sorts the array in alphabetical order by using sort & localeCompare
- * 
- * @param {string} contact - function-internal placeholder for the contact to be added to the function
- */
-function addContactToArray(contact) {
+function addContactToArray() {
+    let name = document.getElementById('inputAddContactName').value;
+    let mail = document.getElementById('inputAddContactMail').value;
+    let phone = document.getElementById('inputAddContactPhone').value;
+    let id = (nextId++).toString(); // generates new ID based on the length of the array, without checking the IDs of the existing contacts
+    let color = getRandomColor();
+    let contact = {
+        name: name, 
+        mail: mail,
+        phone: phone,
+        color: color, 
+        id: id
+    };
     contacts.push(contact);
     contacts.sort((a, b) => {
         const nameA = a.name.toLowerCase();
@@ -222,10 +229,11 @@ function addContactToArray(contact) {
 
         return nameA.localeCompare(nameB);
     });
+    console.log(contacts);
 }
 
 
-function addNewContact() {
+function openAddNewContact() {
     let container = document.getElementById('addContactMask');
     container.innerHTML = renderAddContactContainerHTML();
     let addContactContainer = document.getElementById('addContactContainer');
