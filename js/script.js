@@ -61,3 +61,22 @@ function openExternalLink(link) {
     let targetUrl = url + '?external';
     window.open(targetUrl, '_blank');
 }
+
+function moveContainerIn(container) {
+    container.classList.remove('outside'); 
+    container.classList.remove('animation-out'); 
+    container.classList.add('centered'); 
+    container.classList.add('animation-in'); 
+}
+
+function moveContainerOut(container) {
+    container.classList.remove('centered'); 
+    container.classList.remove('animation-in'); 
+    container.classList.add('outside'); 
+    container.classList.add('animation-out'); 
+}
+
+function displayNonePopup(popup) {
+    popup.style.display = 'none';
+}
+
