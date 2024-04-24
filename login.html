@@ -9,7 +9,7 @@
     <script src="./js/script.js"></script>
     <script src="./js/register.js"></script>
     <script src="./js/storage.js"></script>
-    <script src="./js/login.js"></script>  
+    <script src="./js/login.js"></script>
     <link rel="stylesheet" href="./css/standard.css">
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/assets.css">
@@ -36,7 +36,8 @@
             <div class="form-div gap-50 width-max">
                 <div class="d_c_c_c gap-20 width-max">
                     <input class="input-style input-email" id="loginEmail" type="email" placeholder="Email" required>
-                    <input class="input-style input-password" id="loginPassword" type="password" placeholder="Password" required>
+                    <input class="input-style input-password" id="loginPassword" type="password" placeholder="Password"
+                        required>
                 </div>
             </div>
             <div class="d_f_c_c gap-20">
@@ -47,10 +48,10 @@
                 <button class="btn" id="loginBtn">Log in</button>
                 <button class="btn btn-alt" onclick="guestLogin()">Guest Log in</button>
             </div>
-            <div class="width-max">
-                <a class="btn" id="messageFormLogin">Message</a>
-            </div>
         </form>
+        <div class="d_f_c_c width-max" id="loginMessageContainer">
+        <a class="btn-message" id="messageFormLogin">Message</a>
+        </div>
     </div>
 
     <div class="legal-links d_f_c_c gap-40 pad-y-70">

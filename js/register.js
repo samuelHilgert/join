@@ -126,14 +126,14 @@ function signUpErrorReset() {
  * 
  */
 function messageDisplay(container) {
-    let messageContainer = document.getElementById('messageContainer');
-    messageContainer.style.display = 'flex';
+    let signUpMessageContainer = document.getElementById('signUpMessageContainer');
+    signUpMessageContainer.style.display = 'flex';
     container.style.display = 'flex';
 }
 
 function hideMessageContainer(container) {
-    let messageContainer = document.getElementById('messageContainer');
-    messageContainer.style.display = 'none';
+    let signUpMessageContainer = document.getElementById('signUpMessageContainer');
+    signUpMessageContainer.style.display = 'none';
     container.style.display = 'none';
 }
 
