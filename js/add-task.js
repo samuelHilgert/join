@@ -18,6 +18,7 @@ function addTask() {
   };
   allTasks.push(task);
   dropdownContact = [];
+  subtasks = [];
   // setItem("task", allTasks);
 }
 
@@ -183,4 +184,19 @@ function deleteSubtask(element) {
   const subtaskContainer = document.getElementById("subtask-div");
   const subtaskItem = element.parentNode.parentNode;
   subtaskContainer.removeChild(subtaskItem);
+}
+
+//clear the hole form
+function clearForm() {
+  document.getElementById("task-title").value = "";
+  document.getElementById("task-description").value = "";
+  document.getElementById("task-date").value = "";
+  document.getElementById("task-category").value = "";
+  document.getElementById("subtask").value = "";
+  document.getElementById("task-assignedTo").value = "";
+  document.getElementById("subtask-div").innerHTML = "";
+  document.getElementById("dropdown-div").style.display = "none";
+  dropdownContact = [];
+  subtasks = [];
+  setPriority("medium-btn");
 }
