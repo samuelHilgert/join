@@ -256,6 +256,16 @@ function addContactToArray() {
 }
 
 
+function validateAndAddContact(event) {
+    event.preventDefault(); // Prevents the default behavior of the form (automatic sending
+    let form = document.getElementById('contactForm'); // Validation of the input form data
+    if (!form.reportValidity()) { // Checking the validity of the form
+        return; // If the form is invalid, the standard error message is displayed
+    }
+    addContactToArray(); // contacted is added, if form is valid
+}
+
+
 function openAddNewContact() {
     let container = document.getElementById('addContactMask');
     container.innerHTML = renderAddContactContainerHTML();
