@@ -210,6 +210,16 @@ function openContactInfo(contactId) {
 }
 
 
+function contactSuccessAnimation() {
+    let container = document.getElementById('contactSuccessWrapper');
+    container.classList.remove('d-none');
+    container.classList.add('animation-in');
+    setTimeout(() => {
+        container.classList.add('d-none');
+    }, 1000);
+}
+
+
 function sortContacts() {
     contacts.sort((a, b) => {
         const nameA = a.name.toLowerCase();
@@ -234,11 +244,11 @@ function addContactToArray() {
     };
     contacts.push(contact);
     sortContacts();
-    closeAddContactForm();
+    closeAddContactFormWithoutAnimation();
     renderContactList();
     setRandomColor();
+    contactSuccessAnimation();
     openContactInfo(id);
-    console.log(contacts);
 }
 
 
@@ -265,6 +275,12 @@ function closeAddContactForm() {
         // Removes event listener to avoid unnecessary use
         addContactContainer.removeEventListener('animationend', animationEndHandler);
     });
+}
+
+
+function closeAddContactFormWithoutAnimation() {
+    let addContactMask = document.getElementById('addContactMask');
+    addContactMask.classList.add('d-none');
 }
 
 

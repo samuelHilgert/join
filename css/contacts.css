@@ -178,11 +178,11 @@
 }
 
 .animation-in {
-    animation: slideInRight 0.5s ease-in-out forwards;
+    animation: slideInRight 0.3s ease-in-out forwards;
 }
 
 .animation-out {
-    animation: slideOutRight 0.5s ease-in-out forwards;
+    animation: slideOutRight 0.3s ease-in-out forwards;
 }
 
 .contact-info {
@@ -422,4 +422,8 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
+}
+
+.contact-success-wrapper {
+    margin: 210px 0 0 55px;
 }
