@@ -236,6 +236,8 @@ function addContactToArray() {
     sortContacts();
     closeAddContactForm();
     renderContactList();
+    setRandomColor();
+    openContactInfo(id);
     console.log(contacts);
 }
 
