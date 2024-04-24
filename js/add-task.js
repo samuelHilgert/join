@@ -145,15 +145,20 @@ function addSubtask() {
   if (subtaskValue !== "") {
     subtasks.push(subtaskValue);
     const subtaskContainer = document.getElementById("subtask-div");
-    subtaskContainer.innerHTML += `
-      <div class='d_f_sb_c pad-x-10'>
-        <span>● ${subtaskValue}</span>
+    subtaskContainer.innerHTML = "";
+    for (let i = 0; i < subtasks.length; i++) {
+      const subtask = subtasks[i];
+      subtaskContainer.innerHTML += `
+      <div id='subtask${i}'class='d_f_sb_c pad-x-10'>
+        <span>● ${subtask}</span>
         <div class='d_f_c_c gap-5'>
           <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
-          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(this)" />
+          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(${i})" />
         </div>
       </div>
     `;
+    }
+
     subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
     changeIcons(); // Icons zurücksetzen
   }
@@ -180,10 +185,9 @@ function clearSubtaskInput() {
   `;
 }
 
-function deleteSubtask(element) {
-  const subtaskContainer = document.getElementById("subtask-div");
-  const subtaskItem = element.parentNode.parentNode;
-  subtaskContainer.removeChild(subtaskItem);
+function deleteSubtask(i) {
+  subtasks.splice(i, 1);
+  document.getElementById(`subtask${i}`).remove();
 }
 
 //clear the hole form
