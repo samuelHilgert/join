@@ -107,5 +107,35 @@ function renderAddContactContainerHTML() {
 
 
 function renderEditContactHTML() {
-
+    return `
+    <div class="add-contact-container" id="editContactContainer">
+            <div class="edit-contact-container-left">
+                <img class="edit-contact-img" src="./assets/img/logo2.png" alt="">
+                <span class="add-contact-span-big">Edit Contact</span>
+                <div class="horizontal-partingline"></div>
+            </div>
+            <div class="add-contact-container-right">
+                <div class="d_f_fe_c close-contact-btn">
+                    <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeEditContactForm()">
+                        <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
+                    </div>
+                </div>
+                <div class="add-contact-container-right-bottom-wrapper">
+                    <div class="add-contact-container-right-bottom">
+                        <div class="circle-big d_f_c_c" style="background-color:;">XX</div>
+                        <form class="contact-form">
+                            <input class="input-style input-name input-font" type="text" placeholder="Name" required>
+                            <input class="input-style input-email input-font" type="email" placeholder="Email" required>
+                            <input class="input-style input-phone input-font" type="text" placeholder="Phone" required>
+                            <div class="btn-wrapper">
+                                <button class="clear-btn gap-10" onclick="closeAddContactForm()">Delete</button>
+                                <button type="button" class="btn gap-10">Save<img
+                                        src="assets/img/check.png" /></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 }

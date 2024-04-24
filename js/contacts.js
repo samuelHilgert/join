@@ -265,7 +265,7 @@ function closeEditContactForm() {
 
 function editContact() {
     let container = document.getElementById('editContactMask');
-    //container.innerHTML = renderEditContactHTML();
+    container.innerHTML = renderEditContactHTML();
     let editContactContainer = document.getElementById('editContactContainer');
     editContactContainer.classList.remove('animation-out');
     editContactContainer.classList.add('animation-in');
