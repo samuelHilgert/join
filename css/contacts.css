@@ -410,3 +410,16 @@
     height: 66.48px;
     width: 55.6px;
 }
+
+.contact-success {
+    border-radius: 20px;
+    background-color: rgba(42, 54, 71, 1);
+    height: 74px;
+    width: 326px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
