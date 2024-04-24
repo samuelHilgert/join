@@ -19,7 +19,7 @@ function addTask() {
   allTasks.push(task);
   dropdownContact = [];
   subtasks = [];
-  // setItem("task", allTasks);
+  setItem("task", allTasks);
 }
 
 //get informations from input
@@ -147,7 +147,7 @@ function addSubtask() {
     const subtaskContainer = document.getElementById("subtask-div");
     subtaskContainer.innerHTML += `
       <div class='d_f_sb_c pad-x-10'>
-        <span>●${subtaskValue}</span>
+        <span>● ${subtaskValue}</span>
         <div class='d_f_c_c gap-5'>
           <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
           <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(this)" />
