@@ -44,7 +44,7 @@ function openDropdownContacts() {
   let dropdownDiv = document.getElementById("dropdown-div");
   dropdownDiv.style.display =
     dropdownDiv.style.display === "flex" ? "none" : "flex";
-
+  rotateDropdownIcon(dropdownArrow, dropdownDiv.style.display === "flex");
   for (let i = 0; i < contacts.length; i++) {
     const element = contacts[i];
     dropdownDiv.innerHTML += `
@@ -128,13 +128,16 @@ function chooseCategory(category) {
 
 function toggleCategoryDiv() {
   var categoryDiv = document.getElementById("category-div");
+  var dropdownIcon = document.getElementById("dropdown-icon");
   if (
     categoryDiv.style.display === "none" ||
     categoryDiv.style.display === ""
   ) {
     categoryDiv.style.display = "flex";
+    dropdownIcon.style.transform = "rotate(180deg)";
   } else {
     categoryDiv.style.display = "none";
+    dropdownIcon.style.transform = "";
   }
 }
 
@@ -224,4 +227,12 @@ function clearForm() {
   dropdownContact = [];
   subtasks = [];
   setPriority("medium-btn");
+}
+
+function rotateDropdownIcon(icon, isOpen) {
+  if (isOpen) {
+    icon.style.transform = "rotate(180deg)";
+  } else {
+    icon.style.transform = "";
+  }
 }

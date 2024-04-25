@@ -74,12 +74,12 @@
             <input
               onclick="openDropdownContacts()"
               id="task-assignedTo"
-              class="task-input-style input-login cursor-pointer"
+              class="task-input-style input-login"
               type="text"
               placeholder="Select contacts to assign"
             />
 
-            <div onclick="openDropdownContacts()" class="dropdown-icon">
+            <div onclick="openDropdownContacts()" class="input-icon-div">
               <img
                 src="assets/img/arrow_drop_down.png"
                 alt="Arrow Down"
@@ -164,11 +164,15 @@
                 onclick="toggleCategoryDiv()"
                 required
               />
-              <div class="category-icon" onclick="toggleCategoryDiv()">
+              <div
+                class="input-icon-div"
+                style="top: 29%"
+                onclick="toggleCategoryDiv()"
+              >
                 <img
                   src="assets/img/arrow_drop_down.png"
                   alt="Arrow Down"
-                  class="category-icon"
+                  id="dropdown-icon"
                 />
               </div>
             </div>
@@ -195,11 +199,12 @@
               type="text"
               placeholder="Add new subtask"
             />
-            <div id="dropdown-icon" class="dropdown-icon">
+            <div id="dropdown-icon" class="input-icon-div">
               <img
                 onclick="changeIcons()"
                 src="assets/img/input-plus.png"
                 alt="plus"
+                id="dropdown-icon"
               />
             </div>
             <div id="subtask-div" class="subtask-div"></div>
