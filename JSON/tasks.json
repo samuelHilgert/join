@@ -1,0 +1,57 @@
+[
+    {
+        "id": "1",
+        "label": "User Story",
+        "title": "Contact Form & Imprint",
+        "description": "Create a contact form and imprint page.",
+        "dueDate": "",
+        "priority": "",
+        "assignedTo": "",
+        "subtasks": "",
+        "category": "backlog"
+    },
+    {
+        "id": "2",
+        "label": "User Story",
+        "title": "Kochwelt Page & Recipe Recommender",
+        "description": "Build start page with recipe recommendation.",
+        "dueDate": "",
+        "priority": "",
+        "assignedTo": "",
+        "subtasks": "",
+        "category": "inProgress"
+    },
+    {
+        "id": "3",
+        "label": "Technical Task",
+        "title": "HTML Base Template Creation",
+        "description": "Create reusable HTML base templates.",
+        "dueDate": "",
+        "priority": "",
+        "assignedTo": "",
+        "subtasks": "",
+        "category": "awaitFeedback"
+    },
+    {
+        "id": "4",
+        "label": "User Story",
+        "title": "Daily Kochwelt Recipe",
+        "description": "Implement daily recipe and portion calculator.",
+        "dueDate": "",
+        "priority": "",
+        "assignedTo": "",
+        "subtasks": "",
+        "category": "awaitFeedback"
+    },
+    {
+        "id": "5",
+        "label": "Technical Task",
+        "title": "CSS Architecture Planning",
+        "description": "Define CSS naming conventions and structure.",
+        "dueDate": "",
+        "priority": "",
+        "assignedTo": "",
+        "subtasks": "",
+        "category": "done"
+    }
+]

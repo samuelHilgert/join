@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<body onload="renderBoardCards(); init()">
+<body onload="loadExampleTasks(); init()">
     <div class="sidebar d_c_sb_c" include-html="../assets/templates/sidebar.html"></div>
 
     <div class="aot d_f_fs_c pad-x-80 bgC-white">
@@ -38,8 +38,7 @@
                     <p>To do</p>
                     <img src="./assets/img/plus-button.svg" alt="">
                 </div>
-                <div class="drag-area d_c_fs_c" id="todoCol" ondrop="moveTo('todoCol')"
-                    ondragleave="removeHighlight('todoCol')" ondragover="allowDrop(event); highlight('todoCol')"></div>
+                <div class="drag-area d_c_fs_c" id="backlog" ondrop="moveTo('backlog')" ondragover="allowDrop(event)"></div>
             </div>
 
             <div class="d_c_c_fs gap-10">
@@ -47,8 +46,7 @@
                     <p>In progress</p>
                     <img src="./assets/img/plus-button.svg" alt="">
                 </div>
-                <div class="drag-area d_c_fs_c" id="inProgress" ondrop="moveTo('inProgress')"
-                    ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')">
+                <div class="drag-area d_c_fs_c" id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)">
                 </div>
             </div>
 
@@ -57,17 +55,14 @@
                     <p>Await feedback</p>
                     <img src="./assets/img/plus-button.svg" alt="">
                 </div>
-                <div class="drag-area d_c_fs_c" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
-                    ondragleave="removeHighlight('awaitFeedback')"
-                    ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
+                <div class="drag-area d_c_fs_c" id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event)"></div>
             </div>
 
             <div class="d_c_c_fs gap-10">
                 <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
                     <p>Done</p>
                 </div>
-                <div class="drag-area d_c_fs_c" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
-                    ondragover="allowDrop(event); highlight('done')"></div>
+                <div class="drag-area d_c_fs_c" id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)"></div>
             </div>
 
         </div>

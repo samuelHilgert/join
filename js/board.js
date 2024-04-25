@@ -1,80 +1,35 @@
-let todos = [{
-    'id': 0,
-    'label': 'User Story',
-    'title': 'Contact Form & Imprint',
-    'description': 'Create a contact form and imprint page...',
-    'category': 'todoCol'
-}, {
-    'id': 1,
-    'label': 'User Story',
-    'title': 'Kochwelt Page & Recipe Recommender',
-    'description': 'Build start page with recipe recommendation...',
-    'category': 'inProgress'
-}, {
-    'id': 2,
-    'label': 'Technical Task',
-    'title': 'HTML Base Template Creation',
-    'description': 'Create reusable HTML base templates...',
-    'category': 'awaitFeedback'
-}, {
-    'id': 3,
-    'label': 'User Story',
-    'title': 'Daily Kochwelt Recipe',
-    'description': 'Implement daily recipe and portion calculator....',
-    'category': 'awaitFeedback'
-}, {
-    'id': 4,
-    'label': 'Technical Task',
-    'title': 'CSS Architecture Planning',
-    'description': 'Define CSS naming conventions and structure...',
-    'category': 'done'
-}];
+let tasks = [];
+let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 
 let currentDraggedElement;
 
+async function loadExampleTasks() {
+    let resp = await fetch('./JSON/tasks.json');
+    tasks = await resp.json();
+    renderBoardCards();
+}
+
 function renderBoardCards() {
-    let todoCol = todos.filter(t => t['category'] == 'todoCol');
-    let inProgress = todos.filter(t => t['category'] == 'inProgress');
-    let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
-    let done = todos.filter(t => t['category'] == 'done');
+    for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
+    const categoriesBySameName = tasks.filter(t => t['category'] == category);
+    const taskDiv = document.getElementById(`${category}`); 
+    taskDiv.innerHTML = '';
+    renderFunction(categoriesBySameName, taskDiv);
+    }
+
+    function renderFunction(categoriesBySameName, taskDiv) {
+        for (let k = 0; k < categoriesBySameName.length; k++) {
+            const element = categoriesBySameName[k];
+            taskDiv.innerHTML += generateTodoHTML(element);
+            updateProgressBar(element);
+        }
+    }
+    
+}
+/* 
     let label = todos.filter(t => t['category'] == 'label');
 
-    document.getElementById('todoCol').innerHTML = '';
-
-    for (let index = 0; index < todoCol.length; index++) {
-        const element = todoCol[index];
-        const elementId = element['id'];
-        document.getElementById('todoCol').innerHTML += generateTodoHTML(element, elementId);
-        updateProgressBar(elementId);
-    }
-
-    document.getElementById('inProgress').innerHTML = '';
-
-    for (let index = 0; index < inProgress.length; index++) {
-        const element = inProgress[index];
-        const elementId = element['id'];
-        document.getElementById('inProgress').innerHTML += generateTodoHTML(element, elementId);
-        updateProgressBar(elementId);
-    }
-
-    document.getElementById('awaitFeedback').innerHTML = '';
-
-    for (let index = 0; index < awaitFeedback.length; index++) {
-        const element = awaitFeedback[index];
-        const elementId = element['id'];
-        document.getElementById('awaitFeedback').innerHTML += generateTodoHTML(element, elementId);
-        updateProgressBar(elementId);
-    }
-
-    document.getElementById('done').innerHTML = '';
-
-    for (let index = 0; index < done.length; index++) {
-        const element = done[index];
-        const elementId = element['id'];
-        document.getElementById('done').innerHTML += generateTodoHTML(element, elementId);
-        updateProgressBar(elementId);
-    }
-    /*
         document.getElementById('label').innerHTML = '';
     
         for (let index = 0; index < label.length; index++) {
@@ -89,14 +44,13 @@ function renderBoardCards() {
                 document.getElementById('btnBoard').style.backgroundColor = 'rgba(31, 215, 193, 1)';
             }
         }*/
-}
 
 function startDragging(id) {
     currentDraggedElement = id;
 }
 
-function generateTodoHTML(element, elementId) {
-    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${elementId})" draggable="true" ondragstart="startDragging(${element['id']})">
+function generateTodoHTML(element) {
+    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${element['id']})" draggable="true" ondragstart="startDragging(${element['id']})">
             <button class="d_f_c_c" id="btnBoard">${element['label']}</button>
             <h6><b>${element['title']}</b></h6>
             <p>${element['description']}</p>
@@ -116,10 +70,10 @@ function generateTodoHTML(element, elementId) {
             </div>`;
 }
 
-function updateProgressBar(elementId) {
+function updateProgressBar(element) {
     let currentTaskStatus = 1;
-    document.getElementById(`currentTaskNumber${elementId}`).innerHTML = `${currentTaskStatus}`;
-    let progressBar = document.getElementById(`progressBar${elementId}`);
+    document.getElementById(`currentTaskNumber${element['id']}`).innerHTML = `${currentTaskStatus}`;
+    let progressBar = document.getElementById(`progressBar${element['id']}`);
     if (currentTaskStatus === 1) {
         progressBar.style.width = `50%`;
         progressBar.classList.add('blue');
@@ -129,30 +83,28 @@ function updateProgressBar(elementId) {
     }
 }
 
-function allowDrop(ev) {
-    ev.preventDefault();
+function allowDrop(event) {
+    event.preventDefault();
 }
 
-function moveTo(category) {
-    todos[currentDraggedElement]['category'] = category;
+function moveTo(currentCategory) {
+    tasks[currentDraggedElement]['category'] = currentCategory;
+    // saveChangesInArray();
     renderBoardCards();
 }
+/*
+// ERST WICHTIG, WENN DATEN REMOTE HOCHGELADEN WERDEN, ALSO BEI USER TAKS NICHT BEI GUEST
+function saveChangesInArray() {
 
-function highlight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
 }
-
-function removeHighlight(id) {
-    document.getElementById(id).classList.remove('drag-area-highlight');
-}
+*/
 
 function doNotClose(event) {
     event.stopPropagation();
 }
 
-function renderBoardTaskPopupContent(elementId) {
-    const todo = todos[elementId];
-    console.log(todo);
+function renderBoardTaskPopupContent(id) {
+    const todo = tasks[id];
     let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
     boardTaskPopupContent.innerHTML = `
 <div class="d_c_sb_fs gap-20 height-max">
@@ -189,26 +141,26 @@ function closeBoardAddTaskPopup() {
     let popup = document.getElementById('boardAddTaskPopup');
     let container = document.getElementById('boardAddTaskPopupContainer');
     moveContainerOut(container);
-    setTimeout(function() {
+    setTimeout(function () {
         displayNonePopup(popup);
     }, 500);
     document.body.style.overflow = 'scroll';
 }
 
-function openBoardTaskPopup(elementId) {
+function openBoardTaskPopup(id) {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
     let container = document.getElementById('boardTaskPopupContainer');
     document.body.style.overflow = 'hidden';
     boardTaskPopup.style.display = 'flex';
     moveContainerIn(container);
-    renderBoardTaskPopupContent(elementId);
+    renderBoardTaskPopupContent(id);
 }
 
 function closeBoardTaskPopup() {
     let popup = document.getElementById('boardTaskPopup');
     let container = document.getElementById('boardTaskPopupContainer');
     moveContainerOut(container);
-    setTimeout(function() {
+    setTimeout(function () {
         displayNonePopup(popup);
     }, 500);
     document.body.style.overflow = 'scroll';

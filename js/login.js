@@ -29,13 +29,17 @@ function iterateUsers() {
             remember = false;
             saveToSessionStorage();
         }
+        let container = document.getElementById('messageFormLogin');
         showLoginMessage();
-        setTimeout(forwardToSummary, messageDisplayTime);
+        loginMessageDisplay(container);
+        moveContainerUp(container);
+        setTimeout(forwardToSummary, 1500);
     } else {
         verificateEmail();
         verifcatePassword();
     }
 }
+
 
 function saveToSessionStorage() {
     let userName = users[indexByEmail]['name'];
@@ -62,11 +66,19 @@ function saveToLocalStorage() {
  * 
  */
 function verificateEmail() {
+    let container = document.getElementById('messageFormLogin');
     if (emailNotFound()) {
         successEmail = false;
-        loginErrorReset();
         showLoginMessage();
-        setTimeout(messageDisplayFormLogin, messageDisplayTime);
+        loginMessageDisplay(container);
+        moveContainerUp(container);
+        setTimeout(function () {
+            moveContainerDown(container);
+        }, 1500);
+        setTimeout(function () {
+            hideLoginMessageContainer(container);
+        }, displayMessageTime);
+        loginErrorReset();
     }
 }
 
@@ -75,13 +87,33 @@ function verificateEmail() {
  * 
  */
 function verifcatePassword() {
+    let container = document.getElementById('messageFormLogin');
     if (onlyEmailCorrect()) {
         successEmail = true;
         successPassword = false;
-        loginErrorReset();
         showLoginMessage();
-        setTimeout(messageDisplayFormLogin, messageDisplayTime);
+        loginMessageDisplay(container);
+        moveContainerUp(container);
+        setTimeout(function () {
+            moveContainerDown(container);
+        }, 1500);
+        setTimeout(function () {
+            hideLoginMessageContainer(container);
+        }, displayMessageTime);
+        loginErrorReset();
     }
+}
+
+function loginMessageDisplay(container) {
+    let loginMessageContainer = document.getElementById('loginMessageContainer');
+    loginMessageContainer.style.display = 'flex';
+    container.style.display = 'flex';
+}
+
+function hideLoginMessageContainer(container) {
+    let loginMessageContainer = document.getElementById('loginMessageContainer');
+    loginMessageContainer.style.display = 'none';
+    container.style.display = 'none';
 }
 
 /**
@@ -132,7 +164,6 @@ function loginErrorReset() {
  */
 function showLoginMessage() {
     let messageFormLogin = document.getElementById('messageFormLogin');
-    messageFormLogin.style.display = 'flex';
     if (successEmail === false && successPassword === false) {
         messageFormLogin.innerHTML = 'email not found';
     }
@@ -142,15 +173,6 @@ function showLoginMessage() {
     if (successEmail === true && successPassword === true) {
         messageFormLogin.innerHTML = 'login successfully';
     }
-}
-
-/**
- * This function set message display to none
- * 
- */
-function messageDisplayFormLogin() {
-    let messageFormLogin = document.getElementById('messageFormLogin');
-    messageFormLogin.style.display = 'none';
 }
 
 /**

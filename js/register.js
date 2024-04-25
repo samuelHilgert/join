@@ -39,9 +39,9 @@ function checkboxClicked() {
     } else {
         showSignUpMessage();
         messageDisplay(container);
-        moveContainerIn(container);
+        moveContainerUp(container);
         setTimeout(function () {
-            moveContainerOut(container);
+            moveContainerDown(container);
         }, 1500);
         setTimeout(function () {
             hideMessageContainer(container);
@@ -62,9 +62,9 @@ async function checkEmailExist() {
         registerEmail.value = '';
         showSignUpMessage();
         messageDisplay(container);
-        moveContainerIn(container);
+        moveContainerUp(container);
         setTimeout(function () {
-            moveContainerOut(container);
+            moveContainerDown(container);
         }, 1500);
         setTimeout(function () {
             hideMessageContainer(container);
@@ -87,9 +87,9 @@ async function signUpPasswordsMatched() {
         pushUserData();
         showSignUpMessage();
         messageDisplay(container);
-        moveContainerIn(container);
+        moveContainerUp(container);
         setTimeout(function () {
-            moveContainerOut(container);
+            moveContainerDown(container);
         }, 1500);
         setTimeout(function () {
             hideMessageContainer(container);
@@ -99,9 +99,9 @@ async function signUpPasswordsMatched() {
     else {
         showSignUpMessage();
         messageDisplay(container);
-        moveContainerIn(container);
+        moveContainerUp(container);
         setTimeout(function () {
-            moveContainerOut(container);
+            moveContainerDown(container);
         }, 1500);
         setTimeout(function () {
             hideMessageContainer(container);
@@ -154,7 +154,9 @@ function pushInArray() {
     users.push({
         name: signUpName.value,
         email: registerEmail.value,
-        password: password.value
+        password: password.value,
+        tasks: '',
+        contacts: ''
     });
 }
 
