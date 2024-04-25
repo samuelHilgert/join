@@ -83,7 +83,7 @@ function renderAddContactContainerHTML() {
                 <div class="add-contact-container-right-bottom-wrapper">
                     <div class="add-contact-container-right-bottom">
                         <img class="contact-grey-svg" src="./assets/img/contact-picture.svg" alt="">
-                        <form class="contact-form" id="contactForm" onsubmit="validateAndAddContact(event)">
+                        <form class="contact-form" id="contactForm" onsubmit="validateAndAddContact(event); return false;">
                             <input id="inputAddContactName" class="input-style input-name input-font" type="text" placeholder="Name" required>
                             <input id="inputAddContactMail" class="input-style input-email input-font" type="email" placeholder="Email" required>
                             <input id="inputAddContactPhone" class="input-style input-phone input-font" type="text" placeholder="Phone" required>

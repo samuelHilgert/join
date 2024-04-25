@@ -102,6 +102,20 @@ let profileCircleColors = [
 
 let nextId = 1;
 
+/*  SAMUEL
+async function loadExampleContacts() {
+    let resp = await fetch('./JSON/contacts.json');
+    contacts = await resp.json();
+    renderContacts();
+}*/ 
+
+async function loadContacts() {
+    try {
+        contacts = JSON.parse(await getItemContacts('contacts'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
+}
 
 function renderContacts() {
     //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
@@ -259,14 +273,19 @@ function addContactToArray() {
     });
 }
 
+// ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
+async function pushContactsOnRemoteServer() {
+    await setItemContacts('contacts', JSON.stringify(contacts));
+}
 
-function validateAndAddContact(event) {
+async function validateAndAddContact(event) {
     event.preventDefault(); // Prevents the default behavior of the form (automatic sending
     let form = document.getElementById('contactForm'); // Validation of the input form data
     if (!form.reportValidity()) { // Checking the validity of the form
         return; // If the form is invalid, the standard error message is displayed
     }
     addContactToArray(); // contacted is added, if form is valid
+    await pushContactsOnRemoteServer(); // aktuell am implementieren - Samuel
 }
 
 
