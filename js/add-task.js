@@ -179,11 +179,14 @@ function renderSubtasks(container) {
 
 function changeIcons() {
   let iconBox = document.getElementById("dropdown-icon");
+  iconBox.classList.remove("input-icon-div");
+  iconBox.classList.add("input-icon");
+
   iconBox.innerHTML = `
     <div class="d_f_c_c gap-5 padding-right-36">
-      <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
+    <div class="icon-edit-delete"> <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" /></div>
       <div class='input-spacer'></div>
-      <img onclick='addSubtask(),clearSubtaskInput()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
+      <div class="icon-edit-delete"> <img onclick='addSubtask(),clearSubtaskInput()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" /></div>
     </div>
   `;
 }
@@ -197,6 +200,7 @@ function editSubtask(element) {
     subtasks.splice(subtaskIndex, 1);
     renderSubtasks(subtaskContainer);
   }
+  changeIcons();
 }
 
 function deleteSubtask(i) {
@@ -210,7 +214,7 @@ function clearSubtaskInput() {
   subtaskInput.blur();
   let iconBox = document.getElementById("dropdown-icon");
   iconBox.innerHTML = `
-    <img onclick="changeIcons()" src="assets/img/input-plus.png" alt="plus" />
+   <div class='icon-edit-delete'><img onclick="changeIcons()" src="assets/img/input-plus.png" alt="plus" /></div>
   `;
 }
 

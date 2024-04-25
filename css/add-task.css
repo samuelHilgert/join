@@ -184,6 +184,33 @@
   background-color: rgba(204, 204, 204, 0.4);
 }
 
+.icon-edit-delete {
+  right: 18px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.icon-edit-delete:hover {
+  background-color: rgba(204, 204, 204, 0.4);
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
 .input-dropdown {
   position: relative;
 }
