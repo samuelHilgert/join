@@ -1,5 +1,5 @@
 // contacts = Array mit Testkontakten -> diese müssen später noch im Backend angelegt werden
-let contacts = [];
+let contacts = []
 
 let profileCircleColors = [
     'teal',
@@ -33,17 +33,8 @@ async function loadExampleContacts() {
 }*/
 
 async function loadUserContacts() {
-    await loadUserData();
     await updateContacts();
     renderContacts();
-}
-
-async function loadUserData() {
-    try {
-        users = JSON.parse(await getItem('users'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
 }
 
 async function updateContacts() {
@@ -210,8 +201,6 @@ function addContactToArray() {
 
 // ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
 async function pushContactsOnRemoteServer() {
-    // let userContacts = users[currentUser].contacts || []; // Aktuelle Kontakte des angemeldeten Users (leeres Array wenn keine vorhanden)
-    // userContacts = userContacts.concat(contacts); // Neue Kontakte hinzufügen
     users[currentUser].contacts = contacts;                          
     await setItem('users', JSON.stringify(users));
 }

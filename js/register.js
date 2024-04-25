@@ -1,4 +1,4 @@
-let users = [];
+
 let registerSuccess = false;
 let checkbox = false;
 let emailExist = false;
@@ -9,6 +9,7 @@ let displayMessageTime = 2500;
  * This function loads all already registered users from remote server
  * 
  */
+
 async function loadUsers() {
     try {
         users = JSON.parse(await getItem('users'));

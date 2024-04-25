@@ -1,4 +1,5 @@
-let currentUser = 0;
+let users = [];
+let currentUser;
 
 /**
  * This is a function to initialize render functions 
@@ -6,6 +7,8 @@ let currentUser = 0;
  */
 async function init() {
     await includeHTML();
+    await loadUserData();
+    getCurrentUserId();
     getCurrentlySidebarLink();
     hideHelpIcon();
 }
@@ -24,6 +27,26 @@ async function includeHTML() {
             element.innerHTML = await resp.text(); // wenn gefunden, Datei wird aufgerufen und Inhalt ausgegeben 
         } else {
             element.innerHTML = 'Page not found'; // wenn nicht gefunden, Ausgabe Fehlermeldung text
+        }
+    }
+}
+
+async function loadUserData() {
+    try {
+        users = JSON.parse(await getItem('users'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
+}
+
+function getCurrentUserId() {
+    const savedDataSesssionStorage = sessionStorage.getItem('user');
+    const savedDataLocalStorage = localStorage.getItem('user');
+    if (savedDataSesssionStorage) {
+        currentUser = savedDataSesssionStorage;
+    } else {
+        if (savedDataLocalStorage) {
+        currentUser = savedDataLocalStorage;
         }
     }
 }
