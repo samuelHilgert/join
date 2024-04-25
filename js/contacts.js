@@ -22,6 +22,7 @@ let profileCircleColors = [
     'cadetblue'
 ];
 
+
 let nextId = 1;
 
 /*  SAMUEL TESTING
@@ -31,16 +32,8 @@ async function loadExampleContacts() {
     renderContacts();
 }*/
 
-async function loadContacts() {
-    try {
-        users = JSON.parse(await getItem('users'));
-        renderContacts();
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
-}
-
 function renderContacts() {
+    loadUserContacts();
     //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
     sortContacts();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
@@ -48,6 +41,11 @@ function renderContacts() {
     setRandomColor();
 }
 
+function loadUserContacts() {
+    users.forEach(function(user) {
+        contacts = contacts.concat(user.contacts);
+    });
+}
 
 /**
  * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has 
@@ -198,31 +196,11 @@ function addContactToArray() {
 
 // ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
 async function pushContactsOnRemoteServer() {
-    let userIndex = currentUser;            
-    await users[userIndex].contacts.push(contacts); // Funktioniert nicht! Muss einen anderen Weg geben, dass in users/0/'contacts' zu speichern
+    // let userIndex = currentUser;            
+    users[currentUser].contacts = contacts;
     console.log(users);                             
     await setItem('users', JSON.stringify(users));
-
 }
-
-/*
-
-// Funktion, um einen neuen Kontakt zu einem Benutzer hinzuzufügen
-function addContactToUser(userIndex, contacts) {
-
-}
-
-
-addContactToUser(0, contacts); // Fügt neuen Kontakt zum ersten Benutzer hinzu
-
-// Speichern der aktualisierten Benutzerdaten
-await setItem('users', JSON.stringify(users));
-
-
-
-
-
-*/
 
 async function validateAndAddContact(event) {
     event.preventDefault(); // Prevents the default behavior of the form (automatic sending
