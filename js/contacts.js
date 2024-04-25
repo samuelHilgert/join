@@ -198,8 +198,31 @@ function addContactToArray() {
 
 // ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
 async function pushContactsOnRemoteServer() {
+    let userIndex = currentUser;            
+    await users[userIndex].contacts.push(contacts); // Funktioniert nicht! Muss einen anderen Weg geben, dass in users/0/'contacts' zu speichern
+    console.log(users);                             
     await setItem('users', JSON.stringify(users));
+
 }
+
+/*
+
+// Funktion, um einen neuen Kontakt zu einem Benutzer hinzuzufügen
+function addContactToUser(userIndex, contacts) {
+
+}
+
+
+addContactToUser(0, contacts); // Fügt neuen Kontakt zum ersten Benutzer hinzu
+
+// Speichern der aktualisierten Benutzerdaten
+await setItem('users', JSON.stringify(users));
+
+
+
+
+
+*/
 
 async function validateAndAddContact(event) {
     event.preventDefault(); // Prevents the default behavior of the form (automatic sending

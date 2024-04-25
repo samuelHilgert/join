@@ -1,3 +1,4 @@
+let currentUser = 0; 
 
 /**
  * This is a function to initialize render functions 
