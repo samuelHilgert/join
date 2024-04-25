@@ -1,83 +1,5 @@
 // contacts = Array mit Testkontakten -> diese müssen später noch im Backend angelegt werden
-let contacts = [
-    {
-        name: "Anna Müller",
-        mail: "anna.mueller@strive.com",
-        phone: "+43 789 878 566",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Bernd Hofmann",
-        mail: "hofmann@ib-bank.com",
-        phone: "+49 647 289 145",
-        color: "",
-        id: "",
-    },
-    {
-        name: "Eva Grace",
-        mail: "eg@marinaclub.com",
-        phone: "+25 493448951",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Frank Groß",
-        mail: "groß@frank.de",
-        phone: "+49 668463546",
-        color: "",
-        id: ""
-    },
-    {
-        name: "James Walker",
-        mail: "jw@dreamlogistics.com",
-        phone: "+49 64865155",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Alex Maier",
-        mail: "alex.maier@strive.com",
-        phone: "+43 789 878 787",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Leonie Maier",
-        mail: "leonie.maier@abc-construct.com",
-        phone: "+49 596 487 12",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Max Baumgart",
-        mail: "max@baumgart.de",
-        phone: "+49 12 123 456",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Olivia Shaun",
-        mail: "os@health-co.com",
-        phone: "+25 1648689446",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Paul Lee",
-        mail: "lee@lee-enterprises.com",
-        phone: "+97 947621654",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Volker Richter",
-        mail: "richter@cv-systems.com",
-        phone: "+63 349 555 479",
-        color: "",
-        id: ""
-    }
-];
+let contacts = [];
 
 let profileCircleColors = [
     'teal',
@@ -102,16 +24,17 @@ let profileCircleColors = [
 
 let nextId = 1;
 
-/*  SAMUEL
+/*  SAMUEL TESTING
 async function loadExampleContacts() {
     let resp = await fetch('./JSON/contacts.json');
     contacts = await resp.json();
     renderContacts();
-}*/ 
+}*/
 
 async function loadContacts() {
     try {
-        contacts = JSON.parse(await getItemContacts('contacts'));
+        users = JSON.parse(await getItem('users'));
+        renderContacts();
     } catch (e) {
         console.error('Loading error:', e);
     }
@@ -275,7 +198,7 @@ function addContactToArray() {
 
 // ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
 async function pushContactsOnRemoteServer() {
-    await setItemContacts('contacts', JSON.stringify(contacts));
+    await setItem('users', JSON.stringify(users));
 }
 
 async function validateAndAddContact(event) {

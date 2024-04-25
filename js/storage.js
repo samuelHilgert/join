@@ -11,29 +11,12 @@ async function setItem(key, value) {
     return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) })
     .then(res => res.json());
 }
-
-async function setItemContacts(key, value) {
-    const payload = { key, value, token: STORAGE_TOKEN };
-    return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) })
-    .then(res => res.json());
-}
-
 /**
  * This function loads the user data from remote server via the url 
  * 
  * 
  */
 async function getItem(key) {
-    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-    return fetch(url).then(res => res.json()).then(res => {
-        // Verbesserter code
-        if (res.data) { 
-            return res.data.value;
-        } throw `Could not find data with key "${key}".`;
-    });
-}
-
-async function getItemContacts(key) {
     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
     return fetch(url).then(res => res.json()).then(res => {
         // Verbesserter code

@@ -154,19 +154,11 @@ function pushInArray() {
     users.push({
         name: signUpName.value,
         email: registerEmail.value,
-        password: password.value
+        password: password.value,
+        tasks: '',
+        contacts: ''
     });
 }
-
-/*
-    {
-        "name": "Anna Müller",
-        "mail": "anna.mueller@strive.com",
-        "phone": "+43 789 878 566",
-        "color": "",
-        "id": ""
-    }
-*/
 
 /**
  * The user data are passed on the remote server.
