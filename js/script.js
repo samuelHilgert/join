@@ -11,6 +11,7 @@ async function init() {
     getCurrentUserId();
     getCurrentlySidebarLink();
     hideHelpIcon();
+    renderSummary();
 }
 
 /**
@@ -46,7 +47,7 @@ function getCurrentUserId() {
         currentUser = savedDataSesssionStorage;
     } else {
         if (savedDataLocalStorage) {
-        currentUser = savedDataLocalStorage;
+            currentUser = savedDataLocalStorage;
         }
     }
 }
@@ -87,17 +88,17 @@ function openExternalLink(link) {
 }
 
 function moveContainerIn(container) {
-    container.classList.remove('outside'); 
-    container.classList.remove('animation-out'); 
-    container.classList.add('centered'); 
-    container.classList.add('animation-in'); 
+    container.classList.remove('outside');
+    container.classList.remove('animation-out');
+    container.classList.add('centered');
+    container.classList.add('animation-in');
 }
 
 function moveContainerOut(container) {
-    container.classList.remove('centered'); 
-    container.classList.remove('animation-in'); 
-    container.classList.add('outside'); 
-    container.classList.add('animation-out'); 
+    container.classList.remove('centered');
+    container.classList.remove('animation-in');
+    container.classList.add('outside');
+    container.classList.add('animation-out');
 }
 
 function displayNonePopup(popup) {
@@ -105,15 +106,26 @@ function displayNonePopup(popup) {
 }
 
 function moveContainerUp(container) {
-    container.classList.remove('outside-down'); 
-    container.classList.remove('animation-down'); 
-    container.classList.add('centered-up'); 
-    container.classList.add('animation-up'); 
+    container.classList.remove('outside-down');
+    container.classList.remove('animation-down');
+    container.classList.add('centered-up');
+    container.classList.add('animation-up');
 }
 
 function moveContainerDown(container) {
-    container.classList.remove('centered-up'); 
-    container.classList.remove('animation-up'); 
-    container.classList.add('outside-down'); 
-    container.classList.add('animation-down'); 
+    container.classList.remove('centered-up');
+    container.classList.remove('animation-up');
+    container.classList.add('outside-down');
+    container.classList.add('animation-down');
+}
+
+
+function clickLogout() {
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
+    setTimeout(forwardAfterLogout, 500);
+}
+
+function forwardAfterLogout() {
+    window.location.href = `./login.html?msg=Du bist abgemeldet`;
 }
