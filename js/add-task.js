@@ -141,27 +141,37 @@ function toggleCategoryDiv() {
 //for subtasks section
 function addSubtask() {
   const subtaskInput = document.getElementById("subtask");
-  const subtaskValue = subtaskInput.value.trim(); // Trimmen Sie den Wert, um führende und nachfolgende Leerzeichen zu entfernen
+  const subtaskValue = subtaskInput.value.trim();
   if (subtaskValue !== "") {
-    subtasks.push(subtaskValue);
     const subtaskContainer = document.getElementById("subtask-div");
-    subtaskContainer.innerHTML = "";
-    for (let i = 0; i < subtasks.length; i++) {
-      const subtask = subtasks[i];
-      subtaskContainer.innerHTML += `
-      <div id='subtask${i}'class='d_f_sb_c pad-x-10'>
+    subtasks.push(subtaskValue);
+    renderSubtasks(subtaskContainer);
+    subtaskInput.value = "";
+    changeIcons();
+  }
+}
+
+function getSubtaskIndex(element) {
+  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
+    element.parentNode.parentNode
+  );
+  return subtaskIndex;
+}
+
+function renderSubtasks(container) {
+  container.innerHTML = "";
+  subtasks.forEach((subtask, index) => {
+    container.innerHTML += `
+      <div id='subtask${index}' class='d_f_sb_c pad-x-10'>
         <span>● ${subtask}</span>
         <div class='d_f_c_c gap-5'>
           <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
-          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(${i})" />
+          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(${index})" />
         </div>
       </div>
     `;
-    }
-
-    subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
-    changeIcons(); // Icons zurücksetzen
-  }
+  });
 }
 
 function changeIcons() {
@@ -175,19 +185,30 @@ function changeIcons() {
   `;
 }
 
-function clearSubtaskInput() {
-  let subtaskInput = document.getElementById("subtask");
-  subtaskInput.value = ""; // Leert das Eingabefeld
-  subtaskInput.blur(); // Entfernt den Fokus vom Eingabefeld
-  let iconBox = document.getElementById("dropdown-icon");
-  iconBox.innerHTML = `
-    <img onclick="changeIcons()" src="assets/img/input-plus.png" alt="plus" />
-  `;
+function editSubtask(element) {
+  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskIndex = getSubtaskIndex(element);
+  if (subtaskIndex !== -1) {
+    const subtaskInput = document.getElementById("subtask");
+    subtaskInput.value = subtasks[subtaskIndex];
+    subtasks.splice(subtaskIndex, 1);
+    renderSubtasks(subtaskContainer);
+  }
 }
 
 function deleteSubtask(i) {
   subtasks.splice(i, 1);
   document.getElementById(`subtask${i}`).remove();
+}
+
+function clearSubtaskInput() {
+  let subtaskInput = document.getElementById("subtask");
+  subtaskInput.value = "";
+  subtaskInput.blur();
+  let iconBox = document.getElementById("dropdown-icon");
+  iconBox.innerHTML = `
+    <img onclick="changeIcons()" src="assets/img/input-plus.png" alt="plus" />
+  `;
 }
 
 //clear the hole form
