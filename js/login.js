@@ -40,25 +40,14 @@ function iterateUsers() {
     }
 }
 
-
 function saveToSessionStorage() {
-    let userName = users[indexByEmail]['name'];
-    let userEmail = users[indexByEmail]['email'];
-    const user = {
-        name: userName,
-        email: userEmail
-    };
-    sessionStorage.setItem('user', JSON.stringify(user));
+    let id = indexByEmail;
+    sessionStorage.setItem('user', id);
 }
 
 function saveToLocalStorage() {
-    let userName = users[indexByEmail]['name'];
-    let userEmail = users[indexByEmail]['email'];
-    const user = {
-        name: userName,
-        email: userEmail
-    };
-    localStorage.setItem('user', JSON.stringify(user));
+    let id = indexByEmail;
+    localStorage.setItem('user', id);
 }
 
 /**
@@ -188,5 +177,10 @@ function forwardToSummary() {
  * 
  */
 function guestLogin() {
+    localStorage.setItem('logged', true);
+    setTimeout(forwardSummary, 500);
+}
+
+function forwardSummary() {
     window.location.href = `./summary.html?msg=Du bist als Gast angemeldet`;
 }

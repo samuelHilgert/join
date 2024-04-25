@@ -18,7 +18,8 @@ function addTask() {
   };
   allTasks.push(task);
   dropdownContact = [];
-  // setItem("task", allTasks);
+  subtasks = [];
+  setItem("task", allTasks);
 }
 
 //get informations from input
@@ -43,7 +44,7 @@ function openDropdownContacts() {
   let dropdownDiv = document.getElementById("dropdown-div");
   dropdownDiv.style.display =
     dropdownDiv.style.display === "flex" ? "none" : "flex";
-
+  rotateDropdownIcon(dropdownArrow, dropdownDiv.style.display === "flex");
   for (let i = 0; i < contacts.length; i++) {
     const element = contacts[i];
     dropdownDiv.innerHTML += `
@@ -127,35 +128,53 @@ function chooseCategory(category) {
 
 function toggleCategoryDiv() {
   var categoryDiv = document.getElementById("category-div");
+  var dropdownIcon = document.getElementById("category-drop-icon");
   if (
     categoryDiv.style.display === "none" ||
     categoryDiv.style.display === ""
   ) {
     categoryDiv.style.display = "flex";
+    dropdownIcon.style.transform = "rotate(180deg)";
   } else {
     categoryDiv.style.display = "none";
+    dropdownIcon.style.transform = "";
   }
 }
 
 //for subtasks section
 function addSubtask() {
   const subtaskInput = document.getElementById("subtask");
-  const subtaskValue = subtaskInput.value.trim(); // Trimmen Sie den Wert, um führende und nachfolgende Leerzeichen zu entfernen
+  const subtaskValue = subtaskInput.value.trim();
   if (subtaskValue !== "") {
-    subtasks.push(subtaskValue);
     const subtaskContainer = document.getElementById("subtask-div");
-    subtaskContainer.innerHTML += `
-      <div class='d_f_sb_c pad-x-10'>
-        <span>●${subtaskValue}</span>
+    subtasks.push(subtaskValue);
+    renderSubtasks(subtaskContainer);
+    subtaskInput.value = "";
+    changeIcons();
+  }
+}
+
+function getSubtaskIndex(element) {
+  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
+    element.parentNode.parentNode
+  );
+  return subtaskIndex;
+}
+
+function renderSubtasks(container) {
+  container.innerHTML = "";
+  subtasks.forEach((subtask, index) => {
+    container.innerHTML += `
+      <div id='subtask${index}' class='d_f_sb_c pad-x-10'>
+        <span>● ${subtask}</span>
         <div class='d_f_c_c gap-5'>
           <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
-          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(this)" />
+          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(${index})" />
         </div>
       </div>
     `;
-    subtaskInput.value = ""; // Leeren Sie das Eingabefeld nach dem Hinzufügen der Unteraufgabe
-    changeIcons(); // Icons zurücksetzen
-  }
+  });
 }
 
 function changeIcons() {
@@ -169,18 +188,57 @@ function changeIcons() {
   `;
 }
 
+function editSubtask(element) {
+  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskIndex = getSubtaskIndex(element);
+  if (subtaskIndex !== -1) {
+    const subtaskInput = document.getElementById("subtask");
+    subtaskInput.value = subtasks[subtaskIndex];
+    subtasks.splice(subtaskIndex, 1);
+    renderSubtasks(subtaskContainer);
+  }
+}
+
+function deleteSubtask(i) {
+  subtasks.splice(i, 1);
+  document.getElementById(`subtask${i}`).remove();
+}
+
 function clearSubtaskInput() {
   let subtaskInput = document.getElementById("subtask");
-  subtaskInput.value = ""; // Leert das Eingabefeld
-  subtaskInput.blur(); // Entfernt den Fokus vom Eingabefeld
+  subtaskInput.value = "";
+  subtaskInput.blur();
   let iconBox = document.getElementById("dropdown-icon");
   iconBox.innerHTML = `
     <img onclick="changeIcons()" src="assets/img/input-plus.png" alt="plus" />
   `;
 }
 
-function deleteSubtask(element) {
-  const subtaskContainer = document.getElementById("subtask-div");
-  const subtaskItem = element.parentNode.parentNode;
-  subtaskContainer.removeChild(subtaskItem);
+//clear the hole form
+function clearForm() {
+  document.getElementById("task-title").value = "";
+  document.getElementById("task-description").value = "";
+  document.getElementById("task-date").value = "";
+  document.getElementById("task-category").value = "";
+  document.getElementById("subtask").value = "";
+  document.getElementById("task-assignedTo").value = "";
+  document.getElementById("subtask-div").innerHTML = "";
+  document.getElementById("dropdown-div").style.display = "none";
+  dropdownContact = [];
+  subtasks = [];
+  setPriority("medium-btn");
+}
+
+function rotateDropdownIcon(icon, isOpen) {
+  if (isOpen) {
+    icon.style.transform = "rotate(180deg)";
+  } else {
+    icon.style.transform = "";
+  }
+}
+
+function setMinimumDate() {
+  var currentDate = new Date();
+  var minDate = currentDate.toISOString().split("T")[0];
+  document.getElementById("task-date").setAttribute("min", minDate);
 }

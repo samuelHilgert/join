@@ -52,6 +52,7 @@
               class="task-input-style input-login"
               type="text"
               placeholder="Enter a title"
+              required
             />
           </div>
 
@@ -72,13 +73,13 @@
             <span class="font-size-20">Assigned to</span>
             <input
               onclick="openDropdownContacts()"
-              id="task-subtask"
-              class="task-input-style input-login cursor-pointer"
+              id="task-assignedTo"
+              class="task-input-style input-login"
               type="text"
               placeholder="Select contacts to assign"
             />
 
-            <div onclick="openDropdownContacts()" class="dropdown-icon">
+            <div onclick="openDropdownContacts()" class="input-icon-div">
               <img
                 src="assets/img/arrow_drop_down.png"
                 alt="Arrow Down"
@@ -106,8 +107,13 @@
             <input
               id="task-date"
               class="task-input-style due-date-field"
-              type="date"
+              name="date"
+              type="text"
+              onfocus="(this.type='date')"
+              onblur="(this.type='text')"
+              onclick="setMinimumDate()"
               placeholder="DD / MM / YYYY"
+              required
             />
           </div>
           <div style="display: flex">
@@ -157,12 +163,17 @@
                 placeholder="Select task category"
                 readonly
                 onclick="toggleCategoryDiv()"
+                required
               />
-              <div class="category-icon" onclick="toggleCategoryDiv()">
+              <div
+                class="input-icon-div"
+                style="top: 29%"
+                onclick="toggleCategoryDiv()"
+              >
                 <img
                   src="assets/img/arrow_drop_down.png"
                   alt="Arrow Down"
-                  class="category-icon"
+                  id="category-drop-icon"
                 />
               </div>
             </div>
@@ -189,7 +200,7 @@
               type="text"
               placeholder="Add new subtask"
             />
-            <div id="dropdown-icon" class="dropdown-icon">
+            <div id="dropdown-icon" class="input-icon-div">
               <img
                 onclick="changeIcons()"
                 src="assets/img/input-plus.png"
@@ -207,7 +218,7 @@
           <span><span style="color: red">*</span>This field is required</span>
         </div>
         <div class="d_f_c_c gap-15">
-          <button class="clear-btn gap-10">
+          <button class="clear-btn gap-10" type="button" onclick="clearForm()">
             Clear
             <svg class="contact-header-svg" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -215,7 +226,7 @@
               />
             </svg>
           </button>
-          <button type="button" onclick="addTask()" class="btn gap-10">
+          <button type="submit" onclick="addTask()" class="btn gap-10">
             Create Task<img src="assets/img/check.png" />
           </button>
         </div>

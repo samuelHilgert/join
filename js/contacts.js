@@ -1,83 +1,5 @@
 // contacts = Array mit Testkontakten -> diese müssen später noch im Backend angelegt werden
-let contacts = [
-    {
-        name: "Anna Müller",
-        mail: "anna.mueller@strive.com",
-        phone: "+43 789 878 566",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Bernd Hofmann",
-        mail: "hofmann@ib-bank.com",
-        phone: "+49 647 289 145",
-        color: "",
-        id: "",
-    },
-    {
-        name: "Eva Grace",
-        mail: "eg@marinaclub.com",
-        phone: "+25 493448951",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Frank Groß",
-        mail: "groß@frank.de",
-        phone: "+49 668463546",
-        color: "",
-        id: ""
-    },
-    {
-        name: "James Walker",
-        mail: "jw@dreamlogistics.com",
-        phone: "+49 64865155",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Alex Maier",
-        mail: "alex.maier@strive.com",
-        phone: "+43 789 878 787",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Leonie Maier",
-        mail: "leonie.maier@abc-construct.com",
-        phone: "+49 596 487 12",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Max Baumgart",
-        mail: "max@baumgart.de",
-        phone: "+49 12 123 456",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Olivia Shaun",
-        mail: "os@health-co.com",
-        phone: "+25 1648689446",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Paul Lee",
-        mail: "lee@lee-enterprises.com",
-        phone: "+97 947621654",
-        color: "",
-        id: ""
-    },
-    {
-        name: "Volker Richter",
-        mail: "richter@cv-systems.com",
-        phone: "+63 349 555 479",
-        color: "",
-        id: ""
-    }
-];
+let contacts = []
 
 let profileCircleColors = [
     'teal',
@@ -100,7 +22,9 @@ let profileCircleColors = [
     'cadetblue'
 ];
 
+
 let nextId = 1;
+
 
 
 function renderContacts() {
@@ -111,6 +35,25 @@ function renderContacts() {
     setRandomColor();
 }
 
+async function updateContacts() {
+    if (loggedAsGuest === true) {
+        await loadExampleContacts();
+    } else {
+        let currentUserContacts = users[currentUser].contacts;
+        if (currentUserContacts === "") {
+            loadExampleContacts();
+            await pushContactsOnRemoteServer();
+        }
+        else {
+        contacts = users[currentUser].contacts;
+        }
+    }
+}
+
+async function loadExampleContacts() {
+    let resp = await fetch('./JSON/contacts.json');
+    contacts = await resp.json();
+}
 
 /**
  * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has 
@@ -259,14 +202,20 @@ function addContactToArray() {
     });
 }
 
+// ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
+async function pushContactsOnRemoteServer() {
+    users[currentUser].contacts = contacts;                          
+    await setItem('users', JSON.stringify(users));
+}
 
-function validateAndAddContact(event) {
+async function validateAndAddContact(event) {
     event.preventDefault(); // Prevents the default behavior of the form (automatic sending
     let form = document.getElementById('contactForm'); // Validation of the input form data
     if (!form.reportValidity()) { // Checking the validity of the form
         return; // If the form is invalid, the standard error message is displayed
     }
     addContactToArray(); // contacted is added, if form is valid
+    await pushContactsOnRemoteServer(); // aktuell am implementieren - Samuel
 }
 
 
@@ -348,6 +297,7 @@ function deleteContact(contactId) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index != -1) {
         contacts.splice(index, 1);
+        pushContactsOnRemoteServer();
         renderContactList();
         let contactCircles = document.querySelectorAll('.contact-circle'); // keeps the backgroundcolor of the circle
         contactCircles.forEach((circle, index) => {
