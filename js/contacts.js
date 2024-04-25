@@ -41,12 +41,10 @@ async function updateContacts() {
     } else {
         let currentUserContacts = users[currentUser].contacts;
         if (currentUserContacts === "") {
-            console.log('Ja leer');
             loadExampleContacts();
             await pushContactsOnRemoteServer();
         }
         else {
-        console.log('Nein nicht leer');
         contacts = users[currentUser].contacts;
         }
     }
@@ -299,6 +297,7 @@ function deleteContact(contactId) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index != -1) {
         contacts.splice(index, 1);
+        pushContactsOnRemoteServer();
         renderContactList();
         let contactCircles = document.querySelectorAll('.contact-circle'); // keeps the backgroundcolor of the circle
         contactCircles.forEach((circle, index) => {
