@@ -4,7 +4,7 @@ let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 let currentDraggedElement;
 
 async function loadExampleTasks() {
-    let resp = await fetch('./JSON/user_tasks.json');
+    let resp = await fetch('./JSON/tasks.json');
     tasks = await resp.json();
     renderBoardCards();
 }
