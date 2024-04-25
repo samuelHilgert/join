@@ -107,7 +107,10 @@
             <input
               id="task-date"
               class="task-input-style due-date-field"
-              type="date"
+              name="date"
+              type="text"
+              onfocus="(this.type='date')"
+              onblur="(this.type='text')"
               placeholder="DD / MM / YYYY"
               required
             />
