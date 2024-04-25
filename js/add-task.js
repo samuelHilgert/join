@@ -128,7 +128,7 @@ function chooseCategory(category) {
 
 function toggleCategoryDiv() {
   var categoryDiv = document.getElementById("category-div");
-  var dropdownIcon = document.getElementById("dropdown-icon");
+  var dropdownIcon = document.getElementById("category-drop-icon");
   if (
     categoryDiv.style.display === "none" ||
     categoryDiv.style.display === ""
@@ -235,4 +235,10 @@ function rotateDropdownIcon(icon, isOpen) {
   } else {
     icon.style.transform = "";
   }
+}
+
+function setMinimumDate() {
+  var currentDate = new Date();
+  var minDate = currentDate.toISOString().split("T")[0];
+  document.getElementById("task-date").setAttribute("min", minDate);
 }

@@ -111,6 +111,7 @@
               type="text"
               onfocus="(this.type='date')"
               onblur="(this.type='text')"
+              onclick="setMinimumDate()"
               placeholder="DD / MM / YYYY"
               required
             />
@@ -172,7 +173,7 @@
                 <img
                   src="assets/img/arrow_drop_down.png"
                   alt="Arrow Down"
-                  id="dropdown-icon"
+                  id="category-drop-icon"
                 />
               </div>
             </div>
@@ -204,7 +205,6 @@
                 onclick="changeIcons()"
                 src="assets/img/input-plus.png"
                 alt="plus"
-                id="dropdown-icon"
               />
             </div>
             <div id="subtask-div" class="subtask-div"></div>

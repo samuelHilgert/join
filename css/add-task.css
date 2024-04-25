@@ -159,6 +159,7 @@
   position: relative;
   background-image: url(/assets/img/event.png);
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .due-date-field::-webkit-calendar-picker-indicator {
