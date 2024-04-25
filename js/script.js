@@ -17,6 +17,7 @@ async function init() {
     if (document.location.pathname === '/summary.html') {
         renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
     } else if (document.location.pathname === '/contacts.html') {
+        await updateContacts();
         renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
     }
 }

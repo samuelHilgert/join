@@ -12,7 +12,7 @@ function renderSummary() {
  */
 function getUserNameForGreet() {
     let userNameDiv = document.getElementById('userNameDiv');
-    if (loggedAsGuest = true) {
+    if (loggedAsGuest === true) {
         userNameDiv.innerHTML = 'Guest';
     } else {
         userNameDiv.innerHTML = users[currentUser]['name'];

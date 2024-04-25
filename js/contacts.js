@@ -25,8 +25,9 @@ let profileCircleColors = [
 
 let nextId = 1;
 
-async function renderContacts() {
-    await updateContacts();
+
+
+function renderContacts() {
     //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
     sortContacts();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
@@ -35,10 +36,19 @@ async function renderContacts() {
 }
 
 async function updateContacts() {
-    if (loggedAsGuest = true) {
+    if (loggedAsGuest === true) {
         await loadExampleContacts();
     } else {
+        let currentUserContacts = users[currentUser].contacts;
+        if (currentUserContacts === "") {
+            console.log('Ja leer');
+            loadExampleContacts();
+            await pushContactsOnRemoteServer();
+        }
+        else {
+        console.log('Nein nicht leer');
         contacts = users[currentUser].contacts;
+        }
     }
 }
 
