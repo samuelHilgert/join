@@ -177,7 +177,7 @@ function forwardToSummary() {
  * 
  */
 function guestLogin() {
-    localStorage.setItem('logged', 'guest');
+    localStorage.setItem('logged', true);
     setTimeout(forwardSummary, 500);
 }
 

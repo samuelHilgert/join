@@ -25,31 +25,27 @@ let profileCircleColors = [
 
 let nextId = 1;
 
-/*  SAMUEL TESTING
-async function loadExampleContacts() {
-    let resp = await fetch('./JSON/contacts.json');
-    contacts = await resp.json();
-    renderContacts();
-}*/
-
-async function loadUserContacts() {
+async function renderContacts() {
     await updateContacts();
-    renderContacts();
-}
-
-async function updateContacts() {
-    users.forEach(function(user) {
-        contacts = contacts.concat(user.contacts);
-    });
-}
-
-
-function renderContacts() {
     //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
     sortContacts();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
     renderContactList();
     setRandomColor();
+}
+
+async function updateContacts() {
+    if (guestLogin === false) {
+        contacts = users[currentUser].contacts;
+    }
+    else {
+        await loadExampleContacts();
+    }
+}
+
+async function loadExampleContacts() {
+    let resp = await fetch('./JSON/contacts.json');
+    contacts = await resp.json();
 }
 
 /**

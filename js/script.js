@@ -1,5 +1,6 @@
 let users = [];
 let currentUser;
+let guestLogin = false;
 
 /**
  * This is a function to initialize render functions 
@@ -11,7 +12,13 @@ async function init() {
     getCurrentUserId();
     getCurrentlySidebarLink();
     hideHelpIcon();
-    renderSummary();
+
+    // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
+    if (document.location.pathname === '/summary.html') {
+        renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
+    } else if (document.location.pathname === '/contacts.html') {
+        renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+    }
 }
 
 /**
@@ -41,14 +48,21 @@ async function loadUserData() {
 }
 
 function getCurrentUserId() {
-    const savedDataSesssionStorage = sessionStorage.getItem('user');
-    const savedDataLocalStorage = localStorage.getItem('user');
-    if (savedDataSesssionStorage) {
-        currentUser = savedDataSesssionStorage;
-    } else {
-        if (savedDataLocalStorage) {
-            currentUser = savedDataLocalStorage;
+    let savedDataSesssionStorage = sessionStorage.getItem('user');
+    let savedDataLocalStorage = localStorage.getItem('user');
+    let logged = localStorage.getItem('logged') === 'true';
+    if (logged) { 
+        guestLogin = true;
+    }
+    else {
+        if (savedDataSesssionStorage) {
+            currentUser = savedDataSesssionStorage;
+        } else {
+            if (savedDataLocalStorage) {
+                currentUser = savedDataLocalStorage;
+            }
         }
+        guestLogin = false;
     }
 }
 
@@ -122,6 +136,7 @@ function moveContainerDown(container) {
 
 function clickLogout() {
     localStorage.removeItem('user');
+    localStorage.removeItem('logged');
     sessionStorage.removeItem('user');
     setTimeout(forwardAfterLogout, 500);
 }
