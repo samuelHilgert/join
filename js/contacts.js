@@ -32,19 +32,33 @@ async function loadExampleContacts() {
     renderContacts();
 }*/
 
+async function loadUserContacts() {
+    await loadUserData();
+    await updateContacts();
+    renderContacts();
+}
+
+async function loadUserData() {
+    try {
+        users = JSON.parse(await getItem('users'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
+}
+
+async function updateContacts() {
+    users.forEach(function(user) {
+        contacts = contacts.concat(user.contacts);
+    });
+}
+
+
 function renderContacts() {
-    loadUserContacts();
     //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
     sortContacts();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
     renderContactList();
     setRandomColor();
-}
-
-function loadUserContacts() {
-    users.forEach(function(user) {
-        contacts = contacts.concat(user.contacts);
-    });
 }
 
 /**
@@ -196,9 +210,9 @@ function addContactToArray() {
 
 // ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
 async function pushContactsOnRemoteServer() {
-    // let userIndex = currentUser;            
-    users[currentUser].contacts = contacts;
-    console.log(users);                             
+    // let userContacts = users[currentUser].contacts || []; // Aktuelle Kontakte des angemeldeten Users (leeres Array wenn keine vorhanden)
+    // userContacts = userContacts.concat(contacts); // Neue Kontakte hinzufügen
+    users[currentUser].contacts = contacts;                          
     await setItem('users', JSON.stringify(users));
 }
 
