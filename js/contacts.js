@@ -35,11 +35,10 @@ async function renderContacts() {
 }
 
 async function updateContacts() {
-    if (guestLogin === false) {
-        contacts = users[currentUser].contacts;
-    }
-    else {
+    if (loggedAsGuest = true) {
         await loadExampleContacts();
+    } else {
+        contacts = users[currentUser].contacts;
     }
 }
 

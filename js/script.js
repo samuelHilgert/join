@@ -1,6 +1,6 @@
 let users = [];
 let currentUser;
-let guestLogin = false;
+let loggedAsGuest = false;
 
 /**
  * This is a function to initialize render functions 
@@ -50,9 +50,9 @@ async function loadUserData() {
 function getCurrentUserId() {
     let savedDataSesssionStorage = sessionStorage.getItem('user');
     let savedDataLocalStorage = localStorage.getItem('user');
-    let logged = localStorage.getItem('logged') === 'true';
-    if (logged) { 
-        guestLogin = true;
+    let loggedStatusLocalStorage = localStorage.getItem('logged');
+    if (loggedStatusLocalStorage) { 
+        loggedAsGuest = true;
     }
     else {
         if (savedDataSesssionStorage) {
@@ -62,7 +62,6 @@ function getCurrentUserId() {
                 currentUser = savedDataLocalStorage;
             }
         }
-        guestLogin = false;
     }
 }
 
