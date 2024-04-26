@@ -45,7 +45,7 @@ async function init() {
             }
             // }
         }
-    }, 1000); // Überprüfe alle Sekunde, ob die Zeit abgelaufen ist
+    }, 180000); // repeat query every 3 minutes
 
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
