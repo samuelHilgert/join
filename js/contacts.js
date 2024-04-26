@@ -22,7 +22,7 @@ let profileCircleColors = [
 ];
 
 let nextId = 1;
-
+let popupCloseTime = 8000;
 
 /**
  * This function renders the contact page.
@@ -294,7 +294,10 @@ async function validateAndAddContact(event) {
     }
     addNewContactToArray(); // contacted is added, if form is valid
     if (!loggedAsGuest === true || loggedAsGuest === false) {
-     await pushContactsOnRemoteServer(); // aktuell am implementieren - Samuel
+        await pushContactsOnRemoteServer();
+    } else {
+        setTimeout(showGuestPopupMessage, 1000);
+        setTimeout(closePopupAutomaticly, popupCloseTime);
     }
 }
 
@@ -385,11 +388,16 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         contacts[index]['name'] = newName;
         contacts[index]['mail'] = newMail;
         contacts[index]['phone'] = newPhone;
-        await pushContactsOnRemoteServer();
+        if (!loggedAsGuest === true || loggedAsGuest === false) {
+            await pushContactsOnRemoteServer();
+        }
+        else {
+            setTimeout(showGuestPopupMessage, 1000);
+            setTimeout(closePopupAutomaticly, popupCloseTime);
+        }
         renderContactList();
     }
 }
-
 
 /**
  * This functions edits a contact with the specified ID using the new information provided.
@@ -452,9 +460,37 @@ async function deleteContact(contactId) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index != -1) {
         contacts.splice(index, 1);
-        await pushContactsOnRemoteServer();
+        if (!loggedAsGuest === true || loggedAsGuest === false) {
+            await pushContactsOnRemoteServer();
+        }
+        else {
+            setTimeout(showGuestPopupMessage, 1000);
+            setTimeout(closePopupAutomaticly, popupCloseTime);
+        }
         renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();
     }
+}
+
+function showGuestPopupMessage() {
+    document.getElementById('contactsMessagePopup').style.display = 'flex';
+    let contactsMessage = document.getElementById('contactsMessage');
+    contactsMessage.innerHTML = `
+    <div onclick="closeGuestPopupMessage()"><a class="link-style guestPopupLinkStyle">Close</a></div>
+    <h5>Hinweis</h5>
+    <div class="d_c_c_c gap-30">
+    <p>Beachte, dass deine Änderungen nicht gespeichert werden können.</p>
+    <p>Du kannst dich jederzeit anmelden, um auf alle Funktionen zugreifen zu können.</p>
+    </div>
+    <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
+    `;
+}
+
+function closeGuestPopupMessage() {
+    document.getElementById('contactsMessagePopup').style.display = 'none';
+}
+
+function closePopupAutomaticly() {
+    document.getElementById('contactsMessagePopup').style.display = 'none';
 }
