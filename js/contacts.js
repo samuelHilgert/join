@@ -293,7 +293,11 @@ async function validateAndAddContact(event) {
 }
 
 
-function openAddNewContact() {
+/**
+ * This function opens the form for adding a new contact.
+ * 
+ */
+function openAddContactForm() {
     let container = document.getElementById('addContactMask');
     container.innerHTML = renderAddContactContainerHTML();
     let addContactContainer = document.getElementById('addContactContainer');
@@ -302,18 +306,18 @@ function openAddNewContact() {
     container.classList.remove('d-none');
 }
 
+
+/**
+ * This function closes the form for adding a new contact.
+ * 
+ */
 function closeAddContactForm() {
     let addContactMask = document.getElementById('addContactMask');
     let addContactContainer = document.getElementById('addContactContainer');
     addContactContainer.classList.add('animation-out');
-
-    // Adds event listener for the animationend event
     addContactContainer.addEventListener('animationend', function animationEndHandler() {
-        // Removes the animation-in class and adds the d-none class
         addContactContainer.classList.remove('animation-in');
         addContactMask.classList.add('d-none');
-
-        // Removes event listener to avoid unnecessary use
         addContactContainer.removeEventListener('animationend', animationEndHandler);
     });
 }
