@@ -1,4 +1,3 @@
-// contacts = Array mit Testkontakten -> diese müssen später noch im Backend angelegt werden
 let contacts = []
 
 let profileCircleColors = [
@@ -36,6 +35,12 @@ function renderContacts() {
 }
 
 
+/**
+ * This is a function that checks whether a guest or user has logged in
+ * The data is only saved remotely if the user is logged in
+ * In both cases sample contacts are also loaded
+ * 
+ */
 async function updateContacts() {
     if (loggedAsGuest === true) {
         await loadExampleContacts();
@@ -52,6 +57,10 @@ async function updateContacts() {
 }
 
 
+/**
+ * This is a function which includes the sample contacts from the contacts.json JSON-Document 
+ * 
+ */
 async function loadExampleContacts() {
     let resp = await fetch('./JSON/contacts.json');
     contacts = await resp.json();
@@ -370,13 +379,13 @@ function openEditContactForm(contactId) {
  * @param {string} newMail - the new email of the contact
  * @param {string} newPhone - the new phone number of the contact
  */
-function updateContactInformation(contactId, newName, newMail, newPhone) {
+async function updateContactInformation(contactId, newName, newMail, newPhone) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index !== -1) {
         contacts[index]['name'] = newName;
         contacts[index]['mail'] = newMail;
         contacts[index]['phone'] = newPhone;
-        pushContactsOnRemoteServer();
+        await pushContactsOnRemoteServer();
         renderContactList();
     }
 }
@@ -387,11 +396,11 @@ function updateContactInformation(contactId, newName, newMail, newPhone) {
  * 
  * @param {string} contactId - the ID of the contact to edit
  */
-function editContact(contactId) {
+async function editContact(contactId) {
     let newName = document.getElementById('newName').value;
     let newMail = document.getElementById('newMail').value;
     let newPhone = document.getElementById('newPhone').value;
-    updateContactInformation(contactId, newName, newMail, newPhone);
+    await updateContactInformation(contactId, newName, newMail, newPhone);
     closeEditContactForm();
     keepCircleBackgroundcolor();
     openContactInfo(contactId, true);
@@ -439,11 +448,11 @@ function clearContactInfoAndHideMask() {
  * 
  * @param {string} contactId - the ID of the contact to delete
  */
-function deleteContact(contactId) {
+async function deleteContact(contactId) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index != -1) {
         contacts.splice(index, 1);
-        pushContactsOnRemoteServer();
+        await pushContactsOnRemoteServer();
         renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();
