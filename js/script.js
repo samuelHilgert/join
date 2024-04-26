@@ -1,6 +1,8 @@
 let users = [];
 let currentUser;
 let loggedAsGuest = false;
+let rememberStatus = [];
+let remember = false;
 
 /**
  * This is a function to initialize render functions 
@@ -8,6 +10,7 @@ let loggedAsGuest = false;
  */
 async function init() {
     await includeHTML();
+    await loadRememberStatus();
     await loadUserData();
     getCurrentUserId();
     getCurrentlySidebarLink();
@@ -40,6 +43,19 @@ async function includeHTML() {
     }
 }
 
+async function loadRememberStatus() {
+    try {
+        rememberStatus = JSON.parse(await getItem('remember_status'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
+    setRememberValue();
+}
+
+function setRememberValue() {
+    remember = rememberStatus[0]['remember_status'];
+}
+
 async function loadUserData() {
     try {
         users = JSON.parse(await getItem('users'));
@@ -52,7 +68,7 @@ function getCurrentUserId() {
     let savedDataSesssionStorage = sessionStorage.getItem('user');
     let savedDataLocalStorage = localStorage.getItem('user');
     let loggedStatusLocalStorage = localStorage.getItem('logged');
-    if (loggedStatusLocalStorage) { 
+    if (loggedStatusLocalStorage) {
         loggedAsGuest = true;
     }
     else {
@@ -138,6 +154,7 @@ function clickLogout() {
     localStorage.removeItem('user');
     localStorage.removeItem('logged');
     sessionStorage.removeItem('user');
+    localStorage.removeItem('remember');
     setTimeout(forwardAfterLogout, 500);
 }
 
