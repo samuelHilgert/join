@@ -1,8 +1,7 @@
 let successEmail = false;
 let successPassword = false;
 let indexByEmail;
-let expiryDate = new Date();
-let expiryDateString;
+let setExpiryTime = 10;
 
 /**
  * This function is called when the login form is submitted, it checks whether the data matches the registration 
@@ -18,20 +17,20 @@ async function checkLoginAccess() {
  * 
  */
 async function iterateUsers() {
-    let activateContent = false;
     if (successCheck()) {
         successEmail = true;
         successPassword = true;
         indexByEmail = getUserId(loginEmail.value);
         if (loginCheckbox.checked) {
+            let expiryDate = new Date().getMinutes() + setExpiryTime;
             remember = true;
-            // await saveToLocalStorage();
+            await saveToLocalStorage(expiryDate);
         }
         else {
             remember = false;
-            expiryDate.setDate(expiryDate.getSeconds() + 60);
-            expiryDateString = expiryDate.toLocaleString('de-DE');
-            await saveToLocalStorage(expiryDateString);
+            // expiryDateString = expiryDate.toLocaleString('de-DE')
+            let expiryDate = new Date().getMinutes() + setExpiryTime;
+            await saveToLocalStorage(expiryDate);
         }
         let container = document.getElementById('messageFormLogin');
         showLoginMessage();
@@ -44,19 +43,18 @@ async function iterateUsers() {
     }
 }
 
-async function saveToLocalStorage(expiryDateString) {
+async function saveToLocalStorage(expiryDate) {
     let id = indexByEmail;
     localStorage.setItem('user', id);
     localStorage.setItem('remember', remember);
-    pushRememberStatusInArray(expiryDateString);
+    pushRememberStatusInArray(expiryDate);
     await pushRememberStatusOnRemoteServer();
 }
 
-function pushRememberStatusInArray(expiryDateString) {
-    // let activateContent = true;
+function pushRememberStatusInArray(expiryDate) {
     rememberStatus.push({
         remember_status: remember,
-        expiryDate: expiryDateString
+        expiryDate: expiryDate
     });
 }
 
