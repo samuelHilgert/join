@@ -45,7 +45,7 @@ async function updateContacts() {
             await pushContactsOnRemoteServer();
         }
         else {
-        contacts = users[currentUser].contacts;
+            contacts = users[currentUser].contacts;
         }
     }
 }
@@ -139,7 +139,7 @@ function removeActiveClasslist() {
  * @param {string} contactId - ID of the clicked contact
  * 
  */
-function openContactInfo(contactId, removeAnimation = false) { 
+function openContactInfo(contactId, removeAnimation = false) {
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
         const { name, mail, phone, color } = contact;
@@ -194,10 +194,10 @@ function addContactToArray() {
     let id = getNextAvailableId();
     let color = getRandomColor();
     let contact = {
-        name: name, 
+        name: name,
         mail: mail,
         phone: phone,
-        color: color, 
+        color: color,
         id: id
     };
     contacts.push(contact);
@@ -215,7 +215,7 @@ function addContactToArray() {
 
 // ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
 async function pushContactsOnRemoteServer() {
-    users[currentUser].contacts = contacts;                          
+    users[currentUser].contacts = contacts;
     await setItem('users', JSON.stringify(users));
 }
 
@@ -275,7 +275,7 @@ function closeEditContactForm() {
 }
 
 // Funktion noch um Bearbeitung von Kontakt erweitern
-function editContact(contactId) {
+function openEditContactForm(contactId) {
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
         const { name, mail, phone, color } = contact;
@@ -287,6 +287,34 @@ function editContact(contactId) {
         wrapper.classList.remove('d-none');
         editContactContainer.classList.remove('animation-out');
         editContactContainer.classList.add('animation-in');
+    }
+}
+
+
+// Hintergrundfarbe beibehalten ergänzen
+function editContact(contactId) {
+    let newName = document.getElementById('newName').value;
+    let newMail = document.getElementById('newMail').value;
+    let newPhone = document.getElementById('newPhone').value;
+    let index = contacts.findIndex(contact => contact['id'] === contactId);
+    console.log('Index des zu bearbeitenden Kontakts:', index);
+    if (index !== -1) {
+        console.log('Vorheriger Name:', contacts[index]['name']);
+        console.log('Vorherige E-Mail:', contacts[index]['mail']);
+        console.log('Vorherige Telefonnummer:', contacts[index]['phone']);
+        
+        contacts[index]['name'] = newName;
+        contacts[index]['mail'] = newMail;
+        contacts[index]['phone'] = newPhone;
+
+        console.log('Aktualisierter Name:', contacts[index]['name']);
+        console.log('Aktualisierte E-Mail:', contacts[index]['mail']);
+        console.log('Aktualisierte Telefonnummer:', contacts[index]['phone']);
+        
+        pushContactsOnRemoteServer();
+        renderContactList(); 
+        closeEditContactForm();
+        openContactInfo(contactId, true);
     }
 }
 
