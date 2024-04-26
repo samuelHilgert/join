@@ -112,7 +112,7 @@ function renderContactList() {
 
 
 /**
- * this function combines all elements with the css class "contact-small" in the variable contacts. 
+ * This function combines all elements with the css class "contact-small" in the variable contacts. 
  * Then a loop runs through contacts, where contact is a temporary variable that represents each individual element in the contacts list. 
  * For each individual element in contacts, the two specified css-classes are removed 
  * 
@@ -133,6 +133,7 @@ function removeActiveClasslist() {
  * @param {string} contactId - the ID of the currently clicked contact
  * @param {boolean} removeAnimation - flag indicating whether to remove animation from the HTML
  * @returns {string} - the HTML string displaying the contact information
+ * 
  */
 function renderContactInfo(contact, contactId, removeAnimation) {
     const { name, mail, phone, color } = contact;
@@ -146,12 +147,31 @@ function renderContactInfo(contact, contactId, removeAnimation) {
 }
 
 
+/**
+ * This function updates the contact information in the DOM with the provided HTML.
+ * 
+ * @param {string} contactId - the ID of the currently clicked contact
+ * @param {string} contactInfoHTML - the HTML string displaying the contact information
+ * 
+ */
 function updateContactInfo(contactId, contactInfoHTML) {
     let contactInfo = document.getElementById('contactInfo');
     contactInfo.innerHTML = contactInfoHTML;
 }
 
 
+/**
+ * This function opens the contact information for the currently clicked contact. 
+ * It first searches for the contact in the contacts list using its ID. When the contact is found, 
+ * the renderContactInfo function is called to generate the HTML for the contact information, specifying 
+ * the removeAnimation option to control whether animations should be removed. Then the updateContactInfo 
+ * function is called to update the contact information in the DOM. After doing so, the function removes 
+ * all active CSS-classes from the contact list elements and then adds 'contact-small-active' class to
+ * visually highlight the displayed contact. If required, the 'contact-small-active:hover' class is also added.
+ * 
+ * @param {string} contactId - the ID of the currently clicked contact
+ * @param {boolean} removeAnimation - flag indicating whether to remove animation from the HTML
+ */
 function openContactInfo(contactId, removeAnimation = false) {
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
