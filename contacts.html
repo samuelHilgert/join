@@ -29,7 +29,7 @@
     <div class="contact-page-wrapper">
         <div class="contact-wrapper">
             <div class="contact-btn-wrapper d_f_c_c">
-                <button class="btn contact-btn d_f_c_c" onclick="openAddNewContact()">
+                <button class="btn contact-btn d_f_c_c" onclick="openAddContactForm()">
                     Add new Contact
                     <img class="contact-btn-img" src="./assets/img/person_add.svg" alt="">
                 </button>
@@ -51,12 +51,13 @@
         </div>
     </div>
 
-    
-
     <div id="addContactMask" class="add-contact-container-wrapper d_f_c_c d-none"></div>
 
     <div id="editContactMask" class="add-contact-container-wrapper d_f_c_c d-none"></div>
 
+    <div class="d_c_c_c popup-bg-filter width-max" id="contactsMessagePopup">
+        <div class="d_c_fs_c popup-contacts-message bgC-white pad-y-40 pad-x-40 gap-60 text-center"  id="contactsMessage"></div>
+    </div>
 </body>
 
 </html>

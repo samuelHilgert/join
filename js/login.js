@@ -1,7 +1,7 @@
 let successEmail = false;
 let successPassword = false;
 let indexByEmail;
-let remember = false;
+let setExpiryTime = 10;
 
 /**
  * This function is called when the login form is submitted, it checks whether the data matches the registration 
@@ -9,25 +9,28 @@ let remember = false;
  */
 async function checkLoginAccess() {
     loginBtn.disabled = true;
-    iterateUsers();
+    await iterateUsers();
 }
 
 /**
  * This is a function to check whether email and password are correct
  * 
  */
-function iterateUsers() {
+async function iterateUsers() {
     if (successCheck()) {
         successEmail = true;
         successPassword = true;
         indexByEmail = getUserId(loginEmail.value);
         if (loginCheckbox.checked) {
+            let expiryDate = new Date().getMinutes() + setExpiryTime;
             remember = true;
-            saveToLocalStorage();
+            await saveToLocalStorage(expiryDate);
         }
         else {
             remember = false;
-            saveToSessionStorage();
+            // expiryDateString = expiryDate.toLocaleString('de-DE')
+            let expiryDate = new Date().getMinutes() + setExpiryTime;
+            await saveToLocalStorage(expiryDate);
         }
         let container = document.getElementById('messageFormLogin');
         showLoginMessage();
@@ -40,14 +43,23 @@ function iterateUsers() {
     }
 }
 
-function saveToSessionStorage() {
-    let id = indexByEmail;
-    sessionStorage.setItem('user', id);
-}
-
-function saveToLocalStorage() {
+async function saveToLocalStorage(expiryDate) {
     let id = indexByEmail;
     localStorage.setItem('user', id);
+    localStorage.setItem('remember', remember);
+    pushRememberStatusInArray(expiryDate);
+    await pushRememberStatusOnRemoteServer();
+}
+
+function pushRememberStatusInArray(expiryDate) {
+    rememberStatus.push({
+        remember_status: remember,
+        expiryDate: expiryDate
+    });
+}
+
+async function pushRememberStatusOnRemoteServer() {
+    await setItem('remember_status', JSON.stringify(rememberStatus));
 }
 
 /**
@@ -178,9 +190,9 @@ function forwardToSummary() {
  */
 function guestLogin() {
     localStorage.setItem('logged', true);
-    setTimeout(forwardSummary, 500);
+    setTimeout(forwardSummaryAsGuest, 500);
 }
 
-function forwardSummary() {
+function forwardSummaryAsGuest() {
     window.location.href = `./summary.html?msg=Du bist als Gast angemeldet`;
 }

@@ -1,25 +1,79 @@
 let users = [];
 let currentUser;
 let loggedAsGuest = false;
+let rememberStatus = [];
+let remember = false;
+let setResetExpiryTime = 10;
+
+/*
+window.addEventListener('beforeunload', function (e) {
+    if (remember === false) {
+        resetLoginValues();
+        rememberStatus[0].activateContent = false;
+        setItem('remember_status', JSON.stringify(rememberStatus));
+    }
+}); 
+*/
 
 /**
  * This is a function to initialize render functions 
  * 
  */
 async function init() {
-    await includeHTML();
+    await loadRememberStatus();
     await loadUserData();
     getCurrentUserId();
+    checkUnauthorizedOpening(); 
+    await includeHTML();
     getCurrentlySidebarLink();
     hideHelpIcon();
 
+    // Überprüfe, ob die aktuelle Zeit größer oder gleich dem Ablaufdatum ist
+    setInterval(function () {
+        let expiryTime = rememberStatus[0].expiryDate;
+        if (rememberStatus[0].remember_status === false) {
+            /* if () {
+              
+              } else { */
+            let now = new Date().getMinutes(); // .toLocaleString('de-DE');
+            if (now >= expiryTime) { // let currentTime = now.getMinutes();
+                // Die Zeit ist abgelaufen
+                // Führe hier die entsprechenden Aktionen aus, z.B. den Benutzer abmelden
+                console.log('Du wärst längere Zeit nicht aktiv, melde dich bitte erneut an!');
+                // clearInterval(intervalId); // Stoppe die Überprüfung, wenn die Zeit abgelaufen ist
+                resetLoginValues();
+                setTimeout(firstLogin, 1000);
+            }
+            // }
+        }
+    }, 180000); // repeat query every 3 minutes
+
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
+        await resetExpiryTime();
         renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
     } else if (document.location.pathname === '/contacts.html') {
+        await resetExpiryTime();
         await updateContacts();
         renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
     }
+}
+
+/**
+ * This feature secures unauthorized opening of pages via the URL by copying and pasting.
+ * 
+ */
+function checkUnauthorizedOpening() {
+    let valueLogged = localStorage.getItem('logged');
+    let valueUser = localStorage.getItem('user');
+    if (valueLogged === null && valueUser === null) {
+        firstLogin();
+    }
+}
+
+async function resetExpiryTime() {
+    rememberStatus[0].expiryDate = new Date().getMinutes() + setResetExpiryTime;
+    await setItem('remember_status', JSON.stringify(rememberStatus));
 }
 
 /**
@@ -40,6 +94,16 @@ async function includeHTML() {
     }
 }
 
+async function loadRememberStatus() {
+    try {
+        rememberStatus = JSON.parse(await getItem('remember_status'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
+}
+
+//rememberStatus[0].activateContent = activateContent;
+
 async function loadUserData() {
     try {
         users = JSON.parse(await getItem('users'));
@@ -52,7 +116,7 @@ function getCurrentUserId() {
     let savedDataSesssionStorage = sessionStorage.getItem('user');
     let savedDataLocalStorage = localStorage.getItem('user');
     let loggedStatusLocalStorage = localStorage.getItem('logged');
-    if (loggedStatusLocalStorage) { 
+    if (loggedStatusLocalStorage) {
         loggedAsGuest = true;
     }
     else {
@@ -135,12 +199,21 @@ function moveContainerDown(container) {
 
 
 function clickLogout() {
+    resetLoginValues();
+    setTimeout(forwardAfterLogout, 500);
+}
+
+function resetLoginValues() {
     localStorage.removeItem('user');
     localStorage.removeItem('logged');
     sessionStorage.removeItem('user');
-    setTimeout(forwardAfterLogout, 500);
+    localStorage.removeItem('remember');
 }
 
 function forwardAfterLogout() {
     window.location.href = `./login.html?msg=Du bist abgemeldet`;
+}
+
+function firstLogin() {
+    window.location.href = `./login.html`;
 }
