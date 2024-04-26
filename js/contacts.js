@@ -22,7 +22,6 @@ let profileCircleColors = [
     'cadetblue'
 ];
 
-
 let nextId = 1;
 
 
@@ -177,11 +176,20 @@ function sortContacts() {
 }
 
 
+function getNextAvailableId() {
+    let id = 1;
+    while (contacts.some(contact => contact.id === id.toString())) {
+        id++;
+    }
+    return id.toString();
+}
+
+
 function addContactToArray() {
     let name = document.getElementById('inputAddContactName').value;
     let mail = document.getElementById('inputAddContactMail').value;
     let phone = document.getElementById('inputAddContactPhone').value;
-    let id = (nextId++).toString(); // generates new ID based on the length of the array, without checking the IDs of the existing contacts
+    let id = getNextAvailableId();
     let color = getRandomColor();
     let contact = {
         name: name, 
