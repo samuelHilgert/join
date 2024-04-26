@@ -26,24 +26,30 @@ async function init() {
     getCurrentlySidebarLink();
     hideHelpIcon();
 
+
+    // Überprüfe, ob die aktuelle Zeit größer oder gleich dem Ablaufdatum ist
+    setInterval(function () {
+        let now = new Date();
+        let nowDateString = now.toLocaleString('de-DE');
+        if (nowDateString >= rememberStatus[0].expiryDate) {
+            // Die Zeit ist abgelaufen
+            // Führe hier die entsprechenden Aktionen aus, z.B. den Benutzer abmelden
+            console.log('Die Zeit ist abgelaufen.');
+            firstLogin();
+            clearInterval(intervalId); // Stoppe die Überprüfung, wenn die Zeit abgelaufen ist
+        }
+    }, 1000); // Überprüfe alle Sekunde, ob die Zeit abgelaufen ist
+
+
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
-        if (rememberStatus[0].activateContent === true || loggedAsGuest === true) {
-            renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
-        } else {
-            // resetLoginValues();
-            // firstLogin();
-        }
+        renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
     } else if (document.location.pathname === '/contacts.html') {
-        if (rememberStatus[0].activateContent === true || loggedAsGuest === true) {
-            await updateContacts();
-            renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
-        } else {
-            //  resetLoginValues();
-            // firstLogin();
-        }
+        await updateContacts();
+        renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
     }
 }
+
 
 /**
  * This is a function to include outsourced html elements

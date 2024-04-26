@@ -1,6 +1,8 @@
 let successEmail = false;
 let successPassword = false;
 let indexByEmail;
+let expiryDate = new Date();
+let expiryDateString;
 
 /**
  * This function is called when the login form is submitted, it checks whether the data matches the registration 
@@ -23,11 +25,13 @@ async function iterateUsers() {
         indexByEmail = getUserId(loginEmail.value);
         if (loginCheckbox.checked) {
             remember = true;
-            await saveToLocalStorage();
+            // await saveToLocalStorage();
         }
         else {
             remember = false;
-            await saveToLocalStorage();
+            expiryDate.setDate(expiryDate.getSeconds() + 60);
+            expiryDateString = expiryDate.toLocaleString('de-DE');
+            await saveToLocalStorage(expiryDateString);
         }
         let container = document.getElementById('messageFormLogin');
         showLoginMessage();
@@ -40,19 +44,19 @@ async function iterateUsers() {
     }
 }
 
-async function saveToLocalStorage() {
+async function saveToLocalStorage(expiryDateString) {
     let id = indexByEmail;
     localStorage.setItem('user', id);
     localStorage.setItem('remember', remember);
-    pushRememberStatusInArray();
+    pushRememberStatusInArray(expiryDateString);
     await pushRememberStatusOnRemoteServer();
 }
 
-function pushRememberStatusInArray() {
-    let activateContent = true;
+function pushRememberStatusInArray(expiryDateString) {
+    // let activateContent = true;
     rememberStatus.push({
         remember_status: remember,
-        activateContent: activateContent
+        expiryDate: expiryDateString
     });
 }
 
@@ -179,7 +183,7 @@ function showLoginMessage() {
  * 
  */
 function forwardToSummary() {
-window.location.href = `./summary.html?msg=Du hast dich erfolgreich angemeldet "${users[indexByEmail]['name']}"`; //queryParameter 
+    window.location.href = `./summary.html?msg=Du hast dich erfolgreich angemeldet "${users[indexByEmail]['name']}"`; //queryParameter 
 }
 
 /**
