@@ -27,7 +27,6 @@ let nextId = 1;
 
 
 function renderContacts() {
-    //addContactToArray(newContact); // Adding new contact to the contacts array after srting it albhabetically
     sortContacts();
     createUniqueContactId(); // adds a unique ID to very contact in contacts array
     renderContactList();
@@ -187,7 +186,7 @@ function getNextAvailableId() {
 }
 
 
-function addContactToArray() {
+function addNewContactToArray() {
     let name = document.getElementById('inputAddContactName').value;
     let mail = document.getElementById('inputAddContactMail').value;
     let phone = document.getElementById('inputAddContactPhone').value;
@@ -206,10 +205,7 @@ function addContactToArray() {
     renderContactList();
     contactSuccessAnimation();
     openContactInfo(id, true); // true, because function should run without animation
-    let contactCircles = document.querySelectorAll('.contact-circle');
-    contactCircles.forEach((circle, index) => {
-        circle.style.backgroundColor = contacts[index]['color'];
-    });
+    keepCircleBackgroundcolor();
 }
 
 
@@ -226,7 +222,7 @@ async function validateAndAddContact(event) {
     if (!form.reportValidity()) { // Checking the validity of the form
         return; // If the form is invalid, the standard error message is displayed
     }
-    addContactToArray(); // contacted is added, if form is valid
+    addNewContactToArray(); // contacted is added, if form is valid
     await pushContactsOnRemoteServer(); // aktuell am implementieren - Samuel
 }
 
@@ -304,10 +300,7 @@ function editContact(contactId) {
         renderContactList();
         closeEditContactForm();
         openContactInfo(contactId, true);
-        let contactCircles = document.querySelectorAll('.contact-circle');
-        contactCircles.forEach((circle, index) => {
-            circle.style.backgroundColor = contacts[index]['color'];
-        });
+        keepCircleBackgroundcolor();
     }
 }
 
@@ -323,6 +316,14 @@ function createUniqueContactId() {
             nextId++;
         }
     }
+}
+
+
+function keepCircleBackgroundcolor() {
+    let contactCircles = document.querySelectorAll('.contact-circle');
+    contactCircles.forEach((circle, index) => {
+        circle.style.backgroundColor = contacts[index]['color'];
+    });
 }
 
 
