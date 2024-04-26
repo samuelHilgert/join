@@ -56,7 +56,6 @@ async function updateContacts() {
     }
 }
 
-
 /**
  * This is a function which includes the sample contacts from the contacts.json JSON-Document 
  * 
