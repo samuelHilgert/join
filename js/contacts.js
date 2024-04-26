@@ -27,7 +27,6 @@ let nextId = 1;
 
 /**
  * This function renders the contact page.
- * 
  */
 function renderContacts() {
     sortContacts();
@@ -63,7 +62,6 @@ async function loadExampleContacts() {
  * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has 
  * the same backgroundcolor - in this case, another color is picked. 
  * The function also adds the randomly selected color to the contacts array.
- * 
  */
 function setRandomColor() {
     let lastColor = null;
@@ -81,7 +79,8 @@ function setRandomColor() {
 
 
 /**
- * This is a function to choose a random color from the "profileCircleColors"-array
+ * This is a function to choose a random color from the "profileCircleColors"-array.
+ * 
  * @returns - returns a randomly selected background color from the array
  */
 function getRandomColor() {
@@ -94,8 +93,7 @@ function getRandomColor() {
  * This function renders the contact list - therefore it iterates trough the contacts-array and checks, 
  * if there is more than one name with the same first letter.
  * In this case, the renderLetterAndPartingLine function is just rendered once for every first letter and not for every single contact.
- * On top of that, the function also gets the first letter of the surname with the help of split(), parting the names in the array after the blank space 
- * 
+ * On top of that, the function also gets the first letter of the surname with the help of split(), parting the names in the array after the blank space.
  */
 function renderContactList() {
     let contactList = document.getElementById('contactList');
@@ -118,7 +116,6 @@ function renderContactList() {
  * This function combines all elements with the css class "contact-small" in the variable contacts. 
  * Then a loop runs through contacts, where contact is a temporary variable that represents each individual element in the contacts list. 
  * For each individual element in contacts, the two specified css-classes are removed 
- * 
  */
 function removeActiveClasslist() {
     let contacts = document.querySelectorAll('.contact-small');
@@ -254,7 +251,6 @@ function getNewContactInput() {
 
 /**
  * This function adds a newly created contact to the contacts array and performs necessary actions.
- * 
  */
 function addNewContactToArray() {
     let newContact = getNewContactInput();
@@ -295,7 +291,6 @@ async function validateAndAddContact(event) {
 
 /**
  * This function opens the form for adding a new contact.
- * 
  */
 function openAddContactForm() {
     let container = document.getElementById('addContactMask');
@@ -309,7 +304,6 @@ function openAddContactForm() {
 
 /**
  * This function closes the form for adding a new contact.
- * 
  */
 function closeAddContactForm() {
     let addContactMask = document.getElementById('addContactMask');
@@ -323,12 +317,18 @@ function closeAddContactForm() {
 }
 
 
+/**
+ * This function closes the form for adding a new contact without the closing animation.
+ */
 function closeAddContactFormWithoutAnimation() {
     let addContactMask = document.getElementById('addContactMask');
     addContactMask.classList.add('d-none');
 }
 
 
+/**
+ * This function closes the edit contact form by adding an 'animation-out' class to the container. 
+ */
 function closeEditContactForm() {
     let editContactMask = document.getElementById('editContactMask');
     let editContactContainer = document.getElementById('editContactContainer');
@@ -340,7 +340,12 @@ function closeEditContactForm() {
     });
 }
 
-// Funktion noch um Bearbeitung von Kontakt erweitern
+
+/**
+ * This function opens the edit contact form for the specified contact ID.
+ * 
+ * @param {string} contactId - the ID of the currently clicked contact
+ */
 function openEditContactForm(contactId) {
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
@@ -357,10 +362,15 @@ function openEditContactForm(contactId) {
 }
 
 
-function editContact(contactId) {
-    let newName = document.getElementById('newName').value;
-    let newMail = document.getElementById('newMail').value;
-    let newPhone = document.getElementById('newPhone').value;
+/**
+ * This function updates the contact information in the contacts array and performs necessary actions.
+ * 
+ * @param {string} contactId - the ID of the contact to edit
+ * @param {string} newName - the new name of the contact
+ * @param {string} newMail - the new email of the contact
+ * @param {string} newPhone - the new phone number of the contact
+ */
+function updateContactInformation(contactId, newName, newMail, newPhone) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index !== -1) {
         contacts[index]['name'] = newName;
@@ -368,16 +378,28 @@ function editContact(contactId) {
         contacts[index]['phone'] = newPhone;
         pushContactsOnRemoteServer();
         renderContactList();
-        closeEditContactForm();
-        openContactInfo(contactId, true);
-        keepCircleBackgroundcolor();
     }
 }
 
 
 /**
- * This function gives each contact in the contacts-array a unique id, starting from 1
+ * This functions edits a contact with the specified ID using the new information provided.
  * 
+ * @param {string} contactId - the ID of the contact to edit
+ */
+function editContact(contactId) {
+    let newName = document.getElementById('newName').value;
+    let newMail = document.getElementById('newMail').value;
+    let newPhone = document.getElementById('newPhone').value;
+    updateContactInformation(contactId, newName, newMail, newPhone);
+    closeEditContactForm();
+    keepCircleBackgroundcolor();
+    openContactInfo(contactId, true);
+}
+
+
+/**
+ * This function gives each contact in the contacts-array a unique id, starting from 1.
  */
 function createUniqueContactId() {
     for (let i = 0; i < contacts.length; i++) {
@@ -389,6 +411,10 @@ function createUniqueContactId() {
 }
 
 
+/**
+ * This function keeps the background color of contact circles consistent with the color 
+ * stored in the contacts array.
+ */
 function keepCircleBackgroundcolor() {
     let contactCircles = document.querySelectorAll('.contact-circle');
     contactCircles.forEach((circle, index) => {
