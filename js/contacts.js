@@ -291,30 +291,23 @@ function openEditContactForm(contactId) {
 }
 
 
-// Hintergrundfarbe beibehalten ergänzen
 function editContact(contactId) {
     let newName = document.getElementById('newName').value;
     let newMail = document.getElementById('newMail').value;
     let newPhone = document.getElementById('newPhone').value;
     let index = contacts.findIndex(contact => contact['id'] === contactId);
-    console.log('Index des zu bearbeitenden Kontakts:', index);
     if (index !== -1) {
-        console.log('Vorheriger Name:', contacts[index]['name']);
-        console.log('Vorherige E-Mail:', contacts[index]['mail']);
-        console.log('Vorherige Telefonnummer:', contacts[index]['phone']);
-        
         contacts[index]['name'] = newName;
         contacts[index]['mail'] = newMail;
         contacts[index]['phone'] = newPhone;
-
-        console.log('Aktualisierter Name:', contacts[index]['name']);
-        console.log('Aktualisierte E-Mail:', contacts[index]['mail']);
-        console.log('Aktualisierte Telefonnummer:', contacts[index]['phone']);
-        
         pushContactsOnRemoteServer();
-        renderContactList(); 
+        renderContactList();
         closeEditContactForm();
         openContactInfo(contactId, true);
+        let contactCircles = document.querySelectorAll('.contact-circle');
+        contactCircles.forEach((circle, index) => {
+            circle.style.backgroundColor = contacts[index]['color'];
+        });
     }
 }
 
