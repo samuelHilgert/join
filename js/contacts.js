@@ -49,6 +49,7 @@ async function updateContacts() {
     }
 }
 
+
 async function loadExampleContacts() {
     let resp = await fetch('./JSON/contacts.json');
     contacts = await resp.json();
@@ -90,7 +91,7 @@ function getRandomColor() {
  * This function renders the contact list - therefore it iterates trough the contacts-array and checks, 
  * if there is more than one name with the same first letter.
  * In this case, the renderLetterAndPartingLine function is just rendered once for every first letter and not for every single contact.
- * On top of that, the functions also gets the first letter of the surname with the help of split(), parting the names in the array after the blank space 
+ * On top of that, the function also gets the first letter of the surname with the help of split(), parting the names in the array after the blank space 
  * 
  */
 function renderContactList() {
@@ -98,10 +99,7 @@ function renderContactList() {
     contactList.innerHTML = '';
     let previousFirstLetter = null;
     for (let i = 0; i < contacts.length; i++) {
-        const name = contacts[i]['name'];
-        const mail = contacts[i]['mail'];
-        const phone = contacts[i]['phone'];
-        const id = contacts[i]['id'];
+        const { name, mail, id } = contacts[i];
         const firstLetter = name.charAt(0);
         const firstLetterSurname = name.split(' ')[1].charAt(0);
         if (firstLetter !== previousFirstLetter) {
@@ -128,6 +126,14 @@ function removeActiveClasslist() {
 }
 
 
+/**
+ * This function renders the contact information HTML based on the provided contact data.
+ * 
+ * @param {object} contact - the contact object contains name, mail, phone and color of the currently clicked contact
+ * @param {string} contactId - the ID of the currently clicked contact
+ * @param {boolean} removeAnimation - flag indicating whether to remove animation from the HTML
+ * @returns {string} - the HTML string displaying the contact information
+ */
 function renderContactInfo(contact, contactId, removeAnimation) {
     const { name, mail, phone, color } = contact;
     const firstLetter = name.charAt(0);
