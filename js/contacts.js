@@ -185,6 +185,11 @@ function openContactInfo(contactId, removeAnimation = false) {
 }
 
 
+/**
+ * This function starts an temporarily limited animation by removing 'd-none' & adding 'animation-in' 
+ * CSS-classes to the container.
+ * 
+ */
 function contactSuccessAnimation() {
     let container = document.getElementById('contactSuccessWrapper');
     container.classList.remove('d-none');
@@ -195,6 +200,10 @@ function contactSuccessAnimation() {
 }
 
 
+/**
+ * This function sorts the contacts array alphabetically by the name property.
+ * 
+ */
 function sortContacts() {
     contacts.sort((a, b) => {
         const nameA = a.name.toLowerCase();
@@ -204,6 +213,11 @@ function sortContacts() {
 }
 
 
+/**
+ * This function gets the next available ID that's not already used in the contacts array. 
+ * 
+ * @returns {string} - the next available ID
+ */
 function getNextAvailableId() {
     let id = 1;
     while (contacts.some(contact => contact.id === id.toString())) {
