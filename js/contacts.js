@@ -272,7 +272,7 @@ function addNewContactToArray() {
 }
 
 
-// ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
+
 async function pushContactsOnRemoteServer() {
     users[currentUser].contacts = contacts;
     await setItem('users', JSON.stringify(users));
@@ -293,9 +293,10 @@ async function validateAndAddContact(event) {
         return; // If the form is invalid, the standard error message is displayed
     }
     addNewContactToArray(); // contacted is added, if form is valid
-    await pushContactsOnRemoteServer(); // aktuell am implementieren - Samuel
+    if (!loggedAsGuest === true || loggedAsGuest === false) {
+     await pushContactsOnRemoteServer(); // aktuell am implementieren - Samuel
+    }
 }
-
 
 /**
  * This function opens the form for adding a new contact.
