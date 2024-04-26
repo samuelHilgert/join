@@ -1,7 +1,6 @@
 let successEmail = false;
 let successPassword = false;
 let indexByEmail;
-let remember = false;
 
 /**
  * This function is called when the login form is submitted, it checks whether the data matches the registration 
@@ -9,25 +8,25 @@ let remember = false;
  */
 async function checkLoginAccess() {
     loginBtn.disabled = true;
-    iterateUsers();
+    await iterateUsers();
 }
 
 /**
  * This is a function to check whether email and password are correct
  * 
  */
-function iterateUsers() {
+async function iterateUsers() {
     if (successCheck()) {
         successEmail = true;
         successPassword = true;
         indexByEmail = getUserId(loginEmail.value);
         if (loginCheckbox.checked) {
-            remember = true;
-            saveToLocalStorage();
+            let remember = true;
+            await saveToLocalStorage(remember);
         }
         else {
-            remember = false;
-            saveToSessionStorage();
+            let remember = false;
+            await saveToLocalStorage(remember);
         }
         let container = document.getElementById('messageFormLogin');
         showLoginMessage();
@@ -40,25 +39,22 @@ function iterateUsers() {
     }
 }
 
-
-function saveToSessionStorage() {
-    let userName = users[indexByEmail]['name'];
-    let userEmail = users[indexByEmail]['email'];
-    const user = {
-        name: userName,
-        email: userEmail
-    };
-    sessionStorage.setItem('user', JSON.stringify(user));
+async function saveToLocalStorage(remember) {
+    let id = indexByEmail;
+    localStorage.setItem('user', id);
+    localStorage.setItem('remember', remember);
+    pushRememberStatusInArray(remember);
+    await pushRememberStatusOnRemoteServer(remember);
 }
 
-function saveToLocalStorage() {
-    let userName = users[indexByEmail]['name'];
-    let userEmail = users[indexByEmail]['email'];
-    const user = {
-        name: userName,
-        email: userEmail
-    };
-    localStorage.setItem('user', JSON.stringify(user));
+function pushRememberStatusInArray(remember) {
+    rememberStatus.push({
+        remember_status: remember
+    });
+}
+
+async function pushRememberStatusOnRemoteServer(remember) {
+    await setItem('remember_status', JSON.stringify(rememberStatus));
 }
 
 /**
@@ -180,7 +176,7 @@ function showLoginMessage() {
  * 
  */
 function forwardToSummary() {
-    window.location.href = `./summary.html?msg=Du hast dich erfolgreich angemeldet "${users[indexByEmail]['name']}"`; //queryParameter 
+window.location.href = `./summary.html?msg=Du hast dich erfolgreich angemeldet "${users[indexByEmail]['name']}"`; //queryParameter 
 }
 
 /**
@@ -188,5 +184,10 @@ function forwardToSummary() {
  * 
  */
 function guestLogin() {
+    localStorage.setItem('logged', true);
+    setTimeout(forwardSummaryAsGuest, 500);
+}
+
+function forwardSummaryAsGuest() {
     window.location.href = `./summary.html?msg=Du bist als Gast angemeldet`;
 }

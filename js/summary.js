@@ -12,34 +12,9 @@ function renderSummary() {
  */
 function getUserNameForGreet() {
     let userNameDiv = document.getElementById('userNameDiv');
-    const savedDataSesssionStorage = sessionStorage.getItem('user');
-    const savedDataLocalStorage = localStorage.getItem('user');
-    if (savedDataSesssionStorage) {
-        loadSessionStorage(userNameDiv, savedDataSesssionStorage);
+    if (loggedAsGuest === true) {
+        userNameDiv.innerHTML = 'Guest';
     } else {
-        if (savedDataLocalStorage) {
-            loadLocalStorage(userNameDiv, savedDataLocalStorage);
-        }
-    }
+        userNameDiv.innerHTML = users[currentUser]['name'];
+    } 
 }
-
-/**
- * This function loads user data from session storage
- * 
- */
-function loadSessionStorage(userNameDiv, savedDataSesssionStorage) {
-    let parsedUserData = JSON.parse(savedDataSesssionStorage);
-    let parsedUserName = parsedUserData['name'];
-    userNameDiv.innerHTML = parsedUserName;
-}
-
-/**
- * This function loads user data from local storage
- * 
- */
-function loadLocalStorage(userNameDiv, savedDataLocalStorage) {
-    let parsedUserData = JSON.parse(savedDataLocalStorage);
-    let parsedUserName = parsedUserData['name'];
-    userNameDiv.innerHTML = parsedUserName;
-}
-
