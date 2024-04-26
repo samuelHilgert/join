@@ -128,28 +128,29 @@ function removeActiveClasslist() {
 }
 
 
-/**
- * This function first checks whether the ID of the clicked element matches the contactId. 
- * Then, using the destructuring assignment method, the contacts-array is destructured to extract the values 
- * of the properties color, name, mail & phone. 
- * These constants are passed to the renderContactInformationHTML, which returns the HTML code.
- * 
- * 
- * @param {string} contactId - ID of the clicked contact
- * 
- */
+function renderContactInfo(contact, contactId, removeAnimation) {
+    const { name, mail, phone, color } = contact;
+    const firstLetter = name.charAt(0);
+    const firstLetterSurname = name.split(' ')[1].charAt(0);
+    let contactInfoHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, contactId, mail, phone);
+    if (removeAnimation) {
+        contactInfoHTML = contactInfoHTML.replace('class="animation-in"', '');
+    }
+    return contactInfoHTML;
+}
+
+
+function updateContactInfo(contactId, contactInfoHTML) {
+    let contactInfo = document.getElementById('contactInfo');
+    contactInfo.innerHTML = contactInfoHTML;
+}
+
+
 function openContactInfo(contactId, removeAnimation = false) {
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
-        const { name, mail, phone, color } = contact;
-        const firstLetter = name.charAt(0);
-        const firstLetterSurname = name.split(' ')[1].charAt(0);
-        let contactInfo = document.getElementById('contactInfo');
-        let contactInfoHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, contactId, mail, phone);
-        if (removeAnimation) {
-            contactInfoHTML = contactInfoHTML.replace('class="animation-in"', '');
-        }
-        contactInfo.innerHTML = contactInfoHTML;
+        let contactInfoHTML = renderContactInfo(contact, contactId, removeAnimation);
+        updateContactInfo(contactId, contactInfoHTML);
         removeActiveClasslist();
         let contactElement = document.getElementById(contactId);
         contactElement.classList.add('contact-small-active');
