@@ -34,6 +34,7 @@ function renderContacts() {
     setRandomColor();
 }
 
+
 async function updateContacts() {
     if (loggedAsGuest === true) {
         await loadExampleContacts();
@@ -53,6 +54,7 @@ async function loadExampleContacts() {
     let resp = await fetch('./JSON/contacts.json');
     contacts = await resp.json();
 }
+
 
 /**
  * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has 
@@ -210,11 +212,13 @@ function addContactToArray() {
     });
 }
 
+
 // ********* AKTUELL AM IMPLEMENTIEREN - SAMUEL
 async function pushContactsOnRemoteServer() {
     users[currentUser].contacts = contacts;                          
     await setItem('users', JSON.stringify(users));
 }
+
 
 async function validateAndAddContact(event) {
     event.preventDefault(); // Prevents the default behavior of the form (automatic sending
