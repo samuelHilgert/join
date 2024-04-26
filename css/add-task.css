@@ -4,23 +4,24 @@
   margin-bottom: 5px;
 }
 
-.dropdown-contact {
-  height: 68px;
+.task-input-style {
+  font-size: 24px;
   width: 100%;
-  gap: 35px;
-  padding: 0 12px;
+  height: auto;
+  padding: 16px 24px;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
   border-radius: 10px;
-  color: rgba(0, 0, 0, 1);
-  margin-bottom: 3px;
-  margin-top: 3px;
+  border: 1px solid lightgray;
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 20px);
+  background-position-y: 50%;
+  background-size: 24px;
+  cursor: pointer;
 }
 
 .assigned-div {
   position: absolute;
-  z-index: 1; /* Stelle sicher, dass die div über anderen Inhalten liegt */
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,7 +39,7 @@
 
 .category-div {
   position: absolute;
-  z-index: 1; /* Stelle sicher, dass die div über anderen Inhalten liegt */
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,6 +69,20 @@
   overflow-x: hidden;
 }
 
+.task-contact {
+  height: 68px;
+  width: 100%;
+  gap: 35px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  color: rgba(0, 0, 0, 1);
+  margin-bottom: 3px;
+  margin-top: 3px;
+}
+
 .task-category {
   font-size: 24px;
   padding: 16px 24px;
@@ -80,25 +95,14 @@
   background-color: #f6f7f8;
 }
 
-.input-category {
-  position: relative;
-}
-
 .category-icon {
   position: absolute;
   top: 50%;
-  right: 12px; /* Anpassen der rechten Ausrichtung */
+  right: 12px;
   transform: translateY(-50%);
   cursor: pointer;
 }
 
-.padding-10 {
-  padding: 5px;
-}
-
-.width-460 {
-  width: 460px;
-}
 .urgent-btn-clicked {
   padding: 20px 10px;
   font-size: 16px;
@@ -107,42 +111,15 @@
   font-weight: 800;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.input-spacer {
-  height: 22px;
-  border: 1px solid #ccc;
-}
-
-.padding-right-36 {
-  padding-right: 36px;
-}
-
-.task-input-style {
-  font-size: 24px;
-  width: 100%;
-  height: auto;
-  padding: 16px 24px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  border: 1px solid lightgray;
-  background-repeat: no-repeat;
-  background-position-x: calc(100% - 20px);
-  background-position-y: 50%;
-  background-size: 24px;
-}
-.task-input-style::placeholder {
-  font-size: 24px;
-}
-
-.height-130 {
+.input-style-description {
+  padding-bottom: 80px;
+  font-family: "Inter";
   height: 130px;
 }
 
-.prio-btn-padding {
-  padding: 18px 12px;
+.input-style-description::placeholder {
+  font-size: 24px;
+  padding-top: 3px;
 }
 
 .input-prio {
@@ -215,15 +192,6 @@
   position: relative;
 }
 
-.input-style-description {
-  padding-bottom: 80px;
-  font-family: "Inter";
-}
-.input-style-description::placeholder {
-  font-size: 24px;
-  padding-top: 3px;
-}
-
 .font-size-20 {
   font-size: 20px;
 }
@@ -252,4 +220,20 @@
 
 .filter-prio-btn {
   filter: invert(100%) brightness(10);
+}
+
+.position-relativ {
+  position: relative;
+}
+
+.width-460 {
+  width: 460px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.padding-right-36 {
+  padding-right: 36px;
 }

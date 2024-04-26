@@ -60,11 +60,9 @@
             <span class="font-size-20">Description</span>
             <textarea
               id="task-description"
-              name=""
-              id=""
               cols="30"
               rows="2"
-              class="task-input-style input-style-description height-130"
+              class="task-input-style input-style-description"
               placeholder="Enter a Description"
             ></textarea>
           </div>
@@ -87,7 +85,7 @@
               />
             </div>
             <div
-              id="dropdown-div"
+              id="task-contact-div"
               class="assigned-div"
               style="display: none"
             ></div>
@@ -155,11 +153,10 @@
             <span class="font-size-20"
               >Category<span style="color: red">*</span></span
             >
-            <div class="input-category width-100">
+            <div class="position-relativ width-100">
               <input
                 id="task-category"
                 class="task-input-style input-login"
-                type="text"
                 placeholder="Select task category"
                 readonly
                 onclick="toggleCategoryDiv()"
