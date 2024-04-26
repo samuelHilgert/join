@@ -23,7 +23,7 @@ async function init() {
     await loadRememberStatus();
     await loadUserData();
     getCurrentUserId();
-    checkUnauthorizedOpening();
+    checkUnauthorizedOpening(); 
     await includeHTML();
     getCurrentlySidebarLink();
     hideHelpIcon();
@@ -59,6 +59,10 @@ async function init() {
     }
 }
 
+/**
+ * This feature secures unauthorized opening of pages via the URL by copying and pasting.
+ * 
+ */
 function checkUnauthorizedOpening() {
     let valueLogged = localStorage.getItem('logged');
     let valueUser = localStorage.getItem('user');
