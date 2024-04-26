@@ -25,10 +25,13 @@ let profileCircleColors = [
 let nextId = 1;
 
 
-
+/**
+ * This function renders the contact page.
+ * 
+ */
 function renderContacts() {
     sortContacts();
-    createUniqueContactId(); // adds a unique ID to very contact in contacts array
+    createUniqueContactId();
     renderContactList();
     setRandomColor();
 }
@@ -227,25 +230,40 @@ function getNextAvailableId() {
 }
 
 
-function addNewContactToArray() {
+/**
+ * 
+ * This function gets the input values for the new contact.
+ * 
+ * @returns {object} - an object containing the input values for the new contact
+ */
+function getNewContactInput() {
     let name = document.getElementById('inputAddContactName').value;
     let mail = document.getElementById('inputAddContactMail').value;
     let phone = document.getElementById('inputAddContactPhone').value;
     let id = getNextAvailableId();
     let color = getRandomColor();
-    let contact = {
+    return {
         name: name,
         mail: mail,
         phone: phone,
         color: color,
         id: id
     };
-    contacts.push(contact);
+}
+
+
+/**
+ * This function adds a newly created contact to the contacts array and performs necessary actions.
+ * 
+ */
+function addNewContactToArray() {
+    let newContact = getNewContactInput();
+    contacts.push(newContact);
     sortContacts();
     closeAddContactFormWithoutAnimation();
     renderContactList();
     contactSuccessAnimation();
-    openContactInfo(id, true); // true, because function should run without animation
+    openContactInfo(newContact['id'], true); // true, because function should run without animation
     keepCircleBackgroundcolor();
 }
 
@@ -257,6 +275,13 @@ async function pushContactsOnRemoteServer() {
 }
 
 
+/**
+ * This function validates the input data of the contact form, adds a new contact to the array, 
+ * and pushes the updated contacts to the remote server.
+ * 
+ * @param {event} event - the event object representing the form submission event
+ * @returns {promise<void>} - a promise that resolves once the new contact has been added to the remote server
+ */
 async function validateAndAddContact(event) {
     event.preventDefault(); // Prevents the default behavior of the form (automatic sending
     let form = document.getElementById('contactForm'); // Validation of the input form data
