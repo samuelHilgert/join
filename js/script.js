@@ -4,6 +4,16 @@ let loggedAsGuest = false;
 let rememberStatus = [];
 let remember = false;
 
+/*
+window.addEventListener('beforeunload', function (e) {
+    if (remember === false) {
+        resetLoginValues();
+        rememberStatus[0].activateContent = false;
+        setItem('remember_status', JSON.stringify(rememberStatus));
+    }
+}); 
+*/
+
 /**
  * This is a function to initialize render functions 
  * 
@@ -18,10 +28,20 @@ async function init() {
 
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
-        renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
+        if (rememberStatus[0].activateContent === true || loggedAsGuest === true) {
+            renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
+        } else {
+            // resetLoginValues();
+            // firstLogin();
+        }
     } else if (document.location.pathname === '/contacts.html') {
-        await updateContacts();
-        renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+        if (rememberStatus[0].activateContent === true || loggedAsGuest === true) {
+            await updateContacts();
+            renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+        } else {
+            //  resetLoginValues();
+            // firstLogin();
+        }
     }
 }
 
@@ -49,12 +69,9 @@ async function loadRememberStatus() {
     } catch (e) {
         console.error('Loading error:', e);
     }
-    setRememberValue();
 }
 
-function setRememberValue() {
-    remember = rememberStatus[0]['remember_status'];
-}
+//rememberStatus[0].activateContent = activateContent;
 
 async function loadUserData() {
     try {
@@ -151,13 +168,21 @@ function moveContainerDown(container) {
 
 
 function clickLogout() {
+    resetLoginValues();
+    setTimeout(forwardAfterLogout, 500);
+}
+
+function resetLoginValues() {
     localStorage.removeItem('user');
     localStorage.removeItem('logged');
     sessionStorage.removeItem('user');
     localStorage.removeItem('remember');
-    setTimeout(forwardAfterLogout, 500);
 }
 
 function forwardAfterLogout() {
     window.location.href = `./login.html?msg=Du bist abgemeldet`;
+}
+
+function firstLogin() {
+    window.location.href = `./login.html`;
 }

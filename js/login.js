@@ -16,17 +16,18 @@ async function checkLoginAccess() {
  * 
  */
 async function iterateUsers() {
+    let activateContent = false;
     if (successCheck()) {
         successEmail = true;
         successPassword = true;
         indexByEmail = getUserId(loginEmail.value);
         if (loginCheckbox.checked) {
-            let remember = true;
-            await saveToLocalStorage(remember);
+            remember = true;
+            await saveToLocalStorage();
         }
         else {
-            let remember = false;
-            await saveToLocalStorage(remember);
+            remember = false;
+            await saveToLocalStorage();
         }
         let container = document.getElementById('messageFormLogin');
         showLoginMessage();
@@ -39,21 +40,23 @@ async function iterateUsers() {
     }
 }
 
-async function saveToLocalStorage(remember) {
+async function saveToLocalStorage() {
     let id = indexByEmail;
     localStorage.setItem('user', id);
     localStorage.setItem('remember', remember);
-    pushRememberStatusInArray(remember);
-    await pushRememberStatusOnRemoteServer(remember);
+    pushRememberStatusInArray();
+    await pushRememberStatusOnRemoteServer();
 }
 
-function pushRememberStatusInArray(remember) {
+function pushRememberStatusInArray() {
+    let activateContent = true;
     rememberStatus.push({
-        remember_status: remember
+        remember_status: remember,
+        activateContent: activateContent
     });
 }
 
-async function pushRememberStatusOnRemoteServer(remember) {
+async function pushRememberStatusOnRemoteServer() {
     await setItem('remember_status', JSON.stringify(rememberStatus));
 }
 
