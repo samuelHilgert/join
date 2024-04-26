@@ -20,10 +20,11 @@ window.addEventListener('beforeunload', function (e) {
  * 
  */
 async function init() {
-    await includeHTML();
     await loadRememberStatus();
     await loadUserData();
     getCurrentUserId();
+    checkUnauthorizedOpening();
+    await includeHTML();
     getCurrentlySidebarLink();
     hideHelpIcon();
 
@@ -38,7 +39,7 @@ async function init() {
             if (now >= expiryTime) { // let currentTime = now.getMinutes();
                 // Die Zeit ist abgelaufen
                 // Führe hier die entsprechenden Aktionen aus, z.B. den Benutzer abmelden
-                console.log('Du wärst längere Zeit nicht aktiv, melde dich bitte erneut an!'); 
+                console.log('Du wärst längere Zeit nicht aktiv, melde dich bitte erneut an!');
                 // clearInterval(intervalId); // Stoppe die Überprüfung, wenn die Zeit abgelaufen ist
                 resetLoginValues();
                 setTimeout(firstLogin, 1000);
@@ -55,6 +56,14 @@ async function init() {
         await resetExpiryTime();
         await updateContacts();
         renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+    }
+}
+
+function checkUnauthorizedOpening() {
+    let valueLogged = localStorage.getItem('logged');
+    let valueUser = localStorage.getItem('user');
+    if (valueLogged === null && valueUser === null) {
+        firstLogin();
     }
 }
 
