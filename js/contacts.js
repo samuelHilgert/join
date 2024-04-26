@@ -423,21 +423,29 @@ function keepCircleBackgroundcolor() {
 }
 
 
+/**
+ * This function clears the contact info and hides the mask.
+ */
+function clearContactInfoAndHideMask() {
+    let contactInfo = document.getElementById('contactInfo');
+    contactInfo.innerHTML = '';
+    let wrapper = document.getElementById('editContactMask');
+    wrapper.classList.add('d-none');
+}
+
+
+/**
+ * This function deletes a contact from the contacts array and performs necessary actions.
+ * 
+ * @param {string} contactId - the ID of the contact to delete
+ */
 function deleteContact(contactId) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index != -1) {
         contacts.splice(index, 1);
         pushContactsOnRemoteServer();
         renderContactList();
-        let contactCircles = document.querySelectorAll('.contact-circle'); // keeps the backgroundcolor of the circle
-        contactCircles.forEach((circle, index) => {
-            if (index >= index) { // If the index is greater than or equal to the index of the deleted contact
-                circle.style.backgroundColor = contacts[index]['color'];
-            }
-        });
-        let contactInfo = document.getElementById('contactInfo');
-        contactInfo.innerHTML = '';
-        let wrapper = document.getElementById('editContactMask');
-        wrapper.classList.add('d-none');
+        keepCircleBackgroundcolor();
+        clearContactInfoAndHideMask();
     }
 }
