@@ -246,3 +246,14 @@ function setMinimumDate() {
   var minDate = currentDate.toISOString().split("T")[0];
   document.getElementById("task-date").setAttribute("min", minDate);
 }
+
+function enableSubtaskEnterKey() {
+  document
+    .getElementById("subtask")
+    .addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        addSubtask(); // Subtask hinzufügen
+        event.preventDefault(); // Standardverhalten der Enter-Taste verhindern (z.B. Formularabsenden)
+      }
+    });
+}
