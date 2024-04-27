@@ -5,6 +5,7 @@ let allUrgents;
 let formattedDeadline;
 let allInProgress;
 let allAwaitFeedback;
+let allTasks;
 
 /**
  * This function includes render functions for summary.html 
@@ -64,6 +65,7 @@ function getValuesForSummaryJsonArray() {
         allAwaitFeedback = allAwaitFeedbackNumber.length;
         let upcomingDeadline = closestDueDateElement.dueDate;
         formattedDeadline = formatDate(upcomingDeadline);
+        allTasks = tasksSummary[0].length;
     }
 }
 
@@ -97,6 +99,7 @@ function getValuesForSummary() {
     allUrgents = allTasksByUrgent.length;
     allInProgress = allTasksByInProgress.length;
     allAwaitFeedback = allAwaitFeedbackNumber.length;
+    allTasks = tasksSummary.length;
 }
 
 async function loadTasksRemote() {
@@ -120,7 +123,7 @@ function renderSummaryValues() {
     allTodosNumber.innerHTML = `<h3>${allTodos}</h3>`;
     allDoneNumber.innerHTML = `<h3>${allDones}</h3>`;
     allUrgentNumber.innerHTML = `<h3>${allUrgents}</h3><p>Urgent</p>`;
-    allTasksNumber.innerHTML = `<h3>${tasksSummary[0].length}</h3>`;
+    allTasksNumber.innerHTML = `<h3>${allTasks}</h3>`;
     allInProgressNumber.innerHTML = `<h3>${allInProgress}</h3>`;
     allAwaitFeedbackNumber.innerHTML = `<h3>${allAwaitFeedback}</h3>`;
     upcomingDueDate.innerHTML = `${formattedDeadline}`;
