@@ -462,8 +462,8 @@ li {
 
 .popup-contacts-message {
   background-color: #2a3647;
-  width: 30%;
-  height: 50%;
+  width: 20%;
+  height: auto;
   border-radius: 30px;
   position: absolute;
   z-index: 9999;

@@ -479,10 +479,10 @@ function showGuestPopupMessage() {
     let contactsMessage = document.getElementById('contactsMessage');
     contactsMessage.innerHTML = `
     <div onclick="closeGuestPopupMessage()"><a class="link-style guestPopupLinkStyle">Close</a></div>
-    <h5>You are logged in as a guest</h5>
-    <div class="d_c_c_c gap-30">
+    <h5>You are not logged in!</h5>
+    <div class="d_c_c_c gap-10">
     <p>Please note that we will not save your changes.</p>
-    <p>You can log in at any time to access all features.</p>
+    <p>Please log in to access all features.</p>
     </div>
     <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
     `;
