@@ -219,9 +219,7 @@ function firstLogin() {
     window.location.href = `./login.html`;
 }
 
-function showGuestPopupMessage() {
-    let div = document.getElementById('guestMessagePopupContacts');
-    let messageText = document.getElementById('guestMessageContacts');
+function showGuestPopupMessage(div, messageText) {
     document.body.style.overflow = 'hidden';
     setTimeout(function () {
         generateGuestMessageText(messageText);
@@ -231,8 +229,6 @@ function showGuestPopupMessage() {
         closePopupAutomaticly(div);
     }, popupCloseTime);
 }
-
-
 
 function generateGuestMessageText(messageText) {
     messageText.innerHTML = `

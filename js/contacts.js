@@ -295,7 +295,9 @@ async function validateAndAddContact(event) {
     if (!loggedAsGuest === true || loggedAsGuest === false) {
         await pushContactsOnRemoteServer();
     } else {
-        showGuestPopupMessage();
+        let div = document.getElementById('guestMessagePopupContacts');
+        let messageText = document.getElementById('guestMessageContacts');
+        showGuestPopupMessage(div, messageText);
     }
 }
 
@@ -389,7 +391,9 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         if (!loggedAsGuest === true || loggedAsGuest === false) {
             await pushContactsOnRemoteServer();
         } else {
-            showGuestPopupMessage();
+            let div = document.getElementById('guestMessagePopupContacts');
+            let messageText = document.getElementById('guestMessageContacts');
+            showGuestPopupMessage(div, messageText);
         }
         renderContactList();
     }
@@ -460,7 +464,9 @@ async function deleteContact(contactId) {
             await pushContactsOnRemoteServer();
         }
         else {
-            showGuestPopupMessage();
+            let div = document.getElementById('guestMessagePopupContacts');
+            let messageText = document.getElementById('guestMessageContacts');
+            showGuestPopupMessage(div, messageText);
         }
         renderContactList();
         keepCircleBackgroundcolor();
