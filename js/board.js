@@ -118,29 +118,19 @@ function updateProgressBar(task) {
 function doNotClose(event) {
     event.stopPropagation();
 }
-/*
+
 function openBoardTaskPopup(openId) {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
     let container = document.getElementById('boardTaskPopupContainer');
     document.body.style.overflow = 'hidden';
     boardTaskPopup.style.display = 'flex';
-    console.log('openId = ' + openId);
-    console.log('');
-    let foundIndex;
-    for (let id = 0; id < tasks.length; id++) {
-        if (tasks[id].id === openId) {
-            foundIndex = id;
-            console.log(foundIndex);
-            moveContainerIn(container);
-            renderBoardTaskPopupContent(id);
-            break;
-        } 
-    } 
+    let taskId = openId - 1;
+    moveContainerIn(container);
+    renderBoardTaskPopupContent(taskId);
+}
 
-}*/
-
-function renderBoardTaskPopupContent(id) {
-    const todo = tasks[id];
+function renderBoardTaskPopupContent(taskId) {
+    const todo = tasks[taskId];
     let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
     boardTaskPopupContent.innerHTML = `
 <div class="d_c_sb_fs gap-20 height-max">
