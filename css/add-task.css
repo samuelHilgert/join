@@ -5,18 +5,25 @@
 }
 
 .task-input-style {
-  font-size: 24px;
   width: 100%;
   height: auto;
   padding: 16px 24px;
   box-sizing: border-box;
   border-radius: 10px;
-  border: 1px solid lightgray;
+  border: 1px solid rgba(209, 209, 209, 1);
   background-repeat: no-repeat;
   background-position-x: calc(100% - 20px);
   background-position-y: 50%;
   background-size: 24px;
   cursor: pointer;
+}
+
+.task-input-style::placeholder {
+  color: rgba(209, 209, 209, 1);
+  font-size: 20px;
+  font-family: "Inter";
+  font-weight: 400;
+  line-height: 24px;
 }
 
 .assigned-div {
