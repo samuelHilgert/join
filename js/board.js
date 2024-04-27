@@ -84,7 +84,13 @@ async function moveTo(currentCategory) {
         if (tasks[id].id === currentDraggedTaskIdString) {
             foundIndex = id;
             tasks[foundIndex].category = currentCategory;
-            await pushTasksOnRemoteServer();
+            if (!loggedAsGuest === true || loggedAsGuest === false) {
+                await pushTasksOnRemoteServer();
+            } else {
+                let div = document.getElementById('guestMessagePopupBoard');
+                let messageText = document.getElementById('guestMessageBoard');
+                showGuestPopupMessage(div, messageText);
+            }
             renderBoardTasks();
             break;
         } else {

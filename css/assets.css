@@ -478,6 +478,11 @@ li {
   display: none;
 }
 
+#guestMessagePopupBoard {
+  display: none;
+}
+
+
 .guestPopupLinkStyle {
   color: white;
   text-decoration: underline;
