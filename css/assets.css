@@ -474,6 +474,10 @@ li {
   display: none;
 }
 
+#guestMessagePopupSummary {
+  display: none;
+}
+
 .guestPopupLinkStyle {
   color: white;
   text-decoration: underline;

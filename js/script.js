@@ -4,6 +4,7 @@ let loggedAsGuest = false;
 let rememberStatus = [];
 let remember = false;
 let setResetExpiryTime = 10;
+let popupCloseTime = 8000;
 
 /*
 window.addEventListener('beforeunload', function (e) {
@@ -23,7 +24,7 @@ async function init() {
     await loadRememberStatus();
     await loadUserData();
     getCurrentUserId();
-    checkUnauthorizedOpening(); 
+    checkUnauthorizedOpening();
     await includeHTML();
     getCurrentlySidebarLink();
     hideHelpIcon();
@@ -216,4 +217,37 @@ function forwardAfterLogout() {
 
 function firstLogin() {
     window.location.href = `./login.html`;
+}
+
+function showGuestPopupMessage(div, messageText) {
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () {
+        generateGuestMessageText(div, messageText);
+        div.style.display = 'flex';
+    }, 800);
+    setTimeout(function () {
+        closePopupAutomaticly(div);
+    }, popupCloseTime);
+}
+
+function generateGuestMessageText(div, messageText) {
+    messageText.innerHTML = `
+<div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
+<h5>You are not logged in!</h5>
+<div class="d_c_c_c gap-10">
+<p>Please note that we will not save your changes.</p>
+<p>Please log in to access all features.</p>
+</div>
+<div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
+`;
+}
+
+function closeGuestPopupMessage(div){
+    div.style.display = 'none';
+    document.body.style.overflow = 'scroll';
+}
+
+function closePopupAutomaticly(div) {
+    div.style.display = 'none';
+    document.body.style.overflow = 'scroll';
 }
