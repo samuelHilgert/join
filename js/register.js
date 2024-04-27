@@ -96,6 +96,7 @@ async function signUpPasswordsMatched() {
             hideMessageContainer(container);
         }, displayMessageTime);
         resetSingUpForm();
+        setTimeout(firstLogin, 1500);
     }
     else {
         showSignUpMessage();
