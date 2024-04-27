@@ -18,6 +18,7 @@ async function init() {
     await includeHTML();
     getCurrentlySidebarLink();
     hideHelpIcon();
+    renderHeaderUserName();
 
     // Überprüfe, ob die aktuelle Zeit größer oder gleich dem Ablaufdatum ist
     setInterval(function () {
@@ -122,6 +123,21 @@ function getCurrentUserId() {
                 currentUser = savedDataLocalStorage;
             }
         }
+    }
+}
+
+function renderHeaderUserName() {
+    if (loggedAsGuest === true) {
+        document.getElementById('headerUserName').innerHTML = 'GU';
+    } else {
+        let firstLetter = users[currentUser].name.charAt(0); // Erster Buchstabe des Vornamens
+        let spaceIndex = users[currentUser].name.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
+        let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
+        if (spaceIndex !== -1 && spaceIndex < users[currentUser].name.length - 1) {
+            secondLetter = users[currentUser].name.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+        }
+        // Setzen Sie den Header-Text mit den ersten Buchstaben des Vor- und Nachnamens
+        document.getElementById('headerUserName').innerHTML = firstLetter + secondLetter;
     }
 }
 
