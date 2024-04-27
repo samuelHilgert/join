@@ -33,7 +33,13 @@ async function pushTasksOnRemoteServer() {
     await setItem('users', JSON.stringify(users));
 }
 
-function renderBoardTasks() {
+async function renderBoardTasks() {
+    if (tasks.length === 0) {
+        let div = document.getElementById('guestMessagePopupBoard');
+        let messageText = document.getElementById('guestMessageBoard');
+        showGuestPopupMessageForReload(div, messageText);
+        await updateBoardTasks();
+    }
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
         const allTasksSameCategory = tasks.filter(t => t['category'] == category);
@@ -92,7 +98,7 @@ async function moveTo(currentCategory) {
             }
         }
     }
-    renderBoardTasks();
+    await renderBoardTasks();
 }
 
 function allowDrop(event) {
@@ -161,16 +167,17 @@ function renderBoardTaskPopupContent(taskId) {
 }
 
 async function deleteContact() {
-    let div = document.getElementById('boardTaskPopup');
-    closeGuestPopupMessage(div);
+    document.getElementById('boardTaskPopup').style.display = 'none';
+    document.body.style.overflow = 'scroll';
     tasks.splice(taskId, 1);
     if (!loggedAsGuest === true || loggedAsGuest === false) {
         await pushTasksOnRemoteServer();
     } else {
+        let div = document.getElementById('guestMessagePopupBoard');
         let messageText = document.getElementById('guestMessageBoard');
         showGuestPopupMessage(div, messageText);
     }
-    renderBoardTasks();
+    await renderBoardTasks();
 }
 
 
