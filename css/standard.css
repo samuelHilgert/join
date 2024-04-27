@@ -102,6 +102,10 @@ body {
   padding-left: 40px;
 }
 
+.pad-l-20 {
+  padding-left: 20px;
+}
+
 .pad-y {
   padding-top: 120px;
   padding-bottom: 120px;
@@ -319,6 +323,12 @@ body {
   align-items: flex-start;
 }
 
+.d_f_fs_se {
+  display: flex;
+  justify-content: flex-start;
+  align-items: space-evenly;
+}
+
 .d_f_fe_c {
   display: flex;
   justify-content: flex-end;
@@ -464,6 +474,16 @@ body {
 
 .width-max {
   width: 100%;
+  box-sizing: border-box;
+}
+
+.width-50 {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.width-75 {
+  width: 75%;
   box-sizing: border-box;
 }
 

@@ -14,6 +14,9 @@ function getUserNameForGreet() {
     let userNameDiv = document.getElementById('userNameDiv');
     if (loggedAsGuest === true) {
         userNameDiv.innerHTML = 'Guest';
+        let div = document.getElementById('guestMessagePopupSummary');
+        let messageText = document.getElementById('guestMessageSummary');
+        showGuestPopupMessage(div, messageText);
     } else {
         userNameDiv.innerHTML = users[currentUser]['name'];
     } 

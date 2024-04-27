@@ -137,8 +137,7 @@
   fill: #29abe2;
 }
 
-#btnBoard {
-  cursor: pointer;
+.btn-board {
   border-radius: 8px;
   padding: 4px 16px;
   background-color: rgba(0, 56, 255, 1);
@@ -307,10 +306,6 @@ li {
   box-sizing: border-box;
 }
 
-.centered {
-  text-align: center;
-}
-
 .outside {
   right: 0;
 }
@@ -460,19 +455,28 @@ li {
   z-index: 9999;
 }
 
-.popup-contacts-message {
+.popup-guest-message {
   background-color: #2a3647;
-  width: 30%;
-  height: 50%;
+  width: 20%;
+  height: auto;
   border-radius: 30px;
   position: absolute;
   z-index: 9999;
   color: white;
 }
 
-#contactsMessagePopup {
+#guestMessagePopupContacts {
   display: none;
 }
+
+#guestMessagePopupSummary {
+  display: none;
+}
+
+#guestMessagePopupBoard {
+  display: none;
+}
+
 
 .guestPopupLinkStyle {
   color: white;

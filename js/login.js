@@ -1,7 +1,7 @@
 let successEmail = false;
 let successPassword = false;
 let indexByEmail;
-let setExpiryTime = 10;
+let setExpiryTime = 3;
 
 /**
  * This function is called when the login form is submitted, it checks whether the data matches the registration 

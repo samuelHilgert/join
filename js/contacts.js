@@ -1,4 +1,4 @@
-let contacts = []
+let contacts = [];
 
 let profileCircleColors = [
     'teal',
@@ -22,12 +22,17 @@ let profileCircleColors = [
 ];
 
 let nextId = 1;
-let popupCloseTime = 8000;
 
 /**
  * This function renders the contact page.
  */
-function renderContacts() {
+async function renderContacts() {
+    if (contacts.length === 0) {
+        let div = document.getElementById('guestMessagePopupContacts');
+        let messageText = document.getElementById('guestMessageContacts');
+        showGuestPopupMessageForReload(div, messageText);
+        await updateContacts();
+    }
     sortContacts();
     createUniqueContactId();
     renderContactList();
@@ -46,8 +51,8 @@ async function updateContacts() {
         await loadExampleContacts();
     } else {
         let currentUserContacts = users[currentUser].contacts;
-        if (currentUserContacts === "") {
-            loadExampleContacts();
+        if (currentUserContacts.length === 0) {
+            await loadExampleContacts();
             await pushContactsOnRemoteServer();
         }
         else {
@@ -296,8 +301,9 @@ async function validateAndAddContact(event) {
     if (!loggedAsGuest === true || loggedAsGuest === false) {
         await pushContactsOnRemoteServer();
     } else {
-        setTimeout(showGuestPopupMessage, 1000);
-        setTimeout(closePopupAutomaticly, popupCloseTime);
+        let div = document.getElementById('guestMessagePopupContacts');
+        let messageText = document.getElementById('guestMessageContacts');
+        showGuestPopupMessage(div, messageText);
     }
 }
 
@@ -390,10 +396,10 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         contacts[index]['phone'] = newPhone;
         if (!loggedAsGuest === true || loggedAsGuest === false) {
             await pushContactsOnRemoteServer();
-        }
-        else {
-            setTimeout(showGuestPopupMessage, 1000);
-            setTimeout(closePopupAutomaticly, popupCloseTime);
+        } else {
+            let div = document.getElementById('guestMessagePopupContacts');
+            let messageText = document.getElementById('guestMessageContacts');
+            showGuestPopupMessage(div, messageText);
         }
         renderContactList();
     }
@@ -464,33 +470,13 @@ async function deleteContact(contactId) {
             await pushContactsOnRemoteServer();
         }
         else {
-            setTimeout(showGuestPopupMessage, 1000);
-            setTimeout(closePopupAutomaticly, popupCloseTime);
+            let div = document.getElementById('guestMessagePopupContacts');
+            let messageText = document.getElementById('guestMessageContacts');
+            showGuestPopupMessage(div, messageText);
         }
         renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();
+        await renderContacts();
     }
-}
-
-function showGuestPopupMessage() {
-    document.getElementById('contactsMessagePopup').style.display = 'flex';
-    let contactsMessage = document.getElementById('contactsMessage');
-    contactsMessage.innerHTML = `
-    <div onclick="closeGuestPopupMessage()"><a class="link-style guestPopupLinkStyle">Close</a></div>
-    <h5>Hinweis</h5>
-    <div class="d_c_c_c gap-30">
-    <p>Beachte, dass deine Änderungen nicht gespeichert werden können.</p>
-    <p>Du kannst dich jederzeit anmelden, um auf alle Funktionen zugreifen zu können.</p>
-    </div>
-    <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
-    `;
-}
-
-function closeGuestPopupMessage() {
-    document.getElementById('contactsMessagePopup').style.display = 'none';
-}
-
-function closePopupAutomaticly() {
-    document.getElementById('contactsMessagePopup').style.display = 'none';
 }
