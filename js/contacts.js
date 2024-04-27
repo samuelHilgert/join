@@ -296,7 +296,7 @@ async function validateAndAddContact(event) {
     if (!loggedAsGuest === true || loggedAsGuest === false) {
         await pushContactsOnRemoteServer();
     } else {
-        setTimeout(showGuestPopupMessage, 1000);
+        setTimeout(showGuestPopupMessage, 800);
         setTimeout(closePopupAutomaticly, popupCloseTime);
     }
 }
@@ -392,7 +392,7 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
             await pushContactsOnRemoteServer();
         }
         else {
-            setTimeout(showGuestPopupMessage, 1000);
+            setTimeout(showGuestPopupMessage, 800);
             setTimeout(closePopupAutomaticly, popupCloseTime);
         }
         renderContactList();
@@ -464,7 +464,7 @@ async function deleteContact(contactId) {
             await pushContactsOnRemoteServer();
         }
         else {
-            setTimeout(showGuestPopupMessage, 1000);
+            setTimeout(showGuestPopupMessage, 800);
             setTimeout(closePopupAutomaticly, popupCloseTime);
         }
         renderContactList();
@@ -479,10 +479,10 @@ function showGuestPopupMessage() {
     let contactsMessage = document.getElementById('contactsMessage');
     contactsMessage.innerHTML = `
     <div onclick="closeGuestPopupMessage()"><a class="link-style guestPopupLinkStyle">Close</a></div>
-    <h5>Hinweis</h5>
+    <h5>You are logged in as a guest</h5>
     <div class="d_c_c_c gap-30">
-    <p>Beachte, dass deine Änderungen nicht gespeichert werden können.</p>
-    <p>Du kannst dich jederzeit anmelden, um auf alle Funktionen zugreifen zu können.</p>
+    <p>Please note that we will not save your changes.</p>
+    <p>You can log in at any time to access all features.</p>
     </div>
     <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
     `;
