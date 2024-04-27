@@ -59,7 +59,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
 
 function generateTodoHTML(task) {
     return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${task['id']})" draggable="true" ondragstart="startDragging(${task['id']})">
-            <div class="d_f_fs_fs" id="btnBoard">${task['label']}</div>
+            <div class="btn-board d_f_fs_fs" id="">${task['label']}</div>
             <h6><b>${task['title']}</b></h6>
             <p>${task['description']}</p>
             <div class="d_f_c_c width-max">
@@ -140,72 +140,23 @@ function openBoardTaskPopup(openId) {
 
 function renderBoardTaskPopupContent(taskId) {
     const todo = tasks[taskId];
-    let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
-    boardTaskPopupContent.innerHTML = `
-<div class="d_c_fs_fs gap-30 height-max">
-    <div class="d_f_sb_c width-max">
-        <div class="d_f_c_c width-50" id="btnBoard">${todo['label']}</div>
-        <div class="add-contact-container-right-img-wrapper d_c_c_c popup-close-button" onclick="closeBoardTaskPopup()">
-            <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
-        </div>
-    </div>
-
-    <h6><b>${todo['title']}</b></h6>
-    <p>${todo['description']}</p>
-    <div class="d_c_fs_fs gap-20 width-max">
-        <div class="d_f_c_c width-max">
-            <div class="d_f_fs_c width-50 gap-30">
-                <p>Due date:</p>
-            </div>
-            <div class="d_f_fs_c width-50 gap-30">
-                <p>${todo['dueDate']}</p>
-            </div>
-        </div>
-        <div class="d_f_c_c width-max">
-            <div class="d_f_fs_c width-50 gap-30">
-                <p>Priority:</p>
-            </div>
-            <div class="d_f_fs_c width-50 gap-30">
-                <p>${todo['priority']}</p>
-            </div>
-        </div>
-    </div>
-    <div class="d_c_c_fs width-max gap-10">
-        <div class="d_f_fs_c width-50 gap-30">
-            <p>Assigned To:</p>
-        </div>
-        <div class="d_c_c_fs width-50 gap-10 pad-l-40">
-            <p>XX</p>
-            <p>XX</p>
-            <p>XX</p>
-        </div>
-    </div> 
-
-    <div class="d_c_c_fs width-max gap-10">
-        <div class="d_f_fs_c width-50 gap-30">
-            <p>Subtasks:</p>
-        </div>
-        <div class="d_c_c_fs width-50 gap-10 pad-l-40">
-            <p>XX</p>
-            <p>XX</p>
-            <p>XX</p>
-        </div>
-    </div> 
-</div>
-<div class="d_f_fe_c width-max gap-20">
-<div class="delete-style d_f_c_c gap-10" onclick="deleteContact()">
-    <img src="./assets/img/delete.svg" alt="">
-    <p>Delete</p>
-</div>
-<div class="edit-style d_f_c_c gap-10">
-    <img src="./assets/img/edit.svg" alt="">
-    Edit
-</div>
-</div>
-`;
+    showTaskText(todo);
 }
 
-async function deleteContact() {
+function showTaskText(todo){
+    let taskPopupContentLabel = document.getElementById('taskPopupContentLabel');
+    let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
+    let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
+    let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate'); 
+    let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');    
+    taskPopupContentLabel.innerHTML = `${todo['label']}`;
+    taskPopupContentTitle.innerHTML = `<h6><b>${todo['title']}</b></h6>`;
+    taskPopupContentDescription.innerHTML = `<p>${todo['description']}</p>`;
+    taskPopupContentDueDate.innerHTML = `<p>${todo['dueDate']}</p>`;
+    taskPopupContentPriority.innerHTML = `<p>${todo['priority']}</p>`;
+}
+
+async function deleteTask() {
     document.getElementById('boardTaskPopup').style.display = 'none';
     document.body.style.overflow = 'scroll';
     tasks.splice(taskId, 1);
@@ -219,6 +170,9 @@ async function deleteContact() {
     await renderBoardTasks();
 }
 
+async function editTask() {
+console.log('Hallo');
+}
 
 function openBoardAddTaskPopup() {
     let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');

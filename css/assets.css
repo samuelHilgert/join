@@ -137,7 +137,7 @@
   fill: #29abe2;
 }
 
-#btnBoard {
+.btn-board {
   border-radius: 8px;
   padding: 4px 16px;
   background-color: rgba(0, 56, 255, 1);
