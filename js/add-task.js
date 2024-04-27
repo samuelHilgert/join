@@ -41,7 +41,7 @@ function readTaskInput() {
 function openDropdownContacts() {
   let Dropdownmenu = document.getElementById("inputfield-dropdown");
   let dropdownArrow = document.getElementById("dropdown-arrow");
-  let dropdownDiv = document.getElementById("dropdown-div");
+  let dropdownDiv = document.getElementById("task-contact-div");
   dropdownDiv.style.display =
     dropdownDiv.style.display === "flex" ? "none" : "flex";
   rotateDropdownIcon(dropdownArrow, dropdownDiv.style.display === "flex");
@@ -49,7 +49,7 @@ function openDropdownContacts() {
     const element = contacts[i];
     dropdownDiv.innerHTML += `
     <div class="parting-line-dropdown"></div>
-    <div class="dropdown-contact" id='test${i}'onclick='chooseContact(${i},"${element.name}")' >
+    <div class="task-contact" id='test${i}'onclick='chooseContact(${i},"${element.name}")' >
       <div class="contact-circle d_f_c_c">
         <div class="contact-circle-letters">AM</div>
       </div>
@@ -179,11 +179,14 @@ function renderSubtasks(container) {
 
 function changeIcons() {
   let iconBox = document.getElementById("dropdown-icon");
+  iconBox.classList.remove("input-icon-div");
+  iconBox.classList.add("input-icon");
+
   iconBox.innerHTML = `
     <div class="d_f_c_c gap-5 padding-right-36">
-      <img onclick='clearSubtaskInput()' class='padding-10' src="assets/img/input-cross.png" alt="cross" />
+    <div onclick='clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/input-cross.png" alt="cross" /></div>
       <div class='input-spacer'></div>
-      <img onclick='addSubtask(),clearSubtaskInput()' style='height: 17px;' class='padding-10' src="assets/img/input-check.png" alt="check" />
+      <div onclick='addSubtask(),clearSubtaskInput()' class="icon-edit-delete"> <img style='height: 17px;' src="assets/img/input-check.png" alt="check" /></div>
     </div>
   `;
 }
@@ -197,6 +200,7 @@ function editSubtask(element) {
     subtasks.splice(subtaskIndex, 1);
     renderSubtasks(subtaskContainer);
   }
+  changeIcons();
 }
 
 function deleteSubtask(i) {
@@ -210,7 +214,7 @@ function clearSubtaskInput() {
   subtaskInput.blur();
   let iconBox = document.getElementById("dropdown-icon");
   iconBox.innerHTML = `
-    <img onclick="changeIcons()" src="assets/img/input-plus.png" alt="plus" />
+   <div onclick="changeIcons()" class='icon-edit-delete'><img src="assets/img/input-plus.png" alt="plus" /></div>
   `;
 }
 
