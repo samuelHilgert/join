@@ -478,6 +478,11 @@ body {
   box-sizing: border-box;
 }
 
+.width-75 {
+  width: 75%;
+  box-sizing: border-box;
+}
+
 .height-max {
   height: 100%;
   box-sizing: border-box;
