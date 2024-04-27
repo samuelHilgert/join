@@ -26,7 +26,13 @@ let nextId = 1;
 /**
  * This function renders the contact page.
  */
-function renderContacts() {
+async function renderContacts() {
+    if (contacts.length === 0) {
+        let div = document.getElementById('guestMessagePopupContacts');
+        let messageText = document.getElementById('guestMessageContacts');
+        showGuestPopupMessageForReload(div, messageText);
+        await updateContacts();
+    }
     sortContacts();
     createUniqueContactId();
     renderContactList();
@@ -471,5 +477,6 @@ async function deleteContact(contactId) {
         renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();
+        await renderContacts();
     }
 }

@@ -18,6 +18,7 @@ async function init() {
     await includeHTML();
     getCurrentlySidebarLink();
     hideHelpIcon();
+    renderHeaderUserName();
 
     // Überprüfe, ob die aktuelle Zeit größer oder gleich dem Ablaufdatum ist
     setInterval(function () {
@@ -46,11 +47,11 @@ async function init() {
     } else if (document.location.pathname === '/contacts.html') {
         await resetExpiryTime();
         await updateContacts();
-        renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+        await renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
     } else if (document.location.pathname === '/board.html') {
         await resetExpiryTime();
         await updateBoardTasks();
-        renderBoardTasks();
+        await renderBoardTasks();
     }
 }
 
@@ -122,6 +123,21 @@ function getCurrentUserId() {
                 currentUser = savedDataLocalStorage;
             }
         }
+    }
+}
+
+function renderHeaderUserName() {
+    if (loggedAsGuest === true) {
+        document.getElementById('headerUserName').innerHTML = 'GU';
+    } else {
+        let firstLetter = users[currentUser].name.charAt(0); // Erster Buchstabe des Vornamens
+        let spaceIndex = users[currentUser].name.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
+        let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
+        if (spaceIndex !== -1 && spaceIndex < users[currentUser].name.length - 1) {
+            secondLetter = users[currentUser].name.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+        }
+        // Setzen Sie den Header-Text mit den ersten Buchstaben des Vor- und Nachnamens
+        document.getElementById('headerUserName').innerHTML = firstLetter + secondLetter;
     }
 }
 
@@ -211,6 +227,29 @@ function forwardAfterLogout() {
 
 function firstLogin() {
     window.location.href = `./login.html`;
+}
+
+function showGuestPopupMessageForReload(div, messageText) {
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () {
+        generateGuestMessageTextForReload(div, messageText);
+        div.style.display = 'flex';
+    }, 800);
+    setTimeout(function () {
+        closePopupAutomaticly(div);
+    }, popupCloseTime);
+}
+
+function generateGuestMessageTextForReload(div, messageText) {
+    messageText.innerHTML = `
+<div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
+<h5>Oops!</h5>
+<div class="d_c_c_c gap-10">
+<p>It seems like you need help.</p>
+<p>We'll show you a few examples.</p>
+</div>
+<div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
+`;
 }
 
 function showGuestPopupMessage(div, messageText) {

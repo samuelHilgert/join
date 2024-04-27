@@ -33,7 +33,13 @@ async function pushTasksOnRemoteServer() {
     await setItem('users', JSON.stringify(users));
 }
 
-function renderBoardTasks() {
+async function renderBoardTasks() {
+    if (tasks.length === 0) {
+        let div = document.getElementById('guestMessagePopupBoard');
+        let messageText = document.getElementById('guestMessageBoard');
+        showGuestPopupMessageForReload(div, messageText);
+        await updateBoardTasks();
+    }
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
         const allTasksSameCategory = tasks.filter(t => t['category'] == category);
@@ -53,7 +59,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
 
 function generateTodoHTML(task) {
     return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${task['id']})" draggable="true" ondragstart="startDragging(${task['id']})">
-            <div class="d_f_fs_fs" id="btnBoard">${task['label']}</div>
+            <div class="btn-board d_f_fs_fs" id="">${task['label']}</div>
             <h6><b>${task['title']}</b></h6>
             <p>${task['description']}</p>
             <div class="d_f_c_c width-max">
@@ -92,7 +98,7 @@ async function moveTo(currentCategory) {
             }
         }
     }
-    renderBoardTasks();
+    await renderBoardTasks();
 }
 
 function allowDrop(event) {
@@ -134,45 +140,90 @@ function openBoardTaskPopup(openId) {
 
 function renderBoardTaskPopupContent(taskId) {
     const todo = tasks[taskId];
-    let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
-    boardTaskPopupContent.innerHTML = `
-<div class="d_c_fs_fs gap-40 height-max">
-    <div class="d_f_fs_c width-max" id="btnBoard">${todo['label']}</div>
-    <h6><b>${todo['title']}</b></h6>
-    <p>${todo['description']}</p>
-    <div class="d_c_fs_fs gap-20 width-max">
-        <div class="d_f_sb_c width-50"><p>Due date:</p><p>${todo['dueDate']}</p></div>
-        <div class="d_f_sb_c width-50"><p>Priority:</p><p>${todo['priority']}</p></div>
-        <div class="d_f_sb_c width-50"><p>Assigned To:</p><p>XX</p></div>
-        <div class="d_f_sb_c width-50"><p>Subtasks:</p><p>XX</p></div>
-    </div>
-</div>
-<div class="d_f_fe_c width-max gap-20">
-<div class="delete-style d_f_c_c gap-10" onclick="deleteContact()">
-    <img src="./assets/img/delete.svg" alt="">
-    <p>Delete</p>
-</div>
-<div class="edit-style d_f_c_c gap-10">
-    <img src="./assets/img/edit.svg" alt="">
-    Edit
-</div>
-</div>
-`;
+    showTaskText(todo);
 }
 
-async function deleteContact() {
-    let div = document.getElementById('boardTaskPopup');
-    closeGuestPopupMessage(div);
+function showTaskText(todo) {
+    let taskPopupContentLabel = document.getElementById('taskPopupContentLabel');
+    let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
+    let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
+    let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate');
+    let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');
+    let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
+    let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
+    taskPopupContentLabel.innerHTML = `${todo['label']}`;
+    taskPopupContentTitle.innerHTML = `<h6><b>${todo['title']}</b></h6>`;
+    taskPopupContentDescription.innerHTML = `<p>${todo['description']}</p>`;
+    taskPopupContentDueDate.innerHTML = `
+    <div class="d_f_fs_c width-50 gap-30">
+        <p>Due date:</p>
+    </div>
+    <div class="d_f_fs_c width-50 gap-30" >
+        <p>${todo['dueDate']}</p>
+    </div>
+    `;
+    taskPopupContentPriority.innerHTML = `
+    <div class="d_f_fs_c width-50 gap-30">
+        <p>Priority:</p>
+    </div>
+    <div class="d_f_fs_c width-50 gap-30">
+        <p>${todo['priority']}</p>
+    </div>
+    `;
+    taskPopupContentAssignedTo.innerHTML = `
+    <p>Max Mustermann</p>
+    <p>Thorsten Haas</p>
+    <p>Uwe Schmidt</p>
+    `;
+    taskPopupContentSubtasks.innerHTML = `
+    <p>Start Page Layout</p>
+    <p>Implement Recipe</p>
+    `;
+}
+
+async function editTask() {
+    let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
+    let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
+    let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate');
+    let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');
+    let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
+    let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
+    document.getElementById('taskPopupContentLabel').style.display ='none';
+    taskPopupContentTitle.innerHTML = `<p>Title</p><input>`;
+    taskPopupContentDescription.innerHTML = `<p>Description</p><input>`;
+    taskPopupContentDueDate.style.flexDirection = 'column';
+    taskPopupContentDueDate.style.alignItems = 'flex-start';
+    taskPopupContentDueDate.innerHTML = `<p>Due Date</p><input>`;
+    taskPopupContentPriority.innerHTML = `<p>Priority</p><input>`;
+    taskPopupContentPriority.style.flexDirection = 'column';
+    taskPopupContentPriority.style.alignItems = 'flex-start';
+    taskPopupContentAssignedTo.innerHTML = `
+    <input>
+    <p>Max Mustermann</p>
+    <p>Thorsten Haas</p>
+    <p>Uwe Schmidt</p>
+    `;
+    taskPopupContentSubtasks.innerHTML = `
+    <input>
+    <p>Start Page Layout</p>
+    <p>Implement Recipe</p>
+    `;
+}
+
+
+async function deleteTask() {
+    document.getElementById('boardTaskPopup').style.display = 'none';
+    document.body.style.overflow = 'scroll';
     tasks.splice(taskId, 1);
     if (!loggedAsGuest === true || loggedAsGuest === false) {
         await pushTasksOnRemoteServer();
     } else {
+        let div = document.getElementById('guestMessagePopupBoard');
         let messageText = document.getElementById('guestMessageBoard');
         showGuestPopupMessage(div, messageText);
     }
-    renderBoardTasks();
+    await renderBoardTasks();
 }
-
 
 function openBoardAddTaskPopup() {
     let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');
