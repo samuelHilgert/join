@@ -93,9 +93,7 @@ async function moveTo(currentCategory) {
             }
             renderBoardTasks();
             break;
-        } else {
-            console.log('Task nicht gefunden!');
-        }
+        } 
     } 
 }
 
