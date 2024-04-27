@@ -222,7 +222,7 @@ function firstLogin() {
 function showGuestPopupMessage(div, messageText) {
     document.body.style.overflow = 'hidden';
     setTimeout(function () {
-        generateGuestMessageText(messageText);
+        generateGuestMessageText(div, messageText);
         div.style.display = 'flex';
     }, 800);
     setTimeout(function () {
@@ -230,9 +230,9 @@ function showGuestPopupMessage(div, messageText) {
     }, popupCloseTime);
 }
 
-function generateGuestMessageText(messageText) {
+function generateGuestMessageText(div, messageText) {
     messageText.innerHTML = `
-<div onclick="closeGuestPopupMessage()"><a class="link-style guestPopupLinkStyle">Close</a></div>
+<div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
 <h5>You are not logged in!</h5>
 <div class="d_c_c_c gap-10">
 <p>Please note that we will not save your changes.</p>
@@ -242,8 +242,8 @@ function generateGuestMessageText(messageText) {
 `;
 }
 
-function closeGuestPopupMessage() {
-    document.getElementById('guestMessagePopupContacts').style.display = 'none';
+function closeGuestPopupMessage(div){
+    div.style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
 
