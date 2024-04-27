@@ -6,16 +6,6 @@ let remember = false;
 let setResetExpiryTime = 10;
 let popupCloseTime = 8000;
 
-/*
-window.addEventListener('beforeunload', function (e) {
-    if (remember === false) {
-        resetLoginValues();
-        rememberStatus[0].activateContent = false;
-        setItem('remember_status', JSON.stringify(rememberStatus));
-    }
-}); 
-*/
-
 /**
  * This is a function to initialize render functions 
  * 
@@ -57,6 +47,10 @@ async function init() {
         await resetExpiryTime();
         await updateContacts();
         renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+    } else if (document.location.pathname === '/board.html') {
+        await resetExpiryTime();
+        await updateBoardTasks();
+        renderBoardTasks(); 
     }
 }
 

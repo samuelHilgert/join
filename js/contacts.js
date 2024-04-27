@@ -1,4 +1,4 @@
-let contacts = []
+let contacts = [];
 
 let profileCircleColors = [
     'teal',
@@ -45,8 +45,8 @@ async function updateContacts() {
         await loadExampleContacts();
     } else {
         let currentUserContacts = users[currentUser].contacts;
-        if (currentUserContacts === "") {
-            loadExampleContacts();
+        if (currentUserContacts.length === 0) {
+            await loadExampleContacts();
             await pushContactsOnRemoteServer();
         }
         else {

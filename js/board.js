@@ -1,64 +1,67 @@
 let tasks = [];
 let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
+let currentDraggedTaskId;
 
-let currentDraggedElement;
+/**
+ * This is a function that checks whether a guest or user has logged in
+ * The data is only saved remotely if the user is logged in
+ * In both cases sample contacts are also loaded
+ * 
+ */
+async function updateBoardTasks() {
+    if (loggedAsGuest === true) {
+        await loadExampleTasks();
+    } else {
+        let currentUserTasks = users[currentUser].tasks;
+        if (currentUserTasks.length === 0) {
+            console.log('leer');
+            await loadExampleTasks();
+            await pushTasksOnRemoteServer();
+        }
+        else {
+            tasks = users[currentUser].tasks;
+        }
+    }
+}
 
 async function loadExampleTasks() {
     let resp = await fetch('./JSON/tasks.json');
     tasks = await resp.json();
-    renderBoardCards();
 }
 
-function renderBoardCards() {
+async function pushTasksOnRemoteServer() {
+    users[currentUser].tasks = tasks;
+    await setItem('users', JSON.stringify(users));
+}
+
+function renderBoardTasks() {
     for (let i = 0; i < categories.length; i++) {
-    const category = categories[i];
-    const categoriesBySameName = tasks.filter(t => t['category'] == category);
-    const taskDiv = document.getElementById(`${category}`); 
-    taskDiv.innerHTML = '';
-    renderFunction(categoriesBySameName, taskDiv);
+        const category = categories[i];
+        const allTasksSameCategory = tasks.filter(t => t['category'] == category);
+        const categoryTableColumn = document.getElementById(`${category}`);
+        categoryTableColumn.innerHTML = '';
+        showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
     }
-
-    function renderFunction(categoriesBySameName, taskDiv) {
-        for (let k = 0; k < categoriesBySameName.length; k++) {
-            const element = categoriesBySameName[k];
-            taskDiv.innerHTML += generateTodoHTML(element);
-            updateProgressBar(element);
-        }
-    }
-    
-}
-/* 
-    let label = todos.filter(t => t['category'] == 'label');
-
-        document.getElementById('label').innerHTML = '';
-    
-        for (let index = 0; index < label.length; index++) {
-            const element = label[index];
-            const elementId = element['id'];
-            document.getElementById('label').innerHTML += generateTodoHTML(element);
-            updateProgressBar(elementId);
-            if (element['label'] === 'User Story') {
-                document.getElementById('btnBoard').style.backgroundColor = 'rgba(0, 56, 255, 1)';
-            }
-            if (element['label'] === 'Technical Task') {
-                document.getElementById('btnBoard').style.backgroundColor = 'rgba(31, 215, 193, 1)';
-            }
-        }*/
-
-function startDragging(id) {
-    currentDraggedElement = id;
 }
 
-function generateTodoHTML(element) {
-    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${element['id']})" draggable="true" ondragstart="startDragging(${element['id']})">
-            <button class="d_f_c_c" id="btnBoard">${element['label']}</button>
-            <h6><b>${element['title']}</b></h6>
-            <p>${element['description']}</p>
+function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
+    for (let k = 0; k < allTasksSameCategory.length; k++) {
+        const task = allTasksSameCategory[k];
+        categoryTableColumn.innerHTML += generateTodoHTML(task);
+        updateProgressBar(task);
+    }
+}
+
+function generateTodoHTML(task) {
+    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup()" draggable="true" ondragstart="startDragging(${task['id']})">
+            <button class="d_f_c_c" id="btnBoard">${task['label']}</button>
+            <h6><b>${task['title']}</b></h6>
+            <p>${task['description']}</p>
             <div class="d_f_c_c width-max">
                 <div class="progress">
-                    <div class="progress-bar" id="progressBar${element['id']}"></div>
+                    <div class="progress-bar" id="progressBar${task['id']}"></div>
                 </div>
-                <div class="statusText"><span id="currentTaskNumber${element['id']}">X</span>/<span id="">2</span><span>&nbsp;Subtasks</span></div>
+                <div class="statusText"><span id="currentTaskNumber${task['id']}">X</span>/<span id="">2</span><span>&nbsp;Subtasks</span></div>
             </div>
             <div class="d_f_sb_c width-max">
             <div>
@@ -70,10 +73,41 @@ function generateTodoHTML(element) {
             </div>`;
 }
 
-function updateProgressBar(element) {
+function startDragging(id) {
+    currentDraggedTaskId = id;
+}
+
+async function moveTo(currentCategory) {
+    const currentDraggedTaskIdString = String(currentDraggedTaskId);
+    let foundIndex;
+     for (let id = 0; id < tasks.length; id++) {
+        if (tasks[id].id === currentDraggedTaskIdString) {
+            foundIndex = id;
+            tasks[foundIndex].category = currentCategory;
+            if (!loggedAsGuest === true || loggedAsGuest === false) {
+                await pushTasksOnRemoteServer();
+            } else {
+                let div = document.getElementById('guestMessagePopupBoard');
+                let messageText = document.getElementById('guestMessageBoard');
+                showGuestPopupMessage(div, messageText);
+            }
+            renderBoardTasks();
+            break;
+        } else {
+            console.log('Task nicht gefunden!');
+        }
+    } 
+}
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+
+function updateProgressBar(task) {
     let currentTaskStatus = 1;
-    document.getElementById(`currentTaskNumber${element['id']}`).innerHTML = `${currentTaskStatus}`;
-    let progressBar = document.getElementById(`progressBar${element['id']}`);
+    document.getElementById(`currentTaskNumber${task['id']}`).innerHTML = `${currentTaskStatus}`;
+    let progressBar = document.getElementById(`progressBar${task['id']}`);
     if (currentTaskStatus === 1) {
         progressBar.style.width = `50%`;
         progressBar.classList.add('blue');
@@ -82,22 +116,6 @@ function updateProgressBar(element) {
         progressBar.classList.add('blue');
     }
 }
-
-function allowDrop(event) {
-    event.preventDefault();
-}
-
-function moveTo(currentCategory) {
-    tasks[currentDraggedElement]['category'] = currentCategory;
-    // saveChangesInArray();
-    renderBoardCards();
-}
-/*
-// ERST WICHTIG, WENN DATEN REMOTE HOCHGELADEN WERDEN, ALSO BEI USER TAKS NICHT BEI GUEST
-function saveChangesInArray() {
-
-}
-*/
 
 function doNotClose(event) {
     event.stopPropagation();
