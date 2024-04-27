@@ -460,7 +460,7 @@ li {
   z-index: 9999;
 }
 
-.popup-contacts-message {
+.popup-guest-message {
   background-color: #2a3647;
   width: 20%;
   height: auto;
@@ -470,7 +470,7 @@ li {
   color: white;
 }
 
-#contactsMessagePopup {
+#guestMessagePopupContacts {
   display: none;
 }
 

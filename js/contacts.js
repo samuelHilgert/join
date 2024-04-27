@@ -475,9 +475,8 @@ async function deleteContact(contactId) {
 
 function showGuestPopupMessage() {
     document.body.style.overflow = 'hidden';
-    document.getElementById('contactsMessagePopup').style.display = 'flex';
-    let contactsMessage = document.getElementById('contactsMessage');
-    contactsMessage.innerHTML = `
+    document.getElementById('guestMessagePopupContacts').style.display = 'flex';
+    document.getElementById('guestMessageContacts').innerHTML = `
     <div onclick="closeGuestPopupMessage()"><a class="link-style guestPopupLinkStyle">Close</a></div>
     <h5>You are not logged in!</h5>
     <div class="d_c_c_c gap-10">
@@ -489,11 +488,11 @@ function showGuestPopupMessage() {
 }
 
 function closeGuestPopupMessage() {
-    document.getElementById('contactsMessagePopup').style.display = 'none';
+    document.getElementById('guestMessagePopupContacts').style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
 
 function closePopupAutomaticly() {
-    document.getElementById('contactsMessagePopup').style.display = 'none';
+    document.getElementById('guestMessagePopupContacts').style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
