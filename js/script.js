@@ -3,7 +3,7 @@ let currentUser;
 let loggedAsGuest = false;
 let rememberStatus = [];
 let remember = false;
-let setResetExpiryTime = 10;
+let setResetExpiryTime = 3;
 let popupCloseTime = 8000;
 
 /**
@@ -37,7 +37,7 @@ async function init() {
             }
             // }
         }
-    }, 180000); // repeat query every 3 minutes
+    }, 30000); // repeat query every 30 seconds
 
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
