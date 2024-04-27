@@ -474,6 +474,7 @@ async function deleteContact(contactId) {
 }
 
 function showGuestPopupMessage() {
+    document.body.style.overflow = 'hidden';
     document.getElementById('contactsMessagePopup').style.display = 'flex';
     let contactsMessage = document.getElementById('contactsMessage');
     contactsMessage.innerHTML = `
@@ -489,8 +490,10 @@ function showGuestPopupMessage() {
 
 function closeGuestPopupMessage() {
     document.getElementById('contactsMessagePopup').style.display = 'none';
+    document.body.style.overflow = 'scroll';
 }
 
 function closePopupAutomaticly() {
     document.getElementById('contactsMessagePopup').style.display = 'none';
+    document.body.style.overflow = 'scroll';
 }
