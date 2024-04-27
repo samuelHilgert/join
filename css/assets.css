@@ -212,6 +212,13 @@
   padding: 38px 76px;
   background-color: rgba(255, 255, 255, 1);
   margin: 10px;
+  color: rgba(0, 0, 0, 1);
+}
+
+.card:hover {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 1);
+  background-color: #2a3647;
 }
 
 .card-small {
