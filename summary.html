@@ -36,7 +36,7 @@
 
         <div class="summary-container d_f_se_c gap-50">
             <div class="summary d_f_sb_fs">
-                <div class="card d_f_c_c gap-30">
+                <div class="card d_f_c_c gap-30" onclick="forwardingBoard()">
                     <img class="summary-icon" src="./assets/img/task.svg">
                     <div>
                         <div id="allTodosNumber"></div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="card d_f_c_c gap-30">
+                <div class="card d_f_c_c gap-30" onclick="forwardingBoard()">
                     <img class="summary-icon" src="./assets/img/done.svg">
                     <div>
                         <div id="allDoneNumber"></div>
@@ -52,33 +52,33 @@
                     </div>
                 </div>
 
-                <div class="card d_f_se_c gap-40">
+                <div class="card d_f_se_c gap-40" onclick="forwardingBoard()">
                     <div class="d_f_c_c gap-20">
                     <img class="summary-icon" src="./assets/img/urgent.svg">
                     <div class="d_c_c_c" id="allUrgentNumber"></div>
                 </div>
                     <div class="y-line-grey"></div>
                     <div class="d_c_c_fs gap-10">
-                        <p><b>October 16, 2022</b></p>
+                        <p><b id="upcomingDueDate">October 16, 2022</b></p>
                         <p>Upcoming Deadline</p>
                     </div>
                 </div>
 
-                <div class="card card-small d_f_c_c gap-30 text-center">
+                <div class="card card-small d_f_c_c gap-30 text-center" onclick="forwardingBoard()">
                     <div>
                         <div id="allTasksNumber"></div>
                         <div>Tasks in Board</div>
                     </div>
                 </div>
 
-                <div class="card card-small d_f_c_c gap-30 text-center">
+                <div class="card card-small d_f_c_c gap-30 text-center" onclick="forwardingBoard()">
                     <div>
                         <div id="allInProgressNumber"></div>
                         <div>Tasks In Progress</div>
                     </div>
                 </div>
 
-                <div class="card card-small d_f_c_c gap-30 text-center">
+                <div class="card card-small d_f_c_c gap-30 text-center" onclick="forwardingBoard()">
                     <div>
                         <div id="allAwaitFeedbackNumber"></div>
                         <div>Awaiting Feedback</div>

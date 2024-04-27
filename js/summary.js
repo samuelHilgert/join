@@ -2,7 +2,7 @@ let tasksSummary = [];
 let allTodos;
 let allDones;
 let allUrgents;
-let upcomingDeadline;
+let formattedDeadline;
 let allInProgress;
 let allAwaitFeedback;
 
@@ -48,7 +48,7 @@ function getValuesForSummaryJsonArray() {
             const dueDateParts = task['dueDate'].split('.');
             const dueDate = new Date(dueDateParts[2], dueDateParts[1] - 1, dueDateParts[0]); // Jahr, Monat (0-based), Tag
             // Vergleiche das Fälligkeitsdatum mit dem aktuellen Datum
-            if (dueDate >= currentDate){
+            if (dueDate >= currentDate) {
                 const difference = Math.abs(dueDate - currentDate); // Betrachte die absolute Differenz
                 if (difference < closestDueDateDifference) {
                     closestDueDateElement = task;
@@ -62,10 +62,28 @@ function getValuesForSummaryJsonArray() {
         allDones = allTasksByDone.length;
         allUrgents = allTasksByUrgent.length;
         allAwaitFeedback = allAwaitFeedbackNumber.length;
+        let upcomingDeadline = closestDueDateElement.dueDate;
+        formattedDeadline = formatDate(upcomingDeadline);
     }
+}
 
-    console.log("Element mit nächstem Fälligkeitsdatum:", closestDueDateElement.dueDate);
-    console.log("Aktuelles Datum im deutschen Format:", currentDateGermanFormat);
+function formatDate(dateString) {
+    const months = [
+        "January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"
+    ];
+    const dateParts = dateString.split('.');
+    const day = parseInt(dateParts[0]);
+    const monthIndex = parseInt(dateParts[1]) - 1;
+    const year = parseInt(dateParts[2]);
+
+    // Erstelle ein JavaScript-Datum-Objekt
+    const date = new Date(year, monthIndex, day);
+
+    // Formatieren des Datums
+    const formattedDate = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+
+    return formattedDate;
 }
 
 function getValuesForSummary() {
@@ -97,13 +115,15 @@ function renderSummaryValues() {
     let allUrgentNumber = document.getElementById('allUrgentNumber');
     let allTasksNumber = document.getElementById('allTasksNumber');
     let allInProgressNumber = document.getElementById('allInProgressNumber');
-    let allAwaitFeedbackNumber =  document.getElementById('allAwaitFeedbackNumber');
+    let allAwaitFeedbackNumber = document.getElementById('allAwaitFeedbackNumber');
+    let upcomingDueDate = document.getElementById('upcomingDueDate');
     allTodosNumber.innerHTML = `<h3>${allTodos}</h3>`;
     allDoneNumber.innerHTML = `<h3>${allDones}</h3>`;
     allUrgentNumber.innerHTML = `<h3>${allUrgents}</h3><p>Urgent</p>`;
     allTasksNumber.innerHTML = `<h3>${tasksSummary[0].length}</h3>`;
     allInProgressNumber.innerHTML = `<h3>${allInProgress}</h3>`;
     allAwaitFeedbackNumber.innerHTML = `<h3>${allAwaitFeedback}</h3>`;
+    upcomingDueDate.innerHTML = `${formattedDeadline}`;
 }
 
 /**
@@ -149,3 +169,6 @@ function getGreeting() {
     return greeting;
 }
 
+function forwardingBoard() {
+    window.location.href = `./board.html`;
+}
