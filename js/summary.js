@@ -23,13 +23,18 @@ function getUserNameForGreet() {
     } 
 }
 
-
+/**
+ * This function displays the greeting text
+ */
 function displayGreeting() {
     let greeting = getGreeting();
     document.getElementById('greeting').innerHTML = greeting;
 }
 
-
+/**
+ * This function generates a greeting text based on the current time of day
+ * @returns {string} - the generated greetings text
+ */
 function getGreeting() {
     let currentTime = new Date();
     let hours = currentTime.getHours();
