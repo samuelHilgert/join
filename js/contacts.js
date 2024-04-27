@@ -22,7 +22,6 @@ let profileCircleColors = [
 ];
 
 let nextId = 1;
-let popupCloseTime = 8000;
 
 /**
  * This function renders the contact page.
@@ -296,8 +295,7 @@ async function validateAndAddContact(event) {
     if (!loggedAsGuest === true || loggedAsGuest === false) {
         await pushContactsOnRemoteServer();
     } else {
-        setTimeout(showGuestPopupMessage, 800);
-        setTimeout(closePopupAutomaticly, popupCloseTime);
+        showGuestPopupMessage();
     }
 }
 
@@ -390,10 +388,8 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         contacts[index]['phone'] = newPhone;
         if (!loggedAsGuest === true || loggedAsGuest === false) {
             await pushContactsOnRemoteServer();
-        }
-        else {
-            setTimeout(showGuestPopupMessage, 800);
-            setTimeout(closePopupAutomaticly, popupCloseTime);
+        } else {
+            showGuestPopupMessage();
         }
         renderContactList();
     }
@@ -464,35 +460,10 @@ async function deleteContact(contactId) {
             await pushContactsOnRemoteServer();
         }
         else {
-            setTimeout(showGuestPopupMessage, 800);
-            setTimeout(closePopupAutomaticly, popupCloseTime);
+            showGuestPopupMessage();
         }
         renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();
     }
-}
-
-function showGuestPopupMessage() {
-    document.body.style.overflow = 'hidden';
-    document.getElementById('guestMessagePopupContacts').style.display = 'flex';
-    document.getElementById('guestMessageContacts').innerHTML = `
-    <div onclick="closeGuestPopupMessage()"><a class="link-style guestPopupLinkStyle">Close</a></div>
-    <h5>You are not logged in!</h5>
-    <div class="d_c_c_c gap-10">
-    <p>Please note that we will not save your changes.</p>
-    <p>Please log in to access all features.</p>
-    </div>
-    <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
-    `;
-}
-
-function closeGuestPopupMessage() {
-    document.getElementById('guestMessagePopupContacts').style.display = 'none';
-    document.body.style.overflow = 'scroll';
-}
-
-function closePopupAutomaticly() {
-    document.getElementById('guestMessagePopupContacts').style.display = 'none';
-    document.body.style.overflow = 'scroll';
 }
