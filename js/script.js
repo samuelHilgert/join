@@ -43,6 +43,7 @@ async function init() {
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
         await resetExpiryTime();
+        await updateTasksForSummary();
         renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
     } else if (document.location.pathname === '/contacts.html') {
         await resetExpiryTime();
