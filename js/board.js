@@ -143,18 +143,73 @@ function renderBoardTaskPopupContent(taskId) {
     showTaskText(todo);
 }
 
-function showTaskText(todo){
+function showTaskText(todo) {
     let taskPopupContentLabel = document.getElementById('taskPopupContentLabel');
     let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
     let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
-    let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate'); 
-    let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');    
+    let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate');
+    let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');
+    let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
+    let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
     taskPopupContentLabel.innerHTML = `${todo['label']}`;
     taskPopupContentTitle.innerHTML = `<h6><b>${todo['title']}</b></h6>`;
     taskPopupContentDescription.innerHTML = `<p>${todo['description']}</p>`;
-    taskPopupContentDueDate.innerHTML = `<p>${todo['dueDate']}</p>`;
-    taskPopupContentPriority.innerHTML = `<p>${todo['priority']}</p>`;
+    taskPopupContentDueDate.innerHTML = `
+    <div class="d_f_fs_c width-50 gap-30">
+        <p>Due date:</p>
+    </div>
+    <div class="d_f_fs_c width-50 gap-30" >
+        <p>${todo['dueDate']}</p>
+    </div>
+    `;
+    taskPopupContentPriority.innerHTML = `
+    <div class="d_f_fs_c width-50 gap-30">
+        <p>Priority:</p>
+    </div>
+    <div class="d_f_fs_c width-50 gap-30">
+        <p>${todo['priority']}</p>
+    </div>
+    `;
+    taskPopupContentAssignedTo.innerHTML = `
+    <p>Max Mustermann</p>
+    <p>Thorsten Haas</p>
+    <p>Uwe Schmidt</p>
+    `;
+    taskPopupContentSubtasks.innerHTML = `
+    <p>Start Page Layout</p>
+    <p>Implement Recipe</p>
+    `;
 }
+
+async function editTask() {
+    let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
+    let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
+    let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate');
+    let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');
+    let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
+    let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
+    document.getElementById('taskPopupContentLabel').style.display ='none';
+    taskPopupContentTitle.innerHTML = `<p>Title</p><input>`;
+    taskPopupContentDescription.innerHTML = `<p>Description</p><input>`;
+    taskPopupContentDueDate.style.flexDirection = 'column';
+    taskPopupContentDueDate.style.alignItems = 'flex-start';
+    taskPopupContentDueDate.innerHTML = `<p>Due Date</p><input>`;
+    taskPopupContentPriority.innerHTML = `<p>Priority</p><input>`;
+    taskPopupContentPriority.style.flexDirection = 'column';
+    taskPopupContentPriority.style.alignItems = 'flex-start';
+    taskPopupContentAssignedTo.innerHTML = `
+    <input>
+    <p>Max Mustermann</p>
+    <p>Thorsten Haas</p>
+    <p>Uwe Schmidt</p>
+    `;
+    taskPopupContentSubtasks.innerHTML = `
+    <input>
+    <p>Start Page Layout</p>
+    <p>Implement Recipe</p>
+    `;
+}
+
 
 async function deleteTask() {
     document.getElementById('boardTaskPopup').style.display = 'none';
@@ -168,10 +223,6 @@ async function deleteTask() {
         showGuestPopupMessage(div, messageText);
     }
     await renderBoardTasks();
-}
-
-async function editTask() {
-console.log('Hallo');
 }
 
 function openBoardAddTaskPopup() {

@@ -78,47 +78,31 @@
             <div class="d_c_fs_fs gap-30 height-max">
                 <div class="d_f_sb_c width-max">
                     <div class="btn-board d_f_c_c width-50" id="taskPopupContentLabel"></div>
-                    <div class="add-contact-container-right-img-wrapper d_c_c_c popup-close-button"
-                        onclick="closeBoardTaskPopup()">
-                        <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
+                    <div class="d_f_fe_c width-max" id="taskCloseButtonRight">
+                        <div class="d_c_c_c add-contact-container-right-img-wrapper popup-close-button"
+                            onclick="closeBoardTaskPopup()">
+                            <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
+                        </div>
                     </div>
                 </div>
                 <div id="taskPopupContentTitle"></div>
                 <div id="taskPopupContentDescription"></div>
                 <div class="d_c_fs_fs gap-20 width-max">
-                    <div class="d_f_c_c width-max">
-                        <div class="d_f_fs_c width-50 gap-30">
-                            <p>Due date:</p>
-                        </div>
-                        <div class="d_f_fs_c width-50 gap-30" id="taskPopupContentDueDate"></div>
-                    </div>
-                    <div class="d_f_c_c width-max">
-                        <div class="d_f_fs_c width-50 gap-30">
-                            <p>Priority:</p>
-                        </div>
-                        <div class="d_f_fs_c width-50 gap-30" id="taskPopupContentPriority"></div>
-                    </div>
+                    <div class="d_f_c_c width-max" id="taskPopupContentDueDate"></div>
+                    <div class="d_f_c_c width-max" id="taskPopupContentPriority"></div>
                 </div>
                 <div class="d_c_c_fs width-max gap-10">
                     <div class="d_f_fs_c width-50 gap-30">
                         <p>Assigned To:</p>
                     </div>
-                    <div class="d_c_c_fs width-50 gap-10 pad-l-40">
-                        <p>XX</p>
-                        <p>XX</p>
-                        <p>XX</p>
-                    </div>
+                    <div class="d_c_c_fs width-50 gap-10 pad-l-20" id="taskPopupContentAssignedTo"></div>
                 </div>
 
                 <div class="d_c_c_fs width-max gap-10">
                     <div class="d_f_fs_c width-50 gap-30">
                         <p>Subtasks:</p>
                     </div>
-                    <div class="d_c_c_fs width-50 gap-10 pad-l-40">
-                        <p>XX</p>
-                        <p>XX</p>
-                        <p>XX</p>
-                    </div>
+                    <div class="d_c_c_fs width-50 gap-10 pad-l-20" id="taskPopupContentSubtasks"> </div>
                 </div>
             </div>
             <div class="d_f_fe_c width-max gap-20">
