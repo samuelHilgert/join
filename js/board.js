@@ -1,7 +1,7 @@
 let tasks = [];
 let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 let currentDraggedTaskId;
-
+let taskId;
 /**
  * This is a function that checks whether a guest or user has logged in
  * The data is only saved remotely if the user is logged in
@@ -14,7 +14,6 @@ async function updateBoardTasks() {
     } else {
         let currentUserTasks = users[currentUser].tasks;
         if (currentUserTasks.length === 0) {
-            console.log('leer');
             await loadExampleTasks();
             await pushTasksOnRemoteServer();
         }
@@ -54,7 +53,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
 
 function generateTodoHTML(task) {
     return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${task['id']})" draggable="true" ondragstart="startDragging(${task['id']})">
-            <button class="d_f_c_c" id="btnBoard">${task['label']}</button>
+            <div class="d_f_fs_fs" id="btnBoard">${task['label']}</div>
             <h6><b>${task['title']}</b></h6>
             <p>${task['description']}</p>
             <div class="d_f_c_c width-max">
@@ -80,7 +79,7 @@ function startDragging(id) {
 async function moveTo(currentCategory) {
     const currentDraggedTaskIdString = String(currentDraggedTaskId);
     let foundIndex;
-     for (let id = 0; id < tasks.length; id++) {
+    for (let id = 0; id < tasks.length; id++) {
         if (tasks[id].id === currentDraggedTaskIdString) {
             foundIndex = id;
             tasks[foundIndex].category = currentCategory;
@@ -91,10 +90,9 @@ async function moveTo(currentCategory) {
                 let messageText = document.getElementById('guestMessageBoard');
                 showGuestPopupMessage(div, messageText);
             }
-            renderBoardTasks();
-            break;
-        } 
-    } 
+        }
+    }
+    renderBoardTasks();
 }
 
 function allowDrop(event) {
@@ -124,7 +122,12 @@ function openBoardTaskPopup(openId) {
     let container = document.getElementById('boardTaskPopupContainer');
     document.body.style.overflow = 'hidden';
     boardTaskPopup.style.display = 'flex';
-    let taskId = openId - 1;
+    let openIdString = String(openId);
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === openIdString) {
+            taskId = i;
+        }
+    }
     moveContainerIn(container);
     renderBoardTaskPopupContent(taskId);
 }
@@ -133,27 +136,43 @@ function renderBoardTaskPopupContent(taskId) {
     const todo = tasks[taskId];
     let boardTaskPopupContent = document.getElementById('boardTaskPopupContent');
     boardTaskPopupContent.innerHTML = `
-<div class="d_c_sb_fs gap-20 height-max">
-<button class="d_f_c_c" id="btnBoard">${todo['label']}</button>
-<h6><b>${todo['title']}</b></h6>
-<p>${todo['description']}</p>
-<p>Due date:</p>
-<p>Priority:</p>
-<p>Assigned To:</p>
-<p>Subtasks:</p>
+<div class="d_c_fs_fs gap-40 height-max">
+    <div class="d_f_fs_c width-max" id="btnBoard">${todo['label']}</div>
+    <h6><b>${todo['title']}</b></h6>
+    <p>${todo['description']}</p>
+    <div class="d_c_fs_fs gap-20 width-max">
+        <div class="d_f_sb_c width-50"><p>Due date:</p><p>${todo['dueDate']}</p></div>
+        <div class="d_f_sb_c width-50"><p>Priority:</p><p>${todo['priority']}</p></div>
+        <div class="d_f_sb_c width-50"><p>Assigned To:</p><p>XX</p></div>
+        <div class="d_f_sb_c width-50"><p>Subtasks:</p><p>XX</p></div>
+    </div>
+</div>
 <div class="d_f_fe_c width-max gap-20">
-    <div class="delete-style d_f_c_c gap-10">
+<div class="delete-style d_f_c_c gap-10" onclick="deleteContact()">
     <img src="./assets/img/delete.svg" alt="">
     <p>Delete</p>
-    </div>
-    <div class="edit-style d_f_c_c gap-10">
+</div>
+<div class="edit-style d_f_c_c gap-10">
     <img src="./assets/img/edit.svg" alt="">
     Edit
-    </div>
-    </div>
+</div>
 </div>
 `;
 }
+
+async function deleteContact() {
+    let div = document.getElementById('boardTaskPopup');
+    closeGuestPopupMessage(div);
+    tasks.splice(taskId, 1);
+    if (!loggedAsGuest === true || loggedAsGuest === false) {
+        await pushTasksOnRemoteServer();
+    } else {
+        let messageText = document.getElementById('guestMessageBoard');
+        showGuestPopupMessage(div, messageText);
+    }
+    renderBoardTasks();
+}
+
 
 function openBoardAddTaskPopup() {
     let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');

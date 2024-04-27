@@ -50,7 +50,7 @@ async function init() {
     } else if (document.location.pathname === '/board.html') {
         await resetExpiryTime();
         await updateBoardTasks();
-        renderBoardTasks(); 
+        renderBoardTasks();
     }
 }
 

@@ -319,6 +319,12 @@ body {
   align-items: flex-start;
 }
 
+.d_f_fs_se {
+  display: flex;
+  justify-content: flex-start;
+  align-items: space-evenly;
+}
+
 .d_f_fe_c {
   display: flex;
   justify-content: flex-end;
@@ -464,6 +470,11 @@ body {
 
 .width-max {
   width: 100%;
+  box-sizing: border-box;
+}
+
+.width-50 {
+  width: 50%;
   box-sizing: border-box;
 }
 
