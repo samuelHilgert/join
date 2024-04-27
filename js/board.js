@@ -53,7 +53,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
 }
 
 function generateTodoHTML(task) {
-    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup()" draggable="true" ondragstart="startDragging(${task['id']})">
+    return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${task['id']})" draggable="true" ondragstart="startDragging(${task['id']})">
             <button class="d_f_c_c" id="btnBoard">${task['label']}</button>
             <h6><b>${task['title']}</b></h6>
             <p>${task['description']}</p>
@@ -118,6 +118,26 @@ function updateProgressBar(task) {
 function doNotClose(event) {
     event.stopPropagation();
 }
+/*
+function openBoardTaskPopup(openId) {
+    let boardTaskPopup = document.getElementById('boardTaskPopup');
+    let container = document.getElementById('boardTaskPopupContainer');
+    document.body.style.overflow = 'hidden';
+    boardTaskPopup.style.display = 'flex';
+    console.log('openId = ' + openId);
+    console.log('');
+    let foundIndex;
+    for (let id = 0; id < tasks.length; id++) {
+        if (tasks[id].id === openId) {
+            foundIndex = id;
+            console.log(foundIndex);
+            moveContainerIn(container);
+            renderBoardTaskPopupContent(id);
+            break;
+        } 
+    } 
+
+}*/
 
 function renderBoardTaskPopupContent(id) {
     const todo = tasks[id];
@@ -161,15 +181,6 @@ function closeBoardAddTaskPopup() {
         displayNonePopup(popup);
     }, 500);
     document.body.style.overflow = 'scroll';
-}
-
-function openBoardTaskPopup(id) {
-    let boardTaskPopup = document.getElementById('boardTaskPopup');
-    let container = document.getElementById('boardTaskPopupContainer');
-    document.body.style.overflow = 'hidden';
-    boardTaskPopup.style.display = 'flex';
-    moveContainerIn(container);
-    renderBoardTaskPopupContent(id);
 }
 
 function closeBoardTaskPopup() {
