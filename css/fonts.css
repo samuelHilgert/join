@@ -40,9 +40,11 @@ h4 {
 }
 
 h5 {
+    color: rgba(42, 54, 71, 1);
+    font-family: 'Inter';
+    font-weight: 400;
     font-size: 27px;
-    line-height: 32.4 px;
-    font-weight: 700;
+    line-height: 32.4px;
 }
 
 h6 {
