@@ -2,39 +2,64 @@ let allTasks = [];
 let dropdownContact = [];
 let subtasks = [];
 
-// function to add the task
+// main function to create a task
 function addTask() {
-  const taskInput = readTaskInput();
-  const prio = determinePriority();
-
-  const task = {
-    title: taskInput.title,
-    description: taskInput.description,
-    assignedTo: dropdownContact,
-    date: new Date(taskInput.date).getTime(),
-    prio: prio,
-    category: taskInput.category,
-    subtask: subtasks,
-  };
-  allTasks.push(task);
-  dropdownContact = [];
-  subtasks = [];
-  setItem("task", allTasks);
+  if (validateForm()) {
+    const taskInput = readTaskInput();
+    const prio = determinePriority();
+    const task = createTaskObject(taskInput, prio);
+    saveTask(task);
+    clearForm();
+  }
 }
 
-//get informations from input
+// check required-fields and set outline color
+function validateForm() {
+  const requiredFields = ["title", "date", "category"];
+  let formIsValid = true;
+  requiredFields.forEach((field) => {
+    const fieldValue = document.getElementById(`task-${field}`).value.trim();
+    const fieldElement = document.getElementById(`task-${field}`);
+    if (fieldValue === "") {
+      formIsValid = false;
+      fieldElement.classList.add("invalid-field");
+    } else {
+      fieldElement.classList.remove("invalid-field");
+    }
+  });
+  return formIsValid;
+}
+
+// read all the values from inputs
 function readTaskInput() {
   const title = document.getElementById("task-title").value;
   const description = document.getElementById("task-description").value;
   const date = document.getElementById("task-date").value;
   const category = document.getElementById("task-category").value;
   const subtask = document.getElementById("subtask").value;
+
+  return { title, description, date, category, subtask };
+}
+
+//create task objekt
+function createTaskObject(taskInput, priority) {
   return {
-    title: title,
-    description: description,
-    date: date,
-    category: category,
+    title: taskInput.title,
+    description: taskInput.description,
+    assignedTo: dropdownContact,
+    date: new Date(taskInput.date).getTime(),
+    prio: priority,
+    category: taskInput.category,
+    subtask: taskInput.subtask,
   };
+}
+
+// Save the Task to server
+function saveTask(task) {
+  allTasks.push(task);
+  dropdownContact = [];
+  subtasks = [];
+  setItem("task", allTasks);
 }
 
 //for the contacts at Assigned to section
