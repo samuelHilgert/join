@@ -39,22 +39,33 @@ async function init() {
             // }
         }
     }, 30000); // repeat query every 30 seconds
+    await initiateIndividualFunctions();
+}
 
+async function initiateIndividualFunctions() {
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
         await resetExpiryTime();
         await updateTasksForSummary();
         renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
-    } else if (document.location.pathname === '/contacts.html') {
+    } else if (document.location.pathname === '/add-task.html') {
         await resetExpiryTime();
-        await updateContacts();
-        await renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
     } else if (document.location.pathname === '/board.html') {
         await resetExpiryTime();
         await updateBoardTasks();
         await renderBoardTasks();
+    } else if (document.location.pathname === '/contacts.html') {
+        await resetExpiryTime();
+        await updateContacts();
+        await renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+    } else if (document.location.pathname === '/privacy-policy.html') {
+        await resetExpiryTime();
+    } else if (document.location.pathname === '/legal-notice.html') {
+        await resetExpiryTime();
+    } else if (document.location.pathname === '/help.html') {
+        await resetExpiryTime();
     }
-}
+} 
 
 /**
  * This feature secures unauthorized opening of pages via the URL by copying and pasting.
