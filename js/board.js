@@ -265,6 +265,7 @@ async function searchTasksOnBoard() {
     await getMatchingIndicies(matchingIndices, search);
     await generateCategoriesBySearch(matchingIndices);
     initGuestPopupMessage();
+    resetSearch();
 }
 
 async function getMatchingIndicies(matchingIndices, search) {
