@@ -18,6 +18,25 @@
   cursor: pointer;
 }
 
+.task-btn-style {
+  width: 100%;
+  height: auto;
+  padding: 16px 24px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 20px);
+  background-position-y: 50%;
+  background-size: 24px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color:rgba(0, 0, 0, 1);
+}
+
 .task-input-style::placeholder {
   color: rgba(209, 209, 209, 1);
   font-size: 20px;
