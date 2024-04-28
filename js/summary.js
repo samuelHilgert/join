@@ -28,12 +28,6 @@ async function updateTasksForSummary() {
 }
 
 function getValuesForSummaryJsonArray() {
-    let currentDate = new Date();
-    // Deutsches Datumsformat verwenden
-    let germanDateFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    let currentDateGermanFormat = currentDate.toLocaleDateString('de-DE', germanDateFormatOptions);
-    let closestDueDateElement = null;
-    let closestDueDateDifference = Infinity;
 
     for (let index = 0; index < tasksSummary.length; index++) {
         const element = tasksSummary[index];
@@ -43,30 +37,41 @@ function getValuesForSummaryJsonArray() {
         const allTasksByDone = element.filter(t => t['category'] === 'done');
         const allTasksByUrgent = element.filter(t => t['priority'] === 'Urgent');
         const upcomingDueDateTasks = element.filter(t => t['dueDate']);
-
-        upcomingDueDateTasks.forEach(task => {
-            // Parse das deutsche Datum und vergleiche es mit dem aktuellen Datum
-            const dueDateParts = task['dueDate'].split('.');
-            const dueDate = new Date(dueDateParts[2], dueDateParts[1] - 1, dueDateParts[0]); // Jahr, Monat (0-based), Tag
-            // Vergleiche das Fälligkeitsdatum mit dem aktuellen Datum
-            if (dueDate >= currentDate) {
-                const difference = Math.abs(dueDate - currentDate); // Betrachte die absolute Differenz
-                if (difference < closestDueDateDifference) {
-                    closestDueDateElement = task;
-                    closestDueDateDifference = difference;
-                }
-            }
-        });
-
+        // calculateUpcomingDate(upcomingDueDateTasks);
         allTodos = allTasksByBacklog.length;
         allInProgress = allTasksByInProgress.length;
         allDones = allTasksByDone.length;
         allUrgents = allTasksByUrgent.length;
         allAwaitFeedback = allAwaitFeedbackNumber.length;
-       // let upcomingDeadline = closestDueDateElement.dueDate;
-        //formattedDeadline = formatDate(upcomingDeadline);
         allTasks = tasksSummary[0].length;
     }
+}
+
+
+function calculateUpcomingDate(upcomingDueDateTasks) {
+    let currentDate = new Date();
+    // Deutsches Datumsformat verwenden
+    let germanDateFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    let currentDateGermanFormat = currentDate.toLocaleDateString('de-DE', germanDateFormatOptions);
+    let closestDueDateElement = null;
+    let closestDueDateDifference = Infinity;
+
+    upcomingDueDateTasks.forEach(task => {
+        // Parse das deutsche Datum und vergleiche es mit dem aktuellen Datum
+        const dueDateParts = task['dueDate'].split('.');
+        const dueDate = new Date(dueDateParts[2], dueDateParts[1] - 1, dueDateParts[0]); // Jahr, Monat (0-based), Tag
+        // Vergleiche das Fälligkeitsdatum mit dem aktuellen Datum
+        if (dueDate >= currentDate) {
+            const difference = Math.abs(dueDate - currentDate); // Betrachte die absolute Differenz
+            if (difference < closestDueDateDifference) {
+                closestDueDateElement = task;
+                closestDueDateDifference = difference;
+            }
+        }
+    });
+
+    let upcomingDeadline = closestDueDateElement.dueDate;
+    formattedDeadline = formatDate(upcomingDeadline);
 }
 
 function formatDate(dateString) {
@@ -94,6 +99,8 @@ function getValuesForSummary() {
     const allTasksByDone = tasksSummary.filter(t => t['category'] == 'done');
     const allTasksByUrgent = tasksSummary.filter(t => t['priority'] == 'Urgent');
     const allAwaitFeedbackNumber = tasksSummary.filter(t => t['category'] == 'awaitFeedback');
+    const upcomingDueDateTasks = tasksSummary.filter(t => t['dueDate']);
+   // calculateUpcomingDate(upcomingDueDateTasks);
     allTodos = allTasksByBacklog.length;
     allDones = allTasksByDone.length;
     allUrgents = allTasksByUrgent.length;

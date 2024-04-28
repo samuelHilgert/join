@@ -6,8 +6,8 @@
     <link rel="icon" type="image/x-icon" href="./assets/img/logo.svg" />
     <title>Add Task</title>
     <script src="./js/script.js"></script>
-    <script src="./js/add-task.js"></script>
     <script src="./js/contacts.js"></script>
+    <script src="./js/add-task.js"></script>
     <script src="./js/contactsHTML.js"></script>
     <script src="./js/sidebar.js"></script>
     <script src="./js/storage.js"></script>
@@ -69,26 +69,26 @@
 
           <div class="d_c_c_s gap-10 width-100 input-dropdown">
             <span class="font-size-20">Assigned to</span>
-            <input
-              onclick="openDropdownContacts()"
-              id="task-assignedTo"
-              class="task-input-style input-login"
-              type="text"
-              placeholder="Select contacts to assign"
-            />
+            <select class="task-input-style input-login" id="taskAssignedTo" onclick="openContactsDropwdown()">
+              <option value="" disabled selected>Select contacts to assign</option>         <!-- deaktiviertes optionsfeld um placeholder anzuzeigen, da bei dropdown nicht mit placeholder im tag gearbeitet werden kann -->
 
-            <div onclick="openDropdownContacts()" class="input-icon-div">
+               <!--     
+            <div onclick="" class="input-icon-div">
               <img
                 src="assets/img/arrow_drop_down.png"
                 alt="Arrow Down"
                 id="dropdown-arrow"
               />
             </div>
+
             <div
               id="task-contact-div"
               class="assigned-div"
               style="display: none"
             ></div>
+            -->
+
+          </select>
           </div>
         </div>
 

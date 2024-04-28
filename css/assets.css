@@ -11,6 +11,21 @@
   background-size: 24px;
 }
 
+.input-style-search {
+  padding: 10px 14px !important;
+  background-color:white;
+}
+
+.search-board-input {
+  padding: 10px 14px;
+  border: none;
+  outline:none;
+}
+
+.search-icon img:hover {
+cursor:pointer;
+}
+
 .input-name {
   background-image: url("../assets/img/person.svg");
 }
@@ -25,11 +40,6 @@
 
 .input-phone {
   background-image: url("../assets/img/phone.svg");
-}
-
-.input-search {
-  background-image: url("../assets/img/search-icon-with-line.svg");
-  background-size: 40px;
 }
 
 .input-style::placeholder {
