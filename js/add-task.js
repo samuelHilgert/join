@@ -49,10 +49,53 @@ async function updateTaskContacts() {
   }
 }
 
+/********************   DROPDOWN SAMUEL ***********************/
+
+
+function openContactsDropwdown() {
+  for (let index = 0; index < contactsForTasks.length; index++) {
+    const contact = contactsForTasks[index];
+    renderContactsDropwdown(contact, index);
+  }
+}
+
+function renderContactsDropwdown(contact, index) {
+  let taskContactDiv = document.getElementById('taskContactDiv');
+
+  if (taskContactDiv.style.display === "none") {
+    taskContactDiv.style.display = 'flex';
+  } else {
+    taskContactDiv.style.display = 'none';
+  }
+
+  taskContactDiv.innerHTML += `
+  <option value="contact${index}">${contact.name}</option>
+  `;
+}
+
+
+function toggleCategoryDiv() {
+  var categoryDiv = document.getElementById("category-div");
+  var dropdownIcon = document.getElementById("category-drop-icon");
+  if (
+    categoryDiv.style.display === "none" ||
+    categoryDiv.style.display === ""
+  ) {
+    categoryDiv.style.display = "flex";
+    dropdownIcon.style.transform = "rotate(180deg)";
+  } else {
+    categoryDiv.style.display = "none";
+    dropdownIcon.style.transform = "";
+  }
+}
+
+/**************************************************************/
+
+
+
 
 //for the contacts at Assigned to section
 function openDropdownContacts() {
-  updateTaskContacts();
   console.log('Alle Kontakte:', contactsForTasks);
   let Dropdownmenu = document.getElementById("inputfield-dropdown");
   let dropdownArrow = document.getElementById("dropdown-arrow");
@@ -80,20 +123,6 @@ function openDropdownContacts() {
     </div>
     `;
   }
-}
-
-function openContactsDropwdown() {
-  for (let index = 0; index < contactsForTasks.length; index++) {
-    const contact = contactsForTasks[index];
-    renderContactsDropwdown(contact, index);
-  }
-}
-
-function renderContactsDropwdown(contact, index) {
-  let taskAssignedTo = document.getElementById('taskAssignedTo');
-  taskAssignedTo.innerHTML += `
-  <option value="contact${index}">${contact.name}</option>
-  `;
 }
 
 //TEST// //Funktion wird ab jetzt nicht mehr aufgerufen!

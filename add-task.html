@@ -52,18 +52,13 @@
 
         <div class="d_c_c_s gap-10 width-max position-relativ">
           <span class="font-size-20">Assigned to</span>
-          <div class="d_f_c_c dropdown-add-task bgC-white width-max">
+          <input class="input-style d_f_c_c dropdown-add-task bgC-white width-max" placeholder="Select contacts to assign">
             <!-- deaktiviertes optionsfeld um placeholder anzuzeigen, da bei dropdown nicht mit placeholder im tag gearbeitet werden kann -->
-            <select class="task-input-style input-login" id="taskAssignedTo" onclick="openContactsDropwdown()">
-              <option value="" disabled selected>Select contacts to assign</option>
-            </select>
-
-            <div onclick="" class="input-icon-div">
+            <div class="input-icon-div" onclick="openContactsDropwdown()">
               <img src="assets/img/arrow_drop_down.png" alt="Arrow Down" id="dropdown-arrow">
             </div>
-            <div id="task-contact-div" class="assigned-div" style="display: none"></div>
-          </div>
-
+            <div class="assigned-div d_c_fs_fs pad-x-30 pad-y-10" id="taskContactDiv" ></div>
+          </input>
         </div>
 
       </div>
