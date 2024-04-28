@@ -31,7 +31,7 @@ async function init() {
             if (now >= expiryTime) { // let currentTime = now.getMinutes();
                 // Die Zeit ist abgelaufen
                 // Führe hier die entsprechenden Aktionen aus, z.B. den Benutzer abmelden
-                console.log('Du wärst längere Zeit nicht aktiv, melde dich bitte erneut an!');
+                console.log('Du warst längere Zeit nicht aktiv, melde dich bitte erneut an!');
                 // clearInterval(intervalId); // Stoppe die Überprüfung, wenn die Zeit abgelaufen ist
                 resetLoginValues();
                 setTimeout(firstLogin, 1000);
