@@ -3,7 +3,7 @@ let currentUser;
 let loggedAsGuest = false;
 let rememberStatus = [];
 let remember = false;
-let setResetExpiryTime = 3;
+let setResetExpiryTime = 2832323;
 let popupCloseTime = 8000;
 
 /**

@@ -37,7 +37,7 @@ function getValuesForSummaryJsonArray() {
         const allTasksByDone = element.filter(t => t['category'] === 'done');
         const allTasksByUrgent = element.filter(t => t['priority'] === 'Urgent');
         const upcomingDueDateTasks = element.filter(t => t['dueDate']);
-        calculateUpcomingDate(upcomingDueDateTasks);
+        // calculateUpcomingDate(upcomingDueDateTasks);
         allTodos = allTasksByBacklog.length;
         allInProgress = allTasksByInProgress.length;
         allDones = allTasksByDone.length;
@@ -100,7 +100,7 @@ function getValuesForSummary() {
     const allTasksByUrgent = tasksSummary.filter(t => t['priority'] == 'Urgent');
     const allAwaitFeedbackNumber = tasksSummary.filter(t => t['category'] == 'awaitFeedback');
     const upcomingDueDateTasks = tasksSummary.filter(t => t['dueDate']);
-    calculateUpcomingDate(upcomingDueDateTasks);
+   // calculateUpcomingDate(upcomingDueDateTasks);
     allTodos = allTasksByBacklog.length;
     allDones = allTasksByDone.length;
     allUrgents = allTasksByUrgent.length;
