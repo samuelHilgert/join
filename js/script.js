@@ -1,13 +1,12 @@
 let users = [];
 let contacts = [];
 let tasks = [];
-
+let rememberStatus = [];
 let currentUser;
 let loggedAsGuest = false;
-let rememberStatus = [];
 let remember = false;
-let setResetExpiryTime = 2832323;
-let popupCloseTime = 8000;
+let setResetExpiryTime = 2832323; // set logout time
+let popupCloseTime = 8000; // set popup display time
 
 /**
  * This is a function to initialize render functions 
@@ -16,8 +15,8 @@ let popupCloseTime = 8000;
 async function init() {
     getCurrentUserId();
     await loadUserData();
-    await loadRememberStatus();
 
+    await loadRememberStatus();
     await updateContacts();
     await updateBoardTasks();
 
@@ -89,6 +88,14 @@ function getCurrentUserId() {
                 currentUser = savedDataLocalStorage;
             }
         }
+    }
+}
+
+async function loadUserData() {
+    try {
+        users = JSON.parse(await getItem('users'));
+    } catch (e) {
+        console.error('Loading error:', e);
     }
 }
 
@@ -199,14 +206,6 @@ async function includeHTML() {
 async function loadRememberStatus() {
     try {
         rememberStatus = JSON.parse(await getItem('remember_status'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
-}
-
-async function loadUserData() {
-    try {
-        users = JSON.parse(await getItem('users'));
     } catch (e) {
         console.error('Loading error:', e);
     }
