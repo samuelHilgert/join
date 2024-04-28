@@ -176,6 +176,7 @@
 
 .input-icon-div {
   position: absolute;
+  background-color: yellow;
   top: 50%;
   right: 18px;
   width: 30px;
