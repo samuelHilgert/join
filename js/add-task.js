@@ -1,4 +1,4 @@
-let allTasks = [];
+let newTask = [];
 // let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
@@ -19,19 +19,22 @@ async function addTask() {
     assignedTo: checkedCheckboxes,
     priority: prio,
     subtasks: subtasks,
-    category: 'todo',
+    category: 'backlog',
   };
-  allTasks.push(task);
+  newTask.push(task);
   // dropdownContact = []; nicht mehr notwendig
   subtasks = [];
   checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
   if (loggedAsGuest === true) {
     let div = document.getElementById('guestMessagePopupBoard');
     let messageText = document.getElementById('guestMessageBoard');
+    users[currentUser].tasks.push(...newTask);
     showGuestPopupMessage(div, messageText);
+    newTask = []
   } else {
-    users[currentUser].tasks.push(...allTasks);
+    users[currentUser].tasks.push(...newTask);
     await setItem('users', JSON.stringify(users));
+    newTask = []
   }
 
 }
