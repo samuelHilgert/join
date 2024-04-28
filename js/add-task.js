@@ -23,7 +23,6 @@ function addTask() {
   setItem("task", allTasks);
 }
 
-
 //get informations from input
 function readTaskInput() {
   const title = document.getElementById("task-title").value;
@@ -50,19 +49,20 @@ async function updateTaskContacts() {
 }
 
 /********************   DROPDOWN SAMUEL ***********************/
-
+let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen
 
 function openContactsDropwdown() {
   for (let index = 0; index < contactsForTasks.length; index++) {
     const contact = contactsForTasks[index];
     renderContactsDropwdown(contact, index);
   }
+  showContactSelection();
 }
 
 function renderContactsDropwdown(contact, index) {
   let taskContactDiv = document.getElementById('taskContactDiv');
   openAndCloseDropdown(taskContactDiv);
-  let letters = contactNamesLetters(contact);
+  let letters = contactNamesLetters(contact.name);
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
 
@@ -70,17 +70,19 @@ function openAndCloseDropdown(taskContactDiv) {
   if (taskContactDiv.style.display === "none") {
     taskContactDiv.style.display = 'flex';
   } else {
+    contactsByCheckboxen();
     taskContactDiv.style.display = 'none';
   }
 }
 
 function contactNamesLetters(contact) {
+  console.log('contact = ' + contact);
   let letters;
-  let firstLetter = contact.name.charAt(0); // Erster Buchstabe des Vornamens
-  let spaceIndex = contact.name.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
+  let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
+  let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
   let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
-  if (spaceIndex !== -1 && spaceIndex < contact.name.length - 1) {
-    secondLetter = contact.name.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+  if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
+    secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
   }
   letters = firstLetter + secondLetter;
   return letters;
@@ -93,15 +95,29 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   <div class="d_f_fs_c" id="contactLetters${index}">${letters}</div> 
   <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
   </div>
-  <div class="d_f_fe_c"> <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${index}">  </div>
+  <div class="d_f_fe_c"> <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}">  </div>
   </div>
   `;
 }
 
+function contactsByCheckboxen() {
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
+  checkboxes.forEach(function(checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
+      if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
+          checkedCheckboxes.push(checkbox.value);
+      }
+  });
+}
 
+function showContactSelection() {
+  let contactSelection = document.getElementById('contactSelection');
+  for (let index = 0; index < checkedCheckboxes.length; index++) {
+    const contact = checkedCheckboxes[index];
+    const letters = contactNamesLetters(contact);
+    contactSelection.innerHTML += `<div class="d_f_c_c">${letters}</div>`;
+  } 
+}
 /**************************************************************/
-
-
 
 
 //for the contacts at Assigned to section
