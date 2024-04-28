@@ -22,8 +22,12 @@ body {
 }
 
 h2 {
-    font-size: 73px;
-    font-weight: bold;
+    font-family: 'Inter';
+    font-size: 61px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 1);
+    line-height: 73.2px;
+    box-sizing: border-box;
 }
 
 h3 {
@@ -36,9 +40,10 @@ h4 {
 }
 
 h5 {
+    font-family: 'Inter';
+    font-weight: 400;
     font-size: 27px;
-    line-height: 32.4 px;
-    font-weight: 700;
+    line-height: 32.4px;
 }
 
 h6 {

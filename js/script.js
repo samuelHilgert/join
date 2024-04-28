@@ -3,7 +3,7 @@ let currentUser;
 let loggedAsGuest = false;
 let rememberStatus = [];
 let remember = false;
-let setResetExpiryTime = 3;
+let setResetExpiryTime = 2832323;
 let popupCloseTime = 8000;
 
 /**
@@ -31,7 +31,7 @@ async function init() {
             if (now >= expiryTime) { // let currentTime = now.getMinutes();
                 // Die Zeit ist abgelaufen
                 // Führe hier die entsprechenden Aktionen aus, z.B. den Benutzer abmelden
-                console.log('Du wärst längere Zeit nicht aktiv, melde dich bitte erneut an!');
+                console.log('Du warst längere Zeit nicht aktiv, melde dich bitte erneut an!');
                 // clearInterval(intervalId); // Stoppe die Überprüfung, wenn die Zeit abgelaufen ist
                 resetLoginValues();
                 setTimeout(firstLogin, 1000);
@@ -39,21 +39,34 @@ async function init() {
             // }
         }
     }, 30000); // repeat query every 30 seconds
+    await initiateIndividualFunctions();
+}
 
+async function initiateIndividualFunctions() {
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
         await resetExpiryTime();
+        await updateTasksForSummary();
         renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
-    } else if (document.location.pathname === '/contacts.html') {
+    } else if (document.location.pathname === '/add-task.html') {
         await resetExpiryTime();
-        await updateContacts();
-        await renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+        updateTaskContacts();
     } else if (document.location.pathname === '/board.html') {
         await resetExpiryTime();
         await updateBoardTasks();
         await renderBoardTasks();
+    } else if (document.location.pathname === '/contacts.html') {
+        await resetExpiryTime();
+        await updateContacts();
+        await renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+    } else if (document.location.pathname === '/privacy-policy.html') {
+        await resetExpiryTime();
+    } else if (document.location.pathname === '/legal-notice.html') {
+        await resetExpiryTime();
+    } else if (document.location.pathname === '/help.html') {
+        await resetExpiryTime();
     }
-}
+} 
 
 /**
  * This feature secures unauthorized opening of pages via the URL by copying and pasting.
@@ -97,8 +110,6 @@ async function loadRememberStatus() {
         console.error('Loading error:', e);
     }
 }
-
-//rememberStatus[0].activateContent = activateContent;
 
 async function loadUserData() {
     try {

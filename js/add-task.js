@@ -1,25 +1,50 @@
-let allTasks = [];
-let dropdownContact = [];
+let newTask = [];
+// let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
+let contactsForTasks = [];
+let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 
 // function to add the task
-function addTask() {
+async function addTask() {
   const taskInput = readTaskInput();
   const prio = determinePriority();
-
   const task = {
+    id: '99',
+    label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
-    assignedTo: dropdownContact,
-    date: new Date(taskInput.date).getTime(),
-    prio: prio,
-    category: taskInput.category,
-    subtask: subtasks,
+    dueDate: new Date(taskInput.date).getTime(),
+    assignedTo: checkedCheckboxes,
+    priority: prio,
+    subtasks: subtasks,
+    category: 'backlog',
   };
-  allTasks.push(task);
-  dropdownContact = [];
+  newTask.push(task);
+  // dropdownContact = []; nicht mehr notwendig
+  if (loggedAsGuest === true) {
+    let div = document.getElementById('guestMessagePopupBoard');
+    let messageText = document.getElementById('guestMessageBoard');
+    users[currentUser].tasks.push(...newTask);
+    resetAddTaskValues();
+    showGuestPopupMessage(div, messageText);
+  } else {
+    users[currentUser].tasks.push(...newTask);
+    await setItem('users', JSON.stringify(users));
+    resetAddTaskValues();
+    alert('Neue Aufgabe erstellt!');
+  }
+}
+
+function resetAddTaskValues() {
+  document.getElementById("task-title").value = '';
+  document.getElementById("task-description").value = '';
+  document.getElementById("task-date").value = '';
+  document.getElementById("task-category").value = '';
+  document.getElementById("subtask").value = '';
+  document.getElementById("contactSelection").innerHTML = '';
+  newTask = []
   subtasks = [];
-  setItem("task", allTasks);
+  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
 }
 
 //get informations from input
@@ -37,29 +62,141 @@ function readTaskInput() {
   };
 }
 
+async function updateTaskContacts() {
+  if (loggedAsGuest === true) {
+    let resp = await fetch('./JSON/contacts.json');
+    contactsForTasks = await resp.json();
+  } else {
+    let currentUserContactsForTasks = users[currentUser].contacts;
+    contactsForTasks = currentUserContactsForTasks;
+  }
+}
+
+/********************   DROPDOWN SAMUEL ***********************/
+
+function openDropdown() {
+  let taskContactDiv = document.getElementById('taskContactDiv');
+  if (taskContactDiv.style.display === 'flex') {
+    taskContactDiv.style.display = 'none';
+  } else {
+    taskContactDiv.style.display = 'flex';
+    checkedCheckboxes = [];
+    for (let index = 0; index < contactsForTasks.length; index++) {
+      const contact = contactsForTasks[index];
+      renderContactsDropwdown(contact, index);
+    }
+  }
+  contactsByCheckboxen();
+  showContactSelection();
+}
+
+function renderContactsDropwdown(contact, index) {
+  let letters = contactNamesLetters(contact.name);
+  renderDopdownMenu(taskContactDiv, letters, contact, index);
+}
+
+function contactNamesLetters(contact) {
+  let letters;
+  let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
+  let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
+  let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
+  if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
+    secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+  }
+  letters = firstLetter + secondLetter;
+  return letters;
+}
+
+function renderDopdownMenu(taskContactDiv, letters, contact, index) {
+  taskContactDiv.innerHTML += `
+  <div class="d_f_sb_c width-max">
+  <div class="d_f_fs_c gap-20">
+  <div class="d_f_fs_c" id="contactLetters${index}">${letters}</div> 
+  <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
+  </div>
+  <div class="d_f_fe_c"> <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}">  </div>
+  </div>
+  `;
+}
+
+function contactsByCheckboxen() {
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
+  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
+    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
+      checkedCheckboxes.push(checkbox.value);
+    }
+  });
+}
+
+function showContactSelection() {
+  let contactSelection = document.getElementById('contactSelection');
+  contactSelection.innerHTML = ``;
+  for (let index = 0; index < checkedCheckboxes.length; index++) {
+    const contact = checkedCheckboxes[index];
+    const letters = contactNamesLetters(contact);
+    contactSelection.innerHTML += `<div class="d_f_c_c">${letters}</div>`;
+  }
+}
+
+/**************************************************************/
+
+
 //for the contacts at Assigned to section
 function openDropdownContacts() {
+  console.log('Alle Kontakte:', contactsForTasks);
   let Dropdownmenu = document.getElementById("inputfield-dropdown");
   let dropdownArrow = document.getElementById("dropdown-arrow");
   let dropdownDiv = document.getElementById("task-contact-div");
   dropdownDiv.style.display =
     dropdownDiv.style.display === "flex" ? "none" : "flex";
   rotateDropdownIcon(dropdownArrow, dropdownDiv.style.display === "flex");
-  for (let i = 0; i < contacts.length; i++) {
-    const element = contacts[i];
+
+  // Leere den HTML-Inhalt des dropdownDiv-Elements
+  dropdownDiv.innerHTML = '';
+
+  // Füge die Kontakte hinzu
+  for (let i = 0; i < contactsForTasks.length; i++) {
+    const contact = contactsForTasks[i];
+    console.log('Kontakt', i, ':', contact); // Debugging-Ausgabe
     dropdownDiv.innerHTML += `
     <div class="parting-line-dropdown"></div>
-    <div class="task-contact" id='test${i}'onclick='chooseContact(${i},"${element.name}")' >
+    <div class="task-contact" id='test${i}'onclick='chooseContact(${i},"${contact.name}")' >
       <div class="contact-circle d_f_c_c">
         <div class="contact-circle-letters">AM</div>
       </div>
       <div class="contact-name-mail">
-        <div class="contact-name">${element.name}</div>
+        <div class="contact-name">${contact.name}</div>
       </div>
     </div>
     `;
   }
 }
+
+//TEST// //Funktion wird ab jetzt nicht mehr aufgerufen!
+
+function testOpenDropdown() {
+  updateTaskContacts();
+  console.log('Alle Kontakte:', contactsForTasks);
+  let dropdownDiv = document.getElementById("task-contact-div");
+  dropdownDiv.innerHTML = '';
+  for (let i = 0; i < contactsForTasks.length; i++) {
+    const contact = contactsForTasks[i];
+    console.log('Kontakt', i, ':', contact); // Debugging-Ausgabe
+    dropdownDiv.innerHTML += `
+    <div class="parting-line-dropdown"></div>
+    <div class="task-contact" id='test${i}'onclick='chooseContact(${i},"${contact.name}")' >
+      <div class="contact-circle d_f_c_c">
+        <div class="contact-circle-letters">AM</div>
+      </div>
+      <div class="contact-name-mail">
+        <div class="contact-name">${contact.name}</div>
+      </div>
+    </div>
+    `;
+  }
+}
+
+//TEST ENDE//
 
 function chooseContact(i, name) {
   constElement = document.getElementById(`test${i}`);
