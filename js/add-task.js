@@ -8,10 +8,8 @@ let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkbo
 async function addTask() {
   const taskInput = readTaskInput();
   const prio = determinePriority();
-  let setiD = 99;
-  let id = setiD + 1;
   const task = {
-    id: id,
+    id: '99',
     label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
@@ -23,20 +21,30 @@ async function addTask() {
   };
   newTask.push(task);
   // dropdownContact = []; nicht mehr notwendig
-  subtasks = [];
-  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
   if (loggedAsGuest === true) {
     let div = document.getElementById('guestMessagePopupBoard');
     let messageText = document.getElementById('guestMessageBoard');
     users[currentUser].tasks.push(...newTask);
+    resetAddTaskValues();
     showGuestPopupMessage(div, messageText);
-    newTask = []
   } else {
     users[currentUser].tasks.push(...newTask);
     await setItem('users', JSON.stringify(users));
-    newTask = []
+    resetAddTaskValues();
+    alert('Neue Aufgabe erstellt!');
   }
+}
 
+function resetAddTaskValues() {
+  document.getElementById("task-title").value = '';
+  document.getElementById("task-description").value = '';
+  document.getElementById("task-date").value = '';
+  document.getElementById("task-category").value = '';
+  document.getElementById("subtask").value = '';
+  document.getElementById("contactSelection").innerHTML = '';
+  newTask = []
+  subtasks = [];
+  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
 }
 
 //get informations from input
