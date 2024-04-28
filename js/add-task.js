@@ -61,33 +61,43 @@ function openContactsDropwdown() {
 
 function renderContactsDropwdown(contact, index) {
   let taskContactDiv = document.getElementById('taskContactDiv');
+  openAndCloseDropdown(taskContactDiv);
+  let letters = contactNamesLetters(contact);
+  renderDopdownMenu(taskContactDiv, letters, contact, index);
+}
 
+function openAndCloseDropdown(taskContactDiv) {
   if (taskContactDiv.style.display === "none") {
     taskContactDiv.style.display = 'flex';
   } else {
     taskContactDiv.style.display = 'none';
   }
+}
 
+function contactNamesLetters(contact) {
+  let letters;
+  let firstLetter = contact.name.charAt(0); // Erster Buchstabe des Vornamens
+  let spaceIndex = contact.name.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
+  let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
+  if (spaceIndex !== -1 && spaceIndex < contact.name.length - 1) {
+    secondLetter = contact.name.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+  }
+  letters = firstLetter + secondLetter;
+  return letters;
+}
+
+function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   taskContactDiv.innerHTML += `
-  <option value="contact${index}">${contact.name}</option>
+  <div class="d_f_sb_c width-max">
+  <div class="d_f_fs_c gap-20">
+  <div class="d_f_fs_c" id="contactLetters${index}">${letters}</div> 
+  <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
+  </div>
+  <div class="d_f_fe_c"> <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${index}">  </div>
+  </div>
   `;
 }
 
-
-function toggleCategoryDiv() {
-  var categoryDiv = document.getElementById("category-div");
-  var dropdownIcon = document.getElementById("category-drop-icon");
-  if (
-    categoryDiv.style.display === "none" ||
-    categoryDiv.style.display === ""
-  ) {
-    categoryDiv.style.display = "flex";
-    dropdownIcon.style.transform = "rotate(180deg)";
-  } else {
-    categoryDiv.style.display = "none";
-    dropdownIcon.style.transform = "";
-  }
-}
 
 /**************************************************************/
 

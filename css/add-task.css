@@ -31,6 +31,10 @@
   overflow-x: hidden;
 }
 
+input[type="checkbox"] {
+  width: 20px; /* Breite der Checkbox */
+  height: 20px; /* Höhe der Checkbox */
+}
 
 #taskContactDiv {
   display:none;
