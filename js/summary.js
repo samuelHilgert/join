@@ -63,8 +63,8 @@ function getValuesForSummaryJsonArray() {
         allDones = allTasksByDone.length;
         allUrgents = allTasksByUrgent.length;
         allAwaitFeedback = allAwaitFeedbackNumber.length;
-        let upcomingDeadline = closestDueDateElement.dueDate;
-        formattedDeadline = formatDate(upcomingDeadline);
+       // let upcomingDeadline = closestDueDateElement.dueDate;
+        //formattedDeadline = formatDate(upcomingDeadline);
         allTasks = tasksSummary[0].length;
     }
 }
