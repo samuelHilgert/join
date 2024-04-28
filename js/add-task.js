@@ -82,6 +82,20 @@ function openDropdownContacts() {
   }
 }
 
+function openContactsDropwdown() {
+  for (let index = 0; index < contactsForTasks.length; index++) {
+    const contact = contactsForTasks[index];
+    renderContactsDropwdown(contact, index);
+  }
+}
+
+function renderContactsDropwdown(contact, index) {
+  let taskAssignedTo = document.getElementById('taskAssignedTo');
+  taskAssignedTo.innerHTML += `
+  <option value="contact${index}">${contact.name}</option>
+  `;
+}
+
 //TEST//
 
 function testOpenDropdown() {
