@@ -111,8 +111,6 @@ async function loadRememberStatus() {
     }
 }
 
-//rememberStatus[0].activateContent = activateContent;
-
 async function loadUserData() {
     try {
         users = JSON.parse(await getItem('users'));

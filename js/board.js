@@ -188,7 +188,7 @@ async function editTask() {
     let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');
     let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
     let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
-    document.getElementById('taskPopupContentLabel').style.display ='none';
+    document.getElementById('taskPopupContentLabel').style.display = 'none';
     taskPopupContentTitle.innerHTML = `<p>Title</p><input>`;
     taskPopupContentDescription.innerHTML = `<p>Description</p><input>`;
     taskPopupContentDueDate.style.flexDirection = 'column';
@@ -253,10 +253,72 @@ function closeBoardTaskPopup() {
     document.body.style.overflow = 'scroll';
 }
 
+/********************** SEARCH FUNCTION **********************************/
+let findMatchingIndices = [];
+
+async function searchTasksOnBoard() {
+    let searchInput = document.getElementById('searchBoardInput').value;
+    let search = searchInput.trim().toLowerCase();
+    
+    let matchingIndices = [];
+    
+    await getMatchingIndicies(matchingIndices, search);
+    await generateCategoriesBySearch(matchingIndices);
+    initGuestPopupMessage();
+}
+
+async function getMatchingIndicies(matchingIndices, search) {
+    if (search.length >= 2) {
+        await findTasksIndices(matchingIndices, search);
+    }
+}
+
+async function findTasksIndices(matchingIndices, search) { 
+    for (let i = 0; i < tasks.length; i++) {
+        const everySearchedTaskName = tasks[i].title;
+        const everySearchedTaskDecription = tasks[i].description;
+        if (everySearchedTaskName.toLowerCase().includes(search) || everySearchedTaskDecription.toLowerCase().includes(search)) {
+            matchingIndices.push(tasks[i]);
+        }
+    }
+}
+
+async function generateCategoriesBySearch(matchingIndices) {
+    for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+        const allTasksSameCategory = matchingIndices.filter(t => t['category'] == category);
+        const categoryTableColumn = document.getElementById(`${category}`);
+        categoryTableColumn.innerHTML = '';
+        showSearchedTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
+    }
+}
+
+function showSearchedTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
+    for (let k = 0; k < allTasksSameCategory.length; k++) {
+        const task = allTasksSameCategory[k];
+        categoryTableColumn.innerHTML += generateTodoHTML(task);
+        updateProgressBar(task);
+    }
+}
+
+function initGuestPopupMessage() {
+    if (loggedAsGuest === true) {
+        let div = document.getElementById('guestMessagePopupBoard');
+        let messageText = document.getElementById('guestMessageBoard');
+        showGuestPopupMessage(div, messageText);
+    }
+}
+
+function searchTasksByKeyPress(event) {
+    if (event.key === 'Enter') {
+        searchTasksOnBoard();
+    }
+}
+
+function resetSearch() {
+    document.getElementById('searchBoardInput').value = '';
+}
 
 
-
-
-
-
+/*************************************************************/
 

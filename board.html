@@ -28,9 +28,11 @@
         <div class="d_f_sb_c gap-30 width-max">
             <h2>Board</h2>
             <div class="search-div d_f_c_c gap-30">
-                <input class="input-style input-search" type="text" placeholder="Find Task" required>
-                <a class="btn" onclick="openBoardAddTaskPopup(event)">Add task <img src="./assets/img/add.svg"
-                        alt=""></a>
+                <div class="input-style d_f_c_c width-max gap-20">
+                    <input class="search-board-input" type="text" id="searchBoardInput" placeholder="Find Task" required onkeypress="searchTasksByKeyPress(event)">
+                    <div class="search-icon"><img src="../assets/img/search-icon-with-line.svg" alt="" onclick="searchTasksOnBoard()"></div>
+                </div>
+                <a class="btn" onclick="openBoardAddTaskPopup(event)">Add task <img src="./assets/img/add.svg" alt=""></a>
             </div>
         </div>
         <div class="drag-area-container d_f_fs_fs gap-20 width-max">
