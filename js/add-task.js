@@ -39,7 +39,7 @@ function readTaskInput() {
   };
 }
 
-async function updateContacts() {
+async function updateTaskContacts() {
   if (loggedAsGuest === true) {
     let resp = await fetch('./JSON/contacts.json');
     contactsForTasks = await resp.json();
@@ -52,7 +52,7 @@ async function updateContacts() {
 
 //for the contacts at Assigned to section
 function openDropdownContacts() {
-  updateContacts();
+  updateTaskContacts();
   console.log('Alle Kontakte:', contactsForTasks);
   let Dropdownmenu = document.getElementById("inputfield-dropdown");
   let dropdownArrow = document.getElementById("dropdown-arrow");
@@ -85,7 +85,7 @@ function openDropdownContacts() {
 //TEST//
 
 function testOpenDropdown() {
-  updateContacts();
+  updateTaskContacts();
   console.log('Alle Kontakte:', contactsForTasks);
   let dropdownDiv = document.getElementById("task-contact-div");
   dropdownDiv.innerHTML = '';
