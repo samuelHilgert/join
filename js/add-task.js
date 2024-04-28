@@ -2,6 +2,7 @@ let allTasks = [];
 let dropdownContact = [];
 let subtasks = [];
 let contactsForTasks = [];
+let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 
 // function to add the task
 function addTask() {
@@ -20,6 +21,7 @@ function addTask() {
   allTasks.push(task);
   dropdownContact = [];
   subtasks = [];
+  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
   setItem("task", allTasks);
 }
 
@@ -49,34 +51,29 @@ async function updateTaskContacts() {
 }
 
 /********************   DROPDOWN SAMUEL ***********************/
-let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen
 
-function openContactsDropwdown() {
-  for (let index = 0; index < contactsForTasks.length; index++) {
-    const contact = contactsForTasks[index];
-    renderContactsDropwdown(contact, index);
+function openDropdown() {
+  let taskContactDiv = document.getElementById('taskContactDiv');
+  if (taskContactDiv.style.display === 'flex') {
+    taskContactDiv.style.display = 'none';
+  } else {
+    taskContactDiv.style.display = 'flex';
+    checkedCheckboxes = [];
+    for (let index = 0; index < contactsForTasks.length; index++) {
+      const contact = contactsForTasks[index];
+      renderContactsDropwdown(contact, index);
+    }
   }
+  contactsByCheckboxen();
   showContactSelection();
 }
 
 function renderContactsDropwdown(contact, index) {
-  let taskContactDiv = document.getElementById('taskContactDiv');
-  openAndCloseDropdown(taskContactDiv);
   let letters = contactNamesLetters(contact.name);
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
 
-function openAndCloseDropdown(taskContactDiv) {
-  if (taskContactDiv.style.display === "none") {
-    taskContactDiv.style.display = 'flex';
-  } else {
-    contactsByCheckboxen();
-    taskContactDiv.style.display = 'none';
-  }
-}
-
 function contactNamesLetters(contact) {
-  console.log('contact = ' + contact);
   let letters;
   let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
   let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
@@ -102,21 +99,23 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
 
 function contactsByCheckboxen() {
   let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
-  checkboxes.forEach(function(checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
-      if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
-          checkedCheckboxes.push(checkbox.value);
-      }
+  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
+    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
+      checkedCheckboxes.push(checkbox.value);
+    }
   });
 }
 
 function showContactSelection() {
   let contactSelection = document.getElementById('contactSelection');
+  contactSelection.innerHTML = ``;
   for (let index = 0; index < checkedCheckboxes.length; index++) {
     const contact = checkedCheckboxes[index];
     const letters = contactNamesLetters(contact);
     contactSelection.innerHTML += `<div class="d_f_c_c">${letters}</div>`;
-  } 
+  }
 }
+
 /**************************************************************/
 
 
