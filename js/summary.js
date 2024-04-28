@@ -36,8 +36,8 @@ function getValuesForSummaryJsonArray() {
         const allAwaitFeedbackNumber = element.filter(t => t['category'] == 'awaitFeedback');
         const allTasksByDone = element.filter(t => t['category'] === 'done');
         const allTasksByUrgent = element.filter(t => t['priority'] === 'Urgent');
-        // const upcomingDueDateTasks = element.filter(t => t['dueDate']);
-       //  calculateUpcomingDate(upcomingDueDateTasks);
+        const upcomingDueDateTasks = element.filter(t => t['dueDate']);
+        calculateUpcomingDate(upcomingDueDateTasks);
         allTodos = allTasksByBacklog.length;
         allInProgress = allTasksByInProgress.length;
         allDones = allTasksByDone.length;
@@ -70,8 +70,8 @@ function calculateUpcomingDate(upcomingDueDateTasks) {
         }
     });
 
-    // let upcomingDeadline = closestDueDateElement.dueDate;
-   // formattedDeadline = formatDate(upcomingDeadline);
+    let upcomingDeadline = closestDueDateElement.dueDate;
+    formattedDeadline = formatDate(upcomingDeadline);
 }
 
 function formatDate(dateString) {
@@ -99,8 +99,8 @@ function getValuesForSummary() {
     const allTasksByDone = tasksSummary.filter(t => t['category'] == 'done');
     const allTasksByUrgent = tasksSummary.filter(t => t['priority'] == 'Urgent');
     const allAwaitFeedbackNumber = tasksSummary.filter(t => t['category'] == 'awaitFeedback');
-    // const upcomingDueDateTasks = element.filter(t => t['dueDate']);
-    // calculateUpcomingDate(upcomingDueDateTasks);
+    const upcomingDueDateTasks = tasksSummary.filter(t => t['dueDate']);
+    calculateUpcomingDate(upcomingDueDateTasks);
     allTodos = allTasksByBacklog.length;
     allDones = allTasksByDone.length;
     allUrgents = allTasksByUrgent.length;
