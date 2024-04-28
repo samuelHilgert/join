@@ -96,7 +96,7 @@ function renderContactsDropwdown(contact, index) {
   `;
 }
 
-//TEST//
+//TEST// //Funktion wird ab jetzt nicht mehr aufgerufen!
 
 function testOpenDropdown() {
   updateTaskContacts();

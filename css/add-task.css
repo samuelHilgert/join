@@ -18,6 +18,10 @@
   cursor: pointer;
 }
 
+.dropdown-add-task {
+  background-color: white;
+}
+
 .task-btn-style {
   width: 100%;
   height: auto;
