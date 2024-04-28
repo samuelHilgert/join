@@ -50,6 +50,7 @@ async function initiateIndividualFunctions() {
         renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
     } else if (document.location.pathname === '/add-task.html') {
         await resetExpiryTime();
+        updateTaskContacts();
     } else if (document.location.pathname === '/board.html') {
         await resetExpiryTime();
         await updateBoardTasks();
