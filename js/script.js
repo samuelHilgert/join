@@ -1,4 +1,7 @@
 let users = [];
+let contacts = [];
+let tasks = [];
+
 let currentUser;
 let loggedAsGuest = false;
 let rememberStatus = [];
@@ -11,9 +14,13 @@ let popupCloseTime = 8000;
  * 
  */
 async function init() {
-    await loadRememberStatus();
-    await loadUserData();
     getCurrentUserId();
+    await loadUserData();
+    await loadRememberStatus();
+
+    await updateContacts();
+    await updateBoardTasks();
+
     checkUnauthorizedOpening();
     await includeHTML();
     getCurrentlySidebarLink();
@@ -46,7 +53,6 @@ async function initiateIndividualFunctions() {
     // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
         await resetExpiryTime();
-        await updateTasksForSummary();
         renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
     } else if (document.location.pathname === '/add-task.html') {
         await resetExpiryTime();
@@ -67,6 +73,93 @@ async function initiateIndividualFunctions() {
         await resetExpiryTime();
     }
 } 
+
+function getCurrentUserId() {
+    let savedDataSesssionStorage = sessionStorage.getItem('user');
+    let savedDataLocalStorage = localStorage.getItem('user');
+    let loggedStatusLocalStorage = localStorage.getItem('logged');
+    if (loggedStatusLocalStorage) {
+        loggedAsGuest = true;
+    }
+    else {
+        if (savedDataSesssionStorage) {
+            currentUser = savedDataSesssionStorage;
+        } else {
+            if (savedDataLocalStorage) {
+                currentUser = savedDataLocalStorage;
+            }
+        }
+    }
+}
+
+/**
+ * This is a function that checks whether a guest or user has logged in
+ * The data is only saved remotely if the user is logged in
+ * In both cases sample contacts are also loaded
+ * 
+ */
+async function updateContacts() {
+    if (loggedAsGuest === true) {
+        await loadExampleContacts();
+    } else {
+        let currentUserContacts = users[currentUser].contacts;
+        if (currentUserContacts.length === 0) {
+            await loadExampleContacts();
+            await pushContactsOnRemoteServer();
+        }
+        else {
+            contacts = users[currentUser].contacts;
+        }
+    }
+}
+
+/**
+ * This is a function which includes the sample contacts from the contacts.json JSON-Document 
+ * 
+ */
+async function loadExampleContacts() {
+    let resp = await fetch('./JSON/contacts.json');
+    contacts = await resp.json();
+}
+
+async function pushContactsOnRemoteServer() {
+    users[currentUser].contacts = contacts;
+    await setItem('users', JSON.stringify(users));
+}
+
+/**
+ * This is a function that checks whether a guest or user has logged in
+ * The data is only saved remotely if the user is logged in
+ * In both cases sample contacts are also loaded
+ * 
+ */
+async function updateBoardTasks() {
+    if (loggedAsGuest === true) {
+        await loadExampleTasks();
+    } else {
+        let currentUserTasks = users[currentUser].tasks;
+        if (currentUserTasks.length === 0) {
+            await loadExampleTasks();
+            await pushTasksOnRemoteServer();
+        }
+        else {
+            tasks = users[currentUser].tasks;
+        }
+    }
+}
+
+async function loadExampleTasks() {
+    let resp = await fetch('./JSON/tasks.json');
+    tasks = await resp.json();
+}
+
+async function pushTasksOnRemoteServer() {
+    users[currentUser].tasks = tasks;
+    await setItem('users', JSON.stringify(users));
+}
+
+
+
 
 /**
  * This feature secures unauthorized opening of pages via the URL by copying and pasting.
@@ -116,24 +209,6 @@ async function loadUserData() {
         users = JSON.parse(await getItem('users'));
     } catch (e) {
         console.error('Loading error:', e);
-    }
-}
-
-function getCurrentUserId() {
-    let savedDataSesssionStorage = sessionStorage.getItem('user');
-    let savedDataLocalStorage = localStorage.getItem('user');
-    let loggedStatusLocalStorage = localStorage.getItem('logged');
-    if (loggedStatusLocalStorage) {
-        loggedAsGuest = true;
-    }
-    else {
-        if (savedDataSesssionStorage) {
-            currentUser = savedDataSesssionStorage;
-        } else {
-            if (savedDataLocalStorage) {
-                currentUser = savedDataLocalStorage;
-            }
-        }
     }
 }
 
