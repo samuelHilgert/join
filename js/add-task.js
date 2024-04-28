@@ -22,9 +22,8 @@ async function addTask() {
   newTask.push(task);
   // dropdownContact = []; nicht mehr notwendig
   if (loggedAsGuest === true) {
-    let div = document.getElementById('guestMessagePopupBoard');
-    let messageText = document.getElementById('guestMessageBoard');
-    users[currentUser].tasks.push(...newTask);
+    let div = document.getElementById('guestMessagePopupAddTask');
+    let messageText = document.getElementById('guestMessageAddTask');
     resetAddTaskValues();
     showGuestPopupMessage(div, messageText);
   } else {

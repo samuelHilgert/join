@@ -1,37 +1,8 @@
-let tasks = [];
+
 let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 let currentDraggedTaskId;
 let taskId;
-/**
- * This is a function that checks whether a guest or user has logged in
- * The data is only saved remotely if the user is logged in
- * In both cases sample contacts are also loaded
- * 
- */
-async function updateBoardTasks() {
-    if (loggedAsGuest === true) {
-        await loadExampleTasks();
-    } else {
-        let currentUserTasks = users[currentUser].tasks;
-        if (currentUserTasks.length === 0) {
-            await loadExampleTasks();
-            await pushTasksOnRemoteServer();
-        }
-        else {
-            tasks = users[currentUser].tasks;
-        }
-    }
-}
 
-async function loadExampleTasks() {
-    let resp = await fetch('./JSON/tasks.json');
-    tasks = await resp.json();
-}
-
-async function pushTasksOnRemoteServer() {
-    users[currentUser].tasks = tasks;
-    await setItem('users', JSON.stringify(users));
-}
 
 async function renderBoardTasks() {
     if (tasks.length === 0) {

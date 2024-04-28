@@ -1,4 +1,4 @@
-let contacts = [];
+
 
 let profileCircleColors = [
     'teal',
@@ -23,6 +23,7 @@ let profileCircleColors = [
 
 let nextId = 1;
 
+
 /**
  * This function renders the contact page.
  */
@@ -39,36 +40,6 @@ async function renderContacts() {
     setRandomColor();
 }
 
-
-/**
- * This is a function that checks whether a guest or user has logged in
- * The data is only saved remotely if the user is logged in
- * In both cases sample contacts are also loaded
- * 
- */
-async function updateContacts() {
-    if (loggedAsGuest === true) {
-        await loadExampleContacts();
-    } else {
-        let currentUserContacts = users[currentUser].contacts;
-        if (currentUserContacts.length === 0) {
-            await loadExampleContacts();
-            await pushContactsOnRemoteServer();
-        }
-        else {
-            contacts = users[currentUser].contacts;
-        }
-    }
-}
-
-/**
- * This is a function which includes the sample contacts from the contacts.json JSON-Document 
- * 
- */
-async function loadExampleContacts() {
-    let resp = await fetch('./JSON/contacts.json');
-    contacts = await resp.json();
-}
 
 //TEST//
 
@@ -283,14 +254,6 @@ function addNewContactToArray() {
     openContactInfo(newContact['id'], true); // true, because function should run without animation
     keepCircleBackgroundcolor();
 }
-
-
-
-async function pushContactsOnRemoteServer() {
-    users[currentUser].contacts = contacts;
-    await setItem('users', JSON.stringify(users));
-}
-
 
 /**
  * This function validates the input data of the contact form, adds a new contact to the array, 

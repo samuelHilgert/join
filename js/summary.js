@@ -1,4 +1,4 @@
-let tasksSummary = [];
+
 let allTodos;
 let allDones;
 let allUrgents;
@@ -14,39 +14,25 @@ let allTasks;
 function renderSummary() {
     getUserNameForGreet();
     displayGreeting();
+    getValuesForSummary();
     renderSummaryValues();
 }
 
-async function updateTasksForSummary() {
-    if (loggedAsGuest === true) {
-        await loadTasksForGuest();
-        getValuesForSummary();
-    } else {
-        await loadTasksRemote();
-        getValuesForSummaryJsonArray();
-    }
+function getValuesForSummary() {
+    const allTasksByBacklog = tasks.filter(t => t['category'] == 'backlog');
+    const allTasksByInProgress = tasks.filter(t => t['category'] == 'inProgress');
+    const allTasksByDone = tasks.filter(t => t['category'] == 'done');
+    const allTasksByUrgent = tasks.filter(t => t['priority'] == 'Urgent');
+    const allAwaitFeedbackNumber = tasks.filter(t => t['category'] == 'awaitFeedback');
+    const upcomingDueDateTasks = tasks.filter(t => t['dueDate']);
+   // calculateUpcomingDate(upcomingDueDateTasks);
+    allTodos = allTasksByBacklog.length;
+    allDones = allTasksByDone.length;
+    allUrgents = allTasksByUrgent.length;
+    allInProgress = allTasksByInProgress.length;
+    allAwaitFeedback = allAwaitFeedbackNumber.length;
+    allTasks = tasks.length;
 }
-
-function getValuesForSummaryJsonArray() {
-
-    for (let index = 0; index < tasksSummary.length; index++) {
-        const element = tasksSummary[index];
-        const allTasksByBacklog = element.filter(t => t['category'] === 'backlog');
-        const allTasksByInProgress = element.filter(t => t['category'] == 'inProgress');
-        const allAwaitFeedbackNumber = element.filter(t => t['category'] == 'awaitFeedback');
-        const allTasksByDone = element.filter(t => t['category'] === 'done');
-        const allTasksByUrgent = element.filter(t => t['priority'] === 'Urgent');
-        const upcomingDueDateTasks = element.filter(t => t['dueDate']);
-        // calculateUpcomingDate(upcomingDueDateTasks);
-        allTodos = allTasksByBacklog.length;
-        allInProgress = allTasksByInProgress.length;
-        allDones = allTasksByDone.length;
-        allUrgents = allTasksByUrgent.length;
-        allAwaitFeedback = allAwaitFeedbackNumber.length;
-        allTasks = tasksSummary[0].length;
-    }
-}
-
 
 function calculateUpcomingDate(upcomingDueDateTasks) {
     let currentDate = new Date();
@@ -93,31 +79,6 @@ function formatDate(dateString) {
     return formattedDate;
 }
 
-function getValuesForSummary() {
-    const allTasksByBacklog = tasksSummary.filter(t => t['category'] == 'backlog');
-    const allTasksByInProgress = tasksSummary.filter(t => t['category'] == 'inProgress');
-    const allTasksByDone = tasksSummary.filter(t => t['category'] == 'done');
-    const allTasksByUrgent = tasksSummary.filter(t => t['priority'] == 'Urgent');
-    const allAwaitFeedbackNumber = tasksSummary.filter(t => t['category'] == 'awaitFeedback');
-    const upcomingDueDateTasks = tasksSummary.filter(t => t['dueDate']);
-   // calculateUpcomingDate(upcomingDueDateTasks);
-    allTodos = allTasksByBacklog.length;
-    allDones = allTasksByDone.length;
-    allUrgents = allTasksByUrgent.length;
-    allInProgress = allTasksByInProgress.length;
-    allAwaitFeedback = allAwaitFeedbackNumber.length;
-    allTasks = tasksSummary.length;
-}
-
-async function loadTasksRemote() {
-    tasksSummary.push(users[currentUser].tasks);
-}
-
-
-async function loadTasksForGuest() {
-    let resp = await fetch('./JSON/tasks.json');
-    tasksSummary = await resp.json();
-}
 
 function renderSummaryValues() {
     let allTodosNumber = document.getElementById('allTodosNumber');
