@@ -1,66 +1,43 @@
 let allTasks = [];
-let dropdownContact = [];
+// let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
+let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 
-// main function to create a task
-function addTask() {
-  if (validateForm()) {
-    const taskInput = readTaskInput();
-    const prio = determinePriority();
-    const task = createTaskObject(taskInput, prio);
-    saveTask(task);
-    clearForm();
-  }
-}
-
-// check required-fields and set outline color
-function validateForm() {
-  const requiredFields = ["title", "date", "category"];
-  let formIsValid = true;
-  requiredFields.forEach((field) => {
-    const fieldValue = document.getElementById(`task-${field}`).value.trim();
-    const fieldElement = document.getElementById(`task-${field}`);
-    if (fieldValue === "") {
-      formIsValid = false;
-      fieldElement.classList.add("invalid-field");
-    } else {
-      fieldElement.classList.remove("invalid-field");
-    }
-  });
-  return formIsValid;
-}
-
-// read all the values from inputs
-function readTaskInput() {
-  const title = document.getElementById("task-title").value;
-  const description = document.getElementById("task-description").value;
-  const date = document.getElementById("task-date").value;
-  const category = document.getElementById("task-category").value;
-  const subtask = document.getElementById("subtask").value;
-
-  return { title, description, date, category, subtask };
-}
-
-//create task objekt
-function createTaskObject(taskInput, priority) {
-  return {
+// function to add the task
+async function addTask() {
+  const taskInput = readTaskInput();
+  const prio = determinePriority();
+  let setiD = 99;
+  let id = setiD + 1;
+  const task = {
+    id: id,
+    label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
-    assignedTo: dropdownContact,
-    date: new Date(taskInput.date).getTime(),
-    prio: priority,
-    category: taskInput.category,
-    subtask: taskInput.subtask,
+    dueDate: new Date(taskInput.date).getTime(),
+    assignedTo: checkedCheckboxes,
+    priority: prio,
+    subtasks: subtasks,
+    category: 'todo',
   };
 }
 
 // Save the Task to server
 function saveTask(task) {
   allTasks.push(task);
-  dropdownContact = [];
+  // dropdownContact = []; nicht mehr notwendig
   subtasks = [];
-  setItem("task", allTasks);
+  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
+  if (loggedAsGuest === true) {
+    let div = document.getElementById('guestMessagePopupBoard');
+    let messageText = document.getElementById('guestMessageBoard');
+    showGuestPopupMessage(div, messageText);
+  } else {
+    users[currentUser].tasks.push(...allTasks);
+    await setItem('users', JSON.stringify(users));
+  }
+
 }
 
 //get informations from input
@@ -88,10 +65,78 @@ async function updateTaskContacts() {
   }
 }
 
+/********************   DROPDOWN SAMUEL ***********************/
+
+function openDropdown() {
+  let taskContactDiv = document.getElementById('taskContactDiv');
+  if (taskContactDiv.style.display === 'flex') {
+    taskContactDiv.style.display = 'none';
+  } else {
+    taskContactDiv.style.display = 'flex';
+    checkedCheckboxes = [];
+    for (let index = 0; index < contactsForTasks.length; index++) {
+      const contact = contactsForTasks[index];
+      renderContactsDropwdown(contact, index);
+    }
+  }
+  contactsByCheckboxen();
+  showContactSelection();
+}
+
+function renderContactsDropwdown(contact, index) {
+  let letters = contactNamesLetters(contact.name);
+  renderDopdownMenu(taskContactDiv, letters, contact, index);
+}
+
+function contactNamesLetters(contact) {
+  let letters;
+  let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
+  let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
+  let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
+  if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
+    secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+  }
+  letters = firstLetter + secondLetter;
+  return letters;
+}
+
+function renderDopdownMenu(taskContactDiv, letters, contact, index) {
+  taskContactDiv.innerHTML += `
+  <div class="d_f_sb_c width-max">
+  <div class="d_f_fs_c gap-20">
+  <div class="d_f_fs_c" id="contactLetters${index}">${letters}</div> 
+  <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
+  </div>
+  <div class="d_f_fe_c"> <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}">  </div>
+  </div>
+  `;
+}
+
+function contactsByCheckboxen() {
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
+  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
+    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
+      checkedCheckboxes.push(checkbox.value);
+    }
+  });
+}
+
+function showContactSelection() {
+  let contactSelection = document.getElementById('contactSelection');
+  contactSelection.innerHTML = ``;
+  for (let index = 0; index < checkedCheckboxes.length; index++) {
+    const contact = checkedCheckboxes[index];
+    const letters = contactNamesLetters(contact);
+    contactSelection.innerHTML += `<div class="d_f_c_c">${letters}</div>`;
+  }
+}
+
+/**************************************************************/
+
+
 //for the contacts at Assigned to section
 function openDropdownContacts() {
-  updateTaskContacts();
-  console.log("Alle Kontakte:", contactsForTasks);
+  console.log('Alle Kontakte:', contactsForTasks);
   let Dropdownmenu = document.getElementById("inputfield-dropdown");
   let dropdownArrow = document.getElementById("dropdown-arrow");
   let dropdownDiv = document.getElementById("task-contact-div");
@@ -120,21 +165,7 @@ function openDropdownContacts() {
   }
 }
 
-function openContactsDropwdown() {
-  for (let index = 0; index < contactsForTasks.length; index++) {
-    const contact = contactsForTasks[index];
-    renderContactsDropwdown(contact, index);
-  }
-}
-
-function renderContactsDropwdown(contact, index) {
-  let taskAssignedTo = document.getElementById("taskAssignedTo");
-  taskAssignedTo.innerHTML += `
-  <option value="contact${index}">${contact.name}</option>
-  `;
-}
-
-//TEST//
+//TEST// //Funktion wird ab jetzt nicht mehr aufgerufen!
 
 function testOpenDropdown() {
   updateTaskContacts();
