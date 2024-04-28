@@ -1,4 +1,3 @@
-
 let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 let currentDraggedTaskId;
 let taskId;

@@ -15,10 +15,9 @@ let popupCloseTime = 8000; // set popup display time
 async function init() {
     getCurrentUserId();
     await loadUserData();
-
     await loadRememberStatus();
-    await updateContacts();
-    await updateBoardTasks();
+
+    await updateUserData();
 
     checkUnauthorizedOpening();
     await includeHTML();
@@ -48,22 +47,25 @@ async function init() {
     await initiateIndividualFunctions();
 }
 
+/**
+ * query which page is visited and launch functions
+ * 
+ */
 async function initiateIndividualFunctions() {
-    // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
     if (document.location.pathname === '/summary.html') {
         await resetExpiryTime();
-        renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
+        renderSummary();
     } else if (document.location.pathname === '/add-task.html') {
         await resetExpiryTime();
-        updateTaskContacts();
+        await updateTaskContacts();
     } else if (document.location.pathname === '/board.html') {
         await resetExpiryTime();
-        await updateBoardTasks();
+        await updateUserData();
         await renderBoardTasks();
     } else if (document.location.pathname === '/contacts.html') {
         await resetExpiryTime();
-        await updateContacts();
-        await renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
+        await updateUserData();
+        await renderContacts();
     } else if (document.location.pathname === '/privacy-policy.html') {
         await resetExpiryTime();
     } else if (document.location.pathname === '/legal-notice.html') {
@@ -73,6 +75,10 @@ async function initiateIndividualFunctions() {
     }
 } 
 
+/**
+ * this is a function to get the current user-array-position from the user on the remote server
+ * 
+ */
 function getCurrentUserId() {
     let savedDataSesssionStorage = sessionStorage.getItem('user');
     let savedDataLocalStorage = localStorage.getItem('user');
@@ -85,12 +91,16 @@ function getCurrentUserId() {
             currentUser = savedDataSesssionStorage;
         } else {
             if (savedDataLocalStorage) {
-                currentUser = savedDataLocalStorage;
+            currentUser = savedDataLocalStorage;
             }
         }
     }
 }
 
+/**
+ * this function loads the user data from the remote server
+ * 
+ */
 async function loadUserData() {
     try {
         users = JSON.parse(await getItem('users'));
@@ -100,25 +110,43 @@ async function loadUserData() {
 }
 
 /**
- * This is a function that checks whether a guest or user has logged in
- * The data is only saved remotely if the user is logged in
- * In both cases sample contacts are also loaded
+ * this function loads the value, whether the user logged in with the remember option
  * 
  */
-async function updateContacts() {
+async function loadRememberStatus() {
+    try {
+        rememberStatus = JSON.parse(await getItem('remember_status'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
+}
+
+/**
+ * This is a function that checks whether a guest or user has logged in
+ * The data is only saved remotely if the user is logged in
+ * In both cases sample contacts and tasks are also loaded
+ * 
+ */
+async function updateUserData() {
     if (loggedAsGuest === true) {
         await loadExampleContacts();
+        await loadExampleTasks();
     } else {
         let currentUserContacts = users[currentUser].contacts;
-        if (currentUserContacts.length === 0) {
+        let currentUserTasks = users[currentUser].tasks;
+        if (currentUserContacts.length === 0 || currentUserTasks.length === 0) {
             await loadExampleContacts();
             await pushContactsOnRemoteServer();
+            await loadExampleTasks();
+            await pushTasksOnRemoteServer();
         }
         else {
             contacts = users[currentUser].contacts;
+            tasks = users[currentUser].tasks;
         }
     }
 }
+
 
 /**
  * This is a function which includes the sample contacts from the contacts.json JSON-Document 
@@ -134,26 +162,7 @@ async function pushContactsOnRemoteServer() {
     await setItem('users', JSON.stringify(users));
 }
 
-/**
- * This is a function that checks whether a guest or user has logged in
- * The data is only saved remotely if the user is logged in
- * In both cases sample contacts are also loaded
- * 
- */
-async function updateBoardTasks() {
-    if (loggedAsGuest === true) {
-        await loadExampleTasks();
-    } else {
-        let currentUserTasks = users[currentUser].tasks;
-        if (currentUserTasks.length === 0) {
-            await loadExampleTasks();
-            await pushTasksOnRemoteServer();
-        }
-        else {
-            tasks = users[currentUser].tasks;
-        }
-    }
-}
+
 
 async function loadExampleTasks() {
     let resp = await fetch('./JSON/tasks.json');
@@ -164,9 +173,6 @@ async function pushTasksOnRemoteServer() {
     users[currentUser].tasks = tasks;
     await setItem('users', JSON.stringify(users));
 }
-
-
-
 
 /**
  * This feature secures unauthorized opening of pages via the URL by copying and pasting.
@@ -200,14 +206,6 @@ async function includeHTML() {
         } else {
             element.innerHTML = 'Page not found'; // wenn nicht gefunden, Ausgabe Fehlermeldung text
         }
-    }
-}
-
-async function loadRememberStatus() {
-    try {
-        rememberStatus = JSON.parse(await getItem('remember_status'));
-    } catch (e) {
-        console.error('Loading error:', e);
     }
 }
 
