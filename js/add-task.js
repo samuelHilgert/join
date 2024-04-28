@@ -40,6 +40,7 @@ function readTaskInput() {
 
 //for the contacts at Assigned to section
 function openDropdownContacts() {
+  loadContacts();
   let Dropdownmenu = document.getElementById("inputfield-dropdown");
   let dropdownArrow = document.getElementById("dropdown-arrow");
   let dropdownDiv = document.getElementById("task-contact-div");

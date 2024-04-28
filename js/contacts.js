@@ -70,6 +70,14 @@ async function loadExampleContacts() {
     contacts = await resp.json();
 }
 
+//TEST//
+
+function loadContacts() {
+    return contacts;
+}
+
+//TEST ENDE//
+
 
 /**
  * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has 
