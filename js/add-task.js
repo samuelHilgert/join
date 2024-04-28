@@ -1,17 +1,15 @@
-let allTasks = [];
+let newTask = [];
 // let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
-let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
+let checkedCheckboxes = []; // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 
 // function to add the task
 async function addTask() {
   const taskInput = readTaskInput();
   const prio = determinePriority();
-  let setiD = 99;
-  let id = setiD + 1;
   const task = {
-    id: id,
+    id: "99",
     label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
@@ -19,25 +17,34 @@ async function addTask() {
     assignedTo: checkedCheckboxes,
     priority: prio,
     subtasks: subtasks,
-    category: 'todo',
+    category: "backlog",
   };
-}
-
-// Save the Task to server
-function saveTask(task) {
-  allTasks.push(task);
+  newTask.push(task);
   // dropdownContact = []; nicht mehr notwendig
-  subtasks = [];
-  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
   if (loggedAsGuest === true) {
-    let div = document.getElementById('guestMessagePopupBoard');
-    let messageText = document.getElementById('guestMessageBoard');
+    let div = document.getElementById("guestMessagePopupBoard");
+    let messageText = document.getElementById("guestMessageBoard");
+    users[currentUser].tasks.push(...newTask);
+    resetAddTaskValues();
     showGuestPopupMessage(div, messageText);
   } else {
-    users[currentUser].tasks.push(...allTasks);
-    await setItem('users', JSON.stringify(users));
+    users[currentUser].tasks.push(...newTask);
+    await setItem("users", JSON.stringify(users));
+    resetAddTaskValues();
+    alert("Neue Aufgabe erstellt!");
   }
+}
 
+function resetAddTaskValues() {
+  document.getElementById("task-title").value = "";
+  document.getElementById("task-description").value = "";
+  document.getElementById("task-date").value = "";
+  document.getElementById("task-category").value = "";
+  document.getElementById("subtask").value = "";
+  document.getElementById("contactSelection").innerHTML = "";
+  newTask = [];
+  subtasks = [];
+  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
 }
 
 //get informations from input
@@ -68,11 +75,11 @@ async function updateTaskContacts() {
 /********************   DROPDOWN SAMUEL ***********************/
 
 function openDropdown() {
-  let taskContactDiv = document.getElementById('taskContactDiv');
-  if (taskContactDiv.style.display === 'flex') {
-    taskContactDiv.style.display = 'none';
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  if (taskContactDiv.style.display === "flex") {
+    taskContactDiv.style.display = "none";
   } else {
-    taskContactDiv.style.display = 'flex';
+    taskContactDiv.style.display = "flex";
     checkedCheckboxes = [];
     for (let index = 0; index < contactsForTasks.length; index++) {
       const contact = contactsForTasks[index];
@@ -91,8 +98,8 @@ function renderContactsDropwdown(contact, index) {
 function contactNamesLetters(contact) {
   let letters;
   let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
-  let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
-  let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
+  let spaceIndex = contact.indexOf(" "); // Index des Leerzeichens zwischen Vor- und Nachnamen
+  let secondLetter = ""; // Initialisieren Sie den zweiten Buchstaben
   if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
     secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
   }
@@ -113,16 +120,18 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
 }
 
 function contactsByCheckboxen() {
-  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
-  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
-    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]'); // Alle Checkboxen abfragen
+  checkboxes.forEach(function (checkbox) {
+    // Für jede Checkbox überprüfen, ob sie angeklickt wurde
+    if (checkbox.checked) {
+      // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
       checkedCheckboxes.push(checkbox.value);
     }
   });
 }
 
 function showContactSelection() {
-  let contactSelection = document.getElementById('contactSelection');
+  let contactSelection = document.getElementById("contactSelection");
   contactSelection.innerHTML = ``;
   for (let index = 0; index < checkedCheckboxes.length; index++) {
     const contact = checkedCheckboxes[index];
@@ -133,10 +142,9 @@ function showContactSelection() {
 
 /**************************************************************/
 
-
 //for the contacts at Assigned to section
 function openDropdownContacts() {
-  console.log('Alle Kontakte:', contactsForTasks);
+  console.log("Alle Kontakte:", contactsForTasks);
   let Dropdownmenu = document.getElementById("inputfield-dropdown");
   let dropdownArrow = document.getElementById("dropdown-arrow");
   let dropdownDiv = document.getElementById("task-contact-div");
