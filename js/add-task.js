@@ -1,5 +1,5 @@
 let allTasks = [];
-let dropdownContact = [];
+// let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
 let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
@@ -12,14 +12,14 @@ function addTask() {
   const task = {
     title: taskInput.title,
     description: taskInput.description,
-    assignedTo: dropdownContact,
+    assignedTo: checkedCheckboxes,
     date: new Date(taskInput.date).getTime(),
     prio: prio,
     category: taskInput.category,
     subtask: subtasks,
   };
   allTasks.push(task);
-  dropdownContact = [];
+  // dropdownContact = []; nicht mehr notwendig
   subtasks = [];
   checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
   setItem("task", allTasks);
