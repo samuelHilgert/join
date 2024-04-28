@@ -5,24 +5,35 @@ let contactsForTasks = [];
 let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 
 // function to add the task
-function addTask() {
+async function addTask() {
   const taskInput = readTaskInput();
   const prio = determinePriority();
-
+  let setiD = 99;
+  let id = setiD + 1;
   const task = {
+    id: id,
+    label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
+    dueDate: new Date(taskInput.date).getTime(),
     assignedTo: checkedCheckboxes,
-    date: new Date(taskInput.date).getTime(),
-    prio: prio,
-    category: taskInput.category,
-    subtask: subtasks,
+    priority: prio,
+    subtasks: subtasks,
+    category: 'todo',
   };
   allTasks.push(task);
   // dropdownContact = []; nicht mehr notwendig
   subtasks = [];
   checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
-  setItem("task", allTasks);
+  if (loggedAsGuest === true) {
+    let div = document.getElementById('guestMessagePopupBoard');
+    let messageText = document.getElementById('guestMessageBoard');
+    showGuestPopupMessage(div, messageText);
+  } else {
+    users[currentUser].tasks.push(...allTasks);
+    await setItem('users', JSON.stringify(users));
+  }
+
 }
 
 //get informations from input
