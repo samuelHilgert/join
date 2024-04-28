@@ -22,6 +22,7 @@ function addTask() {
   setItem("task", allTasks);
 }
 
+
 //get informations from input
 function readTaskInput() {
   const title = document.getElementById("task-title").value;
