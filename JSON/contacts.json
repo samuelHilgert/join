@@ -3,77 +3,77 @@
         "name": "Anna Müller",
         "mail": "anna.mueller@strive.com",
         "phone": "+43 789 878 566",
-        "color": "",
+        "color": "teal",
         "id": ""
     },
     {
         "name": "Bernd Hofmann",
         "mail": "hofmann@ib-bank.com",
         "phone": "+49 647 289 145",
-        "color": "",
+        "color": "purple",
         "id": ""
     },
     {
         "name": "Eva Grace",
         "mail": "eg@marinaclub.com",
         "phone": "+25 493448951",
-        "color": "",
+        "color": "navy",
         "id": ""
     },
     {
         "name": "Frank Groß",
         "mail": "groß@frank.de",
         "phone": "+49 668463546",
-        "color": "",
+        "color": "crimson",
         "id": ""
     },
     {
         "name": "James Walker",
         "mail": "jw@dreamlogistics.com",
         "phone": "+49 64865155",
-        "color": "",
+        "color": "tan",
         "id": ""
     },
     {
         "name": "Alex Maier",
         "mail": "alex.maier@strive.com",
         "phone": "+43 789 878 787",
-        "color": "",
+        "color": "darkgreen",
         "id": ""
     },
     {
         "name": "Leonie Maier",
         "mail": "leonie.maier@abc-construct.com",
         "phone": "+49 596 487 12",
-        "color": "",
+        "color": "skyblue",
         "id": ""
     },
     {
         "name": "Max Baumgart",
         "mail": "max@baumgart.de",
         "phone": "+49 12 123 456",
-        "color": "",
+        "color": "slategrey",
         "id": ""
     },
     {
         "name": "Olivia Shaun",
         "mail": "os@health-co.com",
         "phone": "+25 1648689446",
-        "color": "",
+        "color": "indianred",
         "id": ""
     },
     {
         "name": "Paul Lee",
         "mail": "lee@lee-enterprises.com",
         "phone": "+97 947621654",
-        "color": "",
+        "color": "lightseagreen",
         "id": ""
     },
     {
         "name": "Volker Richter",
         "mail": "richter@cv-systems.com",
         "phone": "+63 349 555 479",
-        "color": "",
+        "color": "indigo",
         "id": ""
     }
 ]

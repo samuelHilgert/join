@@ -270,7 +270,7 @@ async function validateAndAddContact(event) {
     }
     addNewContactToArray(); // contacted is added, if form is valid
     if (!loggedAsGuest === true || loggedAsGuest === false) {
-        await pushContactsOnRemoteServer();
+        await saveNewUserDate();
     } else {
         let div = document.getElementById('guestMessagePopupContacts');
         let messageText = document.getElementById('guestMessageContacts');
@@ -366,7 +366,7 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         contacts[index]['mail'] = newMail;
         contacts[index]['phone'] = newPhone;
         if (!loggedAsGuest === true || loggedAsGuest === false) {
-            await pushContactsOnRemoteServer();
+            await saveNewUserDate();
         } else {
             let div = document.getElementById('guestMessagePopupContacts');
             let messageText = document.getElementById('guestMessageContacts');
@@ -438,7 +438,7 @@ async function deleteContact(contactId) {
     if (index != -1) {
         contacts.splice(index, 1);
         if (!loggedAsGuest === true || loggedAsGuest === false) {
-            await pushContactsOnRemoteServer();
+            await saveNewUserDate();
         }
         else {
             let div = document.getElementById('guestMessagePopupContacts');

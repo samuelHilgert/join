@@ -3,17 +3,33 @@ let newTask = [];
 let subtasks = [];
 let contactsForTasks = [];
 let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
+let contactsLoaded = false;
+
+/**
+ * This function gets the next available ID that's not already used in the tasks array. 
+ * 
+ * @returns {string} - the next available ID
+ */
+function getNextAvailableTaskId() {
+  let id = 1;
+  while (tasks.some(task => task.id === id.toString())) {
+      id++;
+  }
+  return id.toString();
+}
 
 // function to add the task
 async function addTask() {
   const taskInput = readTaskInput();
+  let dueDateFormatted = saveDueDateFormatted(taskInput.date);
   const prio = determinePriority();
+  let id = getNextAvailableTaskId();
   const task = {
-    id: '99',
+    id: id,
     label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
-    dueDate: new Date(taskInput.date).getTime(),
+    dueDate: dueDateFormatted,
     assignedTo: checkedCheckboxes,
     priority: prio,
     subtasks: subtasks,
@@ -32,6 +48,23 @@ async function addTask() {
     resetAddTaskValues();
     alert('Neue Aufgabe erstellt!');
   }
+}
+
+function saveDueDateFormatted(dateValue) {
+  let dueDateFormatted;
+  let unix_timestamp = dateValue; // Unix-Zeitstempel
+  let datum = new Date(unix_timestamp); // Erstelle ein neues Date-Objekt und setze den Unix-Zeitstempel
+  let tag = datum.getDate(); // Gib den Tag zurück
+  let monat = datum.getMonth() + 1; // Gib den Monat zurück und füge 1 hinzu, da Monate bei 0 beginnen
+  let jahr = datum.getFullYear(); // Gib das Jahr zurück
+
+  // Führende Nullen für Tag und Monat hinzufügen, wenn sie kleiner als 10 sind
+  let tagFormatted = (tag < 10) ? '0' + tag : tag;
+  let monatFormatted = (monat < 10) ? '0' + monat : monat;
+
+  // Setze das Datum im gewünschten Format
+  dueDateFormatted = tagFormatted + "/" + monatFormatted + "/" + jahr;
+  return dueDateFormatted;
 }
 
 function resetAddTaskValues() {
@@ -56,7 +89,7 @@ function readTaskInput() {
   return {
     title: title,
     description: description,
-    date: date,
+    date: new Date(date),
     category: category,
   };
 }
@@ -71,7 +104,6 @@ async function updateTaskContacts() {
   }
 }
 
-/********************   DROPDOWN SAMUEL ***********************/
 
 function openDropdown() {
   let taskContactDiv = document.getElementById('taskContactDiv');
@@ -79,53 +111,84 @@ function openDropdown() {
     taskContactDiv.style.display = 'none';
   } else {
     taskContactDiv.style.display = 'flex';
-    checkedCheckboxes = [];
+    taskContactDiv.innerHTML = '';
+    //checkedCheckboxes = [];
     for (let index = 0; index < contactsForTasks.length; index++) {
       const contact = contactsForTasks[index];
       renderContactsDropwdown(contact, index);
     }
+    markSelectedContacts();
   }
-  contactsByCheckboxen();
+  // contactsByCheckbox(); wird nicht mehr benötigt
   showContactSelection();
 }
+
 
 function renderContactsDropwdown(contact, index) {
   let letters = contactNamesLetters(contact.name);
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
 
-function contactNamesLetters(contact) {
-  let letters;
-  let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
-  let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
-  let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
-  if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
-    secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
-  }
-  letters = firstLetter + secondLetter;
-  return letters;
+function getBackgroundColorAssignedContact(contactIndex) {
+  return contacts[contactIndex].color;
 }
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
+  let backgroundColor = getBackgroundColorAssignedContact(index);
   taskContactDiv.innerHTML += `
-  <div class="d_f_sb_c width-max">
-  <div class="d_f_fs_c gap-20">
-  <div class="d_f_fs_c" id="contactLetters${index}">${letters}</div> 
-  <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
-  </div>
-  <div class="d_f_fe_c"> <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}">  </div>
+  <div class="d_f_sb_c width-max dropdown-contact-wrapper" id="wrapper${index}">
+    <div class="d_f_fs_c gap-20 dropdown-contact">
+      <div class="d_f_c_c contact-circle-small contact-circle-small-letters" id="contactLetters${index}" style="background-color: ${backgroundColor};">${letters}</div> 
+      <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
+    </div>
+    <div class="d_f_fe_c"> 
+      <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}" onclick="handleCheckboxChange(${index})">
+    </div>
   </div>
   `;
 }
 
-function contactsByCheckboxen() {
-  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
-  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
-    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
-      checkedCheckboxes.push(checkbox.value);
+function handleCheckboxChange(index) {
+  let wrapper = document.getElementById(`wrapper${index}`);
+  let checkbox = document.getElementById(`checkbox${index}`);
+  let contactName = document.getElementById(`contactName${index}`)
+  if (checkbox.checked) {
+    wrapper.style.backgroundColor = 'rgba(42, 54, 71, 1)';
+    contactName.style.color = 'rgba(255, 255, 255, 1)';
+    if (!checkedCheckboxes.includes(contactName.textContent)) {
+      checkedCheckboxes.push(contactName.textContent);
     }
-  });
+  } else {
+    wrapper.style.backgroundColor = '';
+    contactName.style.color = 'rgba(0, 0, 0, 1)';
+    let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
+    if (indexToRemove !== -1) {
+      checkedCheckboxes.splice(indexToRemove, 1);
+    }
+  }
+  console.log(checkedCheckboxes);
 }
+
+function markSelectedContacts() {
+  for (let index = 0; index < contactsForTasks.length; index++) {
+    const contact = contactsForTasks[index];
+    const checkbox = document.getElementById(`checkbox${index}`);
+    if (checkedCheckboxes.includes(contact.name)) {
+      checkbox.checked = true;
+      handleCheckboxChange(index);
+    }
+  }
+}
+
+// Funktion wird nicht mehr benötigt
+//function contactsByCheckbox(index) {
+//  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
+//  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
+//    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
+//      checkedCheckboxes.push(checkbox.value);
+//    }
+//  });
+//}
 
 function showContactSelection() {
   let contactSelection = document.getElementById('contactSelection');
@@ -137,72 +200,6 @@ function showContactSelection() {
   }
 }
 
-/**************************************************************/
-
-
-//for the contacts at Assigned to section
-function openDropdownContacts() {
-  console.log('Alle Kontakte:', contactsForTasks);
-  let Dropdownmenu = document.getElementById("inputfield-dropdown");
-  let dropdownArrow = document.getElementById("dropdown-arrow");
-  let dropdownDiv = document.getElementById("task-contact-div");
-  dropdownDiv.style.display =
-    dropdownDiv.style.display === "flex" ? "none" : "flex";
-  rotateDropdownIcon(dropdownArrow, dropdownDiv.style.display === "flex");
-
-  // Leere den HTML-Inhalt des dropdownDiv-Elements
-  dropdownDiv.innerHTML = '';
-
-  // Füge die Kontakte hinzu
-  for (let i = 0; i < contactsForTasks.length; i++) {
-    const contact = contactsForTasks[i];
-    console.log('Kontakt', i, ':', contact); // Debugging-Ausgabe
-    dropdownDiv.innerHTML += `
-    <div class="parting-line-dropdown"></div>
-    <div class="task-contact" id='test${i}'onclick='chooseContact(${i},"${contact.name}")' >
-      <div class="contact-circle d_f_c_c">
-        <div class="contact-circle-letters">AM</div>
-      </div>
-      <div class="contact-name-mail">
-        <div class="contact-name">${contact.name}</div>
-      </div>
-    </div>
-    `;
-  }
-}
-
-//TEST// //Funktion wird ab jetzt nicht mehr aufgerufen!
-
-function testOpenDropdown() {
-  updateTaskContacts();
-  console.log('Alle Kontakte:', contactsForTasks);
-  let dropdownDiv = document.getElementById("task-contact-div");
-  dropdownDiv.innerHTML = '';
-  for (let i = 0; i < contactsForTasks.length; i++) {
-    const contact = contactsForTasks[i];
-    console.log('Kontakt', i, ':', contact); // Debugging-Ausgabe
-    dropdownDiv.innerHTML += `
-    <div class="parting-line-dropdown"></div>
-    <div class="task-contact" id='test${i}'onclick='chooseContact(${i},"${contact.name}")' >
-      <div class="contact-circle d_f_c_c">
-        <div class="contact-circle-letters">AM</div>
-      </div>
-      <div class="contact-name-mail">
-        <div class="contact-name">${contact.name}</div>
-      </div>
-    </div>
-    `;
-  }
-}
-
-//TEST ENDE//
-
-function chooseContact(i, name) {
-  constElement = document.getElementById(`test${i}`);
-  constElement.style.backgroundColor = "red";
-  dropdownContact.push(name);
-}
-
 //Change Prio Btn colors!
 function setPriority(btnId) {
   removeActiveClasses();
@@ -211,33 +208,33 @@ function setPriority(btnId) {
 
 //Return Value from Priority!
 function determinePriority() {
-  let prio = "medium"; // Standardpriorität
+  let prio = "Medium"; // Standardpriorität
   const urgentBtn = document.getElementById("urgent-btn");
   const mediumBtn = document.getElementById("medium-btn");
   const lowBtn = document.getElementById("low-btn");
   if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
-    prio = "urgent";
+    prio = "Urgent";
   } else if (lowBtn.classList.contains("active-prio-btn-low")) {
-    prio = "low";
+    prio = "Low";
   }
   return prio;
 }
 
 function setActiveClasses(btnId) {
   const clickedButton = document.getElementById(btnId);
-  const buttonImg = clickedButton.querySelector("img");
-
+  const buttonSVG = clickedButton.querySelector("svg");
   switch (btnId) {
     case "urgent-btn":
       clickedButton.classList.add("active-prio-btn-urgent");
-      buttonImg.classList.add("filter-prio-btn");
+      buttonSVG.style.fill = 'white';
       break;
     case "medium-btn":
       clickedButton.classList.add("active-prio-btn-medium");
+      buttonSVG.style.fill = 'white';
       break;
     case "low-btn":
       clickedButton.classList.add("active-prio-btn-low");
-      buttonImg.classList.add("filter-prio-btn");
+      buttonSVG.style.fill = 'white';
       break;
     default:
       break;
@@ -253,7 +250,7 @@ function removeActiveClasses() {
       "active-prio-btn-medium",
       "active-prio-btn-low"
     );
-    buttonElement.querySelector("img").classList.remove("filter-prio-btn");
+    buttonElement.querySelector("svg").style.fill = '';
   });
 }
 
@@ -302,11 +299,12 @@ function renderSubtasks(container) {
   container.innerHTML = "";
   subtasks.forEach((subtask, index) => {
     container.innerHTML += `
-      <div id='subtask${index}' class='d_f_sb_c pad-x-10'>
-        <span>● ${subtask}</span>
+      <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
+        <span>• ${subtask}</span>
         <div class='d_f_c_c gap-5'>
-          <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
-          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(${index})" />
+          <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+          <div class="subtask-partingline"></div>
+          <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
         </div>
       </div>
     `;
@@ -363,10 +361,10 @@ function clearForm() {
   document.getElementById("subtask").value = "";
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
-  document.getElementById("dropdown-div").style.display = "none";
+  //document.getElementById("dropdown-div").style.display = "none";
   dropdownContact = [];
   subtasks = [];
-  setPriority("medium-btn");
+  checkedCheckboxes = [];
 }
 
 function rotateDropdownIcon(icon, isOpen) {
@@ -382,3 +380,79 @@ function setMinimumDate() {
   var minDate = currentDate.toISOString().split("T")[0];
   document.getElementById("task-date").setAttribute("min", minDate);
 }
+
+
+
+//Funktion wird ab jetzt nicht mehr aufgerufen!
+  /*  
+//for the contacts at Assigned to section
+function openDropdownContacts() {
+  console.log('Alle Kontakte:', contactsForTasks);
+  let Dropdownmenu = document.getElementById("inputfield-dropdown");
+  let dropdownArrow = document.getElementById("dropdown-arrow");
+  let dropdownDiv = document.getElementById("task-contact-div");
+  dropdownDiv.style.display =
+    dropdownDiv.style.display === "flex" ? "none" : "flex";
+  rotateDropdownIcon(dropdownArrow, dropdownDiv.style.display === "flex");
+
+  // Leere den HTML-Inhalt des dropdownDiv-Elements
+  dropdownDiv.innerHTML = '';
+
+  // Füge die Kontakte hinzu
+
+  for (let i = 0; i < contactsForTasks.length; i++) {
+    const contact = contactsForTasks[i];
+    console.log('Kontakt', i, ':', contact); // Debugging-Ausgabe
+    dropdownDiv.innerHTML += `
+    <div class="parting-line-dropdown"></div>
+    <div class="task-contact" id='test${i}'onclick='chooseContact(${i},"${contact.name}")' >
+      <div class="contact-circle d_f_c_c">
+        <div class="contact-circle-letters">AM</div>
+      </div>
+      <div class="contact-name-mail">
+        <div class="contact-name">${contact.name}</div>
+      </div>
+    </div>
+    `;
+  }
+}*/
+
+//TEST// //Funktion wird ab jetzt nicht mehr aufgerufen!
+/* 
+async function testOpenDropdown() {
+  await updateTaskContacts();
+  console.log('Alle Kontakte:', contactsForTasks);
+  let dropdownDiv = document.getElementById("task-contact-div");
+  dropdownDiv.innerHTML = '';
+  for (let i = 0; i < contactsForTasks.length; i++) {
+    const contact = contactsForTasks[i];
+    console.log('Kontakt', i, ':', contact); // Debugging-Ausgabe
+    dropdownDiv.innerHTML += `
+    <div class="parting-line-dropdown"></div>
+    <div class="task-contact" id='test${i}'onclick='chooseContact(${i},"${contact.name}")' >
+      <div class="contact-circle d_f_c_c">
+        <div class="contact-circle-letters">AM</div>
+      </div>
+      <div class="contact-name-mail">
+        <div class="contact-name">${contact.name}</div>
+      </div>
+    </div>
+    `;
+  }
+} 
+
+function chooseContact(i, name) {
+  constElement = document.getElementById(`test${i}`);
+  constElement.style.backgroundColor = "red";
+  dropdownContact.push(name);
+}
+
+
+//TEST ENDE//
+
+*/
+
+
+
+
+
