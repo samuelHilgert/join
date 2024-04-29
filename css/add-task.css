@@ -333,3 +333,8 @@ select.task-input-style {
   width: 20px;
   height: 16px;
 }
+
+.category-svg-medium {
+  width: 20px;
+  height: 10px;
+}
