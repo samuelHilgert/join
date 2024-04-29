@@ -8,7 +8,7 @@ async function renderBoardTasks() {
         let div = document.getElementById('guestMessagePopupBoard');
         let messageText = document.getElementById('guestMessageBoard');
         showGuestPopupMessageForReload(div, messageText);
-        await updateBoardTasks();
+        await updateUserData();
     }
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
@@ -166,10 +166,21 @@ const contacts = todo['assignedTo'];
 taskPopupContentAssignedTo.innerHTML = '';
 for (let index = 0; index < contacts.length; index++) {
     const contact = contacts[index];
-    const letters = contactNamesLetters(contact.name);
-    taskPopupContentAssignedTo.innerHTML += `<div class="contact-circle-small contact-circle-small-letters">${letters}/div><p>${contact}</p>`;
+    const letters = contactNamesLetters(contact);
+    const backgroundColor = getBgColorTaskPopup(index);
+    taskPopupContentAssignedTo.innerHTML += `
+    <div class="d_f_c_c gap-10">
+    <div class="contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    <p>${contact}</p>
+    </div>
+    `;
 }
 }
+
+function getBgColorTaskPopup(index) {
+    let userContact = users[currentUser]['contacts'][index];
+    return userContact.color;
+  }
 
 async function editTask() {
     let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
