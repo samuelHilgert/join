@@ -3,6 +3,7 @@ let newTask = [];
 let subtasks = [];
 let contactsForTasks = [];
 let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
+let contactsLoaded = false;
 
 /**
  * This function gets the next available ID that's not already used in the tasks array. 
@@ -70,7 +71,7 @@ function readTaskInput() {
   return {
     title: title,
     description: description,
-    date: date,
+    date: new Date(date),
     category: category,
   };
 }
@@ -84,6 +85,7 @@ async function updateTaskContacts() {
     contactsForTasks = currentUserContactsForTasks;
   }
 }
+
 
 function openDropdown() {
   let taskContactDiv = document.getElementById('taskContactDiv');
@@ -100,6 +102,7 @@ function openDropdown() {
   // contactsByCheckbox(); wird nicht mehr benötigt
   showContactSelection();
 }
+
 
 function renderContactsDropwdown(contact, index) {
   let letters = contactNamesLetters(contact.name);
