@@ -190,13 +190,23 @@ function markSelectedContacts() {
 //  });
 //}
 
+/**
+ * This function renders the selected contacts in the contact selection area.
+ * Therefore it first loops through the checkedCheckboxes array to find the name of the selected contact. 
+ * The name is then compared with the contactsForTasks array to find the index of the contact. 
+ * If the name is found in the array, the initials and background colors are extracted from it.
+ */
 function showContactSelection() {
   let contactSelection = document.getElementById('contactSelection');
   contactSelection.innerHTML = ``;
   for (let index = 0; index < checkedCheckboxes.length; index++) {
-    const contact = checkedCheckboxes[index];
-    const letters = contactNamesLetters(contact);
-    contactSelection.innerHTML += `<div class="d_f_c_c">${letters}</div>`;
+    const contactName = checkedCheckboxes[index];
+    const contactIndex = contactsForTasks.findIndex(contact => contact.name === contactName);
+    if (contactIndex !== -1) {
+      const backgroundColor = contacts[contactIndex].color;
+      const letters = contactNamesLetters(contactName);
+      contactSelection.innerHTML += `<div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>`;
+    }
   }
 }
 
