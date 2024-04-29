@@ -316,8 +316,8 @@ select.task-input-style {
   position: relative;
 }
 
-.width-460 {
-  width: 460px;
+.width-50 {
+  width: 50%;
 }
 
 .cursor-pointer {
