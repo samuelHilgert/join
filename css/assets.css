@@ -261,6 +261,12 @@ cursor:pointer;
   background-color: rgba(209, 209, 209, 1);
 }
 
+.add-task-partingline {
+  height: 590px;
+  width: 1px;
+  background-color: rgba(209, 209, 209, 1);
+}
+
 .drag-area {
   height: 900px;
   width: 220px;

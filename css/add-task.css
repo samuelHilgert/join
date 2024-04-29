@@ -71,6 +71,11 @@ input[type="checkbox"] {
   background-position-y: 50%;
   background-size: 24px;
   cursor: pointer;
+  z-index: 5;
+}
+
+#dropdown-arrow {
+  z-index: 10;
 }
 
 .task-input-style-black::placeholder {
