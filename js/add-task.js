@@ -336,10 +336,10 @@ function clearForm() {
   document.getElementById("subtask").value = "";
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
-  document.getElementById("dropdown-div").style.display = "none";
+  //document.getElementById("dropdown-div").style.display = "none";
   dropdownContact = [];
   subtasks = [];
-  setPriority("medium-btn");
+  checkedCheckboxes = [];
 }
 
 function rotateDropdownIcon(icon, isOpen) {
