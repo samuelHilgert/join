@@ -11,6 +11,7 @@
   background-position-y: 50%;
   background-size: 24px;
   cursor: pointer;
+  border: unset;
 }
 
 .dropdown-add-task {
@@ -88,7 +89,6 @@ input[type="checkbox"] {
   justify-content: center;
   align-items: center;
 }
-
 
 .task-btn-style {
   width: 100%;
@@ -283,7 +283,6 @@ select.task-input-style {
   outline: none;
 }
 
-
 .input-icon-div {
   position: absolute;
   top: 50%;
@@ -357,7 +356,7 @@ select.task-input-style {
 }
 
 .active-prio-btn-low {
-  background-color: #7AE229;
+  background-color: #7ae229;
   color: rgba(255, 255, 255, 1);
   font-weight: 700;
 }
@@ -381,6 +380,18 @@ select.task-input-style {
 
 .padding-right-36 {
   padding-right: 36px;
+}
+
+input:focus {
+  outline: 2px solid rgb(143, 208, 237);
+}
+
+textarea:focus {
+  outline: 2px solid rgb(143, 208, 237);
+}
+
+.invalid-field {
+  border: 1px solid red; /* Rote Umrandung für ungültige Felder */
 }
 
 .category-svg-urgent {
