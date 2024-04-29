@@ -130,7 +130,7 @@ function handleCheckboxChange(index) {
     wrapper.style.backgroundColor = 'rgba(42, 54, 71, 1)';
     contactName.style.color = 'rgba(255, 255, 255, 1)';
   } else {
-    wrapper.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+    wrapper.style.backgroundColor = '';
     contactName.style.color = 'rgba(0, 0, 0, 1)';
   }
 }
