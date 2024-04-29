@@ -4,12 +4,26 @@ let subtasks = [];
 let contactsForTasks = [];
 let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 
+/**
+ * This function gets the next available ID that's not already used in the tasks array. 
+ * 
+ * @returns {string} - the next available ID
+ */
+function getNextAvailableTaskId() {
+  let id = 1;
+  while (tasks.some(task => task.id === id.toString())) {
+      id++;
+  }
+  return id.toString();
+}
+
 // function to add the task
 async function addTask() {
   const taskInput = readTaskInput();
   const prio = determinePriority();
+  let id = getNextAvailableTaskId();
   const task = {
-    id: '99',
+    id: id,
     label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
