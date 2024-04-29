@@ -50,6 +50,10 @@ function checkFalseOpening() {
     }
 }
 
+function firstLogin() {
+    window.location.href = `./login.html`;
+}
+
 /**
  * This is a query which page is visited and launch functions
  * 
