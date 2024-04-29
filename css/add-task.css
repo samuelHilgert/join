@@ -385,10 +385,6 @@ textarea:focus {
   outline: 2px solid rgb(143, 208, 237);
 }
 
-.invalid-field {
-  border: 1px solid red; /* Rote Umrandung für ungültige Felder */
-}
-
 .category-svg-urgent {
   width: 20px;
   height: 16px;
