@@ -110,11 +110,11 @@ function openBoardTaskPopup(openId) {
 
 function renderBoardTaskPopupContent(taskId) {
     const todo = tasks[taskId];
-    showTaskText(todo);
+    showTaskText(todo, taskId);
     getContactsForPopupTask(todo);
 }
 
-function showTaskText(todo) {
+function showTaskText(todo, taskId) {
     let taskPopupContentLabel = document.getElementById('taskPopupContentLabel');
     let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
     let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
@@ -143,9 +143,26 @@ function showTaskText(todo) {
     `;
 
     taskPopupContentSubtasks.innerHTML = `
+    <div class="d_f_c_c gap-10">
+    <img src="../assets/img/check-button-empty.svg" id="checkButton${taskId}" onclick="clickSubtask(${taskId})"></img>
     <p>Start Page Layout</p>
-    <p>Implement Recipe</p>
+    </div>
     `;
+}
+
+function clickSubtask(taskId) {
+    let checkButton = document.getElementById(`checkButton${taskId}`);
+    let emptyButton = "../assets/img/check-button-empty.svg";
+    let clickedButton = "../assets/img/check-button-clicked.svg";
+    if (checkButton.src.includes(emptyButton)) {
+        console.log('yes, empty');
+        console.log(checkButton.src);
+        checkButton.src = clickedButton;
+    } else {
+        console.log('not empty');
+        console.log(checkButton.src);
+        checkButton.src = emptyButton;
+    }
 }
 
 function getPriorityIcon(todo) {
@@ -161,26 +178,26 @@ function getPriorityIcon(todo) {
 }
 
 function getContactsForPopupTask(todo) {
-let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
-const contacts = todo['assignedTo'];
-taskPopupContentAssignedTo.innerHTML = '';
-for (let index = 0; index < contacts.length; index++) {
-    const contact = contacts[index];
-    const letters = contactNamesLetters(contact);
-    const backgroundColor = getBgColorTaskPopup(index);
-    taskPopupContentAssignedTo.innerHTML += `
+    let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
+    const contacts = todo['assignedTo'];
+    taskPopupContentAssignedTo.innerHTML = '';
+    for (let index = 0; index < contacts.length; index++) {
+        const contact = contacts[index];
+        const letters = contactNamesLetters(contact);
+        const backgroundColor = getBgColorTaskPopup(index);
+        taskPopupContentAssignedTo.innerHTML += `
     <div class="d_f_c_c gap-10">
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
     <p>${contact}</p>
     </div>
     `;
-}
+    }
 }
 
 function getBgColorTaskPopup(index) {
     let userContact = users[currentUser]['contacts'][index];
     return userContact.color;
-  }
+}
 
 async function editTask() {
     let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
