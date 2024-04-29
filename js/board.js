@@ -1,44 +1,14 @@
-let tasks = [];
 let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 let currentDraggedTaskId;
 let taskId;
-/**
- * This is a function that checks whether a guest or user has logged in
- * The data is only saved remotely if the user is logged in
- * In both cases sample contacts are also loaded
- * 
- */
-async function updateBoardTasks() {
-    if (loggedAsGuest === true) {
-        await loadExampleTasks();
-    } else {
-        let currentUserTasks = users[currentUser].tasks;
-        if (currentUserTasks.length === 0) {
-            await loadExampleTasks();
-            await pushTasksOnRemoteServer();
-        }
-        else {
-            tasks = users[currentUser].tasks;
-        }
-    }
-}
 
-async function loadExampleTasks() {
-    let resp = await fetch('./JSON/tasks.json');
-    tasks = await resp.json();
-}
-
-async function pushTasksOnRemoteServer() {
-    users[currentUser].tasks = tasks;
-    await setItem('users', JSON.stringify(users));
-}
 
 async function renderBoardTasks() {
     if (tasks.length === 0) {
         let div = document.getElementById('guestMessagePopupBoard');
         let messageText = document.getElementById('guestMessageBoard');
         showGuestPopupMessageForReload(div, messageText);
-        await updateBoardTasks();
+        await updateUserData();
     }
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
@@ -90,7 +60,7 @@ async function moveTo(currentCategory) {
             foundIndex = id;
             tasks[foundIndex].category = currentCategory;
             if (!loggedAsGuest === true || loggedAsGuest === false) {
-                await pushTasksOnRemoteServer();
+                await saveNewUserDate();
             } else {
                 let div = document.getElementById('guestMessagePopupBoard');
                 let messageText = document.getElementById('guestMessageBoard');
@@ -140,19 +110,19 @@ function openBoardTaskPopup(openId) {
 
 function renderBoardTaskPopupContent(taskId) {
     const todo = tasks[taskId];
-    showTaskText(todo);
+    showTaskText(todo, taskId);
+    getContactsForPopupTask(todo);
 }
 
-function showTaskText(todo) {
+function showTaskText(todo, taskId) {
     let taskPopupContentLabel = document.getElementById('taskPopupContentLabel');
     let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
     let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
     let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate');
     let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');
-    let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
     let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
     taskPopupContentLabel.innerHTML = `${todo['label']}`;
-    taskPopupContentTitle.innerHTML = `<h6><b>${todo['title']}</b></h6>`;
+    taskPopupContentTitle.innerHTML = `<h2><b>${todo['title']}</b></h2>`;
     taskPopupContentDescription.innerHTML = `<p>${todo['description']}</p>`;
     taskPopupContentDueDate.innerHTML = `
     <div class="d_f_fs_c width-50 gap-30">
@@ -168,17 +138,65 @@ function showTaskText(todo) {
     </div>
     <div class="d_f_fs_c width-50 gap-30">
         <p>${todo['priority']}</p>
+        <div><img src="../assets/img/${getPriorityIcon(todo)}"></img></div>
     </div>
     `;
-    taskPopupContentAssignedTo.innerHTML = `
-    <p>Max Mustermann</p>
-    <p>Thorsten Haas</p>
-    <p>Uwe Schmidt</p>
-    `;
+
     taskPopupContentSubtasks.innerHTML = `
+    <div class="d_f_c_c gap-10">
+    <img src="../assets/img/check-button-empty.svg" id="checkButton${taskId}" onclick="clickSubtask(${taskId})"></img>
     <p>Start Page Layout</p>
-    <p>Implement Recipe</p>
+    </div>
     `;
+}
+
+function clickSubtask(taskId) {
+    let checkButton = document.getElementById(`checkButton${taskId}`);
+    let emptyButton = "../assets/img/check-button-empty.svg";
+    let clickedButton = "../assets/img/check-button-clicked.svg";
+    if (checkButton.src.includes(emptyButton)) {
+        console.log('yes, empty');
+        console.log(checkButton.src);
+        checkButton.src = clickedButton;
+    } else {
+        console.log('not empty');
+        console.log(checkButton.src);
+        checkButton.src = emptyButton;
+    }
+}
+
+function getPriorityIcon(todo) {
+    let imgSrc;
+    if (todo['priority'] === 'Urgent') {
+        imgSrc = 'arrow-higher.png'
+    } else if (todo['priority'] === 'Medium') {
+        imgSrc = 'prio-media.svg'
+    } else if (todo['priority'] === 'Low') {
+        imgSrc = 'arrow-lower.png'
+    }
+    return imgSrc;
+}
+
+function getContactsForPopupTask(todo) {
+    let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
+    const contacts = todo['assignedTo'];
+    taskPopupContentAssignedTo.innerHTML = '';
+    for (let index = 0; index < contacts.length; index++) {
+        const contact = contacts[index];
+        const letters = contactNamesLetters(contact);
+        const backgroundColor = getBgColorTaskPopup(index);
+        taskPopupContentAssignedTo.innerHTML += `
+    <div class="d_f_c_c gap-10">
+    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    <p>${contact}</p>
+    </div>
+    `;
+    }
+}
+
+function getBgColorTaskPopup(index) {
+    let userContact = users[currentUser]['contacts'][index];
+    return userContact.color;
 }
 
 async function editTask() {
@@ -216,7 +234,7 @@ async function deleteTask() {
     document.body.style.overflow = 'scroll';
     tasks.splice(taskId, 1);
     if (!loggedAsGuest === true || loggedAsGuest === false) {
-        await pushTasksOnRemoteServer();
+        await saveNewUserDate();
     } else {
         let div = document.getElementById('guestMessagePopupBoard');
         let messageText = document.getElementById('guestMessageBoard');
@@ -259,9 +277,9 @@ let findMatchingIndices = [];
 async function searchTasksOnBoard() {
     let searchInput = document.getElementById('searchBoardInput').value;
     let search = searchInput.trim().toLowerCase();
-    
+
     let matchingIndices = [];
-    
+
     await getMatchingIndicies(matchingIndices, search);
     await generateCategoriesBySearch(matchingIndices);
     initGuestPopupMessage();
@@ -274,7 +292,7 @@ async function getMatchingIndicies(matchingIndices, search) {
     }
 }
 
-async function findTasksIndices(matchingIndices, search) { 
+async function findTasksIndices(matchingIndices, search) {
     for (let i = 0; i < tasks.length; i++) {
         const everySearchedTaskName = tasks[i].title;
         const everySearchedTaskDecription = tasks[i].description;

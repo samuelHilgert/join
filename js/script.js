@@ -1,38 +1,34 @@
 let users = [];
+let contacts = [];
+let tasks = [];
+let rememberStatus = [];
 let currentUser;
 let loggedAsGuest = false;
-let rememberStatus = [];
-let remember = false;
-let setResetExpiryTime = 2832323;
-let popupCloseTime = 8000;
+let setResetExpiryTime = 2832323; // set logout time
+let popupCloseTime = 8000; // set popup display time
 
 /**
  * This is a function to initialize render functions 
  * 
  */
 async function init() {
-    await loadRememberStatus();
-    await loadUserData();
+    checkFalseOpening();
     getCurrentUserId();
-    checkUnauthorizedOpening();
+    if (!loggedAsGuest) {
+        await loadUserData();
+    }
+    await loadLoggedTime();
+    await updateUserData();
     await includeHTML();
-    getCurrentlySidebarLink();
-    hideHelpIcon();
-    renderHeaderUserName();
+    renderHeader();
+    getCurrentlySidebarLink(); // in sidebar.js
 
-    // Überprüfe, ob die aktuelle Zeit größer oder gleich dem Ablaufdatum ist
+    // check whether the current time is greater than or equal to the expiration date
     setInterval(function () {
         let expiryTime = rememberStatus[0].expiryDate;
         if (rememberStatus[0].remember_status === false) {
-            /* if () {
-              
-              } else { */
-            let now = new Date().getMinutes(); // .toLocaleString('de-DE');
-            if (now >= expiryTime) { // let currentTime = now.getMinutes();
-                // Die Zeit ist abgelaufen
-                // Führe hier die entsprechenden Aktionen aus, z.B. den Benutzer abmelden
-                console.log('Du warst längere Zeit nicht aktiv, melde dich bitte erneut an!');
-                // clearInterval(intervalId); // Stoppe die Überprüfung, wenn die Zeit abgelaufen ist
+            let now = new Date().getMinutes();
+            if (now >= expiryTime) { // time is over
                 resetLoginValues();
                 setTimeout(firstLogin, 1000);
             }
@@ -42,47 +38,134 @@ async function init() {
     await initiateIndividualFunctions();
 }
 
-async function initiateIndividualFunctions() {
-    // Überprüfe, ob du dich auf der Seite summary.html oder contacts.html befindest
-    if (document.location.pathname === '/summary.html') {
-        await resetExpiryTime();
-        await updateTasksForSummary();
-        renderSummary(); // Rufe renderSummary() nur auf, wenn du dich auf der summary.html-Seite befindest
-    } else if (document.location.pathname === '/add-task.html') {
-        await resetExpiryTime();
-        updateTaskContacts();
-    } else if (document.location.pathname === '/board.html') {
-        await resetExpiryTime();
-        await updateBoardTasks();
-        await renderBoardTasks();
-    } else if (document.location.pathname === '/contacts.html') {
-        await resetExpiryTime();
-        await updateContacts();
-        await renderContacts(); // Rufe renderContacts() nur auf, wenn du dich auf der contacts.html-Seite befindest
-    } else if (document.location.pathname === '/privacy-policy.html') {
-        await resetExpiryTime();
-    } else if (document.location.pathname === '/legal-notice.html') {
-        await resetExpiryTime();
-    } else if (document.location.pathname === '/help.html') {
-        await resetExpiryTime();
-    }
-} 
-
 /**
- * This feature secures unauthorized opening of pages via the URL by copying and pasting.
+ * This function secures unauthorized opening of pages via the URL by copying and pasting without logged in as user or guest
  * 
  */
-function checkUnauthorizedOpening() {
-    let valueLogged = localStorage.getItem('logged');
-    let valueUser = localStorage.getItem('user');
-    if (valueLogged === null && valueUser === null) {
+function checkFalseOpening() {
+    let loggedStatus = localStorage.getItem('logged');
+    let userId = localStorage.getItem('user');
+    if (loggedStatus === null && userId === null) {
         firstLogin();
     }
 }
 
+function firstLogin() {
+    window.location.href = `./login.html`;
+}
+
+/**
+ * This is a query which page is visited and launch functions
+ * 
+ */
+async function initiateIndividualFunctions() {
+    let pages = ['summary', 'add-task', 'board', 'contacts', 'privacy-policy', 'legal-notice', 'help'];
+    for (let index = 0; index < pages.length; index++) {
+        const currentPage = pages[index];
+        if (document.location.pathname === `/${currentPage}.html`) {
+            await resetExpiryTime();
+            if (currentPage === 'summary') {
+                renderSummary();
+            } else if (currentPage === 'add-task') {
+                await updateTaskContacts();
+            } else if (currentPage === 'board') {
+                await renderBoardTasks();
+            } else if (currentPage === 'contacts') {
+                await renderContacts();
+            }
+        }
+    }
+}
+
+/**
+ * This function resets the expiration time for the logout
+ * 
+ */
 async function resetExpiryTime() {
-    rememberStatus[0].expiryDate = new Date().getMinutes() + setResetExpiryTime;
+    rememberStatus[0].expiryDate = new Date().getMinutes() + setResetExpiryTime; // global variable that can be changed
     await setItem('remember_status', JSON.stringify(rememberStatus));
+}
+
+/**
+ * this is a function to get the current user-array-position from the user on the remote server
+ * if the user is logged in as a guest, loggedAsGuest is set to true
+ * the data are initiate in login.js
+ * 
+ */
+function getCurrentUserId() {
+    if (localStorage.getItem('logged')) {
+        loggedAsGuest = true;
+    }
+    if (localStorage.getItem('user')) {
+        currentUser = localStorage.getItem('user');
+    }
+}
+
+/**
+ * this function loads the user data from the remote server to the local array "users"
+ * 
+ */
+async function loadUserData() {
+    try {
+        users = JSON.parse(await getItem('users'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
+}
+
+/**
+ * this function loads the value, whether the user logged in with the remember option
+ * the data is initiate in login.js
+ * 
+ */
+async function loadLoggedTime() {
+    try {
+        rememberStatus = JSON.parse(await getItem('remember_status'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
+}
+
+/**
+ * This is a function that checks whether a guest or user has logged in
+ * The data is only saved remotely if the user is logged in
+ * In both cases sample contacts and tasks are also loaded
+ * 
+ */
+async function updateUserData() {
+    await loadExamples();
+    if (!loggedAsGuest) {
+        let userData = users[currentUser];
+        if (userData.contacts.length === 0 || userData.tasks.length === 0) {
+            await loadExamples();
+        }
+        else {
+            contacts = users[currentUser].contacts;
+            tasks = users[currentUser].tasks;
+        }
+        await saveNewUserDate();
+    }
+}
+
+/**
+ * This is a function which includes the sample contacts from the contacts.json JSON-Document 
+ * 
+ */
+async function loadExamples() {
+    let respContacts = await fetch('./JSON/contacts.json');
+    let respTasks = await fetch('./JSON/tasks.json');
+    contacts = await respContacts.json();
+    tasks = await respTasks.json();
+}
+
+/**
+ * This function moves the data in local arrays and on the server
+ * 
+ */
+async function saveNewUserDate() {
+    users[currentUser].contacts = contacts;
+    users[currentUser].tasks = tasks;
+    await setItem('users', JSON.stringify(users));
 }
 
 /**
@@ -103,76 +186,20 @@ async function includeHTML() {
     }
 }
 
-async function loadRememberStatus() {
-    try {
-        rememberStatus = JSON.parse(await getItem('remember_status'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
+/**
+ * This function renders header elements
+ * 
+ */
+function renderHeader() {
+    let lettersDiv = document.getElementById('headerUserName');
+    hideHelpIcon();
+    renderLettersByName(lettersDiv);
 }
 
-async function loadUserData() {
-    try {
-        users = JSON.parse(await getItem('users'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
-}
-
-function getCurrentUserId() {
-    let savedDataSesssionStorage = sessionStorage.getItem('user');
-    let savedDataLocalStorage = localStorage.getItem('user');
-    let loggedStatusLocalStorage = localStorage.getItem('logged');
-    if (loggedStatusLocalStorage) {
-        loggedAsGuest = true;
-    }
-    else {
-        if (savedDataSesssionStorage) {
-            currentUser = savedDataSesssionStorage;
-        } else {
-            if (savedDataLocalStorage) {
-                currentUser = savedDataLocalStorage;
-            }
-        }
-    }
-}
-
-function renderHeaderUserName() {
-    if (loggedAsGuest === true) {
-        document.getElementById('headerUserName').innerHTML = 'GU';
-    } else {
-        let firstLetter = users[currentUser].name.charAt(0); // Erster Buchstabe des Vornamens
-        let spaceIndex = users[currentUser].name.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
-        let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
-        if (spaceIndex !== -1 && spaceIndex < users[currentUser].name.length - 1) {
-            secondLetter = users[currentUser].name.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
-        }
-        // Setzen Sie den Header-Text mit den ersten Buchstaben des Vor- und Nachnamens
-        document.getElementById('headerUserName').innerHTML = firstLetter + secondLetter;
-    }
-}
-
-let headerOpenPopupClicked = false;
-
-function openHeaderPopupLinks() {
-    if (!headerOpenPopupClicked) {
-        let headerSymbolPopup = document.getElementById('headerSymbolPopup');
-        headerSymbolPopup.style.display = 'flex';
-        headerOpenPopupClicked = true;
-    }
-    else {
-        let headerSymbolPopup = document.getElementById('headerSymbolPopup');
-        headerSymbolPopup.style.display = 'none';
-        headerOpenPopupClicked = false;
-    }
-}
-
-function openHelp() {
-    openHelpClicked = true;
-    let targetUrl = `./help.html`;
-    window.location.href = targetUrl;
-}
-
+/**
+ * This function checks whether help.html is clicked. If this is the case, the help icon will be hidden
+ * 
+ */
 function hideHelpIcon() {
     let currentUrl = window.location.href;
     if (currentUrl.indexOf('help') !== -1) {
@@ -181,12 +208,61 @@ function hideHelpIcon() {
     }
 }
 
+/**
+ * This function generates the initials of the username or from guest
+ * 
+ */
+function renderLettersByName(lettersDiv) {
+    if (loggedAsGuest) {
+        lettersDiv.innerHTML = 'GU';
+    } else {
+        let userName = users[currentUser].name;
+        lettersDiv.innerHTML = getLettersByUserName(userName);
+    }
+}
+
+/**
+ * This function gets the letters by username
+ * 
+ */
+function getLettersByUserName(userName) {
+    let getFirstLetter = userName.charAt(0); // first letter from first name
+    let spaceIndex = userName.indexOf(' '); // index from space between first name and last name
+    let getSecondLetter = ''; // initiate the last name
+    if (spaceIndex !== -1 && spaceIndex < userName.length - 1) {
+        getSecondLetter = userName.charAt(spaceIndex + 1); // first letter from last name
+    }
+    let lettersByUserName = getFirstLetter + getSecondLetter; // both letters merged
+    return lettersByUserName;
+}
+
+/**
+ * this function creates the popup menu with links for header
+ * 
+ */
+function openHeaderPopupLinks() {
+    let headerSymbolPopup = document.getElementById('headerSymbolPopup');
+    if (headerSymbolPopup.style.display === 'flex') {
+        headerSymbolPopup.style.display = 'none'
+    } else {
+        headerSymbolPopup.style.display = 'flex'
+    }
+}
+
+/**
+ * this function opens the external links with an extension of the url address
+ *
+ */
 function openExternalLink(link) {
     let url = `./${link}.html`;
     let targetUrl = url + '?external';
     window.open(targetUrl, '_blank');
 }
 
+/**
+ * this function sets the animation of elements
+ *
+ */
 function moveContainerIn(container) {
     container.classList.remove('outside');
     container.classList.remove('animation-out');
@@ -199,10 +275,6 @@ function moveContainerOut(container) {
     container.classList.remove('animation-in');
     container.classList.add('outside');
     container.classList.add('animation-out');
-}
-
-function displayNonePopup(popup) {
-    popup.style.display = 'none';
 }
 
 function moveContainerUp(container) {
@@ -219,27 +291,31 @@ function moveContainerDown(container) {
     container.classList.add('animation-down');
 }
 
-
-function clickLogout() {
-    resetLoginValues();
-    setTimeout(forwardAfterLogout, 500);
+/**
+ * this function closes every popup
+ * 
+ */
+function displayNonePopup(popup) {
+    popup.style.display = 'none';
 }
 
-function resetLoginValues() {
+/**
+ * this function resets the localStorage and redirects the user to login after logout
+ * 
+ */
+function clickLogout() {
     localStorage.removeItem('user');
     localStorage.removeItem('logged');
-    sessionStorage.removeItem('user');
     localStorage.removeItem('remember');
+    setTimeout(() => {
+        window.location.href = `./login.html?msg=Du bist abgemeldet`;
+    }, 500);
 }
 
-function forwardAfterLogout() {
-    window.location.href = `./login.html?msg=Du bist abgemeldet`;
-}
-
-function firstLogin() {
-    window.location.href = `./login.html`;
-}
-
+/**
+ * 
+ * 
+ */
 function showGuestPopupMessageForReload(div, messageText) {
     document.body.style.overflow = 'hidden';
     setTimeout(function () {
@@ -286,7 +362,7 @@ function generateGuestMessageText(div, messageText) {
 `;
 }
 
-function closeGuestPopupMessage(div){
+function closeGuestPopupMessage(div) {
     div.style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
@@ -295,3 +371,16 @@ function closePopupAutomaticly(div) {
     div.style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
+
+function contactNamesLetters(contact) {
+    let letters;
+    let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
+    let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
+    let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
+    if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
+      secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+    }
+    letters = firstLetter + secondLetter;
+    return letters;
+  }
+  
