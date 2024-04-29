@@ -56,6 +56,21 @@ input[type="checkbox"] {
 
 }
 
+.contact-circle-small {
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 1);
+  height: 35px;
+  width: 35px;
+}
+
+.contact-circle-small-letters {
+  font-family: 'Inter';
+  font-size: 13px;
+  line-height: 14.4px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+}
+
 
 /*************************************************/
 
