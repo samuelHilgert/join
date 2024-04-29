@@ -303,7 +303,7 @@ select.task-input-style {
 }
 
 .active-prio-btn-low {
-  background-color: #7ae229;
+  background-color: #7AE229;
   color: rgba(255, 255, 255, 1);
   font-weight: 700;
 }
@@ -329,12 +329,20 @@ select.task-input-style {
   padding-right: 36px;
 }
 
-.category-svg {
+.category-svg-urgent {
   width: 20px;
   height: 16px;
+  fill: #ff3d00;
 }
 
 .category-svg-medium {
   width: 20px;
   height: 10px;
+  fill: #ffa800;
+}
+
+.category-svg-low {
+  width: 20px;
+  height: 16px;
+  fill: #7ae229;
 }

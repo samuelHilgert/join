@@ -198,19 +198,19 @@ function determinePriority() {
 
 function setActiveClasses(btnId) {
   const clickedButton = document.getElementById(btnId);
-  const buttonImg = clickedButton.querySelector("img");
-
+  const buttonSVG = clickedButton.querySelector("svg");
   switch (btnId) {
     case "urgent-btn":
       clickedButton.classList.add("active-prio-btn-urgent");
-      buttonImg.classList.add("filter-prio-btn");
+      buttonSVG.style.fill = 'white';
       break;
     case "medium-btn":
       clickedButton.classList.add("active-prio-btn-medium");
+      buttonSVG.style.fill = 'white';
       break;
     case "low-btn":
       clickedButton.classList.add("active-prio-btn-low");
-      buttonImg.classList.add("filter-prio-btn");
+      buttonSVG.style.fill = 'white';
       break;
     default:
       break;
@@ -226,7 +226,7 @@ function removeActiveClasses() {
       "active-prio-btn-medium",
       "active-prio-btn-low"
     );
-    buttonElement.querySelector("img").classList.remove("filter-prio-btn");
+    buttonElement.querySelector("svg").classList.remove("filter-prio-btn");
   });
 }
 
