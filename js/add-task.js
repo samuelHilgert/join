@@ -111,11 +111,13 @@ function openDropdown() {
     taskContactDiv.style.display = 'none';
   } else {
     taskContactDiv.style.display = 'flex';
+    taskContactDiv.innerHTML = '';
     //checkedCheckboxes = [];
     for (let index = 0; index < contactsForTasks.length; index++) {
       const contact = contactsForTasks[index];
       renderContactsDropwdown(contact, index);
     }
+    markSelectedContacts();
   }
   // contactsByCheckbox(); wird nicht mehr benötigt
   showContactSelection();
@@ -150,29 +152,32 @@ function handleCheckboxChange(index) {
   let wrapper = document.getElementById(`wrapper${index}`);
   let checkbox = document.getElementById(`checkbox${index}`);
   let contactName = document.getElementById(`contactName${index}`)
-  
   if (checkbox.checked) {
     wrapper.style.backgroundColor = 'rgba(42, 54, 71, 1)';
     contactName.style.color = 'rgba(255, 255, 255, 1)';
-    console.log('ausgewählter Kontakt', contactName.textContent);
-    
-    // Überprüfen, ob der Kontakt bereits im Array ist, bevor er hinzugefügt wird
     if (!checkedCheckboxes.includes(contactName.textContent)) {
       checkedCheckboxes.push(contactName.textContent);
     }
   } else {
     wrapper.style.backgroundColor = '';
     contactName.style.color = 'rgba(0, 0, 0, 1)';
-    
-    // Index des zu entfernenden Kontakts im Array finden
     let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
-    
-    // Kontakt aus dem Array entfernen, wenn er vorhanden ist
     if (indexToRemove !== -1) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
   console.log(checkedCheckboxes);
+}
+
+function markSelectedContacts() {
+  for (let index = 0; index < contactsForTasks.length; index++) {
+    const contact = contactsForTasks[index];
+    const checkbox = document.getElementById(`checkbox${index}`);
+    if (checkedCheckboxes.includes(contact.name)) {
+      checkbox.checked = true;
+      handleCheckboxChange(index);
+    }
+  }
 }
 
 // Funktion wird nicht mehr benötigt
