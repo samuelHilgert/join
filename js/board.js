@@ -122,7 +122,7 @@ function showTaskText(todo) {
     let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
     let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
     taskPopupContentLabel.innerHTML = `${todo['label']}`;
-    taskPopupContentTitle.innerHTML = `<h6><b>${todo['title']}</b></h6>`;
+    taskPopupContentTitle.innerHTML = `<h2><b>${todo['title']}</b></h2>`;
     taskPopupContentDescription.innerHTML = `<p>${todo['description']}</p>`;
     taskPopupContentDueDate.innerHTML = `
     <div class="d_f_fs_c width-50 gap-30">

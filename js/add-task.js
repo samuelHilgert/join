@@ -21,6 +21,7 @@ function getNextAvailableTaskId() {
 // function to add the task
 async function addTask() {
   const taskInput = readTaskInput();
+  let dueDateFormatted = saveDueDateFormatted(taskInput.date);
   const prio = determinePriority();
   let id = getNextAvailableTaskId();
   const task = {
@@ -28,7 +29,7 @@ async function addTask() {
     label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
-    dueDate: new Date(taskInput.date).getTime(),
+    dueDate: dueDateFormatted,
     assignedTo: checkedCheckboxes,
     priority: prio,
     subtasks: subtasks,
@@ -47,6 +48,23 @@ async function addTask() {
     resetAddTaskValues();
     alert('Neue Aufgabe erstellt!');
   }
+}
+
+function saveDueDateFormatted(dateValue) {
+  let dueDateFormatted;
+  let unix_timestamp = dateValue; // Unix-Zeitstempel
+  let datum = new Date(unix_timestamp); // Erstelle ein neues Date-Objekt und setze den Unix-Zeitstempel
+  let tag = datum.getDate(); // Gib den Tag zurück
+  let monat = datum.getMonth() + 1; // Gib den Monat zurück und füge 1 hinzu, da Monate bei 0 beginnen
+  let jahr = datum.getFullYear(); // Gib das Jahr zurück
+
+  // Führende Nullen für Tag und Monat hinzufügen, wenn sie kleiner als 10 sind
+  let tagFormatted = (tag < 10) ? '0' + tag : tag;
+  let monatFormatted = (monat < 10) ? '0' + monat : monat;
+
+  // Setze das Datum im gewünschten Format
+  dueDateFormatted = tagFormatted + "/" + monatFormatted + "/" + jahr;
+  return dueDateFormatted;
 }
 
 function resetAddTaskValues() {
