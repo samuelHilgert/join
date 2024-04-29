@@ -32,7 +32,8 @@ async function addTask() {
     dueDate: dueDateFormatted,
     assignedTo: checkedCheckboxes,
     priority: prio,
-    subtasks: subtasks,
+    subtasksOpen: subtasks,
+    subtasksDone: [],
     category: "backlog",
   };
   newTask.push(task);

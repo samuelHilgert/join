@@ -112,7 +112,7 @@ function renderBoardTaskPopupContent(taskId) {
     const todo = tasks[taskId];
     showTaskText(todo, taskId);
     getContactsForPopupTask(todo);
-    getSubtasksForPopupTask(taskId);
+    // getSubtasksForPopupTask(taskId); // in Bearbeitung
 }
 
 function showTaskText(todo) {
@@ -143,16 +143,18 @@ function showTaskText(todo) {
     `;
 }
 
+// in Bearbeitung
 function getSubtasksForPopupTask(taskId) {
     let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
     const subtasksOpen = tasks[taskId]['subtasksOpen'];
     const subtasksDone = tasks[taskId]['subtasksDone'];
+
     taskPopupContentSubtasks.innerHTML = '';
         // rendering subtasksOpen with empty check-button
         for (let a = 0; a < subtasksOpen.length; a++) {
             taskPopupContentSubtasks.innerHTML += `
             <div class="d_f_c_c gap-10">
-            <div id="taskId${taskId}SubtaskId${a}"><img src="../assets/img/check-button-empty.svg" id="taskId${taskId}checkButton${a}" onclick="clickSubtask(${taskId}, ${a})"></img></div>
+            <div id="taskId${taskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" id="taskId${taskId}checkButtonOpenId${a}" onclick="clickSubtask(${taskId}, ${a})"></img></div>
             <p>${subtasksOpen[a]}</p>
             </div>
             `;
@@ -161,25 +163,28 @@ function getSubtasksForPopupTask(taskId) {
         for (let b = 0; b < subtasksDone.length; b++) {
             taskPopupContentSubtasks.innerHTML += `
             <div class="d_f_c_c gap-10">
-            <div id="taskId${taskId}SubtaskId${b}"><img src="../assets/img/check-button-clicked.svg" id="taskId${taskId}checkButton${b}" onclick="clickSubtask(${taskId}, ${b})"></img></div>
+            <div id="taskId${taskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" id="taskId${taskId}checkButtonDoneId${b}" onclick="clickSubtask(${taskId}, ${b})"></img></div>
             <p>${subtasksDone[b]}</p>
             </div>
             `;
         }
 }
 
+// in Bearbeitung
 function clickSubtask(taskId, index) {
-    let divSubtask = document.getElementById(`taskId${taskId}SubtaskId${index}`);
-    let checkButton = document.getElementById(`taskId${taskId}checkButton${index}`);
+    let divSubtaskDone = document.getElementById(`taskId${taskId}SubtaskIdDoneId${index}`);
+    let divSubtaskOpen = document.getElementById(`taskId${taskId}SubtaskIdOpenId${index}`);
+    let checkButtonOpen = document.getElementById(`taskId${taskId}checkButtonOpenId${index}`);
+    let checkButtonDone = document.getElementById(`taskId${taskId}checkButtonDoneId${index}`);
     let emptyButton = 'check-button-empty.svg';
     let clickedButton = 'check-button-clicked.svg';
-    if (checkButton.src.includes(emptyButton)) {
-        divSubtask.innerHTML = `
-        <img src="../assets/img/${clickedButton}" id="taskId${taskId}checkButton${index}" onclick="clickSubtask(${taskId}, ${index})"></img>
+    if (checkButtonOpen.src.includes(emptyButton)) {
+        divSubtaskDone.innerHTML = `
+        <img src="../assets/img/${clickedButton}" id="taskId${taskId}checkButtonDoneId${index}" onclick="clickSubtask(${taskId}, ${index})"></img>
         `;
     } else {
-        divSubtask.innerHTML = `
-        <img src="../assets/img/${emptyButton}" id="taskId${taskId}checkButton${index}" onclick="clickSubtask(${taskId}, ${index})"></img>
+        divSubtaskOpen.innerHTML = `
+        <img src="../assets/img/${emptyButton}" id="taskId${taskId}checkButtonOpenId${index}" onclick="clickSubtask(${taskId}, ${index})"></img>
         `;
     }
 }
