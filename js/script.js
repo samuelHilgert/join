@@ -306,7 +306,6 @@ function clickLogout() {
     setTimeout(() => {
         window.location.href = `./login.html?msg=Du bist abgemeldet`;
     }, 500);
-    setTimeout(forwardAfterLogout, 500);
 }
 
 /**
