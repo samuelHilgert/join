@@ -97,7 +97,7 @@ function openDropdown() {
       renderContactsDropwdown(contact, index);
     }
   }
-  contactsByCheckboxen();
+  contactsByCheckbox();
   showContactSelection();
 }
 
@@ -150,7 +150,7 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   `;
 }
 
-function contactsByCheckboxen() {
+function contactsByCheckbox() {
   let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
   checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
     if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
