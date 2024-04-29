@@ -118,11 +118,16 @@ function contactNamesLetters(contact) {
   return letters;
 }
 
+function getBackgroundColorAssignedContact(contactIndex) {
+  return contacts[contactIndex].color;
+}
+
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
+  let backgroundColor = getBackgroundColorAssignedContact(index);
   taskContactDiv.innerHTML += `
   <div class="d_f_sb_c width-max dropdown-contact-wrapper">
     <div class="d_f_fs_c gap-20 dropdown-contact">
-      <div class="d_f_c_c contact-circle-small contact-circle-small-letters" id="contactLetters${index}">${letters}</div> 
+      <div class="d_f_c_c contact-circle-small contact-circle-small-letters" id="contactLetters${index}" style="background-color: ${backgroundColor};">${letters}</div> 
       <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
     </div>
     <div class="d_f_fe_c"> <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}">  </div>
