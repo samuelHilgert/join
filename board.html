@@ -29,10 +29,13 @@
             <h2>Board</h2>
             <div class="search-div d_f_c_c gap-30">
                 <div class="input-style input-style-search d_f_sb_c width-max gap-20">
-                    <input class="search-board-input" type="text" id="searchBoardInput" placeholder="Find Task" required onkeypress="searchTasksByKeyPress(event)">
-                    <div class="search-icon"><img src="../assets/img/search-icon-with-line.svg" alt="" onclick="searchTasksOnBoard()"></div>
+                    <input class="search-board-input" type="text" id="searchBoardInput" placeholder="Find Task" required
+                        onkeypress="searchTasksByKeyPress(event)">
+                    <div class="search-icon"><img src="../assets/img/search-icon-with-line.svg" alt=""
+                            onclick="searchTasksOnBoard()"></div>
                 </div>
-                <a class="btn" onclick="openBoardAddTaskPopup(event)">Add task <img src="./assets/img/add.svg" alt=""></a>
+                <a class="btn" onclick="openBoardAddTaskPopup(event)">Add task <img src="./assets/img/add.svg"
+                        alt=""></a>
             </div>
         </div>
         <div class="drag-area-container d_f_fs_fs gap-20 width-max">
@@ -76,8 +79,8 @@
     </div>
 
     <div class="d_c_c_c popup-bg-filter width-max" id="boardTaskPopup">
-        <div class="d_c_c_c board-task-popup-container bgC-white pad-y-60 pad-x-60 gap-70" id="boardTaskPopupContainer">
-            <div class="d_c_fs_fs gap-30 height-max">
+        <div class="d_c_c_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70" id="boardTaskPopupContainer">
+            <div class="d_c_sb_fs gap-30">
                 <div class="d_f_sb_c width-max">
                     <div class="btn-board d_f_c_c width-50" id="taskPopupContentLabel"></div>
                     <div class="d_f_fe_c width-max" id="taskCloseButtonRight">
@@ -106,15 +109,16 @@
                     </div>
                     <div class="d_c_c_fs width-50 gap-10 pad-l-20" id="taskPopupContentSubtasks"> </div>
                 </div>
-            </div>
-            <div class="options-task-popup d_f_fe_c width-max gap-20">
-                <div class="delete-style d_f_c_c gap-10" onclick="deleteTask()">
-                    <img src="./assets/img/delete.svg" alt="">
-                    <p>Delete</p>
-                </div>
-                <div class="edit-style d_f_c_c gap-10" onclick="editTask()">
-                    <img src="./assets/img/edit.svg" alt="">
-                    <p>Edit</p>
+
+                <div class="options-task-popup d_f_fe_c width-max gap-20">
+                    <div class="delete-style d_f_c_c gap-10" onclick="deleteTask()">
+                        <img src="./assets/img/delete.svg" alt="">
+                        <p>Delete</p>
+                    </div>
+                    <div class="edit-style d_f_c_c gap-10" onclick="editTask()">
+                        <img src="./assets/img/edit.svg" alt="">
+                        <p>Edit</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -112,15 +112,15 @@ function renderBoardTaskPopupContent(taskId) {
     const todo = tasks[taskId];
     showTaskText(todo, taskId);
     getContactsForPopupTask(todo);
+    getSubtasksForPopupTask(taskId);
 }
 
-function showTaskText(todo, taskId) {
+function showTaskText(todo) {
     let taskPopupContentLabel = document.getElementById('taskPopupContentLabel');
     let taskPopupContentTitle = document.getElementById('taskPopupContentTitle');
     let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
     let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate');
     let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');
-    let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
     taskPopupContentLabel.innerHTML = `${todo['label']}`;
     taskPopupContentTitle.innerHTML = `<h2><b>${todo['title']}</b></h2>`;
     taskPopupContentDescription.innerHTML = `<p>${todo['description']}</p>`;
@@ -141,41 +141,49 @@ function showTaskText(todo, taskId) {
         <div><img src="../assets/img/${getPriorityIcon(todo)}"></img></div>
     </div>
     `;
-
-    taskPopupContentSubtasks.innerHTML = `
-    <div class="d_f_c_c gap-10">
-    <img src="../assets/img/check-button-empty.svg" id="checkButton${taskId}" onclick="clickSubtask(${taskId})"></img>
-    <p>Start Page Layout</p>
-    </div>
-    `;
 }
 
-function clickSubtask(taskId) {
-    let checkButton = document.getElementById(`checkButton${taskId}`);
-    let emptyButton = "../assets/img/check-button-empty.svg";
-    let clickedButton = "../assets/img/check-button-clicked.svg";
+function getSubtasksForPopupTask(taskId) {
+    let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
+    const subtasksOpen = tasks[taskId]['subtasksOpen'];
+    const subtasksDone = tasks[taskId]['subtasksDone'];
+    taskPopupContentSubtasks.innerHTML = '';
+        // rendering subtasksOpen with empty check-button
+        for (let a = 0; a < subtasksOpen.length; a++) {
+            taskPopupContentSubtasks.innerHTML += `
+            <div class="d_f_c_c gap-10">
+            <div id="taskId${taskId}SubtaskId${a}"><img src="../assets/img/check-button-empty.svg" id="taskId${taskId}checkButton${a}" onclick="clickSubtask(${taskId}, ${a})"></img></div>
+            <p>${subtasksOpen[a]}</p>
+            </div>
+            `;
+        }
+        // rendering subtasksDone with clicked check-button
+        for (let b = 0; b < subtasksDone.length; b++) {
+            taskPopupContentSubtasks.innerHTML += `
+            <div class="d_f_c_c gap-10">
+            <div id="taskId${taskId}SubtaskId${b}"><img src="../assets/img/check-button-clicked.svg" id="taskId${taskId}checkButton${b}" onclick="clickSubtask(${taskId}, ${b})"></img></div>
+            <p>${subtasksDone[b]}</p>
+            </div>
+            `;
+        }
+}
+
+function clickSubtask(taskId, index) {
+    let divSubtask = document.getElementById(`taskId${taskId}SubtaskId${index}`);
+    let checkButton = document.getElementById(`taskId${taskId}checkButton${index}`);
+    let emptyButton = 'check-button-empty.svg';
+    let clickedButton = 'check-button-clicked.svg';
     if (checkButton.src.includes(emptyButton)) {
-        console.log('yes, empty');
-        console.log(checkButton.src);
-        checkButton.src = clickedButton;
+        divSubtask.innerHTML = `
+        <img src="../assets/img/${clickedButton}" id="taskId${taskId}checkButton${index}" onclick="clickSubtask(${taskId}, ${index})"></img>
+        `;
     } else {
-        console.log('not empty');
-        console.log(checkButton.src);
-        checkButton.src = emptyButton;
+        divSubtask.innerHTML = `
+        <img src="../assets/img/${emptyButton}" id="taskId${taskId}checkButton${index}" onclick="clickSubtask(${taskId}, ${index})"></img>
+        `;
     }
 }
 
-function getPriorityIcon(todo) {
-    let imgSrc;
-    if (todo['priority'] === 'Urgent') {
-        imgSrc = 'arrow-higher.png'
-    } else if (todo['priority'] === 'Medium') {
-        imgSrc = 'prio-media.svg'
-    } else if (todo['priority'] === 'Low') {
-        imgSrc = 'arrow-lower.png'
-    }
-    return imgSrc;
-}
 
 function getContactsForPopupTask(todo) {
     let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
@@ -194,8 +202,25 @@ function getContactsForPopupTask(todo) {
     }
 }
 
+function getPriorityIcon(todo) {
+    let imgSrc;
+    if (todo['priority'] === 'Urgent') {
+        imgSrc = 'arrow-higher.png'
+    } else if (todo['priority'] === 'Medium') {
+        imgSrc = 'prio-media.svg'
+    } else if (todo['priority'] === 'Low') {
+        imgSrc = 'arrow-lower.png'
+    }
+    return imgSrc;
+}
+
 function getBgColorTaskPopup(index) {
-    let userContact = users[currentUser]['contacts'][index];
+    let userContact;
+    if (loggedAsGuest) {
+        userContact = contacts[index];
+    } else {
+        userContact = users[currentUser]['contacts'][index];
+    }
     return userContact.color;
 }
 
