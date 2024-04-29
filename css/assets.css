@@ -350,7 +350,7 @@ li {
 
 .board-task-popup-container {
   width: 30%;
-  flex:1;
+  height:80%;
   border-radius: 30px;
   position: relative;
   z-index: 9999;
