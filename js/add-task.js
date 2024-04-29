@@ -300,6 +300,7 @@ function renderSubtasks(container) {
         <span>• ${subtask}</span>
         <div class='d_f_c_c gap-5'>
           <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+          <div class="subtask-partingline"></div>
           <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
         </div>
       </div>

@@ -205,6 +205,14 @@ input[type="checkbox"] {
   height: 20px;
 }
 
+.subtask-partingline {
+  height: 20px;
+  width: 2px;
+  background-color: rgba(42, 54, 71, 1);
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
 .task-contact {
   height: 68px;
   width: 100%;
