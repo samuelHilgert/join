@@ -327,3 +327,8 @@ select.task-input-style {
 .padding-right-36 {
   padding-right: 36px;
 }
+
+.category-svg {
+  width: 20px;
+  height: 16px;
+}
