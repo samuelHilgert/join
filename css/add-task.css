@@ -318,6 +318,7 @@ select.task-input-style {
 
 .width-50 {
   width: 50%;
+  max-width: 500px;
 }
 
 .cursor-pointer {
