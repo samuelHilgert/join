@@ -14,7 +14,7 @@
 }
 
 .dropdown-add-task {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .assigned-div {
@@ -24,7 +24,7 @@
   z-index: 1;
   margin-top: 297px;
   height: 200px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow-y: auto;
@@ -38,6 +38,23 @@ input[type="checkbox"] {
 
 #taskContactDiv {
   display:none;
+}
+
+.dropdown-contact-wrapper {
+  background-color: rgba(255, 255, 255, 1);
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.dropdown-contact-wrapper:hover {
+  background-color: rgb(240, 240, 240);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dropdown-contact {
+
 }
 
 /*************************************************/
@@ -88,7 +105,7 @@ input[type="checkbox"] {
   height: 118px;
   width: 460px;
   margin-top: 213px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   cursor: pointer;
@@ -148,7 +165,7 @@ input[type="checkbox"] {
   padding: 20px 10px;
   font-size: 16px;
   font-weight: 400;
-  color: white;
+  color: rgba(255, 255, 255, 1);
   font-weight: 800;
 }
 
@@ -165,7 +182,7 @@ input[type="checkbox"] {
 
 .input-prio {
   padding: 18px 20px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .input-prio:hover {
@@ -243,24 +260,24 @@ select.task-input-style {
 }
 
 .color-white {
-  color: white;
+  color: rgba(255, 255, 255, 1);
 }
 
 .active-prio-btn-urgent {
   background-color: #ff3d00;
-  color: white;
+  color: rgba(255, 255, 255, 1);
   font-weight: 700;
 }
 
 .active-prio-btn-medium {
   background-color: #ffa800;
-  color: white;
+  color: rgba(255, 255, 255, 1);
   font-weight: 700;
 }
 
 .active-prio-btn-low {
   background-color: #7ae229;
-  color: white;
+  color: rgba(255, 255, 255, 1);
   font-weight: 700;
 }
 

@@ -120,8 +120,8 @@ function contactNamesLetters(contact) {
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   taskContactDiv.innerHTML += `
-  <div class="d_f_sb_c width-max">
-    <div class="d_f_fs_c gap-20">
+  <div class="d_f_sb_c width-max dropdown-contact-wrapper">
+    <div class="d_f_fs_c gap-20 dropdown-contact">
       <div class="d_f_fs_c" id="contactLetters${index}">${letters}</div> 
       <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
     </div>
