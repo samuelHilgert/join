@@ -109,6 +109,20 @@ input[type="checkbox"] {
   font-family: "Inter";
   font-weight: 400;
   line-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-style-description::placeholder {
+  color: rgba(209, 209, 209, 1);
+  font-size: 20px;
+  font-family: "Inter";
+  font-weight: 400;
+  line-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .category-div {
@@ -186,14 +200,7 @@ input[type="checkbox"] {
 }
 
 .input-style-description {
-  padding-bottom: 80px;
-  font-family: "Inter";
   height: 130px;
-}
-
-.input-style-description::placeholder {
-  font-size: 24px;
-  padding-top: 3px;
 }
 
 .input-prio {

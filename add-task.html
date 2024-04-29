@@ -40,19 +40,19 @@
       <div class="box d_c_c_s gap-30 width-460">
         <div class="d_c_c_s gap-10 width-100">
           <span class="font-size-20">Title<span style="color: red">*</span></span>
-          <input id="task-title" class="task-input-style input-login" type="text" placeholder="Enter a title"
+          <input id="task-title" class="task-input-style input-login input-font" type="text" placeholder="Enter a title"
             required />
         </div>
 
         <div class="d_c_c_s gap-10 width-100">
           <span class="font-size-20">Description</span>
-          <textarea id="task-description" cols="30" rows="2" class="task-input-style input-style-description"
+          <textarea id="task-description" cols="30" rows="2" class="task-input-style input-style-description input-font"
             placeholder="Enter a Description"></textarea>
         </div>
 
         <div class="d_c_c_s gap-10 width-max position-relativ">
           <span class="font-size-20">Assigned to</span>
-          <input class="input-style d_f_c_c dropdown-add-task bgC-white width-max" placeholder="Select contacts to assign">
+          <input class="input-style d_f_c_c dropdown-add-task bgC-white width-max input-font" placeholder="Select contacts to assign">
             <!-- deaktiviertes optionsfeld um placeholder anzuzeigen, da bei dropdown nicht mit placeholder im tag gearbeitet werden kann -->
             <div class="input-icon-div" onclick="openDropdown()">
               <img src="assets/img/arrow_drop_down.png" alt="Arrow Down" id="dropdown-arrow">
@@ -99,7 +99,7 @@
         <div class="d_c_c_s gap-10 width-100">
           <span class="font-size-20">Category<span style="color: red">*</span></span>
           <div class="position-relativ width-100">
-            <input id="task-category" class="task-input-style input-login" placeholder="Select task category" readonly
+            <input id="task-category" class="task-input-style input-login input-font" placeholder="Select task category" readonly
               onclick="toggleCategoryDiv()" required />
             <div class="input-icon-div" style="top: 29%" onclick="toggleCategoryDiv()">
               <img src="assets/img/arrow_drop_down.png" alt="Arrow Down" id="category-drop-icon" />
@@ -113,7 +113,7 @@
 
         <div class="d_c_c_s gap-10 width-100 input-dropdown">
           <span class="font-size-20">Subtask</span>
-          <input onfocus="changeIcons()" id="subtask" class="task-input-style input-login" type="text"
+          <input onfocus="changeIcons()" id="subtask" class="task-input-style input-login input-font" type="text"
             placeholder="Add new subtask" />
           <div id="dropdown-icon" class="input-icon-div">
             <img onclick="changeIcons()" src="assets/img/input-plus.png" alt="plus" />
