@@ -60,7 +60,7 @@ async function moveTo(currentCategory) {
             foundIndex = id;
             tasks[foundIndex].category = currentCategory;
             if (!loggedAsGuest === true || loggedAsGuest === false) {
-                await pushTasksOnRemoteServer();
+                await saveNewUserDate();
             } else {
                 let div = document.getElementById('guestMessagePopupBoard');
                 let messageText = document.getElementById('guestMessageBoard');
@@ -186,7 +186,7 @@ async function deleteTask() {
     document.body.style.overflow = 'scroll';
     tasks.splice(taskId, 1);
     if (!loggedAsGuest === true || loggedAsGuest === false) {
-        await pushTasksOnRemoteServer();
+        await saveNewUserDate();
     } else {
         let div = document.getElementById('guestMessagePopupBoard');
         let messageText = document.getElementById('guestMessageBoard');
