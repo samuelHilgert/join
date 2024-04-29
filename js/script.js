@@ -51,7 +51,7 @@ function checkFalseOpening() {
 }
 
 function firstLogin() {
-    window.location.href = `./login.html`;
+   return window.location.href = `./login.html`;
 }
 
 /**
