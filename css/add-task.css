@@ -213,6 +213,14 @@ input[type="checkbox"] {
   margin-right: 2px;
 }
 
+.input-spacer {
+  height: 28px;
+  width: 2px;
+  background-color: rgba(204, 204, 204, 0.4);
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
 .task-contact {
   height: 68px;
   width: 100%;
