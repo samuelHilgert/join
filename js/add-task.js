@@ -2,18 +2,18 @@ let newTask = [];
 // let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
-let checkedCheckboxes = [];   // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
+let checkedCheckboxes = []; // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 let contactsLoaded = false;
 
 /**
- * This function gets the next available ID that's not already used in the tasks array. 
- * 
+ * This function gets the next available ID that's not already used in the tasks array.
+ *
  * @returns {string} - the next available ID
  */
 function getNextAvailableTaskId() {
   let id = 1;
-  while (tasks.some(task => task.id === id.toString())) {
-      id++;
+  while (tasks.some((task) => task.id === id.toString())) {
+    id++;
   }
   return id.toString();
 }
@@ -33,20 +33,20 @@ async function addTask() {
     assignedTo: checkedCheckboxes,
     priority: prio,
     subtasks: subtasks,
-    category: 'backlog',
+    category: "backlog",
   };
   newTask.push(task);
   // dropdownContact = []; nicht mehr notwendig
   if (loggedAsGuest === true) {
-    let div = document.getElementById('guestMessagePopupAddTask');
-    let messageText = document.getElementById('guestMessageAddTask');
+    let div = document.getElementById("guestMessagePopupAddTask");
+    let messageText = document.getElementById("guestMessageAddTask");
     resetAddTaskValues();
     showGuestPopupMessage(div, messageText);
   } else {
     users[currentUser].tasks.push(...newTask);
-    await setItem('users', JSON.stringify(users));
+    await setItem("users", JSON.stringify(users));
     resetAddTaskValues();
-    alert('Neue Aufgabe erstellt!');
+    alert("Neue Aufgabe erstellt!");
   }
 }
 
@@ -59,8 +59,25 @@ function saveDueDateFormatted(dateValue) {
   let jahr = datum.getFullYear(); // Gib das Jahr zurück
 
   // Führende Nullen für Tag und Monat hinzufügen, wenn sie kleiner als 10 sind
-  let tagFormatted = (tag < 10) ? '0' + tag : tag;
-  let monatFormatted = (monat < 10) ? '0' + monat : monat;
+  let tagFormatted = tag < 10 ? "0" + tag : tag;
+  let monatFormatted = monat < 10 ? "0" + monat : monat;
+
+  // Setze das Datum im gewünschten Format
+  dueDateFormatted = tagFormatted + "/" + monatFormatted + "/" + jahr;
+  return dueDateFormatted;
+}
+
+function saveDueDateFormatted(dateValue) {
+  let dueDateFormatted;
+  let unix_timestamp = dateValue; // Unix-Zeitstempel
+  let datum = new Date(unix_timestamp); // Erstelle ein neues Date-Objekt und setze den Unix-Zeitstempel
+  let tag = datum.getDate(); // Gib den Tag zurück
+  let monat = datum.getMonth() + 1; // Gib den Monat zurück und füge 1 hinzu, da Monate bei 0 beginnen
+  let jahr = datum.getFullYear(); // Gib das Jahr zurück
+
+  // Führende Nullen für Tag und Monat hinzufügen, wenn sie kleiner als 10 sind
+  let tagFormatted = tag < 10 ? "0" + tag : tag;
+  let monatFormatted = monat < 10 ? "0" + monat : monat;
 
   // Setze das Datum im gewünschten Format
   dueDateFormatted = tagFormatted + "/" + monatFormatted + "/" + jahr;
@@ -68,13 +85,13 @@ function saveDueDateFormatted(dateValue) {
 }
 
 function resetAddTaskValues() {
-  document.getElementById("task-title").value = '';
-  document.getElementById("task-description").value = '';
-  document.getElementById("task-date").value = '';
-  document.getElementById("task-category").value = '';
-  document.getElementById("subtask").value = '';
-  document.getElementById("contactSelection").innerHTML = '';
-  newTask = []
+  document.getElementById("task-title").value = "";
+  document.getElementById("task-description").value = "";
+  document.getElementById("task-date").value = "";
+  document.getElementById("task-category").value = "";
+  document.getElementById("subtask").value = "";
+  document.getElementById("contactSelection").innerHTML = "";
+  newTask = [];
   subtasks = [];
   checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
 }
@@ -96,7 +113,7 @@ function readTaskInput() {
 
 async function updateTaskContacts() {
   if (loggedAsGuest === true) {
-    let resp = await fetch('./JSON/contacts.json');
+    let resp = await fetch("./JSON/contacts.json");
     contactsForTasks = await resp.json();
   } else {
     let currentUserContactsForTasks = users[currentUser].contacts;
@@ -104,14 +121,13 @@ async function updateTaskContacts() {
   }
 }
 
-
 function openDropdown() {
-  let taskContactDiv = document.getElementById('taskContactDiv');
-  if (taskContactDiv.style.display === 'flex') {
-    taskContactDiv.style.display = 'none';
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  if (taskContactDiv.style.display === "flex") {
+    taskContactDiv.style.display = "none";
   } else {
-    taskContactDiv.style.display = 'flex';
-    taskContactDiv.innerHTML = '';
+    taskContactDiv.style.display = "flex";
+    taskContactDiv.innerHTML = "";
     //checkedCheckboxes = [];
     for (let index = 0; index < contactsForTasks.length; index++) {
       const contact = contactsForTasks[index];
@@ -122,7 +138,6 @@ function openDropdown() {
   // contactsByCheckbox(); wird nicht mehr benötigt
   showContactSelection();
 }
-
 
 function renderContactsDropwdown(contact, index) {
   let letters = contactNamesLetters(contact.name);
@@ -151,16 +166,16 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
 function handleCheckboxChange(index) {
   let wrapper = document.getElementById(`wrapper${index}`);
   let checkbox = document.getElementById(`checkbox${index}`);
-  let contactName = document.getElementById(`contactName${index}`)
+  let contactName = document.getElementById(`contactName${index}`);
   if (checkbox.checked) {
-    wrapper.style.backgroundColor = 'rgba(42, 54, 71, 1)';
-    contactName.style.color = 'rgba(255, 255, 255, 1)';
+    wrapper.style.backgroundColor = "rgba(42, 54, 71, 1)";
+    contactName.style.color = "rgba(255, 255, 255, 1)";
     if (!checkedCheckboxes.includes(contactName.textContent)) {
       checkedCheckboxes.push(contactName.textContent);
     }
   } else {
-    wrapper.style.backgroundColor = '';
-    contactName.style.color = 'rgba(0, 0, 0, 1)';
+    wrapper.style.backgroundColor = "";
+    contactName.style.color = "rgba(0, 0, 0, 1)";
     let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
     if (indexToRemove !== -1) {
       checkedCheckboxes.splice(indexToRemove, 1);
@@ -190,13 +205,23 @@ function markSelectedContacts() {
 //  });
 //}
 
+/**
+ * This function renders the selected contacts in the contact selection area.
+ * Therefore it first loops through the checkedCheckboxes array to find the name of the selected contact. 
+ * The name is then compared with the contactsForTasks array to find the index of the contact. 
+ * If the name is found in the array, the initials and background colors are extracted from it.
+ */
 function showContactSelection() {
-  let contactSelection = document.getElementById('contactSelection');
+  let contactSelection = document.getElementById("contactSelection");
   contactSelection.innerHTML = ``;
   for (let index = 0; index < checkedCheckboxes.length; index++) {
-    const contact = checkedCheckboxes[index];
-    const letters = contactNamesLetters(contact);
-    contactSelection.innerHTML += `<div class="d_f_c_c">${letters}</div>`;
+    const contactName = checkedCheckboxes[index];
+    const contactIndex = contactsForTasks.findIndex(contact => contact.name === contactName);
+    if (contactIndex !== -1) {
+      const backgroundColor = contacts[contactIndex].color;
+      const letters = contactNamesLetters(contactName);
+      contactSelection.innerHTML += `<div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>`;
+    }
   }
 }
 
@@ -226,15 +251,15 @@ function setActiveClasses(btnId) {
   switch (btnId) {
     case "urgent-btn":
       clickedButton.classList.add("active-prio-btn-urgent");
-      buttonSVG.style.fill = 'white';
+      buttonSVG.style.fill = "white";
       break;
     case "medium-btn":
       clickedButton.classList.add("active-prio-btn-medium");
-      buttonSVG.style.fill = 'white';
+      buttonSVG.style.fill = "white";
       break;
     case "low-btn":
       clickedButton.classList.add("active-prio-btn-low");
-      buttonSVG.style.fill = 'white';
+      buttonSVG.style.fill = "white";
       break;
     default:
       break;
@@ -250,7 +275,7 @@ function removeActiveClasses() {
       "active-prio-btn-medium",
       "active-prio-btn-low"
     );
-    buttonElement.querySelector("svg").style.fill = '';
+    buttonElement.querySelector("svg").style.fill = "";
   });
 }
 
@@ -381,10 +406,8 @@ function setMinimumDate() {
   document.getElementById("task-date").setAttribute("min", minDate);
 }
 
-
-
 //Funktion wird ab jetzt nicht mehr aufgerufen!
-  /*  
+/*  
 //for the contacts at Assigned to section
 function openDropdownContacts() {
   console.log('Alle Kontakte:', contactsForTasks);
@@ -451,8 +474,3 @@ function chooseContact(i, name) {
 //TEST ENDE//
 
 */
-
-
-
-
-

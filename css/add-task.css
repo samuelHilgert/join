@@ -11,6 +11,7 @@
   background-position-y: 50%;
   background-size: 24px;
   cursor: pointer;
+  border: unset;
 }
 
 .dropdown-add-task {
@@ -71,6 +72,11 @@ input[type="checkbox"] {
   background-position-y: 50%;
   background-size: 24px;
   cursor: pointer;
+  z-index: 5;
+}
+
+#dropdown-arrow {
+  z-index: 10;
 }
 
 .task-input-style-black::placeholder {
@@ -83,7 +89,6 @@ input[type="checkbox"] {
   justify-content: center;
   align-items: center;
 }
-
 
 .task-btn-style {
   width: 100%;
@@ -195,6 +200,11 @@ input[type="checkbox"] {
   background-color: rgba(42, 54, 71, 1);
   margin-left: 2px;
   margin-right: 2px;
+  display: none;
+}
+
+.subtask:hover .subtask-partingline {
+  display: block;
 }
 
 .input-spacer {
@@ -278,7 +288,6 @@ select.task-input-style {
   outline: none;
 }
 
-
 .input-icon-div {
   position: absolute;
   top: 50%;
@@ -352,7 +361,7 @@ select.task-input-style {
 }
 
 .active-prio-btn-low {
-  background-color: #7AE229;
+  background-color: #7ae229;
   color: rgba(255, 255, 255, 1);
   font-weight: 700;
 }
@@ -376,6 +385,18 @@ select.task-input-style {
 
 .padding-right-36 {
   padding-right: 36px;
+}
+
+input:focus {
+  outline: 2px solid rgb(143, 208, 237);
+}
+
+textarea:focus {
+  outline: 2px solid rgb(143, 208, 237);
+}
+
+.invalid-field {
+  border: 1px solid red; /* Rote Umrandung für ungültige Felder */
 }
 
 .category-svg-urgent {
