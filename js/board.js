@@ -111,6 +111,7 @@ function openBoardTaskPopup(openId) {
 function renderBoardTaskPopupContent(taskId) {
     const todo = tasks[taskId];
     showTaskText(todo);
+    getContactsForPopupTask(todo);
 }
 
 function showTaskText(todo) {
@@ -119,7 +120,6 @@ function showTaskText(todo) {
     let taskPopupContentDescription = document.getElementById('taskPopupContentDescription');
     let taskPopupContentDueDate = document.getElementById('taskPopupContentDueDate');
     let taskPopupContentPriority = document.getElementById('taskPopupContentPriority');
-    let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
     let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
     taskPopupContentLabel.innerHTML = `${todo['label']}`;
     taskPopupContentTitle.innerHTML = `<h2><b>${todo['title']}</b></h2>`;
@@ -138,17 +138,36 @@ function showTaskText(todo) {
     </div>
     <div class="d_f_fs_c width-50 gap-30">
         <p>${todo['priority']}</p>
+        <div><img src="../assets/img/${getPriorityIcon(todo)}"></img></div>
     </div>
     `;
-    taskPopupContentAssignedTo.innerHTML += `
-    <p>Max Mustermann</p>
-    <p>Thorsten Haas</p>
-    <p>Uwe Schmidt</p>
-    `;
+
     taskPopupContentSubtasks.innerHTML = `
     <p>Start Page Layout</p>
     <p>Implement Recipe</p>
     `;
+}
+
+function getPriorityIcon(todo) {
+    let imgSrc;
+    if (todo['priority'] === 'Urgent') {
+        imgSrc = 'arrow-higher.png'
+    } else if (todo['priority'] === 'Medium') {
+        imgSrc = 'prio-media.svg'
+    } else if (todo['priority'] === 'Low') {
+        imgSrc = 'arrow-lower.png'
+    }
+    return imgSrc;
+}
+
+function getContactsForPopupTask(todo) {
+let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
+const contacts = todo['assignedTo'];
+taskPopupContentAssignedTo.innerHTML = '';
+for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    taskPopupContentAssignedTo.innerHTML += `<p>${contact}</p>`;
+}
 }
 
 async function editTask() {
@@ -229,9 +248,9 @@ let findMatchingIndices = [];
 async function searchTasksOnBoard() {
     let searchInput = document.getElementById('searchBoardInput').value;
     let search = searchInput.trim().toLowerCase();
-    
+
     let matchingIndices = [];
-    
+
     await getMatchingIndicies(matchingIndices, search);
     await generateCategoriesBySearch(matchingIndices);
     initGuestPopupMessage();
@@ -244,7 +263,7 @@ async function getMatchingIndicies(matchingIndices, search) {
     }
 }
 
-async function findTasksIndices(matchingIndices, search) { 
+async function findTasksIndices(matchingIndices, search) {
     for (let i = 0; i < tasks.length; i++) {
         const everySearchedTaskName = tasks[i].title;
         const everySearchedTaskDecription = tasks[i].description;
