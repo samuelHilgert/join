@@ -344,9 +344,9 @@ li {
 
 .board-task-popup-container {
   width: 30%;
-  height: 80%;
+  flex:1;
   border-radius: 30px;
-  position: absolute;
+  position: relative;
   z-index: 9999;
   overflow-y: auto;
 }
@@ -502,4 +502,23 @@ li {
 .guestPopupLinkStyle {
   color: white;
   text-decoration: underline;
+}
+
+.contact-circle-small {
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 1);
+  height: 35px;
+  width: 35px;
+}
+
+.contact-circle-small-letters {
+  font-family: 'Inter';
+  font-size: 13px;
+  line-height: 14.4px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+}
+
+.class1 {
+  height:200px;
 }

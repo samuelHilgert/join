@@ -170,7 +170,7 @@ for (let index = 0; index < contacts.length; index++) {
     const backgroundColor = getBgColorTaskPopup(index);
     taskPopupContentAssignedTo.innerHTML += `
     <div class="d_f_c_c gap-10">
-    <div class="contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
     <p>${contact}</p>
     </div>
     `;
