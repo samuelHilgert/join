@@ -166,7 +166,8 @@ const contacts = todo['assignedTo'];
 taskPopupContentAssignedTo.innerHTML = '';
 for (let index = 0; index < contacts.length; index++) {
     const contact = contacts[index];
-    taskPopupContentAssignedTo.innerHTML += `<p>${contact}</p>`;
+    const letters = contactNamesLetters(contact.name);
+    taskPopupContentAssignedTo.innerHTML += `<div class="contact-circle-small contact-circle-small-letters">${letters}/div><p>${contact}</p>`;
 }
 }
 
