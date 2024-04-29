@@ -97,7 +97,7 @@ function openDropdown() {
       renderContactsDropwdown(contact, index);
     }
   }
-  contactsByCheckbox();
+  // contactsByCheckbox(); wird nicht mehr benötigt
   showContactSelection();
 }
 
@@ -134,6 +134,10 @@ function handleCheckboxChange(index) {
   } else {
     wrapper.style.backgroundColor = '';
     contactName.style.color = 'rgba(0, 0, 0, 1)';
+    let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
+    if (indexToRemove !== -1) {
+      checkedCheckboxes.splice(indexToRemove, 1);
+    }
   }
 }
 
@@ -152,14 +156,15 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   `;
 }
 
-function contactsByCheckbox() {
-  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
-  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
-    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
-      checkedCheckboxes.push(checkbox.value);
-    }
-  });
-}
+// Funktion wird nicht mehr benötigt
+//function contactsByCheckbox(index) {
+//  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
+//  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
+//    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
+//      checkedCheckboxes.push(checkbox.value);
+//    }
+//  });
+//}
 
 function showContactSelection() {
   let contactSelection = document.getElementById('contactSelection');

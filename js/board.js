@@ -140,7 +140,7 @@ function showTaskText(todo) {
         <p>${todo['priority']}</p>
     </div>
     `;
-    taskPopupContentAssignedTo.innerHTML = `
+    taskPopupContentAssignedTo.innerHTML += `
     <p>Max Mustermann</p>
     <p>Thorsten Haas</p>
     <p>Uwe Schmidt</p>
