@@ -205,14 +205,14 @@ function setPriority(btnId) {
 
 //Return Value from Priority!
 function determinePriority() {
-  let prio = "medium"; // Standardpriorität
+  let prio = "Medium"; // Standardpriorität
   const urgentBtn = document.getElementById("urgent-btn");
   const mediumBtn = document.getElementById("medium-btn");
   const lowBtn = document.getElementById("low-btn");
   if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
-    prio = "urgent";
+    prio = "Urgent";
   } else if (lowBtn.classList.contains("active-prio-btn-low")) {
-    prio = "low";
+    prio = "Low";
   }
   return prio;
 }

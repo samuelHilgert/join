@@ -6,7 +6,7 @@
         "description": "Create a contact form and imprint page.",
         "dueDate": "30/04/2024",
         "priority": "Urgent",
-        "assignedTo": "",
+        "assignedTo": ["Anna Müller", "Eva Grace"],
         "subtasks": "",
         "category": "backlog"
     },
@@ -17,7 +17,7 @@
         "description": "Build start page with recipe recommendation.",
         "dueDate": "04/05/2024",
         "priority": "Medium",
-        "assignedTo": "",
+        "assignedTo": ["Anna Müller", "Olivia Shaun", "Paul Lee"],
         "subtasks": "",
         "category": "inProgress"
     },
@@ -28,7 +28,7 @@
         "description": "Create reusable HTML base templates.",
         "dueDate": "20/07/2024",
         "priority": "Low",
-        "assignedTo": "",
+        "assignedTo": ["Anna Müller"],
         "subtasks": "",
         "category": "awaitFeedback"
     },
@@ -39,7 +39,7 @@
         "description": "Implement daily recipe and portion calculator.",
         "dueDate": "15/07/2024",
         "priority": "Urgent",
-        "assignedTo": "",
+        "assignedTo": ["Alex Maier"],
         "subtasks": "",
         "category": "awaitFeedback"
     },
@@ -50,7 +50,7 @@
         "description": "Define CSS naming conventions and structure.",
         "dueDate": "05/08/2024",
         "priority": "Medium",
-        "assignedTo": "",
+        "assignedTo": ["Max Baumgart"],
         "subtasks": "",
         "category": "done"
     }
