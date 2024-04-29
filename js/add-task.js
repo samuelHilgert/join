@@ -226,7 +226,7 @@ function removeActiveClasses() {
       "active-prio-btn-medium",
       "active-prio-btn-low"
     );
-    buttonElement.querySelector("svg").classList.remove("filter-prio-btn");
+    buttonElement.querySelector("svg").style.fill = '';
   });
 }
 
