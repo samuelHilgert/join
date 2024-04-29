@@ -129,6 +129,8 @@ function handleCheckboxChange(index) {
   if (checkbox.checked) {
     wrapper.style.backgroundColor = 'rgba(42, 54, 71, 1)';
     contactName.style.color = 'rgba(255, 255, 255, 1)';
+    console.log('ausgewählter Kontakt', contactName.textContent);
+    checkedCheckboxes.push(contactName.textContent);
   } else {
     wrapper.style.backgroundColor = '';
     contactName.style.color = 'rgba(0, 0, 0, 1)';
