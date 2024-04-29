@@ -367,3 +367,16 @@ function closePopupAutomaticly(div) {
     div.style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
+
+function contactNamesLetters(contact) {
+    let letters;
+    let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
+    let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
+    let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
+    if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
+      secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+    }
+    letters = firstLetter + secondLetter;
+    return letters;
+  }
+  

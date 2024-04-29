@@ -348,6 +348,7 @@ li {
   border-radius: 30px;
   position: absolute;
   z-index: 9999;
+  overflow-y: auto;
 }
 
 .close-button-div:hover {
