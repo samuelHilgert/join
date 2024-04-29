@@ -147,19 +147,29 @@ function handleCheckboxChange(index) {
   let wrapper = document.getElementById(`wrapper${index}`);
   let checkbox = document.getElementById(`checkbox${index}`);
   let contactName = document.getElementById(`contactName${index}`)
+  
   if (checkbox.checked) {
     wrapper.style.backgroundColor = 'rgba(42, 54, 71, 1)';
     contactName.style.color = 'rgba(255, 255, 255, 1)';
     console.log('ausgewählter Kontakt', contactName.textContent);
-    checkedCheckboxes.push(contactName.textContent);
+    
+    // Überprüfen, ob der Kontakt bereits im Array ist, bevor er hinzugefügt wird
+    if (!checkedCheckboxes.includes(contactName.textContent)) {
+      checkedCheckboxes.push(contactName.textContent);
+    }
   } else {
     wrapper.style.backgroundColor = '';
     contactName.style.color = 'rgba(0, 0, 0, 1)';
+    
+    // Index des zu entfernenden Kontakts im Array finden
     let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
+    
+    // Kontakt aus dem Array entfernen, wenn er vorhanden ist
     if (indexToRemove !== -1) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
+  console.log(checkedCheckboxes);
 }
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
@@ -171,7 +181,7 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
       <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
     </div>
     <div class="d_f_fe_c"> 
-      <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}" onchange="handleCheckboxChange(${index})">
+      <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}" onclick="handleCheckboxChange(${index})">
     </div>
   </div>
   `;
