@@ -180,6 +180,47 @@ input[type="checkbox"] {
   overflow-x: hidden;
 }
 
+.subtask {
+  border-radius: 10px;
+  font-size: 16px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.subtask:hover {
+  background-color: rgb(240, 240, 240);
+  cursor: pointer;
+}
+
+.subtask:hover img {
+  display: inline-block;
+}
+
+.subtask img {
+  display: none;
+}
+
+.subtask-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.subtask-partingline {
+  height: 20px;
+  width: 2px;
+  background-color: rgba(42, 54, 71, 1);
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.input-spacer {
+  height: 28px;
+  width: 2px;
+  background-color: rgba(204, 204, 204, 0.4);
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
 .task-contact {
   height: 68px;
   width: 100%;
