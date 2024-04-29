@@ -200,6 +200,11 @@ input[type="checkbox"] {
   background-color: rgba(42, 54, 71, 1);
   margin-left: 2px;
   margin-right: 2px;
+  display: none;
+}
+
+.subtask:hover .subtask-partingline {
+  display: block;
 }
 
 .input-spacer {
