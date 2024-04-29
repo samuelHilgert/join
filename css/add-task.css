@@ -43,17 +43,16 @@ input[type="checkbox"] {
 .dropdown-contact-wrapper {
   background-color: rgba(255, 255, 255, 1);
   width: 100%;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 10px;
 }
 
 .dropdown-contact-wrapper:hover {
   background-color: rgb(240, 240, 240);
-  border-radius: 10px;
   cursor: pointer;
-}
-
-.dropdown-contact {
-
 }
 
 .contact-circle-small {

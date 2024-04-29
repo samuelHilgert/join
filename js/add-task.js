@@ -122,15 +122,30 @@ function getBackgroundColorAssignedContact(contactIndex) {
   return contacts[contactIndex].color;
 }
 
+function handleCheckboxChange(index) {
+  let wrapper = document.getElementById(`wrapper${index}`);
+  let checkbox = document.getElementById(`checkbox${index}`);
+  let contactName = document.getElementById(`contactName${index}`)
+  if (checkbox.checked) {
+    wrapper.style.backgroundColor = 'rgba(42, 54, 71, 1)';
+    contactName.style.color = 'rgba(255, 255, 255, 1)';
+  } else {
+    wrapper.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+    contactName.style.color = 'rgba(0, 0, 0, 1)';
+  }
+}
+
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   let backgroundColor = getBackgroundColorAssignedContact(index);
   taskContactDiv.innerHTML += `
-  <div class="d_f_sb_c width-max dropdown-contact-wrapper">
+  <div class="d_f_sb_c width-max dropdown-contact-wrapper" id="wrapper${index}">
     <div class="d_f_fs_c gap-20 dropdown-contact">
       <div class="d_f_c_c contact-circle-small contact-circle-small-letters" id="contactLetters${index}" style="background-color: ${backgroundColor};">${letters}</div> 
       <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
     </div>
-    <div class="d_f_fe_c"> <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}">  </div>
+    <div class="d_f_fe_c"> 
+      <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}" onchange="handleCheckboxChange(${index})">
+    </div>
   </div>
   `;
 }
