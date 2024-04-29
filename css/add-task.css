@@ -180,6 +180,31 @@ input[type="checkbox"] {
   overflow-x: hidden;
 }
 
+.subtask {
+  border-radius: 10px;
+  font-size: 16px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.subtask:hover {
+  background-color: rgb(240, 240, 240);
+  cursor: pointer;
+}
+
+.subtask:hover img {
+  display: inline-block;
+}
+
+.subtask img {
+  display: none;
+}
+
+.subtask-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .task-contact {
   height: 68px;
   width: 100%;

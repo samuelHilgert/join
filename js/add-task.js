@@ -296,11 +296,11 @@ function renderSubtasks(container) {
   container.innerHTML = "";
   subtasks.forEach((subtask, index) => {
     container.innerHTML += `
-      <div id='subtask${index}' class='d_f_sb_c pad-x-10'>
+      <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
         <span>• ${subtask}</span>
         <div class='d_f_c_c gap-5'>
-          <img src="assets/img/pen_dark.svg" alt="pen" class='cursor-pointer' onclick="editSubtask(this)" />
-          <img src="assets/img/trash_dark.svg" alt="trash" class='cursor-pointer' onclick="deleteSubtask(${index})" />
+          <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+          <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
         </div>
       </div>
     `;
