@@ -233,7 +233,7 @@ input[type="checkbox"] {
   padding: 16px 24px;
   width: 100%;
   max-width: 500px;
-  border-radius: 15px;
+  border-radius: 10px;
   cursor: pointer;
   box-sizing: border-box;
 }
