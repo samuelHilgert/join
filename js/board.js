@@ -1,7 +1,9 @@
 let categories = ['backlog', 'inProgress', 'awaitFeedback', 'done'];
 let currentDraggedTaskId;
+let currentOpenTaskId;
 let taskId;
-
+let subtasksOpen = [];
+let subtasksDone = [];
 
 async function renderBoardTasks() {
     if (tasks.length === 0) {
@@ -10,6 +12,7 @@ async function renderBoardTasks() {
         showGuestPopupMessageForReload(div, messageText);
         await updateUserData();
     }
+
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
         const allTasksSameCategory = tasks.filter(t => t['category'] == category);
@@ -36,7 +39,7 @@ function generateTodoHTML(task) {
                 <div class="progress">
                     <div class="progress-bar" id="progressBar${task['id']}"></div>
                 </div>
-                <div class="statusText"><span id="currentTaskNumber${task['id']}">X</span>/<span id="">2</span><span>&nbsp;Subtasks</span></div>
+                <div class="statusText"><span id="stubtasksDoneLength${task['id']}">X</span>/<span id="subtasksLength${task['id']}">XX</span><span>&nbsp;Subtasks</span></div>
             </div>
             <div class="d_f_sb_c width-max">
             <div>
@@ -46,6 +49,62 @@ function generateTodoHTML(task) {
             </div>
             <img src="./assets/img/priority.svg" alt=""></div>
             </div>`;
+}
+
+function updateProgressBar(task) {
+    let stubtasksOpenLength = task.subtasksOpen.length;
+    let stubtasksDoneLength = task.subtasksDone.length;
+    let allSubtasksByTask = stubtasksOpenLength + stubtasksDoneLength;
+
+    let subtasksLengthDiv = document.getElementById(`subtasksLength${task['id']}`);
+    subtasksLengthDiv.innerHTML = `${allSubtasksByTask}`;
+
+
+    let stubtasksDoneLengthDiv = document.getElementById(`stubtasksDoneLength${task['id']}`);
+    stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
+
+    /* 
+        if (!loggedAsGuest) {
+            subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
+            subtasksDone = users[currentUser].tasks[currentOpenTaskId].subtasksDone;
+        } else {
+            subtasksOpen = tasks[currentOpenTaskId].subtasksOpen;
+            subtasksDone = tasks[currentOpenTaskId].subtasksDone;
+        }
+
+
+    let numberOfSubtasksDone = subtasksDone.length;
+    let numberOfSubtasksOpen = subtasksOpen.length;
+    console.log(numberOfSubtasksDone);
+    console.log(numberOfSubtasksOpen);
+
+
+    for (let i = 0; i < tasks.length; i++) {
+        
+        if (tasks[i].id === openIdString) {
+            taskId = i;
+
+        }
+    }
+    /*
+    if (!loggedAsGuest) {
+        subtasksOpen = users[currentUser].tasks[taskId].subtasksOpen;
+        subtasksDone = users[currentUser].tasks[taskId].subtasksDone;
+    } else {
+        subtasksOpen = tasks[taskId].subtasksOpen;
+        subtasksDone = tasks[taskId].subtasksDone;
+    }
+
+    let currentTaskStatus = 1;
+
+    let progressBar = document.getElementById(`progressBar${task['id']}`);
+    if (currentTaskStatus === 1) {
+        progressBar.style.width = `50%`;
+        progressBar.classList.add('blue');
+    } else if (currentTaskStatus === 2) {
+        progressBar.style.width = `100%`;
+        progressBar.classList.add('blue');
+    } */
 }
 
 function startDragging(id) {
@@ -75,25 +134,11 @@ function allowDrop(event) {
     event.preventDefault();
 }
 
-
-function updateProgressBar(task) {
-    let currentTaskStatus = 1;
-    document.getElementById(`currentTaskNumber${task['id']}`).innerHTML = `${currentTaskStatus}`;
-    let progressBar = document.getElementById(`progressBar${task['id']}`);
-    if (currentTaskStatus === 1) {
-        progressBar.style.width = `50%`;
-        progressBar.classList.add('blue');
-    } else if (currentTaskStatus === 2) {
-        progressBar.style.width = `100%`;
-        progressBar.classList.add('blue');
-    }
-}
-
 function doNotClose(event) {
     event.stopPropagation();
 }
 
-function openBoardTaskPopup(openId) {
+async function openBoardTaskPopup(openId) {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
     let container = document.getElementById('boardTaskPopupContainer');
     document.body.style.overflow = 'hidden';
@@ -101,18 +146,18 @@ function openBoardTaskPopup(openId) {
     let openIdString = String(openId);
     for (let i = 0; i < tasks.length; i++) {
         if (tasks[i].id === openIdString) {
-            taskId = i;
+            currentOpenTaskId = i;
         }
     }
     moveContainerIn(container);
-    renderBoardTaskPopupContent(taskId);
+    await renderBoardTaskPopupContent(currentOpenTaskId);
 }
 
-function renderBoardTaskPopupContent(taskId) {
-    const todo = tasks[taskId];
-    showTaskText(todo, taskId);
+async function renderBoardTaskPopupContent(currentOpenTaskId) {
+    const todo = tasks[currentOpenTaskId];
+    showTaskText(todo, currentOpenTaskId);
     getContactsForPopupTask(todo);
-    getSubtasksForPopupTask(taskId);
+    await getSubtasksForPopupTask(currentOpenTaskId);
 }
 
 function showTaskText(todo) {
@@ -143,26 +188,15 @@ function showTaskText(todo) {
     `;
 }
 
-let subtasksOpen = [];
-let subtasksDone = [];
-
-// in Bearbeitung
-function getSubtasksForPopupTask(taskId) {
+async function getSubtasksForPopupTask(currentOpenTaskId) {
     let taskPopupContentSubtasks = document.getElementById('taskPopupContentSubtasks');
-    if (!loggedAsGuest) {
-        subtasksOpen = users[currentUser].tasks[taskId].subtasksOpen;
-        subtasksDone = users[currentUser].tasks[taskId].subtasksDone;
-    } else {
-        subtasksOpen = tasks[taskId].subtasksOpen;
-        subtasksDone = tasks[taskId].subtasksDone;
-    }
-
+    await loadSubtasksByOpenTask();
     taskPopupContentSubtasks.innerHTML = '';
     // rendering subtasksOpen with empty check-button
     for (let a = 0; a < subtasksOpen.length; a++) {
         taskPopupContentSubtasks.innerHTML += `
             <div class="d_f_c_c gap-10">
-            <div id="taskId${taskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${taskId}, ${a})"></img></div>
+            <div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
             <p>${subtasksOpen[a]}</p>
             </div>
             `;
@@ -171,57 +205,58 @@ function getSubtasksForPopupTask(taskId) {
     for (let b = 0; b < subtasksDone.length; b++) {
         taskPopupContentSubtasks.innerHTML += `
             <div class="d_f_c_c gap-10">
-            <div id="taskId${taskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${taskId}, ${b})"></img></div>
+            <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
             <p>${subtasksDone[b]}</p>
             </div>
             `;
     }
 }
 
-// in Bearbeitung
-async function clickSubtaskOpen(taskId, a) {
-    let divSubtaskOpen = document.getElementById(`taskId${taskId}SubtaskOpenId${a}`);
+async function loadSubtasksByOpenTask() {
+    if (!loggedAsGuest) {
+        subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
+        subtasksDone = users[currentUser].tasks[currentOpenTaskId].subtasksDone;
+    } else {
+        subtasksOpen = tasks[currentOpenTaskId].subtasksOpen;
+        subtasksDone = tasks[currentOpenTaskId].subtasksDone;
+    }
+}
+
+async function clickSubtaskOpen(currentOpenTaskId, a) {
+    let divSubtaskOpen = document.getElementById(`taskId${currentOpenTaskId}SubtaskOpenId${a}`);
     let clickedButton = 'check-button-clicked.svg';
     divSubtaskOpen.innerHTML = `
-    <img src="../assets/img/${clickedButton}" id="taskId${taskId}checkButtonDoneId${a}" onclick="clickSubtaskDone(${taskId}, ${a})"></img>
+    <img src="../assets/img/${clickedButton}" id="taskId${currentOpenTaskId}checkButtonDoneId${a}" onclick="clickSubtaskDone(${currentOpenTaskId}, ${a})"></img>
     `;
     if (!loggedAsGuest) {
         subtasksDone.push(subtasksOpen[a]);
         subtasksOpen.splice(a, 1);
         await saveNewUserDate();
-        getSubtasksForPopupTask(taskId);
+        getSubtasksForPopupTask(currentOpenTaskId);
     } else {
-        tasks[taskId].subtasksDone.push(subtasksOpen[a]);;
-        tasks[taskId].subtasksOpen.splice(a, 1);
-        getSubtasksForPopupTask(taskId);
-        let div = document.getElementById('guestMessagePopupBoard');
-        let messageText = document.getElementById('guestMessageBoard');
-        showGuestPopupMessage(div, messageText);
+        tasks[currentOpenTaskId].subtasksDone.push(subtasksOpen[a]);;
+        tasks[currentOpenTaskId].subtasksOpen.splice(a, 1);
+        getSubtasksForPopupTask(currentOpenTaskId);
     }
 }
 
-// in Bearbeitung
-async function clickSubtaskDone(taskId, b) {
-    let divSubtaskDone = document.getElementById(`taskId${taskId}SubtaskDoneId${b}`);
+async function clickSubtaskDone(currentOpenTaskId, b) {
+    let divSubtaskDone = document.getElementById(`taskId${currentOpenTaskId}SubtaskDoneId${b}`);
     let emptyButton = 'check-button-empty.svg';
     divSubtaskDone.innerHTML = `
-    <img src="../assets/img/${emptyButton}" id="taskId${taskId}checkButtonOpenId${b}" onclick="clickSubtaskOpen(${taskId}, ${b})"></img>
+    <img src="../assets/img/${emptyButton}" id="taskId${currentOpenTaskId}checkButtonOpenId${b}" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${b})"></img>
     `;
     if (!loggedAsGuest) {
         subtasksOpen.push(subtasksDone[b]);
         subtasksDone.splice(b, 1);
         await saveNewUserDate();
-        getSubtasksForPopupTask(taskId);
+        getSubtasksForPopupTask(currentOpenTaskId);
     } else {
-        tasks[taskId].subtasksOpen.push(subtasksDone[b]);;
-        tasks[taskId].subtasksDone.splice(b, 1);
-        getSubtasksForPopupTask(taskId);
-        let div = document.getElementById('guestMessagePopupBoard');
-        let messageText = document.getElementById('guestMessageBoard');
-        showGuestPopupMessage(div, messageText);
+        tasks[currentOpenTaskId].subtasksOpen.push(subtasksDone[b]);;
+        tasks[currentOpenTaskId].subtasksDone.splice(b, 1);
+        getSubtasksForPopupTask(currentOpenTaskId);
     }
 }
-
 
 function getContactsForPopupTask(todo) {
     let taskPopupContentAssignedTo = document.getElementById('taskPopupContentAssignedTo');
@@ -295,7 +330,7 @@ async function editTask() {
 async function deleteTask() {
     document.getElementById('boardTaskPopup').style.display = 'none';
     document.body.style.overflow = 'scroll';
-    tasks.splice(taskId, 1);
+    tasks.splice(currentOpenTaskId, 1);
     if (!loggedAsGuest === true || loggedAsGuest === false) {
         await saveNewUserDate();
     } else {
@@ -320,6 +355,12 @@ function closeBoardAddTaskPopup() {
     moveContainerOut(container);
     setTimeout(function () {
         displayNonePopup(popup);
+        renderBoardTasks();
+        if (loggedAsGuest) {
+            let div = document.getElementById('guestMessagePopupBoard');
+            let messageText = document.getElementById('guestMessageBoard');
+            showGuestPopupMessage(div, messageText);
+        }
     }, 500);
     document.body.style.overflow = 'scroll';
 }
@@ -330,6 +371,12 @@ function closeBoardTaskPopup() {
     moveContainerOut(container);
     setTimeout(function () {
         displayNonePopup(popup);
+        renderBoardTasks();
+        if (loggedAsGuest) {
+            let div = document.getElementById('guestMessagePopupBoard');
+            let messageText = document.getElementById('guestMessageBoard');
+            showGuestPopupMessage(div, messageText);
+        }
     }, 500);
     document.body.style.overflow = 'scroll';
 }
@@ -379,7 +426,7 @@ function showSearchedTasksForEachCategory(allTasksSameCategory, categoryTableCol
     for (let k = 0; k < allTasksSameCategory.length; k++) {
         const task = allTasksSameCategory[k];
         categoryTableColumn.innerHTML += generateTodoHTML(task);
-        updateProgressBar(task);
+        // updateProgressBar(task);
     }
 }
 
