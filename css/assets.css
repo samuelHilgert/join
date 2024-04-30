@@ -273,14 +273,18 @@
 }
 
 .drag-area {
-  height: 900px;
   width: 220px;
+  flex:1;
+  min-height:50px;
   padding: 0 20px;
   margin-bottom: 50px;
-  /* 
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(231, 231, 231, 1);
+  border-radius:10px;
   border: 1px dashed black;
-  */
+}
+
+.drag-area-highlight {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .todo {

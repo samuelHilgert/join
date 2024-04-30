@@ -66,7 +66,8 @@
             class="drag-area d_c_fs_c"
             id="backlog"
             ondrop="moveTo('backlog')"
-            ondragover="allowDrop(event)"
+            ondragleave="removeHighlight('open')"
+            ondragover="allowDrop(event); highlight('open')"
           ></div>
         </div>
 
@@ -79,7 +80,8 @@
             class="drag-area d_c_fs_c"
             id="inProgress"
             ondrop="moveTo('inProgress')"
-            ondragover="allowDrop(event)"
+            ondragleave="removeHighlight('open')"
+            ondragover="allowDrop(event); highlight('open')"
           ></div>
         </div>
 
@@ -92,7 +94,8 @@
             class="drag-area d_c_fs_c"
             id="awaitFeedback"
             ondrop="moveTo('awaitFeedback')"
-            ondragover="allowDrop(event)"
+            ondragleave="removeHighlight('open')"
+            ondragover="allowDrop(event); highlight('open')"
           ></div>
         </div>
 
@@ -104,7 +107,8 @@
             class="drag-area d_c_fs_c"
             id="done"
             ondrop="moveTo('done')"
-            ondragover="allowDrop(event)"
+            ondragleave="removeHighlight('done')"
+            ondragover="allowDrop(event); highlight('done')"
           ></div>
         </div>
       </div>
