@@ -404,7 +404,10 @@ function displaySearchMessage(matchingIndices) {
     resultMessageDiv.style.display = 'flex'
     if (matchingIndices.length === 0) {
         resultMessageDiv.innerHTML = `<div>there were no results for your search</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
-    } else {
+    } else if (matchingIndices.length === 1) {
+        resultMessageDiv.innerHTML = `<div>${matchingIndices.length} match found</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
+    }
+    else {
         resultMessageDiv.innerHTML = `<div>${matchingIndices.length} matches found</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
     }
 }
