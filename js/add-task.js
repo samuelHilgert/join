@@ -2,6 +2,7 @@ let newTask = [];
 // let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
+let matchingContactNames = [];
 let checkedCheckboxes = []; // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 let contactsLoaded = false;
 
@@ -421,17 +422,18 @@ function setMinimumDate() {
 
 ///////// SEARCHBAR /////////
 
-function clearAssignInput() {
+function clearAssignToInput() {
   let input = document.getElementById('task-assignedTo');
   if (input.placeholder === 'Search contact') {
     input.placeholder = 'Select contacts to assign';
   } else {
     input.placeholder = 'Search contact'
-  }
-  ;
+  };
 }
 
-
+function findMatchingContact() {
+  
+}
 
 
 
