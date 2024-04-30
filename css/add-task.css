@@ -275,7 +275,7 @@ input[type="checkbox"] {
 
 .due-date-field {
   position: relative;
-  background-image: url(/assets/img/event.png);
+  background-image: url(/assets/img/event.svg);
   background-repeat: no-repeat;
   cursor: pointer;
 }
