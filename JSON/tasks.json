@@ -7,7 +7,8 @@
         "dueDate": "30/04/2024",
         "priority": "Urgent",
         "assignedTo": ["Anna Müller", "Eva Grace"],
-        "subtasks": "",
+        "subtasksOpen": ["styling form with CSS", "create imprint"],
+        "subtasksDone": [],
         "category": "backlog"
     },
     {
@@ -18,7 +19,8 @@
         "dueDate": "04/05/2024",
         "priority": "Medium",
         "assignedTo": ["Anna Müller", "Olivia Shaun", "Paul Lee"],
-        "subtasks": "",
+        "subtasksOpen": ["create page with HTML and CSS"],
+        "subtasksDone": ["looking for a recipe"],
         "category": "inProgress"
     },
     {
@@ -29,7 +31,8 @@
         "dueDate": "20/07/2024",
         "priority": "Low",
         "assignedTo": ["Anna Müller"],
-        "subtasks": "",
+        "subtasksOpen": [],
+        "subtasksDone": ["create a file structure", "create first html template"],
         "category": "awaitFeedback"
     },
     {
@@ -40,7 +43,8 @@
         "dueDate": "15/07/2024",
         "priority": "Urgent",
         "assignedTo": ["Alex Maier"],
-        "subtasks": "",
+        "subtasksOpen": ["looking for a recipe", "create js functions"],
+        "subtasksDone": ["create calculator with HTML & CSS"],
         "category": "awaitFeedback"
     },
     {
@@ -51,7 +55,8 @@
         "dueDate": "05/08/2024",
         "priority": "Medium",
         "assignedTo": ["Max Baumgart"],
-        "subtasks": "",
+        "subtasksOpen": [],
+        "subtasksDone": ["create CSS file structure"],
         "category": "done"
     }
 ]

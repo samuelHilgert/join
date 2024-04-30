@@ -20,7 +20,7 @@ body {
 }
 
 .login-form-container {
-  width: 50%;
+  min-width: 50%;
   border-radius: 20px;
 }
 
@@ -182,6 +182,8 @@ header {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
 }
 
 .search-div {
@@ -201,4 +203,22 @@ header {
   position: fixed;
   padding-top: 30px;
   right: 60px;
+}
+
+@media screen and (max-width: 630px) {
+  .signup-btn-respons {
+    position: absolute;
+    bottom: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .pad-x-60 {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  body {
+    height: 100%;
+    padding: 20px 10px;
+  }
 }

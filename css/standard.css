@@ -19,6 +19,13 @@ body {
   box-sizing: border-box;
 }
 
+.word-break {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  hyphens: auto;
+}
+
 .pad-x {
   padding-right: 80px;
   padding-left: 80px;
@@ -153,6 +160,10 @@ body {
 
 .pad-top-100 {
   padding-top: 100px;
+}
+
+.mar-bot-10 {
+  margin-bottom: 10px;
 }
 
 .space-1 {
@@ -479,6 +490,11 @@ body {
 
 .width-33 {
   width: 33%;
+  box-sizing: border-box;
+}
+
+.width-20 {
+  width: 20%;
   box-sizing: border-box;
 }
 
