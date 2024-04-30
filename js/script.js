@@ -12,30 +12,36 @@ let popupCloseTime = 8000; // set popup display time
  * 
  */
 async function init() {
-    checkFalseOpening();
-    getCurrentUserId();
-    if (!loggedAsGuest) {
-        await loadUserData();
-    }
-    await loadLoggedTime();
-    await updateUserData();
-    await includeHTML();
-    renderHeader();
-    getCurrentlySidebarLink(); // in sidebar.js
-
-    // check whether the current time is greater than or equal to the expiration date
-    setInterval(function () {
-        let expiryTime = rememberStatus[0].expiryDate;
-        if (rememberStatus[0].remember_status === false) {
-            let now = new Date().getMinutes();
-            if (now >= expiryTime) { // time is over
-                resetLoginValues();
-                setTimeout(firstLogin, 1000);
-            }
-            // }
+    let loggedStatus = localStorage.getItem('logged');
+    let userId = localStorage.getItem('user');
+    if (loggedStatus !== null || userId !== null) {
+        checkFalseOpening();
+        getCurrentUserId();
+        if (!loggedAsGuest) {
+            await loadUserData();
         }
-    }, 30000); // repeat query every 30 seconds
-    await initiateIndividualFunctions();
+        await loadLoggedTime();
+        await updateUserData();
+        await includeHTML();
+        renderHeader();
+        getCurrentlySidebarLink(); // in sidebar.js
+        // check whether the current time is greater than or equal to the expiration date
+        setInterval(function () {
+            let expiryTime = rememberStatus[0].expiryDate;
+            if (rememberStatus[0].remember_status === false) {
+                let now = new Date().getMinutes();
+                if (now >= expiryTime) { // time is over
+                    resetLoginValues();
+                    setTimeout(firstLogin, 1000);
+                }
+                // }
+            }
+        }, 30000); // repeat query every 30 seconds
+        await initiateIndividualFunctions();
+    } else {
+        await includeHTML();
+        getCurrentlySidebarLink();
+    }
 }
 
 /**
@@ -45,13 +51,17 @@ async function init() {
 function checkFalseOpening() {
     let loggedStatus = localStorage.getItem('logged');
     let userId = localStorage.getItem('user');
+    let currentUrl = window.location.href;
     if (loggedStatus === null && userId === null) {
-        firstLogin();
+        if (currentUrl.indexOf('?external') !== -1) {
+        } else {
+            firstLogin();
+        }
     }
 }
 
 function firstLogin() {
-   return window.location.href = `./login.html`;
+    return window.location.href = `./login.html`;
 }
 
 /**
@@ -378,9 +388,8 @@ function contactNamesLetters(contact) {
     let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
     let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
     if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
-      secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
+        secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
     }
     letters = firstLetter + secondLetter;
     return letters;
-  }
-  
+}
