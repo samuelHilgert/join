@@ -27,6 +27,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
         const task = allTasksSameCategory[k];
         categoryTableColumn.innerHTML += generateTodoHTML(task);
         updateProgressBar(task);
+        getContactsForTask(task);
     }
 }
 
@@ -42,13 +43,26 @@ function generateTodoHTML(task) {
                 <div class="statusText"><span id="stubtasksDoneLength${task['id']}">X</span>/<span id="subtasksLength${task['id']}">XX</span><span>&nbsp;Subtasks</span></div>
             </div>
             <div class="d_f_sb_c width-max">
-            <div>
-            <img src="./assets/img/profile-board.svg" alt="">
-            <img src="./assets/img/profile-board.svg" alt="">
-            <img src="./assets/img/profile-board.svg" alt="">
+            <div class="d_f_c_c" id="contactsIn${task['id']}">
             </div>
             <img src="./assets/img/priority.svg" alt=""></div>
             </div>`;
+}
+
+function getContactsForTask(task) {
+    let contactsForTaskDiv = document.getElementById(`contactsIn${task['id']}`);
+    const contacts = task['assignedTo'];
+    contactsForTaskDiv.innerHTML = '';
+    for (let c = 0; c < contacts.length; c++) {
+        const contact = contacts[c];
+        const letters = contactNamesLetters(contact);
+        const backgroundColor = getBgColorTaskPopup(c);
+        contactsForTaskDiv.innerHTML += `
+    <div class="d_f_fs_c gap-10 width-max">
+    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    </div>
+    `;
+    }
 }
 
 function updateProgressBar(task) {
