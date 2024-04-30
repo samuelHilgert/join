@@ -419,6 +419,20 @@ function setMinimumDate() {
   document.getElementById("task-date").setAttribute("min", minDate);
 }
 
+///////// SEARCHBAR /////////
+
+function clearAssignInput() {
+  let input = document.getElementById('task-assignedTo');
+  input.placeholder = 'Search contact';
+}
+
+
+
+
+
+///////// SEARCHBAR ENDE /////////
+
+
 //Funktion wird ab jetzt nicht mehr aufgerufen!
 /*  
 //for the contacts at Assigned to section
