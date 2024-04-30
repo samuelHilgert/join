@@ -377,7 +377,6 @@ async function searchTasksOnBoard() {
 
     await getMatchingIndicies(matchingIndices, search);
     await generateCategoriesBySearch(matchingIndices);
-    initGuestPopupMessage();
     resetSearch();
 }
 
@@ -403,23 +402,7 @@ async function generateCategoriesBySearch(matchingIndices) {
         const allTasksSameCategory = matchingIndices.filter(t => t['category'] == category);
         const categoryTableColumn = document.getElementById(`${category}`);
         categoryTableColumn.innerHTML = '';
-        showSearchedTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
-    }
-}
-
-function showSearchedTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
-    for (let k = 0; k < allTasksSameCategory.length; k++) {
-        const task = allTasksSameCategory[k];
-        categoryTableColumn.innerHTML += generateTodoHTML(task);
-        // updateProgressBar(task);
-    }
-}
-
-function initGuestPopupMessage() {
-    if (loggedAsGuest === true) {
-        let div = document.getElementById('guestMessagePopupBoard');
-        let messageText = document.getElementById('guestMessageBoard');
-        showGuestPopupMessage(div, messageText);
+        showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
     }
 }
 
