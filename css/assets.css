@@ -13,17 +13,17 @@
 
 .input-style-search {
   padding: 10px 14px !important;
-  background-color:white;
+  background-color: white;
 }
 
 .search-board-input {
   padding: 10px 14px;
   border: none;
-  outline:none;
+  outline: none;
 }
 
 .search-icon img:hover {
-cursor:pointer;
+  cursor: pointer;
 }
 
 .input-name {
@@ -354,7 +354,7 @@ li {
 
 .board-task-popup-container {
   width: 35%;
-  height:80%;
+  height: 80%;
   border-radius: 30px;
   position: relative;
   z-index: 9999;
@@ -506,7 +506,7 @@ li {
   display: none;
 }
 
-#guestMessagePopupAddTask{
+#guestMessagePopupAddTask {
   display: none;
 }
 
@@ -523,7 +523,7 @@ li {
 }
 
 .contact-circle-small-letters {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 13px;
   line-height: 14.4px;
   font-weight: 400;
@@ -531,9 +531,15 @@ li {
 }
 
 .class1 {
-  height:200px;
+  height: 200px;
 }
 
 #resultMessageDiv {
-  display:none;
+  display: none;
+}
+
+.icon-separator {
+  height: 24px;
+  width: 1px;
+  background-color: #d1d1d1;
 }
