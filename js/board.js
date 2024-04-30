@@ -59,52 +59,15 @@ function updateProgressBar(task) {
     let subtasksLengthDiv = document.getElementById(`subtasksLength${task['id']}`);
     subtasksLengthDiv.innerHTML = `${allSubtasksByTask}`;
 
-
     let stubtasksDoneLengthDiv = document.getElementById(`stubtasksDoneLength${task['id']}`);
     stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
 
-    /* 
-        if (!loggedAsGuest) {
-            subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
-            subtasksDone = users[currentUser].tasks[currentOpenTaskId].subtasksDone;
-        } else {
-            subtasksOpen = tasks[currentOpenTaskId].subtasksOpen;
-            subtasksDone = tasks[currentOpenTaskId].subtasksDone;
-        }
-
-
-    let numberOfSubtasksDone = subtasksDone.length;
-    let numberOfSubtasksOpen = subtasksOpen.length;
-    console.log(numberOfSubtasksDone);
-    console.log(numberOfSubtasksOpen);
-
-
-    for (let i = 0; i < tasks.length; i++) {
-        
-        if (tasks[i].id === openIdString) {
-            taskId = i;
-
-        }
-    }
-    /*
-    if (!loggedAsGuest) {
-        subtasksOpen = users[currentUser].tasks[taskId].subtasksOpen;
-        subtasksDone = users[currentUser].tasks[taskId].subtasksDone;
-    } else {
-        subtasksOpen = tasks[taskId].subtasksOpen;
-        subtasksDone = tasks[taskId].subtasksDone;
-    }
-
-    let currentTaskStatus = 1;
-
+    // progessBar
     let progressBar = document.getElementById(`progressBar${task['id']}`);
-    if (currentTaskStatus === 1) {
-        progressBar.style.width = `50%`;
+    let percent = stubtasksDoneLength / allSubtasksByTask * 100;
+    let result = percent.toFixed(2);
+        progressBar.style.width = `${result}%`;
         progressBar.classList.add('blue');
-    } else if (currentTaskStatus === 2) {
-        progressBar.style.width = `100%`;
-        progressBar.classList.add('blue');
-    } */
 }
 
 function startDragging(id) {
