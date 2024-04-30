@@ -39,6 +39,7 @@ async function init() {
         }, 30000); // repeat query every 30 seconds
         await initiateIndividualFunctions();
     } else {
+        checkFalseOpening();
         await includeHTML();
         getCurrentlySidebarLink();
     }
