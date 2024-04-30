@@ -366,9 +366,9 @@ function changeIcons() {
 
   iconBox.innerHTML = `
     <div class="d_f_c_c gap-5 padding-right-36">
-    <div onclick='clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/input-cross.png" alt="cross" /></div>
+    <div onclick='clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/close.svg" alt="cross" /></div>
       <div class='input-spacer'></div>
-      <div onclick='addSubtask(),clearSubtaskInput()' class="icon-edit-delete"> <img style='height: 17px;' src="assets/img/input-check.png" alt="check" /></div>
+      <div onclick='addSubtask(),clearSubtaskInput()' class="icon-edit-delete"> <img style='height: 17px;' src="assets/img/check.svg" alt="check" /></div>
     </div>
   `;
 }
