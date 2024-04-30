@@ -421,7 +421,7 @@ function setMinimumDate() {
 
 ///////// SEARCHBAR /////////
 
-function clearAssignInput() {
+function clearAssignToInput() {
   let input = document.getElementById('task-assignedTo');
   if (input.placeholder === 'Search contact') {
     input.placeholder = 'Select contacts to assign';
