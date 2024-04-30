@@ -291,6 +291,7 @@ select.task-input-style {
 
 .input-icon-div {
   position: absolute;
+  top: 50%;
   right: 18px;
   width: 30px;
   height: 30px;
@@ -299,6 +300,28 @@ select.task-input-style {
   align-items: center;
   cursor: pointer;
   border-radius: 50%;
+  z-index: 10;
+}
+
+.input-icon-dropdown-div {
+  position: absolute;
+  top: 48px;
+  right: 18px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.assigned-to-field {
+  position: relative;
+  background-image: url(/assets/img/arrow_drop_down.png);
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .input-icon-div:hover {
