@@ -145,7 +145,8 @@ input[type="checkbox"] {
   justify-content: center;
   align-items: start;
   height: 118px;
-  width: 460px;
+  max-width: 500px;
+  width: 100%;
   margin-top: 213px;
   background-color: rgba(255, 255, 255, 1);
   border-bottom-left-radius: 10px;
@@ -161,7 +162,8 @@ input[type="checkbox"] {
   justify-content: start;
   align-items: stretch;
   height: 118px;
-  width: 460px;
+  max-width: 500px;
+  width: 100%;
   margin-top: 242px;
   gap: 10px;
   cursor: pointer;
@@ -170,15 +172,12 @@ input[type="checkbox"] {
 }
 
 .subtask {
+  max-width: 500px;
+  width: 100%;
   border-radius: 10px;
   font-size: 16px;
   padding-top: 3px;
   padding-bottom: 3px;
-}
-
-.subtask:hover {
-  background-color: rgb(240, 240, 240);
-  cursor: pointer;
 }
 
 .subtask:hover img {
@@ -233,8 +232,10 @@ input[type="checkbox"] {
   font-size: 20px;
   padding: 16px 24px;
   width: 100%;
+  max-width: 500px;
   border-radius: 15px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .task-category:hover {
