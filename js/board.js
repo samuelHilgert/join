@@ -52,10 +52,6 @@ function generateTodoHTML(task) {
 
 function getPrioForTask(task) {
     let prioForTaskDiv = document.getElementById(`prioIn${task['id']}`);
-    // console.log(task);
-    // const todo = task['priority'];
-    // console.log(todo);
-
     prioForTaskDiv.innerHTML += `
     <img src="../assets/img/${getPriorityIcon(task)}" alt="">
     `; 
@@ -159,18 +155,18 @@ function showTaskText(todo) {
     taskPopupContentTitle.innerHTML = `<h2><b>${todo['title']}</b></h2>`;
     taskPopupContentDescription.innerHTML = `<p>${todo['description']}</p>`;
     taskPopupContentDueDate.innerHTML = `
-    <div class="d_f_fs_c width-50 gap-30">
+    <div class="d_f_fs_c width-20 gap-30">
         <p>Due date:</p>
     </div>
-    <div class="d_f_fs_c width-50 gap-30" >
+    <div class="d_f_fs_c gap-30">
         <p>${todo['dueDate']}</p>
     </div>
     `;
     taskPopupContentPriority.innerHTML = `
-    <div class="d_f_fs_c width-50 gap-30">
+    <div class="d_f_fs_c width-20 gap-30">
         <p>Priority:</p>
     </div>
-    <div class="d_f_fs_c width-50 gap-30">
+    <div class="d_f_fs_c gap-10">
         <p>${todo['priority']}</p>
         <div><img src="../assets/img/${getPriorityIcon(todo)}"></img></div>
     </div>

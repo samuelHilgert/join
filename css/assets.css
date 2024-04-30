@@ -353,12 +353,13 @@ li {
 }
 
 .board-task-popup-container {
-  width: 30%;
+  width: 35%;
   height:80%;
   border-radius: 30px;
   position: relative;
   z-index: 9999;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .close-button-div:hover {
