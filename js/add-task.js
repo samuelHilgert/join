@@ -19,6 +19,14 @@ function getNextAvailableTaskId() {
   return id.toString();
 }
 
+function sortContactsForTasks() {
+  contactsForTasks.sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      return nameA.localeCompare(nameB);
+  });
+}
+
 // function to add the task
 async function addTask() {
   const taskInput = readTaskInput();
@@ -124,6 +132,7 @@ async function updateTaskContacts() {
 }
 
 function openDropdown() {
+  sortContactsForTasks();
   let taskContactDiv = document.getElementById("taskContactDiv");
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
@@ -432,7 +441,7 @@ function clearAssignToInput() {
 }
 
 function findMatchingContact() {
-  
+
 }
 
 
