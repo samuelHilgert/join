@@ -21,9 +21,9 @@ function getNextAvailableTaskId() {
 
 function sortContactsForTasks() {
   contactsForTasks.sort((a, b) => {
-      const nameA = a.name.toLowerCase();
-      const nameB = b.name.toLowerCase();
-      return nameA.localeCompare(nameB);
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    return nameA.localeCompare(nameB);
   });
 }
 
@@ -396,7 +396,7 @@ function clearSubtaskInput() {
   subtaskInput.blur();
   let iconBox = document.getElementById("dropdown-icon");
   iconBox.innerHTML = `
-   <div onclick="changeIcons()" class='icon-edit-delete'><img src="assets/img/input-plus.png" alt="plus" /></div>
+   <div onclick="changeIcons()" class='icon-edit-delete'><img src="assets/img/add.svg" alt="plus" /></div>
   `;
 }
 
@@ -432,24 +432,19 @@ function setMinimumDate() {
 ///////// SEARCHBAR /////////
 
 function clearAssignToInput() {
-  let input = document.getElementById('task-assignedTo');
-  if (input.placeholder === 'Search contact') {
-    input.placeholder = 'Select contacts to assign';
+  let input = document.getElementById("task-assignedTo");
+  if (input.placeholder === "Search contact") {
+    input.placeholder = "Select contacts to assign";
   } else {
-    input.placeholder = 'Search contact'
-  };
+    input.placeholder = "Search contact";
+  }
 }
 
 function findMatchingContact() {
   clearAssignToInput();
-  
-  
 }
 
-
-
 ///////// SEARCHBAR ENDE /////////
-
 
 //Funktion wird ab jetzt nicht mehr aufgerufen!
 /*  
