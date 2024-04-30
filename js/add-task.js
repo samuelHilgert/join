@@ -441,7 +441,9 @@ function clearAssignToInput() {
 }
 
 function findMatchingContact() {
-
+  clearAssignToInput();
+  
+  
 }
 
 
