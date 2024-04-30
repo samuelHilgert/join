@@ -5,14 +5,19 @@ let taskId;
 let subtasksOpen = [];
 let subtasksDone = [];
 
+/**
+ * 
+ * 
+ */
 async function renderBoardTasks() {
+    
     if (tasks.length === 0) {
         let div = document.getElementById('guestMessagePopupBoard');
         let messageText = document.getElementById('guestMessageBoard');
         showGuestPopupMessageForReload(div, messageText);
         await updateUserData();
     }
-
+    
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
         const allTasksSameCategory = tasks.filter(t => t['category'] == category);
@@ -31,6 +36,18 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
         getPrioForTask(task);
     }
 }
+
+/********************** GENERAL FUNCTIONS **********************************/
+
+function showGuestMessageOnBoard() {
+    if (loggedAsGuest) {
+        let div = document.getElementById('guestMessagePopupBoard');
+        let messageText = document.getElementById('guestMessageBoard');
+        showGuestPopupMessage(div, messageText);
+    }
+}
+
+/*********************** END GENERAL FUNCTIONS ********************************/
 
 function generateTodoHTML(task) {
     return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${task['id']})" draggable="true" ondragstart="startDragging(${task['id']})">
@@ -316,16 +333,31 @@ async function deleteTask() {
     document.getElementById('boardTaskPopup').style.display = 'none';
     document.body.style.overflow = 'scroll';
     tasks.splice(currentOpenTaskId, 1);
+    showGuestMessageOnBoard();
     if (!loggedAsGuest === true || loggedAsGuest === false) {
         await saveNewUserDate();
-    } else {
-        let div = document.getElementById('guestMessagePopupBoard');
-        let messageText = document.getElementById('guestMessageBoard');
-        showGuestPopupMessage(div, messageText);
     }
     await renderBoardTasks();
 }
 
+function closeBoardTaskPopup() {
+    let popup = document.getElementById('boardTaskPopup');
+    let container = document.getElementById('boardTaskPopupContainer');
+    moveContainerOut(container);
+    setTimeout(function () {
+        displayNonePopup(popup);
+        renderBoardTasks();
+        showGuestMessageOnBoard();
+    }, 500);
+    document.body.style.overflow = 'scroll';
+}
+
+/********************** ADD-TASK POPUP OPENED **********************************/
+
+/**
+ * this functions initiate all functions for the popup add-task
+ * 
+ */
 function openBoardAddTaskPopup() {
     let boardAddTaskPopup = document.getElementById('boardAddTaskPopup');
     let container = document.getElementById('boardAddTaskPopupContainer');
@@ -341,51 +373,47 @@ function closeBoardAddTaskPopup() {
     setTimeout(function () {
         displayNonePopup(popup);
         renderBoardTasks();
-        if (loggedAsGuest) {
-            let div = document.getElementById('guestMessagePopupBoard');
-            let messageText = document.getElementById('guestMessageBoard');
-            showGuestPopupMessage(div, messageText);
-        }
+        showGuestMessageOnBoard();
     }, 500);
     document.body.style.overflow = 'scroll';
 }
 
-function closeBoardTaskPopup() {
-    let popup = document.getElementById('boardTaskPopup');
-    let container = document.getElementById('boardTaskPopupContainer');
-    moveContainerOut(container);
-    setTimeout(function () {
-        displayNonePopup(popup);
-        renderBoardTasks();
-        if (loggedAsGuest) {
-            let div = document.getElementById('guestMessagePopupBoard');
-            let messageText = document.getElementById('guestMessageBoard');
-            showGuestPopupMessage(div, messageText);
-        }
-    }, 500);
-    document.body.style.overflow = 'scroll';
-}
+/*********************** END ADD TASK POPUP OPENED ********************************/
 
 /********************** SEARCH FUNCTION **********************************/
+
 let findMatchingIndices = [];
 
+/**
+ * this function initiate all search functions
+ * 
+ */
 async function searchTasksOnBoard() {
     let searchInput = document.getElementById('searchBoardInput').value;
     let search = searchInput.trim().toLowerCase();
 
-    let matchingIndices = [];
+    let matchingIndices = []; // array for search matches
 
-    await getMatchingIndicies(matchingIndices, search);
+    await setQueryForSearch(matchingIndices, search);
     await generateCategoriesBySearch(matchingIndices);
     resetSearch();
 }
 
-async function getMatchingIndicies(matchingIndices, search) {
+/**
+ * this function includes search querys whehter a search is allowed or not, here only one query set
+ * 
+ */
+async function setQueryForSearch(matchingIndices, search) {
     if (search.length >= 2) {
         await findTasksIndices(matchingIndices, search);
     }
 }
 
+/**
+ * this function iterates all tasks, whether the task description or task name includes the search result
+ * the result tasks are pushed in the array after matching
+ * 
+ */
 async function findTasksIndices(matchingIndices, search) {
     for (let i = 0; i < tasks.length; i++) {
         const everySearchedTaskName = tasks[i].title;
@@ -396,26 +424,37 @@ async function findTasksIndices(matchingIndices, search) {
     }
 }
 
+/**
+ * this function creates all categegories and the corresponding tasks with the parameter "allTasksSameCategory"
+ * 
+ */
 async function generateCategoriesBySearch(matchingIndices) {
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
         const allTasksSameCategory = matchingIndices.filter(t => t['category'] == category);
         const categoryTableColumn = document.getElementById(`${category}`);
         categoryTableColumn.innerHTML = '';
-        showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
+        showTasksForEachCategory(allTasksSameCategory, categoryTableColumn); // this functions already exist and renders the tasks
     }
 }
 
+/**
+ * after the search results are displayed, the search input field is reset
+ * 
+ */
+function resetSearch() {
+    document.getElementById('searchBoardInput').value = '';
+}
+
+/**
+ * the search function should also start, when the key-button "enter" is pressed
+ * 
+ */
 function searchTasksByKeyPress(event) {
     if (event.key === 'Enter') {
         searchTasksOnBoard();
     }
 }
 
-function resetSearch() {
-    document.getElementById('searchBoardInput').value = '';
-}
-
-
-/*************************************************************/
+/*********************** END SEARCH FUNCTION ********************************/
 
