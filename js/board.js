@@ -28,6 +28,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
         categoryTableColumn.innerHTML += generateTodoHTML(task);
         updateProgressBar(task);
         getContactsForTask(task);
+        getPrioForTask(task);
     }
 }
 
@@ -45,8 +46,19 @@ function generateTodoHTML(task) {
             <div class="d_f_sb_c width-max">
             <div class="d_f_c_c" id="contactsIn${task['id']}">
             </div>
-            <img src="./assets/img/priority.svg" alt=""></div>
+            <div id="prioIn${task['id']}"></div>
             </div>`;
+}
+
+function getPrioForTask(task) {
+    let prioForTaskDiv = document.getElementById(`prioIn${task['id']}`);
+    // console.log(task);
+    // const todo = task['priority'];
+    // console.log(todo);
+
+    prioForTaskDiv.innerHTML += `
+    <img src="../assets/img/${getPriorityIcon(task)}" alt="">
+    `; 
 }
 
 function getContactsForTask(task) {
