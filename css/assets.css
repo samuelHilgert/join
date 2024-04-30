@@ -533,3 +533,7 @@ li {
 .class1 {
   height:200px;
 }
+
+#resultMessageDiv {
+  display:none;
+}

@@ -10,14 +10,15 @@ let subtasksDone = [];
  * 
  */
 async function renderBoardTasks() {
-    
+    hideSearchMessage();
+
     if (tasks.length === 0) {
         let div = document.getElementById('guestMessagePopupBoard');
         let messageText = document.getElementById('guestMessageBoard');
         showGuestPopupMessageForReload(div, messageText);
         await updateUserData();
     }
-    
+
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
         const allTasksSameCategory = tasks.filter(t => t['category'] == category);
@@ -71,7 +72,7 @@ function getPrioForTask(task) {
     let prioForTaskDiv = document.getElementById(`prioIn${task['id']}`);
     prioForTaskDiv.innerHTML += `
     <img src="../assets/img/${getPriorityIcon(task)}" alt="">
-    `; 
+    `;
 }
 
 function getContactsForTask(task) {
@@ -105,8 +106,8 @@ function updateProgressBar(task) {
     let progressBar = document.getElementById(`progressBar${task['id']}`);
     let percent = stubtasksDoneLength / allSubtasksByTask * 100;
     let result = percent.toFixed(2);
-        progressBar.style.width = `${result}%`;
-        progressBar.classList.add('blue');
+    progressBar.style.width = `${result}%`;
+    progressBar.classList.add('blue');
 }
 
 function startDragging(id) {
@@ -391,12 +392,34 @@ let findMatchingIndices = [];
 async function searchTasksOnBoard() {
     let searchInput = document.getElementById('searchBoardInput').value;
     let search = searchInput.trim().toLowerCase();
-
     let matchingIndices = []; // array for search matches
-
     await setQueryForSearch(matchingIndices, search);
+    displaySearchMessage(matchingIndices);
     await generateCategoriesBySearch(matchingIndices);
     resetSearch();
+}
+
+function displaySearchMessage(matchingIndices) {
+    let resultMessageDiv = document.getElementById('resultMessageDiv');
+    resultMessageDiv.style.display = 'flex'
+    if (matchingIndices.length === 0) {
+        resultMessageDiv.innerHTML = `<div>there were no results for your search</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
+    } else if (matchingIndices.length === 1) {
+        resultMessageDiv.innerHTML = `<div>${matchingIndices.length} match found</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
+    }
+    else {
+        resultMessageDiv.innerHTML = `<div>${matchingIndices.length} matches found</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
+    }
+}
+
+async function renderAfterSearch() {
+    await renderBoardTasks();
+}
+
+
+function hideSearchMessage() {
+    let resultMessageDiv = document.getElementById('resultMessageDiv');
+    resultMessageDiv.style.display = 'none'
 }
 
 /**
