@@ -31,7 +31,15 @@ async function renderBoardTasks() {
 function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
   for (let k = 0; k < allTasksSameCategory.length; k++) {
     const task = allTasksSameCategory[k];
+
+    /* if () {
+  No tasks To do
+} else { 
+}
+*/
+
     categoryTableColumn.innerHTML += generateTodoHTML(task);
+
     updateProgressBar(task);
     getContactsForTask(task);
     getPrioForTask(task);
@@ -139,6 +147,14 @@ async function moveTo(currentCategory) {
 
 function allowDrop(event) {
   event.preventDefault();
+}
+
+function highlight(id) {
+  document.getElementById(id).classList.add('drag-area-highlight');
+}
+
+function removeHighlight(id) {
+  document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
 function doNotClose(event) {

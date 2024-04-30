@@ -9,7 +9,7 @@
         "assignedTo": ["Anna Müller", "Eva Grace"],
         "subtasksOpen": ["styling form with CSS", "create imprint"],
         "subtasksDone": [],
-        "category": "backlog"
+        "category": "inProgress"
     },
     {
         "id": "2",
