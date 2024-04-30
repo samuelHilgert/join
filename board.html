@@ -38,6 +38,7 @@
                         alt=""></a>
             </div>
         </div>
+        <div class="d_f_c_c width-max gap-10" id="resultMessageDiv"></div>
         <div class="drag-area-container d_f_fs_fs gap-20 width-max">
 
             <div class="d_c_c_fs gap-10">
@@ -45,8 +46,7 @@
                     <p>To do</p>
                     <img src="./assets/img/plus-button.svg" alt="">
                 </div>
-                <div class="drag-area d_c_fs_c" id="backlog" ondrop="moveTo('backlog')" ondragover="allowDrop(event)">
-                </div>
+                <div class="drag-area d_c_fs_c" id="backlog" ondrop="moveTo('backlog')" ondragleave="removeHighlight('open')" ondragover="allowDrop(event); highlight('open')"></div>
             </div>
 
             <div class="d_c_c_fs gap-10">
@@ -54,8 +54,8 @@
                     <p>In progress</p>
                     <img src="./assets/img/plus-button.svg" alt="">
                 </div>
-                <div class="drag-area d_c_fs_c" id="inProgress" ondrop="moveTo('inProgress')"
-                    ondragover="allowDrop(event)">
+                <div class="drag-area d_c_fs_c" id="inProgress" ondrop="moveTo('inProgress')" ondragleave="removeHighlight('open')"
+                    ondragover="allowDrop(event); highlight('open')">
                 </div>
             </div>
 
@@ -64,15 +64,15 @@
                     <p>Await feedback</p>
                     <img src="./assets/img/plus-button.svg" alt="">
                 </div>
-                <div class="drag-area d_c_fs_c" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
-                    ondragover="allowDrop(event)"></div>
+                <div class="drag-area d_c_fs_c" id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragleave="removeHighlight('open')"
+                    ondragover="allowDrop(event); highlight('open')"></div>
             </div>
 
             <div class="d_c_c_fs gap-10">
                 <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
                     <p>Done</p>
                 </div>
-                <div class="drag-area d_c_fs_c" id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)"></div>
+                <div class="drag-area d_c_fs_c" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')"></div>
             </div>
 
         </div>

@@ -14,7 +14,6 @@ function setBackgroundcolorSidebarLinks() {
     });
 }
 
-
 function getSidebarLinks() {
     return document.querySelectorAll('.sidebar-links .sidebar-menu');
 }
@@ -31,9 +30,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+function backToLegalOrSummary() {
+    let currentUrl = window.location.href;
+    if (currentUrl.indexOf('legal-notice.html?external') !== -1) {
+        window.location.href = `./privacy-policy.html?external`;
+    } else if (currentUrl.indexOf('privacy-policy.html?external') !== -1) {
+        window.location.href = `./login.html`;
+    } else if (currentUrl.indexOf('legal-notice.html') !== -1) {
+        window.location.href = `./privacy-policy.html`;
+    } else if (currentUrl.indexOf('privacy-policy.html') !== -1) {
+        window.location.href = `./summary.html`;
+    }
+}
 
 // TEST 2
-
 
 function setBackgroundcolorSidebarLinks() {
     let currentPagePath = window.location.pathname;
@@ -78,7 +88,7 @@ function getCurrentlySidebarLink() {
         sidebarLinks.style.display = 'none';
     }
     if (currentUrl.indexOf('privacy-policy') !== -1) {
-        let legalSidebar = document.getElementsByClassName(' sidebar-legal-element')[0];
+        let legalSidebar = document.getElementsByClassName('sidebar-legal-element')[0];
         legalSidebar.style.backgroundColor = 'rgba(9, 25, 49, 1)';
         let headerSymbols = document.getElementById('headerSymbols');
         headerSymbols.style.display = 'none';
@@ -107,5 +117,5 @@ function openSidebarLegalLink(link) {
         let targetUrl = `./${link}.html`;
         window.location.href = targetUrl;
     }
-    
+
 }

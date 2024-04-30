@@ -42,9 +42,10 @@ cursor:pointer;
   background-image: url("../assets/img/phone.svg");
 }
 
+/*
 .input-dropdown-arrow {
   background-image: url("../assets/img/arrow_drop_down.png");
-}
+}*/
 
 .input-style::placeholder {
   color: rgba(209, 209, 209, 1);
@@ -272,14 +273,18 @@ cursor:pointer;
 }
 
 .drag-area {
-  height: 900px;
   width: 220px;
+  flex:1;
+  min-height:50px;
   padding: 0 20px;
   margin-bottom: 50px;
-  /* 
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(231, 231, 231, 1);
+  border-radius:10px;
   border: 1px dashed black;
-  */
+}
+
+.drag-area-highlight {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .todo {
@@ -532,4 +537,8 @@ li {
 
 .class1 {
   height:200px;
+}
+
+#resultMessageDiv {
+  display:none;
 }
