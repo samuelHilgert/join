@@ -300,7 +300,6 @@ select.task-input-style {
   align-items: center;
   cursor: pointer;
   border-radius: 50%;
-  z-index: 10;
 }
 
 .input-icon-dropdown-div {
