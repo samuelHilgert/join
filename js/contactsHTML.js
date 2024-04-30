@@ -1,5 +1,5 @@
 function renderLetterAndPartinglineHTML(firstLetter) {
-    return `
+  return `
     <div>
         <div class="contact-letter gap-8">
             <p>${firstLetter}</p>
@@ -9,9 +9,14 @@ function renderLetterAndPartinglineHTML(firstLetter) {
     `;
 }
 
-
-function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) {
-    return `
+function renderContactListHTML(
+  id,
+  firstLetter,
+  firstLetterSurname,
+  name,
+  mail
+) {
+  return `
     <div class="contact-small" id="${id}" onclick="openContactInfo('${id}')">
         <div class="contact-circle d_f_c_c">
             <div class="contact-circle-letters">${firstLetter}${firstLetterSurname}</div>
@@ -24,9 +29,16 @@ function renderContactListHTML(id, firstLetter, firstLetterSurname, name, mail) 
     `;
 }
 
-
-function renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, contactId, mail, phone) {
-    return `
+function renderContactInformationHTML(
+  color,
+  firstLetter,
+  firstLetterSurname,
+  name,
+  contactId,
+  mail,
+  phone
+) {
+  return `
     <div class="animation-in">
         <div class="contact-card-header">
             <div class="circle-big d_f_c_c" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
@@ -66,7 +78,7 @@ function renderContactInformationHTML(color, firstLetter, firstLetterSurname, na
 }
 
 function renderAddContactContainerHTML() {
-    return `
+  return `
     <div class="add-contact-container" id="addContactContainer">
             <div class="add-contact-container-left">
                 <img class="add-contact-img" src="./assets/img/logo2.png" alt="">
@@ -95,7 +107,7 @@ function renderAddContactContainerHTML() {
                                     </svg>
                                 </button>
                                 <button type="submit" class="btn gap-10" >Create Contact<img
-                                        src="assets/img/check.png" />
+                                        src="assets/img/check.svg" />
                                 </button>
                             </div>
                         </form>
@@ -106,9 +118,16 @@ function renderAddContactContainerHTML() {
     `;
 }
 
-
-function renderEditContactHTML(color, firstLetter, firstLetterSurname, name, mail, phone, contactId) {
-    return `
+function renderEditContactHTML(
+  color,
+  firstLetter,
+  firstLetterSurname,
+  name,
+  mail,
+  phone,
+  contactId
+) {
+  return `
     <div class="add-contact-container" id="editContactContainer">
             <div class="edit-contact-container-left">
                 <img class="edit-contact-img" src="./assets/img/logo2.png" alt="">
