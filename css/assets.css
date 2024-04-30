@@ -42,9 +42,10 @@
   background-image: url("../assets/img/phone.svg");
 }
 
+/*
 .input-dropdown-arrow {
   background-image: url("../assets/img/arrow_drop_down.png");
-}
+}*/
 
 .input-style::placeholder {
   color: rgba(209, 209, 209, 1);
