@@ -442,13 +442,12 @@ function clearAssignToInput() {
 
 function turnArrow() {
   let arrow = document.getElementById('turn-dropdown-arrow');
-  arrow.style.transform = "rotate(180deg)";
+  arrow.classList.add('rotate-180');
 }
 
 function findMatchingContact() {
   clearAssignToInput();
   let searchInput = document.getElementById("task-assignedTo").value.trim().toLowerCase();
-
   if (searchInput === "") {
     openDropdown();
     updateDropdownMenu(contactsForTasks);
@@ -471,7 +470,6 @@ function isDropdownOpen() {
 function updateDropdownMenu(contacts) {
   let taskContactDiv = document.getElementById("taskContactDiv");
   taskContactDiv.innerHTML = "";
-
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
     renderContactsDropwdown(contact, i);
@@ -479,7 +477,9 @@ function updateDropdownMenu(contacts) {
 }
 
 function closeDropdown() {
+  let arrow = document.getElementById('turn-dropdown-arrow');
   let taskContactDiv = document.getElementById("taskContactDiv");
+  arrow.classList.remove('rotate-180');
   taskContactDiv.style.display = "none";
 }
 
