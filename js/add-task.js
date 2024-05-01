@@ -442,15 +442,38 @@ function clearAssignToInput() {
 
 function findMatchingContact() {
   clearAssignToInput();
-  let input = document.getElementById("task-assignedTo").value.trim().toLowerCase();
-  matchingContactNames = [];
-  for (let i = 0; i < contactsForTasks.length; i++) {
-    const searchedName = contactsForTasks[i];
-    if (searchedName.includes(input)) {
-      matchingContactNames.push(searchedName);
+  let searchInput = document.getElementById("task-assignedTo").value.trim().toLowerCase();
+
+  if (searchInput === "") {
+    openDropdown();
+    updateDropdownMenu(contactsForTasks);
+  } else {
+    let filteredContacts = contactsForTasks.filter(contact =>
+      contact.name.toLowerCase().includes(searchInput)
+    );
+    if (!isDropdownOpen()) {
+      openDropdown();
     }
+    updateDropdownMenu(filteredContacts);
   }
 }
+
+function isDropdownOpen() {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  return taskContactDiv.style.display === "flex";
+}
+
+function updateDropdownMenu(contacts) {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  taskContactDiv.innerHTML = "";
+
+  for (let i = 0; i < contacts.length; i++) {
+    const contact = contacts[i];
+    renderContactsDropwdown(contact, i);
+  }
+}
+
+
 
 ///////// SEARCHBAR ENDE /////////
 
