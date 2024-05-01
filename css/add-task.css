@@ -91,7 +91,7 @@ input[type="checkbox"] {
 }
 
 .task-btn-style {
-  width: 100%;
+  width: 136px;
   height: auto;
   padding: 16px 24px;
   box-sizing: border-box;
@@ -173,7 +173,7 @@ input[type="checkbox"] {
 
 .subtask {
   max-width: 500px;
-  width: 100%;
+  width: 95%;
   border-radius: 10px;
   font-size: 16px;
   padding-top: 3px;
@@ -429,6 +429,20 @@ textarea:focus {
   width: 20px;
   height: 16px;
   fill: #7ae229;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.priority-box-wrapper {
+  display: flex;
+}
+
+.priority-boxes {
+  width: 100%;
+  max-width: 500px;
+  flex-wrap: wrap;
 }
 
 .add-board-message-btn {

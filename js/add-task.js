@@ -155,12 +155,14 @@ function renderContactsDropwdown(contact, index) {
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
 
+/* // Funktion wird nicht mehr benötigt
 function getBackgroundColorAssignedContact(contactIndex) {
   return contacts[contactIndex].color;
 }
+*/
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
-  let backgroundColor = getBackgroundColorAssignedContact(index);
+  let backgroundColor = contact.color;
   taskContactDiv.innerHTML += `
   <div class="d_f_sb_c width-max dropdown-contact-wrapper" id="wrapper${index}">
     <div class="d_f_fs_c gap-20 dropdown-contact">
@@ -192,7 +194,7 @@ function handleCheckboxChange(index) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
-  console.log(checkedCheckboxes);
+  showContactSelection();
 }
 
 function markSelectedContacts() {
@@ -242,6 +244,10 @@ function showContactSelection() {
 function setPriority(btnId) {
   removeActiveClasses();
   setActiveClasses(btnId);
+}
+
+function resetPriority() {
+  removeActiveClasses();
 }
 
 //Return Value from Priority!
@@ -399,7 +405,7 @@ function clearSubtaskInput() {
   `;
 }
 
-//clear the hole form
+//clear the whole form
 function clearForm() {
   document.getElementById("task-title").value = "";
   document.getElementById("task-description").value = "";
@@ -408,7 +414,8 @@ function clearForm() {
   document.getElementById("subtask").value = "";
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
-  //document.getElementById("dropdown-div").style.display = "none";
+  document.getElementById("contactSelection").innerHTML = "";
+  resetPriority();
   dropdownContact = [];
   subtasks = [];
   checkedCheckboxes = [];
@@ -439,13 +446,17 @@ function clearAssignToInput() {
   }
 }
 
+function turnArrow() {
+  let arrow = document.getElementById("turn-dropdown-arrow");
+  arrow.classList.add("rotate-180");
+}
+
 function findMatchingContact() {
   clearAssignToInput();
   let searchInput = document
     .getElementById("task-assignedTo")
     .value.trim()
     .toLowerCase();
-
   if (searchInput === "") {
     openDropdown();
     updateDropdownMenu(contactsForTasks);
@@ -468,17 +479,24 @@ function isDropdownOpen() {
 function updateDropdownMenu(contacts) {
   let taskContactDiv = document.getElementById("taskContactDiv");
   taskContactDiv.innerHTML = "";
-
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
     renderContactsDropwdown(contact, i);
   }
 }
 
+function closeDropdown() {
+  clearAssignToInput();
+  let arrow = document.getElementById("turn-dropdown-arrow");
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  arrow.classList.remove("rotate-180");
+  taskContactDiv.style.display = "none";
+}
+
 ///////// SEARCHBAR ENDE /////////
 
 //Funktion wird ab jetzt nicht mehr aufgerufen!
-/*  
+/*
 //for the contacts at Assigned to section
 function openDropdownContacts() {
   console.log('Alle Kontakte:', contactsForTasks);
