@@ -91,7 +91,7 @@ input[type="checkbox"] {
 }
 
 .task-btn-style {
-  width: 100%;
+  width: 136px;
   height: auto;
   padding: 16px 24px;
   box-sizing: border-box;
@@ -441,4 +441,13 @@ textarea:focus {
 
 .rotate-180 {
   transform: rotate(180deg);
+}
+
+.priority-box-wrapper {
+  display: flex;
+}
+
+.priority-boxes {
+  width: 100%;
+  max-width: 500px;
 }
