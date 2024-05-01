@@ -440,8 +440,51 @@ function clearAssignToInput() {
   }
 }
 
+function turnArrow() {
+  let arrow = document.getElementById("turn-dropdown-arrow");
+  arrow.classList.add("rotate-180");
+}
+
 function findMatchingContact() {
   clearAssignToInput();
+  let searchInput = document
+    .getElementById("task-assignedTo")
+    .value.trim()
+    .toLowerCase();
+  if (searchInput === "") {
+    openDropdown();
+    updateDropdownMenu(contactsForTasks);
+  } else {
+    let filteredContacts = contactsForTasks.filter((contact) =>
+      contact.name.toLowerCase().includes(searchInput)
+    );
+    if (!isDropdownOpen()) {
+      openDropdown();
+    }
+    updateDropdownMenu(filteredContacts);
+  }
+}
+
+function isDropdownOpen() {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  return taskContactDiv.style.display === "flex";
+}
+
+function updateDropdownMenu(contacts) {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  taskContactDiv.innerHTML = "";
+  for (let i = 0; i < contacts.length; i++) {
+    const contact = contacts[i];
+    renderContactsDropwdown(contact, i);
+  }
+}
+
+function closeDropdown() {
+  clearAssignToInput();
+  let arrow = document.getElementById("turn-dropdown-arrow");
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  arrow.classList.remove("rotate-180");
+  taskContactDiv.style.display = "none";
 }
 
 ///////// SEARCHBAR ENDE /////////
