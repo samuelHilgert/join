@@ -133,6 +133,7 @@ async function updateTaskContacts() {
 
 function openDropdown() {
   sortContactsForTasks();
+  clearAssignToInput();
   let taskContactDiv = document.getElementById("taskContactDiv");
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
@@ -155,12 +156,14 @@ function renderContactsDropwdown(contact, index) {
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
 
+/* // Funktion wird nicht mehr benötigt
 function getBackgroundColorAssignedContact(contactIndex) {
   return contacts[contactIndex].color;
 }
+*/
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
-  let backgroundColor = getBackgroundColorAssignedContact(index);
+  let backgroundColor = contact.color;
   taskContactDiv.innerHTML += `
   <div class="d_f_sb_c width-max dropdown-contact-wrapper" id="wrapper${index}">
     <div class="d_f_fs_c gap-20 dropdown-contact">
@@ -192,7 +195,7 @@ function handleCheckboxChange(index) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
-  console.log(checkedCheckboxes);
+  showContactSelection();
 }
 
 function markSelectedContacts() {
