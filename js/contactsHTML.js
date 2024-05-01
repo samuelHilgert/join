@@ -1,5 +1,5 @@
 function renderLetterAndPartinglineHTML(firstLetter) {
-  return `
+    return `
     <div>
         <div class="contact-letter gap-8">
             <p>${firstLetter}</p>
@@ -10,13 +10,13 @@ function renderLetterAndPartinglineHTML(firstLetter) {
 }
 
 function renderContactListHTML(
-  id,
-  firstLetter,
-  firstLetterSurname,
-  name,
-  mail
+    id,
+    firstLetter,
+    firstLetterSurname,
+    name,
+    mail
 ) {
-  return `
+    return `
     <div class="contact-small" id="${id}" onclick="openContactInfo('${id}')">
         <div class="contact-circle d_f_c_c">
             <div class="contact-circle-letters">${firstLetter}${firstLetterSurname}</div>
@@ -30,15 +30,15 @@ function renderContactListHTML(
 }
 
 function renderContactInformationHTML(
-  color,
-  firstLetter,
-  firstLetterSurname,
-  name,
-  contactId,
-  mail,
-  phone
+    color,
+    firstLetter,
+    firstLetterSurname,
+    name,
+    contactId,
+    mail,
+    phone
 ) {
-  return `
+    return `
     <div class="animation-in">
         <div class="contact-card-header">
             <div class="circle-big d_f_c_c" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
@@ -78,7 +78,7 @@ function renderContactInformationHTML(
 }
 
 function renderAddContactContainerHTML() {
-  return `
+    return `
     <div class="add-contact-container" id="addContactContainer">
             <div class="add-contact-container-left">
                 <img class="add-contact-img" src="./assets/img/logo2.png" alt="">
@@ -119,15 +119,15 @@ function renderAddContactContainerHTML() {
 }
 
 function renderEditContactHTML(
-  color,
-  firstLetter,
-  firstLetterSurname,
-  name,
-  mail,
-  phone,
-  contactId
+    color,
+    firstLetter,
+    firstLetterSurname,
+    name,
+    mail,
+    phone,
+    contactId
 ) {
-  return `
+    return `
     <div class="add-contact-container" id="editContactContainer">
             <div class="edit-contact-container-left">
                 <img class="edit-contact-img" src="./assets/img/logo2.png" alt="">
@@ -149,7 +149,11 @@ function renderEditContactHTML(
                             <input id="newPhone" class="contact-input-style input-phone input-font placeholder-black" type="text" value="${phone}">
                             <div class="btn-wrapper">
                                 <button type="button" class="clear-btn gap-10" onclick="deleteContact('${contactId}')">Delete</button>
-                                <button type="submit" class="btn gap-10">Save<img src="assets/img/check.png"/></button>
+                                <button type="submit" class="btn gap-10">Save
+                                <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5.55057 9.65L14.0256 1.175C14.2256 0.975 14.4631 0.875 14.7381 0.875C15.0131 0.875 15.2506 0.975 15.4506 1.175C15.6506 1.375 15.7506 1.6125 15.7506 1.8875C15.7506 2.1625 15.6506 2.4 15.4506 2.6L6.25057 11.8C6.05057 12 5.81724 12.1 5.55057 12.1C5.28391 12.1 5.05057 12 4.85057 11.8L0.550573 7.5C0.350573 7.3 0.25474 7.0625 0.263073 6.7875C0.271407 6.5125 0.375573 6.275 0.575573 6.075C0.775573 5.875 1.01307 5.775 1.28807 5.775C1.56307 5.775 1.80057 5.875 2.00057 6.075L5.55057 9.65Z" fill="white"/>
+                                </svg>
+                                </button>
                             </div>
                         </form>
                     </div>
