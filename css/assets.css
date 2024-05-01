@@ -312,6 +312,31 @@
 }
 
 
+
+.task-popup-svg {
+  height: 18px;
+  width: 16px;
+  fill: rgba(42, 54, 71, 1);
+}
+
+.header-icons-wrapper:hover .task-popup-svg,
+.header-icons-wrapper:hover .task-popup-span {
+  fill: rgba(41, 171, 226, 1);
+  color: rgba(41, 171, 226, 1);
+  cursor: pointer;
+}
+
+.task-popup-span {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(42, 54, 71, 1);
+}
+
+
+
+
+
 .drag-area-highlight {
   padding: 10px;
   height: auto;

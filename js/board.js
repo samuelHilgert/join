@@ -530,3 +530,11 @@ function searchTasksByKeyPress(event) {
 }
 
 /*********************** END SEARCH FUNCTION ********************************/
+
+function changeImage(element, src) {
+  element.querySelector(".delete").src = src;
+}
+
+function restoreImagePopupTask(element, defaultSrc) {
+  element.querySelector(".delete").src = defaultSrc;
+}
