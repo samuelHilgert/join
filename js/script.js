@@ -2,8 +2,8 @@ let users = [];
 let contacts = [];
 let tasks = [];
 let rememberStatus = [];
-let setResetExpiryTime = 2832323; // set logout time
-let popupCloseTime = 8000; // set popup display time
+let setResetExpiryTime = 2832323; // Set the logout time when the user has not used the reminder option
+let popupCloseTime = 8000; // Set popup display time
 let authorized = 'none';
 let currentUser;
 
@@ -23,19 +23,15 @@ async function init() {
         await updateOrLoadData();
         await loadLoggedTime();
         await includeHTML();
-        renderHeader();
         getCurrentlySidebarLink(); // in sidebar.js
-
-        setInterval(function () { // check whether the current time is greater than or equal to the expiration date
-            checkExpiryAndReset(rememberStatus);
-        }, 30000); // repeat query every 30 seconds
-
+        renderHeader();
+        startExpiryCheckInterval(rememberStatus); // check whether the current time is greater than or equal to the expiration date
         await initiateIndividualFunctions();
     }
 }
 
 /**
- * this functions includes all functions for unauthorized access
+ * This functions includes all functions for unauthorized access
  * 
  */
 async function unauthorizedFunctions() {
@@ -45,8 +41,8 @@ async function unauthorizedFunctions() {
 }
 
 /**
- * this function checks if the user used the login. If not the authorized status get the status 'none'. In this case user will not get an access.
- * if user used the login, the current user-array-position will load from the remote server otherwise authorized will get the status 'guest'
+ * This function checks if the user used the login. If not the authorized status get the status 'none'. In this case user will not get an access.
+ * If user used the login, the current user-array-position will load from the remote server otherwise authorized will get the status 'guest'
  * 
  */
 function setAuthorizedStatus() {
@@ -97,8 +93,8 @@ async function includeHTML() {
 }
 
 /**
- * this function loads the value, whether the user logged in with the remember option
- * the data is initiate in login.js
+ * This function loads the value, whether the user logged in with the remember option
+ * The data is initiate in login.js
  * 
  */
 async function loadLoggedTime() {
@@ -142,7 +138,7 @@ async function resetExpiryTime() {
 }
 
 /**
- * this function loads the user data from the remote server to the local array "users"
+ * This function loads the user data from the remote server to the local array "users"
  * 
  */
 async function loadUserData() {
@@ -206,8 +202,20 @@ function renderHeader() {
 }
 
 /**
- * this function is included in setInterval in init(). It checks whether the time to log out has expired if the user did not use the reminder option.
- * the logout time is reset every time the user clicks on an HTML document
+ * This function is included in setInterval in init()
+ * It checks whether the time to log out has expired if the user did not use the reminder option.
+ *
+ */
+
+function startExpiryCheckInterval(rememberStatus) {
+    setInterval(function () {
+        checkExpiryAndReset(rememberStatus);
+    }, 30000); // repeat query every 30 seconds
+}
+
+/**
+ * The logout time is reset every time the user clicks on an HTML document
+ * 
  */
 function checkExpiryAndReset(rememberStatus) {
     let expiryTime = rememberStatus[0].expiryDate;
@@ -233,7 +241,7 @@ function hideHelpIcon() {
 }
 
 /**
- * This function generates the initials of the username or from guest
+ * This function generates the initials of the username or guest
  * 
  */
 function renderLettersByName(lettersDiv) {
@@ -241,40 +249,41 @@ function renderLettersByName(lettersDiv) {
         lettersDiv.innerHTML = 'GU';
     } else {
         let userName = users[currentUser].name;
-        lettersDiv.innerHTML = getLettersByUserName(userName);
+        lettersDiv.innerHTML = contactNamesLetters(userName);
     }
 }
 
 /**
- * This function gets the letters by username
+ * This function renders the letters of first and last name of the user or the contacts
  * 
  */
-function getLettersByUserName(userName) {
-    let getFirstLetter = userName.charAt(0); // first letter from first name
-    let spaceIndex = userName.indexOf(' '); // index from space between first name and last name
-    let getSecondLetter = ''; // initiate the last name
-    if (spaceIndex !== -1 && spaceIndex < userName.length - 1) {
-        getSecondLetter = userName.charAt(spaceIndex + 1); // first letter from last name
+function contactNamesLetters(name) {
+    let letters;
+    let firstLetter = name.charAt(0); // first letter of first name
+    let spaceIndex = name.indexOf(' '); // index from space between first and last name
+    let secondLetter = ''; // initialise of second letter
+    if (spaceIndex !== -1 && spaceIndex < name.length - 1) {
+        secondLetter = name.charAt(spaceIndex + 1); // second letter of last name
     }
-    let lettersByUserName = getFirstLetter + getSecondLetter; // both letters merged
-    return lettersByUserName;
+    letters = firstLetter + secondLetter;
+    return letters;
 }
 
 /**
- * this function creates the popup menu with links for header
+ * This function creates the popup menu with links for header
  * 
  */
 function openHeaderPopupLinks() {
-    let headerSymbolPopup = document.getElementById('headerSymbolPopup');
-    if (headerSymbolPopup.style.display === 'flex') {
-        headerSymbolPopup.style.display = 'none'
+    let headerLinks = document.getElementById('headerSymbolPopup');
+    if (headerLinks.style.display === 'flex') {
+        headerLinks.style.display = 'none'
     } else {
-        headerSymbolPopup.style.display = 'flex'
+        headerLinks.style.display = 'flex'
     }
 }
 
 /**
- * this function opens the external links with an extension of the url address
+ * This function opens the external links with an extension of the url address
  *
  */
 function openExternalLink(link) {
@@ -284,7 +293,7 @@ function openExternalLink(link) {
 }
 
 /**
- * this function sets the animation of elements
+ * This function sets the animation of elements
  *
  */
 function moveContainerIn(container) {
@@ -294,6 +303,10 @@ function moveContainerIn(container) {
     container.classList.add('animation-in');
 }
 
+/**
+ * This function sets the animation of elements
+ *
+ */
 function moveContainerOut(container) {
     container.classList.remove('centered');
     container.classList.remove('animation-in');
@@ -301,6 +314,10 @@ function moveContainerOut(container) {
     container.classList.add('animation-out');
 }
 
+/**
+ * This function sets the animation of elements
+ *
+ */
 function moveContainerUp(container) {
     container.classList.remove('outside-down');
     container.classList.remove('animation-down');
@@ -308,6 +325,10 @@ function moveContainerUp(container) {
     container.classList.add('animation-up');
 }
 
+/**
+ * This function sets the animation of elements
+ *
+ */
 function moveContainerDown(container) {
     container.classList.remove('centered-up');
     container.classList.remove('animation-up');
@@ -316,7 +337,7 @@ function moveContainerDown(container) {
 }
 
 /**
- * this function closes every popup
+ * This function closes every popup
  * 
  */
 function displayNonePopup(popup) {
@@ -324,7 +345,7 @@ function displayNonePopup(popup) {
 }
 
 /**
- * this function resets the localStorage and redirects the user to login after logout
+ * This function resets the localStorage and redirects the user to login after logout
  * 
  */
 function clickLogout() {
@@ -332,18 +353,18 @@ function clickLogout() {
     localStorage.removeItem('logged');
     localStorage.removeItem('remember');
     setTimeout(() => {
-        window.location.href = `./login.html?msg=Du bist abgemeldet`;
+        window.location.href = `./login.html?msg=you are logged out`;
     }, 500);
 }
 
 /**
- * 
+ * This function initialize the popup message after reloading tasks or contacts
  * 
  */
 function showGuestPopupMessageForReload(div, messageText) {
     document.body.style.overflow = 'hidden';
     setTimeout(function () {
-        generateGuestMessageTextForReload(div, messageText);
+        generateGuestMessageTextForReload(div, messageText); // text for message is outsourced in renderHTML.js
         div.style.display = 'flex';
     }, 800);
     setTimeout(function () {
@@ -351,10 +372,14 @@ function showGuestPopupMessageForReload(div, messageText) {
     }, popupCloseTime);
 }
 
+/**
+ * This function initialize the message popup for the limited access as guest
+ * 
+ */
 function showGuestPopupMessage(div, messageText) {
     document.body.style.overflow = 'hidden';
     setTimeout(function () {
-        generateGuestMessageText(div, messageText);
+        generateGuestMessageText(div, messageText); // text for message is outsourced in renderHTML.js
         div.style.display = 'flex';
     }, 800);
     setTimeout(function () {
@@ -362,36 +387,20 @@ function showGuestPopupMessage(div, messageText) {
     }, popupCloseTime);
 }
 
-function generateGuestMessageText(div, messageText) {
-    messageText.innerHTML = `
-<div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
-<h5>You are not logged in!</h5>
-<div class="d_c_c_c gap-10">
-<p>Please note that we will not save your changes.</p>
-<p>Please log in to access all features.</p>
-</div>
-<div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
-`;
-}
-
+/**
+ * This function closes the message popup by onclick
+ * 
+ */
 function closeGuestPopupMessage(div) {
     div.style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
 
+/**
+ * This function will automatically close the message popup after some time
+ * 
+ */
 function closePopupAutomaticly(div) {
     div.style.display = 'none';
     document.body.style.overflow = 'scroll';
-}
-
-function contactNamesLetters(contact) {
-    let letters;
-    let firstLetter = contact.charAt(0); // Erster Buchstabe des Vornamens
-    let spaceIndex = contact.indexOf(' '); // Index des Leerzeichens zwischen Vor- und Nachnamen
-    let secondLetter = ''; // Initialisieren Sie den zweiten Buchstaben
-    if (spaceIndex !== -1 && spaceIndex < contact.length - 1) {
-        secondLetter = contact.charAt(spaceIndex + 1); // Zweiter Buchstabe des Nachnamens
-    }
-    letters = firstLetter + secondLetter;
-    return letters;
 }

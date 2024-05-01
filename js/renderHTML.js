@@ -163,14 +163,34 @@ function renderEditContactHTML(
     `;
 }
 
+/**
+ * This function returns the text for the pop-up messages when contacts or tasks are reloaded
+ * 
+ */
 function generateGuestMessageTextForReload(div, messageText) {
     messageText.innerHTML = `
-<div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
-<h5>Oops!</h5>
-<div class="d_c_c_c gap-10">
-<p>It seems like you need help.</p>
-<p>We'll show you a few examples.</p>
-</div>
-<div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
-`;
+    <div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
+    <h5>Oops!</h5>
+    <div class="d_c_c_c gap-10">
+        <p>It seems like you need help.</p>
+        <p>We'll show you a few examples.</p>
+    </div>
+    <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
+    `;
+}
+
+/**
+ * This function returns the text for the popup messages when the user is a guest and has used a function
+ * 
+ */
+function generateGuestMessageText(div, messageText) {
+    messageText.innerHTML = `
+    <div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
+    <h5>You are not logged in!</h5>
+    <div class="d_c_c_c gap-10">
+        <p>Please note that we will not save your changes.</p>
+        <p>Please log in to access all features.</p>
+    </div>
+    <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
+    `;
 }
