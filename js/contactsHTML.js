@@ -162,3 +162,15 @@ function renderEditContactHTML(
         </div>
     `;
 }
+
+function generateGuestMessageTextForReload(div, messageText) {
+    messageText.innerHTML = `
+<div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
+<h5>Oops!</h5>
+<div class="d_c_c_c gap-10">
+<p>It seems like you need help.</p>
+<p>We'll show you a few examples.</p>
+</div>
+<div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
+`;
+}

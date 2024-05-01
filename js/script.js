@@ -14,33 +14,34 @@ let currentUser;
 async function init() {
     setAuthorizedStatus();
     if (authorized === 'none') {
-        checkFalseOpening();
-        await includeHTML();
-        getCurrentlySidebarLink();
-    } 
+        await unauthorizedFunctions();
+    }
     else {
         if ((authorized === 'user')) {
             await loadUserData();
         }
-        await loadLoggedTime();
         await updateOrLoadData();
+        await loadLoggedTime();
         await includeHTML();
         renderHeader();
         getCurrentlySidebarLink(); // in sidebar.js
-        // check whether the current time is greater than or equal to the expiration date
-        setInterval(function () {
-            let expiryTime = rememberStatus[0].expiryDate;
-            if (rememberStatus[0].remember_status === false) {
-                let now = new Date().getMinutes();
-                if (now >= expiryTime) { // time is over
-                    resetLoginValues();
-                    setTimeout(firstLogin, 1000);
-                }
-                // }
-            }
+
+        setInterval(function () { // check whether the current time is greater than or equal to the expiration date
+            checkExpiryAndReset(rememberStatus);
         }, 30000); // repeat query every 30 seconds
+
         await initiateIndividualFunctions();
     }
+}
+
+/**
+ * this functions includes all functions for unauthorized access
+ * 
+ */
+async function unauthorizedFunctions() {
+    checkFalseOpening();
+    await includeHTML();
+    getCurrentlySidebarLink();
 }
 
 /**
@@ -158,8 +159,8 @@ async function loadUserData() {
  * In both cases sample contacts and tasks are also loaded
  * 
  */
-async function updateOrLoadData() { 
-    if ((authorized === 'user'))  {
+async function updateOrLoadData() {
+    if ((authorized === 'user')) {
         let userData = users[currentUser];
         if (userData.contacts.length === 0 || userData.tasks.length === 0) {
             await loadExamples();
@@ -194,8 +195,6 @@ async function saveNewUserDate() {
     await setItem('users', JSON.stringify(users));
 }
 
-
-
 /**
  * This function renders header elements
  * 
@@ -204,6 +203,21 @@ function renderHeader() {
     let lettersDiv = document.getElementById('headerUserName');
     hideHelpIcon();
     renderLettersByName(lettersDiv);
+}
+
+/**
+ * this function is included in setInterval in init(). It checks whether the time to log out has expired if the user did not use the reminder option.
+ * the logout time is reset every time the user clicks on an HTML document
+ */
+function checkExpiryAndReset(rememberStatus) {
+    let expiryTime = rememberStatus[0].expiryDate;
+    if (rememberStatus[0].remember_status === false) {
+        let now = new Date().getMinutes();
+        if (now >= expiryTime) { // time is over
+            resetLoginValues();
+            setTimeout(firstLogin, 1000);
+        }
+    }
 }
 
 /**
@@ -335,18 +349,6 @@ function showGuestPopupMessageForReload(div, messageText) {
     setTimeout(function () {
         closePopupAutomaticly(div);
     }, popupCloseTime);
-}
-
-function generateGuestMessageTextForReload(div, messageText) {
-    messageText.innerHTML = `
-<div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
-<h5>Oops!</h5>
-<div class="d_c_c_c gap-10">
-<p>It seems like you need help.</p>
-<p>We'll show you a few examples.</p>
-</div>
-<div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
-`;
 }
 
 function showGuestPopupMessage(div, messageText) {
