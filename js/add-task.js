@@ -155,9 +155,11 @@ function renderContactsDropwdown(contact, index) {
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
 
+/* // Funktion wird nicht mehr benötigt
 function getBackgroundColorAssignedContact(contactIndex) {
   return contacts[contactIndex].color;
 }
+*/
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   let backgroundColor = contact.color;
@@ -242,6 +244,10 @@ function showContactSelection() {
 function setPriority(btnId) {
   removeActiveClasses();
   setActiveClasses(btnId);
+}
+
+function resetPriority() {
+  removeActiveClasses();
 }
 
 //Return Value from Priority!
@@ -410,7 +416,7 @@ function clearForm() {
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
   document.getElementById('contactSelection').innerHTML = "";
-  //document.getElementById("dropdown-div").style.display = "none";
+  resetPriority();
   dropdownContact = [];
   subtasks = [];
   checkedCheckboxes = [];
