@@ -419,12 +419,13 @@
 }
 
 .edit-contact-container-left {
-    height: 594px;
+    height: 450px;
     width: 40%;
     max-width: 576px;
     background-color: rgba(42, 54, 71, 1);
     border-radius: 40px 0 0 40px;
-    padding: 66px 48px;
+    padding-left: 30px;
+    padding-right: 30px;
     gap: 12px;
     display: flex;
     flex-direction: column;
