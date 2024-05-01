@@ -55,8 +55,7 @@ async function addTask() {
     users[currentUser].tasks.push(...newTask);
     await setItem("users", JSON.stringify(users));
     resetAddTaskValues();
-    showSuccessMessage();
-    forwardToBoard();
+    addTaskToBoardMessage();
   }
 }
 
@@ -402,7 +401,6 @@ function changeIcons() {
   iconBox.innerHTML = `
     <div class="d_f_c_c gap-5 padding-right-36">
     <div onclick='clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/close.svg" alt="cross" /></div>
-      <div class='input-spacer'></div>
       <div onclick='addSubtask(),clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/check-black.svg" alt="check" /></div>
     </div>
   `;
@@ -444,7 +442,7 @@ function clearForm() {
   document.getElementById("subtask").value = "";
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
-  document.getElementById('contactSelection').innerHTML = "";
+  document.getElementById("contactSelection").innerHTML = "";
   resetPriority();
   dropdownContact = [];
   subtasks = [];
@@ -478,18 +476,21 @@ function clearAssignToInput() {
 }
 
 function turnArrow() {
-  let arrow = document.getElementById('turn-dropdown-arrow');
-  arrow.classList.add('rotate-180');
+  let arrow = document.getElementById("turn-dropdown-arrow");
+  arrow.classList.add("rotate-180");
 }
 
 function findMatchingContact() {
   clearAssignToInput();
-  let searchInput = document.getElementById("task-assignedTo").value.trim().toLowerCase();
+  let searchInput = document
+    .getElementById("task-assignedTo")
+    .value.trim()
+    .toLowerCase();
   if (searchInput === "") {
     openDropdown();
     updateDropdownMenu(contactsForTasks);
   } else {
-    let filteredContacts = contactsForTasks.filter(contact =>
+    let filteredContacts = contactsForTasks.filter((contact) =>
       contact.name.toLowerCase().includes(searchInput)
     );
     if (!isDropdownOpen()) {
@@ -515,14 +516,11 @@ function updateDropdownMenu(contacts) {
 
 function closeDropdown() {
   clearAssignToInput();
-  let arrow = document.getElementById('turn-dropdown-arrow');
+  let arrow = document.getElementById("turn-dropdown-arrow");
   let taskContactDiv = document.getElementById("taskContactDiv");
-  arrow.classList.remove('rotate-180');
+  arrow.classList.remove("rotate-180");
   taskContactDiv.style.display = "none";
 }
-
-
-
 
 ///////// SEARCHBAR ENDE /////////
 
@@ -594,3 +592,15 @@ function chooseContact(i, name) {
 //TEST ENDE//
 
 */
+function addTaskToBoardMessage() {
+  const container = document.getElementById("addTaskMessageContainer");
+  container.classList.add("add-board-message-btn");
+  container.style.display = "flex";
+  setTimeout(function () {
+    container.classList.add("show");
+    setTimeout(function () {
+      container.classList.remove("show");
+      container.style.display = "none";
+    }, 900);
+  }, 100);
+}
