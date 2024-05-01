@@ -438,3 +438,7 @@ textarea:focus {
   height: 16px;
   fill: #7ae229;
 }
+
+.rotate-180 {
+  transform: rotate(180deg);
+}

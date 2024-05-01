@@ -440,6 +440,11 @@ function clearAssignToInput() {
   }
 }
 
+function turnArrow() {
+  let arrow = document.getElementById('turn-dropdown-arrow');
+  arrow.style.transform = "rotate(180deg)";
+}
+
 function findMatchingContact() {
   clearAssignToInput();
   let searchInput = document.getElementById("task-assignedTo").value.trim().toLowerCase();
@@ -473,11 +478,18 @@ function updateDropdownMenu(contacts) {
   }
 }
 
+function closeDropdown() {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  taskContactDiv.style.display = "none";
+}
+
+
+
 
 ///////// SEARCHBAR ENDE /////////
 
 //Funktion wird ab jetzt nicht mehr aufgerufen!
-/*  
+/*
 //for the contacts at Assigned to section
 function openDropdownContacts() {
   console.log('Alle Kontakte:', contactsForTasks);

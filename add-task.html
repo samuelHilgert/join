@@ -76,18 +76,18 @@
               id="task-assignedTo"
               class="task-input-style-black d_f_c_c dropdown-add-task bgC-white width-max input-font"
               placeholder="Select contacts to assign"
-              onclick="openDropdown()"
+              onclick="openDropdown(); turnArrow()"
               oninput="findMatchingContact()"
             />
             <!-- deaktiviertes optionsfeld um placeholder anzuzeigen, da bei dropdown nicht mit placeholder im tag gearbeitet werden kann -->
             <div
               class="input-icon-dropdown-div"
+              id="turn-dropdown-arrow"
               onclick="openDropdown()"
             >
               <img
                 src="./assets/img/arrow_drop_down.svg"
                 alt="Arrow Down"
-                id="dropdown-arrow"
               />
             </div>
             
