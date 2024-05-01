@@ -269,7 +269,7 @@ async function validateAndAddContact(event) {
         return; // If the form is invalid, the standard error message is displayed
     }
     addNewContactToArray(); // contacted is added, if form is valid
-    if (!loggedAsGuest === true || loggedAsGuest === false) {
+    if ((authorized === 'user')) {
         await saveNewUserDate();
     } else {
         let div = document.getElementById('guestMessagePopupContacts');
@@ -365,7 +365,7 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         contacts[index]['name'] = newName;
         contacts[index]['mail'] = newMail;
         contacts[index]['phone'] = newPhone;
-        if (!loggedAsGuest === true || loggedAsGuest === false) {
+        if ((authorized === 'user')) {
             await saveNewUserDate();
         } else {
             let div = document.getElementById('guestMessagePopupContacts');
@@ -437,7 +437,7 @@ async function deleteContact(contactId) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index != -1) {
         contacts.splice(index, 1);
-        if (!loggedAsGuest === true || loggedAsGuest === false) {
+        if ((authorized === 'user')) {
             await saveNewUserDate();
         }
         else {

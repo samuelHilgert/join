@@ -49,7 +49,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
 /********************** GENERAL FUNCTIONS **********************************/
 
 function showGuestMessageOnBoard() {
-  if (loggedAsGuest) {
+  if ((authorized === 'guest'))  {
     let div = document.getElementById("guestMessagePopupBoard");
     let messageText = document.getElementById("guestMessageBoard");
     showGuestPopupMessage(div, messageText);
@@ -133,7 +133,7 @@ async function moveTo(currentCategory) {
     if (tasks[id].id === currentDraggedTaskIdString) {
       foundIndex = id;
       tasks[foundIndex].category = currentCategory;
-      if (!loggedAsGuest === true || loggedAsGuest === false) {
+      if ((authorized === 'user'))  {
         await saveNewUserDate();
       } else {
         let div = document.getElementById("guestMessagePopupBoard");
@@ -244,7 +244,7 @@ async function getSubtasksForPopupTask(currentOpenTaskId) {
 }
 
 async function loadSubtasksByOpenTask() {
-  if (!loggedAsGuest) {
+  if ((authorized === 'user'))  {
     subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
     subtasksDone = users[currentUser].tasks[currentOpenTaskId].subtasksDone;
   } else {
@@ -261,7 +261,7 @@ async function clickSubtaskOpen(currentOpenTaskId, a) {
   divSubtaskOpen.innerHTML = `
     <img src="../assets/img/${clickedButton}" id="taskId${currentOpenTaskId}checkButtonDoneId${a}" onclick="clickSubtaskDone(${currentOpenTaskId}, ${a})"></img>
     `;
-  if (!loggedAsGuest) {
+  if ((authorized === 'user')) {
     subtasksDone.push(subtasksOpen[a]);
     subtasksOpen.splice(a, 1);
     await saveNewUserDate();
@@ -281,7 +281,7 @@ async function clickSubtaskDone(currentOpenTaskId, b) {
   divSubtaskDone.innerHTML = `
     <img src="../assets/img/${emptyButton}" id="taskId${currentOpenTaskId}checkButtonOpenId${b}" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${b})"></img>
     `;
-  if (!loggedAsGuest) {
+  if ((authorized === 'user')) {
     subtasksOpen.push(subtasksDone[b]);
     subtasksDone.splice(b, 1);
     await saveNewUserDate();
@@ -326,7 +326,7 @@ function getPriorityIcon(todo) {
 
 function getBgColorTaskPopup(index) {
   let userContact;
-  if (loggedAsGuest) {
+  if ((authorized === 'guest'))  {
     userContact = contacts[index];
   } else {
     userContact = users[currentUser]["contacts"][index];
@@ -378,7 +378,7 @@ async function deleteTask() {
   document.body.style.overflow = "scroll";
   tasks.splice(currentOpenTaskId, 1);
   showGuestMessageOnBoard();
-  if (!loggedAsGuest === true || loggedAsGuest === false) {
+  if ((authorized === 'user')) {
     await saveNewUserDate();
   }
   await renderBoardTasks();

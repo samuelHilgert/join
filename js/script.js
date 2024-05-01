@@ -2,22 +2,24 @@ let users = [];
 let contacts = [];
 let tasks = [];
 let rememberStatus = [];
-let currentUser;
-let loggedAsGuest = false;
 let setResetExpiryTime = 2832323; // set logout time
 let popupCloseTime = 8000; // set popup display time
+let authorized = 'none';
+let currentUser;
 
 /**
  * This is a function to initialize render functions 
  * 
  */
 async function init() {
-    let loggedStatus = localStorage.getItem('logged');
-    let userId = localStorage.getItem('user');
-    if (loggedStatus !== null || userId !== null) {
+    setAuthorizedStatus();
+    if (authorized === 'none') {
         checkFalseOpening();
-        getCurrentUserId();
-        if (!loggedAsGuest) {
+        await includeHTML();
+        getCurrentlySidebarLink();
+    } 
+    else {
+        if ((authorized === 'user')) {
             await loadUserData();
         }
         await loadLoggedTime();
@@ -38,10 +40,24 @@ async function init() {
             }
         }, 30000); // repeat query every 30 seconds
         await initiateIndividualFunctions();
-    } else {
-        checkFalseOpening();
-        await includeHTML();
-        getCurrentlySidebarLink();
+    }
+}
+
+/**
+ * this function checks if the user used the login. If not the authorized status get the status 'none'. In this case user will not get an access.
+ * if user used the login, the current user-array-position will load from the remote server otherwise authorized will get the status 'guest'
+ * 
+ */
+function setAuthorizedStatus() {
+    let loggedStatus = localStorage.getItem('logged');
+    let userId = localStorage.getItem('user');
+    if (loggedStatus === null && userId === null) {
+        authorized = 'none';
+    } else if (localStorage.getItem('logged')) {
+        authorized = 'guest';
+    } else if (localStorage.getItem('user')) {
+        authorized = 'user';
+        currentUser = userId;
     }
 }
 
@@ -50,19 +66,46 @@ async function init() {
  * 
  */
 function checkFalseOpening() {
-    let loggedStatus = localStorage.getItem('logged');
-    let userId = localStorage.getItem('user');
     let currentUrl = window.location.href;
-    if (loggedStatus === null && userId === null) {
-        if (currentUrl.indexOf('?external') !== -1) {
-        } else {
-            firstLogin();
-        }
+    if (currentUrl.indexOf('?external') !== -1) {
+    } else {
+        firstLogin();
     }
 }
 
 function firstLogin() {
     return window.location.href = `./login.html`;
+}
+
+/**
+ * This is a function to include outsourced html elements
+ * 
+ */
+async function includeHTML() {
+    let includeElements = document.querySelectorAll('[include-html]'); // Es wird nach Begriff gesucht 
+    for (let i = 0; i < includeElements.length; i++) { // Es wird durchiteriert
+        const element = includeElements[i]; // alle elemente sollen angesprochen werden 
+        file = element.getAttribute("include-html"); // es wird der Wert des Begriffs gesucht, indem Fall der Pfad: "./header.html"
+        let resp = await fetch(file); // Es besteht jetzt nur Zugang, noch nicht der Text. Ladevorgang wird als Variable deklariert, um weiter arbeiten zu können
+        if (resp.ok) { // Abfrage, um auf Fehler zu prüfen
+            element.innerHTML = await resp.text(); // wenn gefunden, Datei wird aufgerufen und Inhalt ausgegeben 
+        } else {
+            element.innerHTML = 'Page not found'; // wenn nicht gefunden, Ausgabe Fehlermeldung text
+        }
+    }
+}
+
+/**
+ * this function loads the value, whether the user logged in with the remember option
+ * the data is initiate in login.js
+ * 
+ */
+async function loadLoggedTime() {
+    try {
+        rememberStatus = JSON.parse(await getItem('remember_status'));
+    } catch (e) {
+        console.error('Loading error:', e);
+    }
 }
 
 /**
@@ -98,21 +141,6 @@ async function resetExpiryTime() {
 }
 
 /**
- * this is a function to get the current user-array-position from the user on the remote server
- * if the user is logged in as a guest, loggedAsGuest is set to true
- * the data are initiate in login.js
- * 
- */
-function getCurrentUserId() {
-    if (localStorage.getItem('logged')) {
-        loggedAsGuest = true;
-    }
-    if (localStorage.getItem('user')) {
-        currentUser = localStorage.getItem('user');
-    }
-}
-
-/**
  * this function loads the user data from the remote server to the local array "users"
  * 
  */
@@ -124,18 +152,7 @@ async function loadUserData() {
     }
 }
 
-/**
- * this function loads the value, whether the user logged in with the remember option
- * the data is initiate in login.js
- * 
- */
-async function loadLoggedTime() {
-    try {
-        rememberStatus = JSON.parse(await getItem('remember_status'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
-}
+
 
 /**
  * This is a function that checks whether a guest or user has logged in
@@ -145,7 +162,7 @@ async function loadLoggedTime() {
  */
 async function updateUserData() {
     await loadExamples();
-    if (!loggedAsGuest) {
+    if ((authorized === 'user'))  {
         let userData = users[currentUser];
         if (userData.contacts.length === 0 || userData.tasks.length === 0) {
             await loadExamples();
@@ -179,23 +196,7 @@ async function saveNewUserDate() {
     await setItem('users', JSON.stringify(users));
 }
 
-/**
- * This is a function to include outsourced html elements
- * 
- */
-async function includeHTML() {
-    let includeElements = document.querySelectorAll('[include-html]'); // Es wird nach Begriff gesucht 
-    for (let i = 0; i < includeElements.length; i++) { // Es wird durchiteriert
-        const element = includeElements[i]; // alle elemente sollen angesprochen werden 
-        file = element.getAttribute("include-html"); // es wird der Wert des Begriffs gesucht, indem Fall der Pfad: "./header.html"
-        let resp = await fetch(file); // Es besteht jetzt nur Zugang, noch nicht der Text. Ladevorgang wird als Variable deklariert, um weiter arbeiten zu können
-        if (resp.ok) { // Abfrage, um auf Fehler zu prüfen
-            element.innerHTML = await resp.text(); // wenn gefunden, Datei wird aufgerufen und Inhalt ausgegeben 
-        } else {
-            element.innerHTML = 'Page not found'; // wenn nicht gefunden, Ausgabe Fehlermeldung text
-        }
-    }
-}
+
 
 /**
  * This function renders header elements
@@ -224,7 +225,7 @@ function hideHelpIcon() {
  * 
  */
 function renderLettersByName(lettersDiv) {
-    if (loggedAsGuest) {
+    if ((authorized === 'guest')) {
         lettersDiv.innerHTML = 'GU';
     } else {
         let userName = users[currentUser].name;

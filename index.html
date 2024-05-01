@@ -13,28 +13,36 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<body class="animation-container d_c_c_c pad-x-80 pad-y-70">
+<body onload="indexHTMLAnimation()" class="animation-container d_c_c_c pad-x-80 pad-y-70">
     <div class=" d_c_c_c">
-        <svg xmlns="http://www.w3.org/2000/svg" class="index-logo logo-animation">
-            <!-- Dein Logo hier -->
+        <svg class="index-logo logo-animation">
             <image xlink:href="./assets/img/logo.svg" class="index-logo" />
         </svg>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let logoAnimation = document.querySelector('.logo-animation');
-
-            logoAnimation.addEventListener('animationend', function() {
-                // Weiterleitung zur login.html-Seite
-                setTimeout(forward, 1000);
-            });
-        });
-
-        function forward() {
-            window.location.href = 'login.html';
-        }
-    </script>
 
 </body>
+
+<script>
+/**
+ * this is a function to initiate the animation on index.html
+ * 
+ */
+function indexHTMLAnimation() {
+    if (document.location.pathname === `/index.html`) { 
+        let logoAnimation = document.querySelector('.logo-animation');
+        logoAnimation.addEventListener('animationend', function() { // "animationend" is the name of the event. Its a fixed term.
+        setTimeout(forward, 1000);
+        });
+    }
+}
+
+/**
+ * this function forwards the user to login after the animation 
+ * 
+ */
+function forward() {
+    window.location.href = 'login.html';
+}
+</script>
 
 </html>

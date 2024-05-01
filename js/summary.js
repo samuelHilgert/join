@@ -130,7 +130,7 @@ function renderSummaryValues() {
  */
 function getUserNameForGreet() {
   let userNameDiv = document.getElementById("userNameDiv");
-  if (loggedAsGuest === true) {
+  if ((authorized === 'guest'))  {
     userNameDiv.innerHTML = "Guest";
     let div = document.getElementById("guestMessagePopupSummary");
     let messageText = document.getElementById("guestMessageSummary");

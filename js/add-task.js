@@ -47,7 +47,7 @@ async function addTask() {
   };
   newTask.push(task);
   // dropdownContact = []; nicht mehr notwendig
-  if (loggedAsGuest === true) {
+  if ((authorized === 'guest'))  {
     let div = document.getElementById("guestMessagePopupAddTask");
     let messageText = document.getElementById("guestMessageAddTask");
     resetAddTaskValues();
@@ -122,7 +122,7 @@ function readTaskInput() {
 }
 
 async function updateTaskContacts() {
-  if (loggedAsGuest === true) {
+  if ((authorized === 'guest'))  {
     let resp = await fetch("./JSON/contacts.json");
     contactsForTasks = await resp.json();
   } else {
