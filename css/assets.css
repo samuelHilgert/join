@@ -573,6 +573,10 @@ li {
   display: none;
 }
 
+#messagePopupLogoutDiv {
+  display: none;
+}
+
 .guestPopupLinkStyle {
   color: white;
   text-decoration: underline;
