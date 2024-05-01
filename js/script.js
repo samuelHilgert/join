@@ -2,7 +2,7 @@ let users = [];
 let contacts = [];
 let tasks = [];
 let rememberStatus = [];
-let setResetExpiryTime = 10000000000000000; // Set the logout time when the user has not used the reminder option
+let setResetExpiryTime = 10000000000000; // Set the logout time when the user has not used the reminder option
 let popupCloseTime = 8000; // Set popup display time
 let authorized = 'none';
 let currentUser;
