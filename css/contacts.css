@@ -288,32 +288,34 @@
     display: flex;
     justify-content: center;
     margin: 50px;
-    width: 100%;
+    width: 75%;
+    max-width: 1440px;
 }
 
 .add-contact-container-left {
-    height: 594px;
+    height: 450px;
     width: 40%;
     max-width: 576px;
     background-color: rgba(42, 54, 71, 1);
     border-radius: 40px 0 0 40px;
-    padding: 66px 48px;
+    padding-left: 30px;
+    padding-right: 30px;
     gap: 12px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .add-contact-container-right {
-    height: 594px;
+    height: 450px;
     width: 60%;
     max-width: 864px;
     border-radius: 0px 40px 40px 0px;
-    padding: 66px 48px;
+    padding-left: 48px;
     background-color: rgba(255, 255, 255, 1);
 }
 
 .add-contact-img {
-    padding-top: 140px;
     height: 66.48px;
     width: 55.6px;
 }
