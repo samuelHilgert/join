@@ -244,6 +244,10 @@ function setPriority(btnId) {
   setActiveClasses(btnId);
 }
 
+function resetPriority() {
+  removeActiveClasses();
+}
+
 //Return Value from Priority!
 function determinePriority() {
   let prio = "Medium"; // Standardpriorität
@@ -409,7 +413,8 @@ function clearForm() {
   document.getElementById("subtask").value = "";
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
-  //document.getElementById("dropdown-div").style.display = "none";
+  document.getElementById("contactSelection").innerHTML = "";
+  resetPriority();
   dropdownContact = [];
   subtasks = [];
   checkedCheckboxes = [];
