@@ -2,7 +2,7 @@ let users = [];
 let contacts = [];
 let tasks = [];
 let rememberStatus = [];
-let setResetExpiryTime = 2832323; // Set the logout time when the user has not used the reminder option
+let setResetExpiryTime = 2; // Set the logout time when the user has not used the reminder option
 let popupCloseTime = 8000; // Set popup display time
 let authorized = 'none';
 let currentUser;
@@ -25,7 +25,9 @@ async function init() {
         await includeHTML();
         getCurrentlySidebarLink(); // in sidebar.js
         renderHeader();
-        startExpiryCheckInterval(rememberStatus); // check whether the current time is greater than or equal to the expiration date
+        if ((authorized === 'user')) {
+            startExpiryCheckInterval(rememberStatus); // check whether the current time is greater than or equal to the expiration date
+        }
         await initiateIndividualFunctions();
     }
 }
@@ -222,8 +224,7 @@ function checkExpiryAndReset(rememberStatus) {
     if (rememberStatus[0].remember_status === false) {
         let now = new Date().getMinutes();
         if (now >= expiryTime) { // time is over
-            resetLoginValues();
-            setTimeout(firstLogin, 1000);
+            setTimeout(clickLogout, 1000);
         }
     }
 }
