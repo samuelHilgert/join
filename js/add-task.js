@@ -192,7 +192,7 @@ function handleCheckboxChange(index) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
-  console.log(checkedCheckboxes);
+  showContactSelection();
 }
 
 function markSelectedContacts() {
