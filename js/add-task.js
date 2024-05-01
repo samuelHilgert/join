@@ -477,6 +477,7 @@ function updateDropdownMenu(contacts) {
 }
 
 function closeDropdown() {
+  clearAssignToInput();
   let arrow = document.getElementById('turn-dropdown-arrow');
   let taskContactDiv = document.getElementById("taskContactDiv");
   arrow.classList.remove('rotate-180');
