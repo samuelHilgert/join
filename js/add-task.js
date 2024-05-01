@@ -56,7 +56,7 @@ async function addTask() {
     users[currentUser].tasks.push(...newTask);
     await setItem("users", JSON.stringify(users));
     resetAddTaskValues();
-    alert("Neue Aufgabe erstellt!");
+    addTaskToBoardMessage();
   }
 }
 
@@ -565,3 +565,20 @@ function chooseContact(i, name) {
 //TEST ENDE//
 
 */
+
+function addTaskToBoardMessage() {
+  const container = document.getElementById("addTaskMessageContainer");
+  container.classList.add("add-board-message-btn");
+  container.style.display = "flex";
+
+  // Timeout verwenden, um die Klasse "show" hinzuzufügen
+  setTimeout(function () {
+    container.classList.add("show");
+
+    // Timeout verwenden, um das Element auszublenden
+    setTimeout(function () {
+      container.classList.remove("show");
+      container.style.display = "none";
+    }, 900);
+  }, 100);
+}
