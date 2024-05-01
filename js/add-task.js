@@ -133,6 +133,7 @@ async function updateTaskContacts() {
 
 function openDropdown() {
   sortContactsForTasks();
+  clearAssignToInput();
   let taskContactDiv = document.getElementById("taskContactDiv");
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
