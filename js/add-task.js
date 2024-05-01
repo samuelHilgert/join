@@ -160,7 +160,7 @@ function getBackgroundColorAssignedContact(contactIndex) {
 }
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
-  let backgroundColor = getBackgroundColorAssignedContact(index);
+  let backgroundColor = contact.color;
   taskContactDiv.innerHTML += `
   <div class="d_f_sb_c width-max dropdown-contact-wrapper" id="wrapper${index}">
     <div class="d_f_fs_c gap-20 dropdown-contact">
@@ -400,7 +400,7 @@ function clearSubtaskInput() {
   `;
 }
 
-//clear the hole form
+//clear the whole form
 function clearForm() {
   document.getElementById("task-title").value = "";
   document.getElementById("task-description").value = "";
@@ -409,6 +409,7 @@ function clearForm() {
   document.getElementById("subtask").value = "";
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
+  document.getElementById('contactSelection').innerHTML = "";
   //document.getElementById("dropdown-div").style.display = "none";
   dropdownContact = [];
   subtasks = [];
