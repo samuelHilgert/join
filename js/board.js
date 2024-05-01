@@ -23,8 +23,12 @@ async function renderBoardTasks() {
     const category = categories[i];
     const allTasksSameCategory = tasks.filter((t) => t["category"] == category);
     const categoryTableColumn = document.getElementById(`${category}`);
-    categoryTableColumn.innerHTML = "";
-    showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
+    categoryTableColumn.innerHTML = '';
+    if (allTasksSameCategory.length === 0) {
+      categoryTableColumn.innerHTML = `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
+    } else {
+      showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
+    }
   }
 }
 
@@ -32,11 +36,6 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
   for (let k = 0; k < allTasksSameCategory.length; k++) {
     const task = allTasksSameCategory[k];
 
-    /* if () {
-  No tasks To do
-} else { 
-}
-*/
 
     categoryTableColumn.innerHTML += generateTodoHTML(task);
 
@@ -59,7 +58,7 @@ function showGuestMessageOnBoard() {
 /*********************** END GENERAL FUNCTIONS ********************************/
 
 function generateTodoHTML(task) {
-  return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
+  return `<div class="todo d_c_fs_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
             <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
             <h6><b>${task["title"]}</b></h6>
             <p>${task["description"]}</p>
@@ -502,8 +501,12 @@ async function generateCategoriesBySearch(matchingIndices) {
       (t) => t["category"] == category
     );
     const categoryTableColumn = document.getElementById(`${category}`);
-    categoryTableColumn.innerHTML = "";
-    showTasksForEachCategory(allTasksSameCategory, categoryTableColumn); // this functions already exist and renders the tasks
+    categoryTableColumn.innerHTML = '';
+    if (allTasksSameCategory.length === 0) {
+      categoryTableColumn.innerHTML = `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
+    } else {
+      showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
+    }
   }
 }
 
@@ -512,7 +515,7 @@ async function generateCategoriesBySearch(matchingIndices) {
  *
  */
 function resetSearch() {
-  document.getElementById("searchBoardInput").value = "";
+  document.getElementById("searchBoardInput").value = '';
 }
 
 /**

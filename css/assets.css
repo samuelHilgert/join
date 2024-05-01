@@ -272,31 +272,49 @@
   background-color: rgba(209, 209, 209, 1);
 }
 
+.drag-area-category {
+  height: 100%;
+  flex: 1;
+  margin: 0 2px;
+  box-sizing: border-box;
+}
+
+.drag-area-no-tasks {
+  padding: 10px;
+  margin: 10px;
+  min-height: 50px;
+  width: 100%;
+  background-color: rgba(231, 231, 231, 1);
+  border-radius: 10px;
+  border: 1px dashed black;
+  box-sizing: border-box;
+}
+
 .drag-area {
   width: 220px;
-  flex:1;
-  min-height:50px;
-  padding: 0 20px;
+  flex: 1;
+  min-height: 50px;
+  padding: 0 5px;
+  box-sizing: border-box;
   margin-bottom: 50px;
   background-color: rgba(231, 231, 231, 1);
-  border-radius:10px;
+  border-radius: 10px;
   border: 1px dashed black;
 }
 
 .drag-area-alt {
-  width: 220px;
-  min-height:600px;
-  height:100%;
+  min-height: 600px;
+  height: 100%;
+  width: 100%;
   box-sizing: border-box;
-  padding: 0 20px;
-  margin-bottom: 50px;
-  border-radius:10px;
+  padding: 0 10px;
+  border-radius: 10px;
 }
 
 
 .drag-area-highlight {
-  /* background-color: rgba(0, 0, 0, 0.2); */
-  background-color: rgba(245, 25, 25, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
+  /* background-color: rgba(245, 25, 25, 0.2);  */
 }
 
 .todo {
@@ -306,7 +324,6 @@
   padding: 10px;
   margin: 10px;
   height: auto;
-  width: 100%;
   cursor: pointer;
   box-sizing: border-box;
 }
