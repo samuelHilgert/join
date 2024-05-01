@@ -8,7 +8,7 @@
     <script src="./js/script.js"></script>
     <script src="./js/contacts.js"></script>
     <script src="./js/add-task.js"></script>
-    <script src="./js/contactsHTML.js"></script>
+    <script src="./js/renderHTML.js"></script>
     <script src="./js/sidebar.js"></script>
     <script src="./js/storage.js"></script>
     <link rel="stylesheet" href="./css/standard.css" />
@@ -76,18 +76,16 @@
               id="task-assignedTo"
               class="task-input-style-black d_f_c_c dropdown-add-task bgC-white width-max input-font"
               placeholder="Select contacts to assign"
-              onclick="openDropdown(); findMatchingContact()"
+              onclick="openDropdown(); turnArrow()"
+              oninput="findMatchingContact()"
             />
             <!-- deaktiviertes optionsfeld um placeholder anzuzeigen, da bei dropdown nicht mit placeholder im tag gearbeitet werden kann -->
             <div
               class="input-icon-dropdown-div"
-              onclick="openDropdown(); findMatchingContact()"
+              id="turn-dropdown-arrow"
+              onclick="closeDropdown()"
             >
-              <img
-                src="./assets/img/arrow_drop_down.svg"
-                alt="Arrow Down"
-                id="dropdown-arrow"
-              />
+              <img src="./assets/img/arrow_drop_down.svg" alt="Arrow Down" />
             </div>
             <div
               class="assigned-div d_c_fs_fs pad-y-10 gap-10"
@@ -121,10 +119,10 @@
               required
             />
           </div>
-          <div style="display: flex">
+          <div class="d_f">
             <div class="d_c_c_s gap-10">
               <span class="font-size-20">Prio</span>
-              <div class="d_f_c_c gap-20" style="width: 460px">
+              <div class="d_f_c_c gap-20 priority-boxes">
                 <button
                   type="button"
                   onclick="setPriority('urgent-btn')"
@@ -291,13 +289,16 @@
     </form>
 
     <div
-      class="d_c_fs_fe pad-x-40 pad-y-40 popup-bg-filter width-max"
-      id="guestMessagePopupAddTask"
+      class="d_f_fs_c gap-8 add-board-message-btn"
+      id="addTaskMessageContainer"
+      style="display: none"
     >
-      <div
-        class="d_c_fs_c popup-guest-message bgC-white pad-y-40 pad-x-40 gap-40 text-center"
-        id="guestMessageAddTask"
-      ></div>
+      <a class="btn-message d_c_c_c">Task added to board</a
+      ><img
+        src="assets/img/board-icon_grey.svg"
+        alt="icon"
+        style="padding-right: 24px"
+      />
     </div>
   </body>
 </html>

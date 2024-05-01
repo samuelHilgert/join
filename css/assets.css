@@ -13,17 +13,17 @@
 
 .input-style-search {
   padding: 10px 14px !important;
-  background-color:white;
+  background-color: white;
 }
 
 .search-board-input {
   padding: 10px 14px;
   border: none;
-  outline:none;
+  outline: none;
 }
 
 .search-icon img:hover {
-cursor:pointer;
+  cursor: pointer;
 }
 
 .input-name {
@@ -272,19 +272,78 @@ cursor:pointer;
   background-color: rgba(209, 209, 209, 1);
 }
 
+.drag-area-category {
+  height: 100%;
+  flex: 1;
+  margin: 0 2px;
+  box-sizing: border-box;
+}
+
+.drag-area-no-tasks {
+  padding: 10px;
+  margin: 10px;
+  min-height: 50px;
+  width: 100%;
+  background-color: rgba(231, 231, 231, 1);
+  border-radius: 10px;
+  border: 1px dashed black;
+  box-sizing: border-box;
+}
+
 .drag-area {
   width: 220px;
-  flex:1;
-  min-height:50px;
-  padding: 0 20px;
+  flex: 1;
+  min-height: 50px;
+  padding: 0 5px;
+  box-sizing: border-box;
   margin-bottom: 50px;
   background-color: rgba(231, 231, 231, 1);
-  border-radius:10px;
+  border-radius: 10px;
   border: 1px dashed black;
 }
 
+.drag-area-alt {
+  min-height: 600px;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 10px;
+  border-radius: 10px;
+}
+
+
+
+.task-popup-svg {
+  height: 18px;
+  width: 16px;
+  fill: rgba(42, 54, 71, 1);
+}
+
+.header-icons-wrapper:hover .task-popup-svg,
+.header-icons-wrapper:hover .task-popup-span {
+  fill: rgba(41, 171, 226, 1);
+  color: rgba(41, 171, 226, 1);
+  cursor: pointer;
+}
+
+.task-popup-span {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(42, 54, 71, 1);
+}
+
+
+
+
+
 .drag-area-highlight {
-  background-color: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  height: auto;
+  width: 100%;
+  background-color: rgba(212, 212, 212, 0.2);
+  border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .todo {
@@ -294,7 +353,6 @@ cursor:pointer;
   padding: 10px;
   margin: 10px;
   height: auto;
-  width: 100%;
   cursor: pointer;
   box-sizing: border-box;
 }
@@ -359,7 +417,7 @@ li {
 
 .board-task-popup-container {
   width: 35%;
-  height:80%;
+  height: 80%;
   border-radius: 30px;
   position: relative;
   z-index: 9999;
@@ -511,7 +569,7 @@ li {
   display: none;
 }
 
-#guestMessagePopupAddTask{
+#guestMessagePopupAddTask {
   display: none;
 }
 
@@ -528,7 +586,7 @@ li {
 }
 
 .contact-circle-small-letters {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 13px;
   line-height: 14.4px;
   font-weight: 400;
@@ -536,9 +594,15 @@ li {
 }
 
 .class1 {
-  height:200px;
+  height: 200px;
 }
 
 #resultMessageDiv {
-  display:none;
+  display: none;
+}
+
+.icon-separator {
+  height: 24px;
+  width: 1px;
+  background-color: #d1d1d1;
 }

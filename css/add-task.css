@@ -91,7 +91,7 @@ input[type="checkbox"] {
 }
 
 .task-btn-style {
-  width: 100%;
+  width: 136px;
   height: auto;
   padding: 16px 24px;
   box-sizing: border-box;
@@ -173,7 +173,7 @@ input[type="checkbox"] {
 
 .subtask {
   max-width: 500px;
-  width: 100%;
+  width: 95%;
   border-radius: 10px;
   font-size: 16px;
   padding-top: 3px;
@@ -204,14 +204,6 @@ input[type="checkbox"] {
 
 .subtask:hover .subtask-partingline {
   display: block;
-}
-
-.input-spacer {
-  height: 28px;
-  width: 2px;
-  background-color: rgba(204, 204, 204, 0.4);
-  margin-left: 2px;
-  margin-right: 2px;
 }
 
 .task-contact {
@@ -437,4 +429,34 @@ textarea:focus {
   width: 20px;
   height: 16px;
   fill: #7ae229;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.priority-box-wrapper {
+  display: flex;
+}
+
+.priority-boxes {
+  width: 100%;
+  max-width: 500px;
+  flex-wrap: wrap;
+}
+
+.add-board-message-btn {
+  position: fixed;
+  bottom: -100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 0 10px;
+  border-radius: 20px;
+  transition: bottom 0.5s ease-in-out;
+  background-color: #2a3647;
+  z-index: 20;
+}
+
+.add-board-message-btn.show {
+  bottom: 50%;
 }

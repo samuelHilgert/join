@@ -476,6 +476,10 @@ body {
   transform: scaleX(-1);
 }
 
+.cursor-pointer {
+  cursor:pointer;
+}
+
 .list-style {
   list-style: none;
   padding-inline-start: 0;

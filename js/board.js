@@ -16,15 +16,20 @@ async function renderBoardTasks() {
     let div = document.getElementById("guestMessagePopupBoard");
     let messageText = document.getElementById("guestMessageBoard");
     showGuestPopupMessageForReload(div, messageText);
-    await updateUserData();
+    await updateOrLoadData();
   }
 
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
     const allTasksSameCategory = tasks.filter((t) => t["category"] == category);
     const categoryTableColumn = document.getElementById(`${category}`);
-    categoryTableColumn.innerHTML = "";
-    showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
+    categoryTableColumn.innerHTML = '';
+    document.getElementById(category).classList.remove('drag-area-highlight');
+    if (allTasksSameCategory.length === 0) {
+      categoryTableColumn.innerHTML = `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
+    } else {
+      showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
+    }
   }
 }
 
@@ -32,11 +37,6 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
   for (let k = 0; k < allTasksSameCategory.length; k++) {
     const task = allTasksSameCategory[k];
 
-    /* if () {
-  No tasks To do
-} else { 
-}
-*/
 
     categoryTableColumn.innerHTML += generateTodoHTML(task);
 
@@ -49,7 +49,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
 /********************** GENERAL FUNCTIONS **********************************/
 
 function showGuestMessageOnBoard() {
-  if (loggedAsGuest) {
+  if ((authorized === 'guest'))  {
     let div = document.getElementById("guestMessagePopupBoard");
     let messageText = document.getElementById("guestMessageBoard");
     showGuestPopupMessage(div, messageText);
@@ -59,7 +59,7 @@ function showGuestMessageOnBoard() {
 /*********************** END GENERAL FUNCTIONS ********************************/
 
 function generateTodoHTML(task) {
-  return `<div class="todo d_c_fs_fs gap-10" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
+  return `<div class="todo d_c_fs_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
             <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
             <h6><b>${task["title"]}</b></h6>
             <p>${task["description"]}</p>
@@ -133,7 +133,7 @@ async function moveTo(currentCategory) {
     if (tasks[id].id === currentDraggedTaskIdString) {
       foundIndex = id;
       tasks[foundIndex].category = currentCategory;
-      if (!loggedAsGuest === true || loggedAsGuest === false) {
+      if ((authorized === 'user'))  {
         await saveNewUserDate();
       } else {
         let div = document.getElementById("guestMessagePopupBoard");
@@ -244,7 +244,7 @@ async function getSubtasksForPopupTask(currentOpenTaskId) {
 }
 
 async function loadSubtasksByOpenTask() {
-  if (!loggedAsGuest) {
+  if ((authorized === 'user'))  {
     subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
     subtasksDone = users[currentUser].tasks[currentOpenTaskId].subtasksDone;
   } else {
@@ -261,7 +261,7 @@ async function clickSubtaskOpen(currentOpenTaskId, a) {
   divSubtaskOpen.innerHTML = `
     <img src="../assets/img/${clickedButton}" id="taskId${currentOpenTaskId}checkButtonDoneId${a}" onclick="clickSubtaskDone(${currentOpenTaskId}, ${a})"></img>
     `;
-  if (!loggedAsGuest) {
+  if ((authorized === 'user')) {
     subtasksDone.push(subtasksOpen[a]);
     subtasksOpen.splice(a, 1);
     await saveNewUserDate();
@@ -281,7 +281,7 @@ async function clickSubtaskDone(currentOpenTaskId, b) {
   divSubtaskDone.innerHTML = `
     <img src="../assets/img/${emptyButton}" id="taskId${currentOpenTaskId}checkButtonOpenId${b}" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${b})"></img>
     `;
-  if (!loggedAsGuest) {
+  if ((authorized === 'user')) {
     subtasksOpen.push(subtasksDone[b]);
     subtasksDone.splice(b, 1);
     await saveNewUserDate();
@@ -326,7 +326,7 @@ function getPriorityIcon(todo) {
 
 function getBgColorTaskPopup(index) {
   let userContact;
-  if (loggedAsGuest) {
+  if ((authorized === 'guest'))  {
     userContact = contacts[index];
   } else {
     userContact = users[currentUser]["contacts"][index];
@@ -378,7 +378,7 @@ async function deleteTask() {
   document.body.style.overflow = "scroll";
   tasks.splice(currentOpenTaskId, 1);
   showGuestMessageOnBoard();
-  if (!loggedAsGuest === true || loggedAsGuest === false) {
+  if ((authorized === 'user')) {
     await saveNewUserDate();
   }
   await renderBoardTasks();
@@ -502,8 +502,12 @@ async function generateCategoriesBySearch(matchingIndices) {
       (t) => t["category"] == category
     );
     const categoryTableColumn = document.getElementById(`${category}`);
-    categoryTableColumn.innerHTML = "";
-    showTasksForEachCategory(allTasksSameCategory, categoryTableColumn); // this functions already exist and renders the tasks
+    categoryTableColumn.innerHTML = '';
+    if (allTasksSameCategory.length === 0) {
+      categoryTableColumn.innerHTML = `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
+    } else {
+      showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
+    }
   }
 }
 
@@ -512,7 +516,7 @@ async function generateCategoriesBySearch(matchingIndices) {
  *
  */
 function resetSearch() {
-  document.getElementById("searchBoardInput").value = "";
+  document.getElementById("searchBoardInput").value = '';
 }
 
 /**
@@ -526,3 +530,11 @@ function searchTasksByKeyPress(event) {
 }
 
 /*********************** END SEARCH FUNCTION ********************************/
+
+function changeImage(element, src) {
+  element.querySelector(".delete").src = src;
+}
+
+function restoreImagePopupTask(element, defaultSrc) {
+  element.querySelector(".delete").src = defaultSrc;
+}
