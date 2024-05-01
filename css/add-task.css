@@ -433,11 +433,15 @@ textarea:focus {
 
 .add-board-message-btn {
   position: fixed;
-  top: 50%;
+  bottom: -100%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   padding: 0 10px;
   border-radius: 20px;
   transition: bottom 0.5s ease-in-out;
   background-color: #2a3647;
+}
+
+.add-board-message-btn.show {
+  bottom: 50%;
 }

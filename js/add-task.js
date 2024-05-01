@@ -441,13 +441,16 @@ function clearAssignToInput() {
 
 function findMatchingContact() {
   clearAssignToInput();
-  let searchInput = document.getElementById("task-assignedTo").value.trim().toLowerCase();
+  let searchInput = document
+    .getElementById("task-assignedTo")
+    .value.trim()
+    .toLowerCase();
 
   if (searchInput === "") {
     openDropdown();
     updateDropdownMenu(contactsForTasks);
   } else {
-    let filteredContacts = contactsForTasks.filter(contact =>
+    let filteredContacts = contactsForTasks.filter((contact) =>
       contact.name.toLowerCase().includes(searchInput)
     );
     if (!isDropdownOpen()) {
@@ -471,7 +474,6 @@ function updateDropdownMenu(contacts) {
     renderContactsDropwdown(contact, i);
   }
 }
-
 
 ///////// SEARCHBAR ENDE /////////
 
@@ -547,8 +549,11 @@ function addTaskToBoardMessage() {
   const container = document.getElementById("addTaskMessageContainer");
   container.classList.add("add-board-message-btn");
   container.style.display = "flex";
-  setTimeout(() => {
-    container.classList.remove("add-board-message-btn");
-    container.style.display = "none";
-  }, 900);
+  setTimeout(function () {
+    container.classList.add("show");
+    setTimeout(function () {
+      container.classList.remove("show");
+      container.style.display = "none";
+    }, 900);
+  }, 100);
 }
