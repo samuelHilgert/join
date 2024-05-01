@@ -450,4 +450,5 @@ textarea:focus {
 .priority-boxes {
   width: 100%;
   max-width: 500px;
+  flex-wrap: wrap;
 }
