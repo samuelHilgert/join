@@ -274,12 +274,12 @@
 
 .drag-area {
   width: 220px;
-  flex:1;
-  min-height:50px;
+  flex: 1;
+  min-height: 50px;
   padding: 0 20px;
   margin-bottom: 50px;
   background-color: rgba(231, 231, 231, 1);
-  border-radius:10px;
+  border-radius: 10px;
   border: 1px dashed black;
 }
 
