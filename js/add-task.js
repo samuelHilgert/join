@@ -2,7 +2,6 @@ let newTask = [];
 // let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
-let matchingContactNames = [];
 let checkedCheckboxes = []; // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 let contactsLoaded = false;
 
@@ -133,6 +132,7 @@ async function updateTaskContacts() {
 
 function openDropdown() {
   sortContactsForTasks();
+  clearAssignToInput();
   let taskContactDiv = document.getElementById("taskContactDiv");
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
@@ -441,7 +441,37 @@ function clearAssignToInput() {
 
 function findMatchingContact() {
   clearAssignToInput();
+  let searchInput = document.getElementById("task-assignedTo").value.trim().toLowerCase();
+
+  if (searchInput === "") {
+    openDropdown();
+    updateDropdownMenu(contactsForTasks);
+  } else {
+    let filteredContacts = contactsForTasks.filter(contact =>
+      contact.name.toLowerCase().includes(searchInput)
+    );
+    if (!isDropdownOpen()) {
+      openDropdown();
+    }
+    updateDropdownMenu(filteredContacts);
+  }
 }
+
+function isDropdownOpen() {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  return taskContactDiv.style.display === "flex";
+}
+
+function updateDropdownMenu(contacts) {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  taskContactDiv.innerHTML = "";
+
+  for (let i = 0; i < contacts.length; i++) {
+    const contact = contacts[i];
+    renderContactsDropwdown(contact, i);
+  }
+}
+
 
 ///////// SEARCHBAR ENDE /////////
 
