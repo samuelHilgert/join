@@ -24,6 +24,7 @@ async function renderBoardTasks() {
     const allTasksSameCategory = tasks.filter((t) => t["category"] == category);
     const categoryTableColumn = document.getElementById(`${category}`);
     categoryTableColumn.innerHTML = '';
+    document.getElementById(category).classList.remove('drag-area-highlight');
     if (allTasksSameCategory.length === 0) {
       categoryTableColumn.innerHTML = `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
     } else {
