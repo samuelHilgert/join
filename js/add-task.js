@@ -442,6 +442,14 @@ function clearAssignToInput() {
 
 function findMatchingContact() {
   clearAssignToInput();
+  let input = document.getElementById("task-assignedTo").value.trim().toLowerCase();
+  matchingContactNames = [];
+  for (let i = 0; i < contactsForTasks.length; i++) {
+    const searchedName = contactsForTasks[i];
+    if (searchedName.includes(input)) {
+      matchingContactNames.push(searchedName);
+    }
+  }
 }
 
 ///////// SEARCHBAR ENDE /////////
