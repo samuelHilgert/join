@@ -16,7 +16,7 @@ async function renderBoardTasks() {
     let div = document.getElementById("guestMessagePopupBoard");
     let messageText = document.getElementById("guestMessageBoard");
     showGuestPopupMessageForReload(div, messageText);
-    await updateUserData();
+    await updateOrLoadData();
   }
 
   for (let i = 0; i < categories.length; i++) {

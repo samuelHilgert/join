@@ -23,7 +23,7 @@ async function init() {
             await loadUserData();
         }
         await loadLoggedTime();
-        await updateUserData();
+        await updateOrLoadData();
         await includeHTML();
         renderHeader();
         getCurrentlySidebarLink(); // in sidebar.js
@@ -152,16 +152,13 @@ async function loadUserData() {
     }
 }
 
-
-
 /**
  * This is a function that checks whether a guest or user has logged in
  * The data is only saved remotely if the user is logged in
  * In both cases sample contacts and tasks are also loaded
  * 
  */
-async function updateUserData() {
-    await loadExamples();
+async function updateOrLoadData() { 
     if ((authorized === 'user'))  {
         let userData = users[currentUser];
         if (userData.contacts.length === 0 || userData.tasks.length === 0) {
@@ -173,6 +170,7 @@ async function updateUserData() {
         }
         await saveNewUserDate();
     }
+    await loadExamples();
 }
 
 /**
