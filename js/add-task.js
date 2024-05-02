@@ -57,7 +57,14 @@ async function addTask() {
     await setItem("users", JSON.stringify(users));
     resetAddTaskValues();
     addTaskToBoardMessage();
+    forwardToBoard();
   }
+}
+
+function forwardToBoard() {
+  setTimeout(function() {
+    window.location.replace("board.html");
+  }, 1400);
 }
 
 function saveDueDateFormatted(dateValue) {
