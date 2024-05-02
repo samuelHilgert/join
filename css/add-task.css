@@ -137,6 +137,10 @@ input[type="checkbox"] {
   align-items: center;
 }
 
+.search-placeholder::placeholder {
+  color: rgba(209, 209, 209, 1);
+}
+
 .category-div {
   position: absolute;
   z-index: 1;

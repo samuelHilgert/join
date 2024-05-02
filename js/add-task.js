@@ -450,8 +450,10 @@ function clearAssignToInput() {
   let input = document.getElementById("task-assignedTo");
   if (input.placeholder === "Search contact") {
     input.placeholder = "Select contacts to assign";
+    input.classList.remove('search-placeholder');
   } else {
     input.placeholder = "Search contact";
+    input.classList.add('search-placeholder');
   }
 }
 
