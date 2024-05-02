@@ -41,7 +41,7 @@ async function updateUpcomingDate() {
   let allTimeStampsDifferences = [];
   let upcomingDate;
   let currentDate = new Date();
-  let formattedDate = formatDateCorrect(currentDate);
+  let formattedDate = await formatDateCorrect(currentDate);
   let datum = new Date(formattedDate);  // Erstelle ein Date-Objekt mit dem gewünschten Datum
   let timeStampCurrentDate = datum.getTime(); // Hole den Zeitstempel in Millisekunden
   await getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTimeStampsDifferences);

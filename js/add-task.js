@@ -39,7 +39,6 @@ async function addTask() {
     return;
   }
   let formattedInputDate = await formatDateCorrect(taskInput.date); 
-  console.log(formattedInputDate);
   const prio = determinePriority(); 
   let id = getNextAvailableTaskId();
   const task = {
