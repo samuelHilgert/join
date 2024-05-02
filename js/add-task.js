@@ -415,6 +415,14 @@ function setMinimumDate() {
   document.getElementById("task-date").setAttribute("min", minDate);
 }
 
+function formatInputDate(input) {
+  let dateByValue = new Date(input.value);
+  let formattedDate = formatDateCorrect(dateByValue);
+  console.log(formattedDate);
+  input.type = 'text';
+  input.value = formattedDate;
+}
+
 ///////// SEARCHBAR /////////
 
 function clearAssignToInput() {
