@@ -38,17 +38,24 @@ function getValuesForSummary() {
 
 function updateUpcomingDate() {
   let currentDate = new Date();
-  let formattedDate = formatDateCorrect(currentDate); 
-  console.log(formattedDate);
+  let formattedDate = formatDateCorrect(currentDate);
+  console.log('formattedDate = ' + formattedDate);
 
-  tasks.forEach(function(task) {
-      if (task['dueDate']) {
-        
-        console.log(task['dueDate']);
-
-      }
-  });
+tasks.forEach(function (task) {
+  if (task['dueDate']) {
+    console.log(task['dueDate']);
+  }
+});
 }
+
+/*
+if (difference < closestDifference) {
+  // Aktualisiere die kleinste Differenz
+  closestDifference = difference;
+  // Aktualisiere das Datum, das am nächsten liegt
+  closestDate = date;
+}*/
+
 
 function calculateUpcomingDate(upcomingDueDateTasks) {
   let currentDate = new Date();

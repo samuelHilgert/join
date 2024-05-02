@@ -33,7 +33,7 @@ async function init() {
 }
 
 /**
- * this function formats the date
+ * this function formats the date from add-task input and for the upcoming function in summary
  *
  */
 function formatDateCorrect(timeStamp) {
@@ -44,7 +44,6 @@ function formatDateCorrect(timeStamp) {
     };
     let formattedTimeStamp = timeStamp.toLocaleDateString("de-DE", dateFormatOptions);
     formattedDate = formattedTimeStamp.replace(/\./g, '/');  // replace the period with a slash
-
     return formattedDate;
 }
 
