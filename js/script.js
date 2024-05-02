@@ -133,7 +133,7 @@ async function initiateIndividualFunctions() {
         if (document.location.pathname === `/${currentPage}.html`) {
             await resetExpiryTime();
             if (currentPage === 'summary') {
-                renderSummary();
+               await renderSummary();
             } else if (currentPage === 'add-task') {
                 await updateTaskContacts();
             } else if (currentPage === 'board') {
