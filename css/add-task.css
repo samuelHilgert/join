@@ -417,6 +417,10 @@ input:focus {
   outline: 2px solid red;
 }
 
+.required-input-outline-red {
+  outline: 2px solid red;
+}
+
 textarea:focus {
   outline: 2px solid rgb(143, 208, 237);
 }
@@ -467,4 +471,16 @@ textarea:focus {
 
 .add-board-message-btn.show {
   bottom: 50%;
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
 }

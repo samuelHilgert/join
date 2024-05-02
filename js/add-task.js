@@ -30,6 +30,15 @@ function sortContactsForTasks() {
 // function to add the task
 async function addTask() {
   const taskInput = readTaskInput();
+
+  const selectedCategory = taskInput.category;
+  if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
+    shakeDiv();
+    toggleCategoryDiv();
+    document.getElementById('task-category').classList.add('required-input-outline-red');
+    return;
+  }
+
   let formattedInputDate = formatDateCorrect(taskInput.date); 
   const prio = determinePriority(); 
   let id = getNextAvailableTaskId();
@@ -59,6 +68,14 @@ async function addTask() {
     addTaskToBoardMessage();
     forwardToBoard();
   }
+}
+
+function shakeDiv() {
+  let container = document.getElementById('requiredDiv');
+  container.classList.add('shake');
+  setTimeout(() => {
+    container.classList.remove('shake');
+  }, 500);
 }
 
 function forwardToBoard() {
