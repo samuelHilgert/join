@@ -81,6 +81,10 @@ body {
   padding-left: 100px;
 }
 
+.pad-r-15 {
+  padding-right: 15px;
+}
+
 .pad-r-40 {
   padding-right: 40px;
 }

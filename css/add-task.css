@@ -484,3 +484,8 @@ textarea:focus {
   75% { transform: translateX(-10px); }
   100% { transform: translateX(0); }
 }
+
+.bottom-box {
+  width: 99%;
+  max-width: 1077px;
+}
