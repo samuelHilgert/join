@@ -155,7 +155,7 @@ function openDropdown() {
     markSelectedContacts();
   }
   // contactsByCheckbox(); wird nicht mehr benötigt
-  showContactSelection();
+  //showContactSelection();
 }
 
 function renderContactsDropwdown(contact, index) {
@@ -202,7 +202,7 @@ function handleCheckboxChange(index) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
-  showContactSelection();
+  //showContactSelection();
 }
 
 function markSelectedContacts() {
