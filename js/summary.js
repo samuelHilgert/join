@@ -15,6 +15,7 @@ function renderSummary() {
   displayGreeting();
   getValuesForSummary();
   renderSummaryValues();
+  updateUpcomingDate();
 }
 
 function getValuesForSummary() {
@@ -27,8 +28,6 @@ function getValuesForSummary() {
   const allAwaitFeedbackNumber = tasks.filter(
     (t) => t["category"] == "awaitFeedback"
   );
-  const upcomingDueDateTasks = tasks.filter((t) => t["dueDate"]);
-  // calculateUpcomingDate(upcomingDueDateTasks);
   allTodos = allTasksByBacklog.length;
   allDones = allTasksByDone.length;
   allUrgents = allTasksByUrgent.length;
@@ -37,18 +36,25 @@ function getValuesForSummary() {
   allTasks = tasks.length;
 }
 
+function updateUpcomingDate() {
+  let currentDate = new Date();
+  let formattedDate = formatDateCorrect(currentDate); 
+  console.log(formattedDate);
+
+  tasks.forEach(function(task) {
+      if (task['dueDate']) {
+        
+        console.log(task['dueDate']);
+
+      }
+  });
+}
+
 function calculateUpcomingDate(upcomingDueDateTasks) {
   let currentDate = new Date();
   // Deutsches Datumsformat verwenden
-  let germanDateFormatOptions = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-  let currentDateGermanFormat = currentDate.toLocaleDateString(
-    "de-DE",
-    germanDateFormatOptions
-  );
+
+
   let closestDueDateElement = null;
   let closestDueDateDifference = Infinity;
 
@@ -98,9 +104,8 @@ function formatDate(dateString) {
   const date = new Date(year, monthIndex, day);
 
   // Formatieren des Datums
-  const formattedDate = `${
-    months[date.getMonth()]
-  } ${date.getDate()}, ${date.getFullYear()}`;
+  const formattedDate = `${months[date.getMonth()]
+    } ${date.getDate()}, ${date.getFullYear()}`;
 
   return formattedDate;
 }
@@ -130,7 +135,7 @@ function renderSummaryValues() {
  */
 function getUserNameForGreet() {
   let userNameDiv = document.getElementById("userNameDiv");
-  if ((authorized === 'guest'))  {
+  if ((authorized === 'guest')) {
     userNameDiv.innerHTML = "Guest";
     let div = document.getElementById("guestMessagePopupSummary");
     let messageText = document.getElementById("guestMessageSummary");

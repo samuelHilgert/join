@@ -33,6 +33,22 @@ async function init() {
 }
 
 /**
+ * this function formats the date
+ *
+ */
+function formatDateCorrect(timeStamp) {
+    let dateFormatOptions = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    };
+    let formattedTimeStamp = timeStamp.toLocaleDateString("de-DE", dateFormatOptions);
+    formattedDate = formattedTimeStamp.replace(/\./g, '/');  // replace the period with a slash
+
+    return formattedDate;
+}
+
+/**
  * This functions includes all functions for unauthorized access
  * 
  */
