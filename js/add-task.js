@@ -457,7 +457,11 @@ function clearAssignToInput() {
 
 function turnArrow() {
   let arrow = document.getElementById("turn-dropdown-arrow");
-  arrow.classList.add("rotate-180");
+  if (arrow.classList.contains("rotate-180")) {
+    arrow.classList.remove("rotate-180");
+  } else {
+    arrow.classList.add("rotate-180");
+  }
 }
 
 function findMatchingContact() {
