@@ -241,7 +241,7 @@ function showContactSelection() {
       (contact) => contact.name === contactName
     );
     if (contactIndex !== -1) {
-      const backgroundColor = contacts[contactIndex].color;
+      const backgroundColor = contactsForTasks[contactIndex].color;
       const letters = contactNamesLetters(contactName);
       contactSelection.innerHTML += `<div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>`;
     }
