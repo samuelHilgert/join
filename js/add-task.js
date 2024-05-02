@@ -412,7 +412,9 @@ function clearForm() {
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
   document.getElementById("contactSelection").innerHTML = "";
+  document.getElementById('task-category').classList.remove('required-input-outline-red');
   resetPriority();
+  toggleCategoryDiv();
   dropdownContact = [];
   subtasks = [];
   checkedCheckboxes = [];
