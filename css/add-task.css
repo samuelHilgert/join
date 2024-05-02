@@ -413,6 +413,10 @@ input:focus {
   outline: 2px solid rgb(143, 208, 237);
 }
 
+.required-input:focus {
+  outline: 2px solid red;
+}
+
 textarea:focus {
   outline: 2px solid rgb(143, 208, 237);
 }
