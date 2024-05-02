@@ -30,16 +30,16 @@ function sortContactsForTasks() {
 // function to add the task
 async function addTask() {
   const taskInput = readTaskInput();
-
   const selectedCategory = taskInput.category;
+
   if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
     shakeDiv();
     toggleCategoryDiv();
     document.getElementById('task-category').classList.add('required-input-outline-red');
     return;
   }
-
-  let formattedInputDate = formatDateCorrect(taskInput.date); 
+  let formattedInputDate = await formatDateCorrect(taskInput.date); 
+  console.log(formattedInputDate);
   const prio = determinePriority(); 
   let id = getNextAvailableTaskId();
   const task = {
@@ -434,10 +434,9 @@ function setMinimumDate() {
   document.getElementById("task-date").setAttribute("min", minDate);
 }
 
-function formatInputDate(input) {
+async function formatInputDate(input) {
   let dateByValue = new Date(input.value);
-  let formattedDate = formatDateCorrect(dateByValue);
-  console.log(formattedDate);
+  let formattedDate = await formatDateCorrect(dateByValue);
   input.type = 'text';
   input.value = formattedDate;
 }

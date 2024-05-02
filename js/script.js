@@ -36,7 +36,7 @@ async function init() {
  * this function formats the date from add-task input and for the upcoming function in summary
  *
  */
-function formatDateCorrect(timeStamp) {
+async function formatDateCorrect(timeStamp) {
     let dateFormatOptions = {
       day: "2-digit",
       month: "2-digit",
