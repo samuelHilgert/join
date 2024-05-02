@@ -498,8 +498,24 @@ function updateDropdownMenu(contacts) {
   }
 }
 
+function setFocusOnInputfield() {
+  let inputfield = document.getElementById('task-assignedTo');
+  inputfield.focus();
+}
+
+function handleClickOnDropdown() {
+  if (!isDropdownOpen()) {
+    openDropdown();
+    turnArrow();
+    setFocusOnInputfield();
+  } else {
+    closeDropdown();
+  }
+}
+
 function closeDropdown() {
   clearAssignToInput();
+  turnArrow();
   let arrow = document.getElementById("turn-dropdown-arrow");
   let taskContactDiv = document.getElementById("taskContactDiv");
   arrow.classList.remove("rotate-180");
