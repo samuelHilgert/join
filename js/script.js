@@ -2,7 +2,7 @@ let users = [];
 let contacts = [];
 let tasks = [];
 let rememberStatus = [];
-let setResetExpiryTime = 10000000000000; // Set the logout time when the user has not used the reminder option
+let setResetExpiryTime = 100; // Set the logout time when the user has not used the reminder option
 let popupCloseTime = 8000; // Set popup display time
 let authorized = 'none';
 let currentUser;
@@ -30,6 +30,21 @@ async function init() {
         }
         await initiateIndividualFunctions();
     }
+}
+
+/**
+ * this function formats the date from add-task input and for the upcoming function in summary
+ *
+ */
+function formatDateCorrect(timeStamp) {
+    let dateFormatOptions = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    };
+    let formattedTimeStamp = timeStamp.toLocaleDateString("de-DE", dateFormatOptions);
+    formattedDate = formattedTimeStamp.replace(/\./g, '/');  // replace the period with a slash
+    return formattedDate;
 }
 
 /**
@@ -118,7 +133,7 @@ async function initiateIndividualFunctions() {
         if (document.location.pathname === `/${currentPage}.html`) {
             await resetExpiryTime();
             if (currentPage === 'summary') {
-                renderSummary();
+               await renderSummary();
             } else if (currentPage === 'add-task') {
                 await updateTaskContacts();
             } else if (currentPage === 'board') {
@@ -160,16 +175,24 @@ async function loadUserData() {
 async function updateOrLoadData() {
     if ((authorized === 'user')) {
         let userData = users[currentUser];
-        if (userData.contacts.length === 0 || userData.tasks.length === 0) {
-            await loadExamples();
+        if (userData.contacts.length !== 0 && userData.tasks.length !== 0) {
+            contacts = users[currentUser].contacts; // save user contacts in array contacts
+            tasks = users[currentUser].tasks;   // save user contacts in array tasks
+        } else {
+            if (userData.contacts.length === 0) {
+                let respContacts = await fetch('./JSON/contacts.json');
+                contacts = await respContacts.json();  // load and save example contacts in array contacts
+                await saveNewUserDate(); // save new arrays content in user on the remote server
+            } 
+            if (userData.tasks.length === 0) {
+                let respTasks = await fetch('./JSON/tasks.json');
+                tasks = await respTasks.json(); // load and save example tasks in array tasks
+                await saveNewUserDate(); // save new arrays content in user on the remote server
+            }
         }
-        else {
-            contacts = users[currentUser].contacts;
-            tasks = users[currentUser].tasks;
-        }
-        await saveNewUserDate();
+    } else {
+        await loadExamples(); // otherwise only load the example contacts and tasks, if user is a geuest
     }
-    await loadExamples();
 }
 
 /**

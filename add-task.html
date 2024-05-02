@@ -52,7 +52,7 @@
             >
             <input
               id="task-title"
-              class="task-input-style input-login input-font"
+              class="task-input-style input-login input-font required-input"
               type="text"
               placeholder="Enter a title"
               required
@@ -83,7 +83,7 @@
             <div
               class="input-icon-dropdown-div"
               id="turn-dropdown-arrow"
-              onclick="closeDropdown()"
+              onclick="handleClickOnDropdown()"
             >
               <img src="./assets/img/arrow_drop_down.svg" alt="Arrow Down" />
             </div>
@@ -93,7 +93,6 @@
             ></div>
 
             <div class="d_f_fs_c" id="contactSelection"></div>
-            <!--Circles mit Initialen noch ergänzen-->
           </div>
         </div>
 
@@ -109,11 +108,11 @@
             >
             <input
               id="task-date"
-              class="task-input-style due-date-field input-font"
+              class="task-input-style due-date-field input-font required-input"
               name="date"
               type="text"
               onfocus="(this.type='date')"
-              onblur="(this.type='text')"
+              onblur="formatInputDate(this)"
               onclick="setMinimumDate()"
               placeholder="dd/mm/yyyy"
               required
@@ -299,6 +298,11 @@
         alt="icon"
         style="padding-right: 24px"
       />
+    </div>
+
+    <div class="d_c_fs_fe pad-x-40 pad-y-40 popup-bg-filter width-max" id="guestMessagePopupAddTask">
+      <div class="d_c_fs_c popup-guest-message bgC-white pad-y-40 pad-x-40 gap-40 text-center" id="guestMessageAddTask">
+      </div>
     </div>
   </body>
 </html>

@@ -10,11 +10,12 @@ let allTasks;
  * This function includes render functions for summary.html
  *
  */
-function renderSummary() {
+async function renderSummary() {
   getUserNameForGreet();
   displayGreeting();
   getValuesForSummary();
   renderSummaryValues();
+  await updateUpcomingDate();
 }
 
 function getValuesForSummary() {
@@ -27,8 +28,6 @@ function getValuesForSummary() {
   const allAwaitFeedbackNumber = tasks.filter(
     (t) => t["category"] == "awaitFeedback"
   );
-  const upcomingDueDateTasks = tasks.filter((t) => t["dueDate"]);
-  // calculateUpcomingDate(upcomingDueDateTasks);
   allTodos = allTasksByBacklog.length;
   allDones = allTasksByDone.length;
   allUrgents = allTasksByUrgent.length;
@@ -37,72 +36,51 @@ function getValuesForSummary() {
   allTasks = tasks.length;
 }
 
-function calculateUpcomingDate(upcomingDueDateTasks) {
+async function updateUpcomingDate() {
+  let allTaskTimeStamps = [];
+  let allTimeStampsDifferences = [];
+  let upcomingDate;
   let currentDate = new Date();
-  // Deutsches Datumsformat verwenden
-  let germanDateFormatOptions = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-  let currentDateGermanFormat = currentDate.toLocaleDateString(
-    "de-DE",
-    germanDateFormatOptions
-  );
-  let closestDueDateElement = null;
-  let closestDueDateDifference = Infinity;
-
-  upcomingDueDateTasks.forEach((task) => {
-    // Parse das deutsche Datum und vergleiche es mit dem aktuellen Datum
-    const dueDateParts = task["dueDate"].split(".");
-    const dueDate = new Date(
-      dueDateParts[2],
-      dueDateParts[1] - 1,
-      dueDateParts[0]
-    ); // Jahr, Monat (0-based), Tag
-    // Vergleiche das Fälligkeitsdatum mit dem aktuellen Datum
-    if (dueDate >= currentDate) {
-      const difference = Math.abs(dueDate - currentDate); // Betrachte die absolute Differenz
-      if (difference < closestDueDateDifference) {
-        closestDueDateElement = task;
-        closestDueDateDifference = difference;
-      }
-    }
-  });
-
-  let upcomingDeadline = closestDueDateElement.dueDate;
-  formattedDeadline = formatDate(upcomingDeadline);
+  let formattedDate = formatDateCorrect(currentDate);
+  let datum = new Date(formattedDate);  // Erstelle ein Date-Objekt mit dem gewünschten Datum
+  let timeStampCurrentDate = datum.getTime(); // Hole den Zeitstempel in Millisekunden
+  await getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTimeStampsDifferences);
+  let smallestDifference = Math.min(...allTimeStampsDifferences);   // Finde die kleinste Zahl im Array
+  let indexOfDifference = allTimeStampsDifferences.indexOf(smallestDifference);
+  upcomingDate = allTaskTimeStamps[indexOfDifference];
+  let formattedUpcomingDate = formatUpcomingDate(upcomingDate);
+  renderUpcomingDueDate(formattedUpcomingDate);
 }
 
-function formatDate(dateString) {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+async function getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTimeStampsDifferences) {
+  tasks.forEach(function (task) {
+    if (task['dueDate']) {
+      const parts = task['dueDate'].split("/");
+      const datum = new Date(parts[2], parts[1] - 1, parts[0]);
+      let timeStampTaskDueDate = datum.getTime(); // Hole den Zeitstempel in Millisekunden
+      let dueDateDifference = calculateDifferencesOftimeStamps(timeStampCurrentDate, timeStampTaskDueDate);
+      allTimeStampsDifferences.push(dueDateDifference);
+      allTaskTimeStamps.push(datum);
+    }
+  });
+}
+
+function calculateDifferencesOftimeStamps(reference, dueDate) {
+  return Math.abs(reference - dueDate);
+}
+
+function formatUpcomingDate(upcomingDate) {
+  let monthNames = [
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
   ];
-  const dateParts = dateString.split(".");
-  const day = parseInt(dateParts[0]);
-  const monthIndex = parseInt(dateParts[1]) - 1;
-  const year = parseInt(dateParts[2]);
+  let formattedUpcomingDate = monthNames[upcomingDate.getMonth()] + " " + upcomingDate.getDate() + ", " + upcomingDate.getFullYear();
+  return formattedUpcomingDate;
+}
 
-  // Erstelle ein JavaScript-Datum-Objekt
-  const date = new Date(year, monthIndex, day);
-
-  // Formatieren des Datums
-  const formattedDate = `${
-    months[date.getMonth()]
-  } ${date.getDate()}, ${date.getFullYear()}`;
-
-  return formattedDate;
+function renderUpcomingDueDate(formattedUpcomingDate) {
+  let upcomingDueDate = document.getElementById("upcomingDueDate");
+  upcomingDueDate.innerHTML = `${formattedUpcomingDate}`;
 }
 
 function renderSummaryValues() {
@@ -114,14 +92,12 @@ function renderSummaryValues() {
   let allAwaitFeedbackNumber = document.getElementById(
     "allAwaitFeedbackNumber"
   );
-  let upcomingDueDate = document.getElementById("upcomingDueDate");
   allTodosNumber.innerHTML = `<h3>${allTodos}</h3>`;
   allDoneNumber.innerHTML = `<h3>${allDones}</h3>`;
   allUrgentNumber.innerHTML = `<h3>${allUrgents}</h3><p>Urgent</p>`;
   allTasksNumber.innerHTML = `<h3>${allTasks}</h3>`;
   allInProgressNumber.innerHTML = `<h3>${allInProgress}</h3>`;
   allAwaitFeedbackNumber.innerHTML = `<h3>${allAwaitFeedback}</h3>`;
-  upcomingDueDate.innerHTML = `${formattedDeadline}`;
 }
 
 /**
@@ -130,7 +106,7 @@ function renderSummaryValues() {
  */
 function getUserNameForGreet() {
   let userNameDiv = document.getElementById("userNameDiv");
-  if ((authorized === 'guest'))  {
+  if ((authorized === 'guest')) {
     userNameDiv.innerHTML = "Guest";
     let div = document.getElementById("guestMessagePopupSummary");
     let messageText = document.getElementById("guestMessageSummary");

@@ -32,11 +32,12 @@ async function renderContacts() {
         let div = document.getElementById('guestMessagePopupContacts');
         let messageText = document.getElementById('guestMessageContacts');
         showGuestPopupMessageForReload(div, messageText);
-        await updateContacts();
+        await updateOrLoadData();
     }
+
     sortContacts();
     createUniqueContactId();
-    renderContactList();
+    await renderContactList();
     setRandomColor();
 }
 
@@ -87,7 +88,13 @@ function getRandomColor() {
  * In this case, the renderLetterAndPartingLine function is just rendered once for every first letter and not for every single contact.
  * On top of that, the function also gets the first letter of the surname with the help of split(), parting the names in the array after the blank space.
  */
-function renderContactList() {
+async function renderContactList() {
+    if (contacts.length === 0) {
+        let div = document.getElementById('guestMessagePopupContacts');
+        let messageText = document.getElementById('guestMessageContacts');
+        showGuestPopupMessageForReload(div, messageText);
+        await updateOrLoadData();
+    }
     let contactList = document.getElementById('contactList');
     contactList.innerHTML = '';
     let previousFirstLetter = null;
@@ -244,12 +251,12 @@ function getNewContactInput() {
 /**
  * This function adds a newly created contact to the contacts array and performs necessary actions.
  */
-function addNewContactToArray() {
+async function addNewContactToArray() {
     let newContact = getNewContactInput();
     contacts.push(newContact);
     sortContacts();
     closeAddContactFormWithoutAnimation();
-    renderContactList();
+    await renderContactList();
     contactSuccessAnimation();
     openContactInfo(newContact['id'], true); // true, because function should run without animation
     keepCircleBackgroundcolor();
@@ -268,7 +275,7 @@ async function validateAndAddContact(event) {
     if (!form.reportValidity()) { // Checking the validity of the form
         return; // If the form is invalid, the standard error message is displayed
     }
-    addNewContactToArray(); // contacted is added, if form is valid
+    await addNewContactToArray(); // contacted is added, if form is valid
     if ((authorized === 'user')) {
         await saveNewUserDate();
     } else {
@@ -372,7 +379,7 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
             let messageText = document.getElementById('guestMessageContacts');
             showGuestPopupMessage(div, messageText);
         }
-        renderContactList();
+        await renderContactList();
     }
 }
 
@@ -445,9 +452,8 @@ async function deleteContact(contactId) {
             let messageText = document.getElementById('guestMessageContacts');
             showGuestPopupMessage(div, messageText);
         }
-        renderContactList();
+        await renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();
-        await renderContacts();
     }
 }

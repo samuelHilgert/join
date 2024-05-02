@@ -137,6 +137,10 @@ input[type="checkbox"] {
   align-items: center;
 }
 
+.search-placeholder::placeholder {
+  color: rgba(209, 209, 209, 1);
+}
+
 .category-div {
   position: absolute;
   z-index: 1;
@@ -407,6 +411,10 @@ select.task-input-style {
 
 input:focus {
   outline: 2px solid rgb(143, 208, 237);
+}
+
+.required-input:focus {
+  outline: 2px solid red;
 }
 
 textarea:focus {

@@ -1,5 +1,12 @@
 [
     {
+        "name": "Alex Maier",
+        "mail": "alex.maier@strive.com",
+        "phone": "+43 789 878 787",
+        "color": "darkgreen",
+        "id": ""
+    },
+    {
         "name": "Anna Müller",
         "mail": "anna.mueller@strive.com",
         "phone": "+43 789 878 566",
@@ -32,13 +39,6 @@
         "mail": "jw@dreamlogistics.com",
         "phone": "+49 64865155",
         "color": "tan",
-        "id": ""
-    },
-    {
-        "name": "Alex Maier",
-        "mail": "alex.maier@strive.com",
-        "phone": "+43 789 878 787",
-        "color": "darkgreen",
         "id": ""
     },
     {

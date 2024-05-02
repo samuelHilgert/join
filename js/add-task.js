@@ -30,15 +30,15 @@ function sortContactsForTasks() {
 // function to add the task
 async function addTask() {
   const taskInput = readTaskInput();
-  let dueDateFormatted = saveDueDateFormatted(taskInput.date);
-  const prio = determinePriority();
+  let formattedInputDate = formatDateCorrect(taskInput.date); 
+  const prio = determinePriority(); 
   let id = getNextAvailableTaskId();
   const task = {
     id: id,
     label: taskInput.category,
     title: taskInput.title,
     description: taskInput.description,
-    dueDate: dueDateFormatted,
+    dueDate: formattedInputDate,
     assignedTo: checkedCheckboxes,
     priority: prio,
     subtasksOpen: subtasks,
@@ -57,41 +57,14 @@ async function addTask() {
     await setItem("users", JSON.stringify(users));
     resetAddTaskValues();
     addTaskToBoardMessage();
+    forwardToBoard();
   }
 }
 
-function saveDueDateFormatted(dateValue) {
-  let dueDateFormatted;
-  let unix_timestamp = dateValue; // Unix-Zeitstempel
-  let datum = new Date(unix_timestamp); // Erstelle ein neues Date-Objekt und setze den Unix-Zeitstempel
-  let tag = datum.getDate(); // Gib den Tag zurück
-  let monat = datum.getMonth() + 1; // Gib den Monat zurück und füge 1 hinzu, da Monate bei 0 beginnen
-  let jahr = datum.getFullYear(); // Gib das Jahr zurück
-
-  // Führende Nullen für Tag und Monat hinzufügen, wenn sie kleiner als 10 sind
-  let tagFormatted = tag < 10 ? "0" + tag : tag;
-  let monatFormatted = monat < 10 ? "0" + monat : monat;
-
-  // Setze das Datum im gewünschten Format
-  dueDateFormatted = tagFormatted + "/" + monatFormatted + "/" + jahr;
-  return dueDateFormatted;
-}
-
-function saveDueDateFormatted(dateValue) {
-  let dueDateFormatted;
-  let unix_timestamp = dateValue; // Unix-Zeitstempel
-  let datum = new Date(unix_timestamp); // Erstelle ein neues Date-Objekt und setze den Unix-Zeitstempel
-  let tag = datum.getDate(); // Gib den Tag zurück
-  let monat = datum.getMonth() + 1; // Gib den Monat zurück und füge 1 hinzu, da Monate bei 0 beginnen
-  let jahr = datum.getFullYear(); // Gib das Jahr zurück
-
-  // Führende Nullen für Tag und Monat hinzufügen, wenn sie kleiner als 10 sind
-  let tagFormatted = tag < 10 ? "0" + tag : tag;
-  let monatFormatted = monat < 10 ? "0" + monat : monat;
-
-  // Setze das Datum im gewünschten Format
-  dueDateFormatted = tagFormatted + "/" + monatFormatted + "/" + jahr;
-  return dueDateFormatted;
+function forwardToBoard() {
+  setTimeout(function() {
+    window.location.replace("board.html");
+  }, 1400);
 }
 
 function resetAddTaskValues() {
@@ -195,7 +168,6 @@ function handleCheckboxChange(index) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
-  showContactSelection();
 }
 
 function markSelectedContacts() {
@@ -227,6 +199,12 @@ function markSelectedContacts() {
  */
 function showContactSelection() {
   let contactSelection = document.getElementById("contactSelection");
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  if (taskContactDiv.style.display === "none") {
+    contactSelection.style.display = "flex";
+  } else {
+    contactSelection.style.display = "none";
+  }
   contactSelection.innerHTML = ``;
   for (let index = 0; index < checkedCheckboxes.length; index++) {
     const contactName = checkedCheckboxes[index];
@@ -234,7 +212,7 @@ function showContactSelection() {
       (contact) => contact.name === contactName
     );
     if (contactIndex !== -1) {
-      const backgroundColor = contacts[contactIndex].color;
+      const backgroundColor = contactsForTasks[contactIndex].color;
       const letters = contactNamesLetters(contactName);
       contactSelection.innerHTML += `<div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>`;
     }
@@ -437,20 +415,34 @@ function setMinimumDate() {
   document.getElementById("task-date").setAttribute("min", minDate);
 }
 
+function formatInputDate(input) {
+  let dateByValue = new Date(input.value);
+  let formattedDate = formatDateCorrect(dateByValue);
+  console.log(formattedDate);
+  input.type = 'text';
+  input.value = formattedDate;
+}
+
 ///////// SEARCHBAR /////////
 
 function clearAssignToInput() {
   let input = document.getElementById("task-assignedTo");
   if (input.placeholder === "Search contact") {
     input.placeholder = "Select contacts to assign";
+    input.classList.remove("search-placeholder");
   } else {
     input.placeholder = "Search contact";
+    input.classList.add("search-placeholder");
   }
 }
 
 function turnArrow() {
   let arrow = document.getElementById("turn-dropdown-arrow");
-  arrow.classList.add("rotate-180");
+  if (arrow.classList.contains("rotate-180")) {
+    arrow.classList.remove("rotate-180");
+  } else {
+    arrow.classList.add("rotate-180");
+  }
 }
 
 function findMatchingContact() {
@@ -487,8 +479,26 @@ function updateDropdownMenu(contacts) {
   }
 }
 
+function setFocusOnInputfield() {
+  let inputfield = document.getElementById('task-assignedTo');
+  inputfield.focus();
+}
+
+function handleClickOnDropdown() {
+  if (!isDropdownOpen()) {
+    openDropdown();
+    turnArrow();
+    setFocusOnInputfield();
+    showContactSelection();
+  } else {
+    closeDropdown();
+    showContactSelection();
+  }
+}
+
 function closeDropdown() {
   clearAssignToInput();
+  turnArrow();
   let arrow = document.getElementById("turn-dropdown-arrow");
   let taskContactDiv = document.getElementById("taskContactDiv");
   arrow.classList.remove("rotate-180");
