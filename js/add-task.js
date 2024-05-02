@@ -64,7 +64,7 @@ async function addTask() {
 function forwardToBoard() {
   setTimeout(function() {
     window.location.replace("board.html");
-  }, 1400);
+  }, 1600);
 }
 
 function resetAddTaskValues() {
