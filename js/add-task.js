@@ -155,7 +155,7 @@ function openDropdown() {
     markSelectedContacts();
   }
   // contactsByCheckbox(); wird nicht mehr benötigt
-  //showContactSelection();
+  showContactSelection();
 }
 
 function renderContactsDropwdown(contact, index) {
@@ -202,7 +202,6 @@ function handleCheckboxChange(index) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
-  //showContactSelection();
 }
 
 function markSelectedContacts() {
@@ -234,6 +233,12 @@ function markSelectedContacts() {
  */
 function showContactSelection() {
   let contactSelection = document.getElementById("contactSelection");
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  if (taskContactDiv.style.display === "none") {
+    contactSelection.style.display = "flex";
+  } else {
+    contactSelection.style.display = "none";
+  }
   contactSelection.innerHTML = ``;
   for (let index = 0; index < checkedCheckboxes.length; index++) {
     const contactName = checkedCheckboxes[index];
@@ -510,8 +515,10 @@ function handleClickOnDropdown() {
     openDropdown();
     turnArrow();
     setFocusOnInputfield();
+    showContactSelection();
   } else {
     closeDropdown();
+    showContactSelection();
   }
 }
 
