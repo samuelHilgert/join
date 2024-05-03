@@ -90,6 +90,7 @@ function resetAddTaskValues() {
   document.getElementById("task-category").value = "";
   document.getElementById("subtask").value = "";
   document.getElementById("contactSelection").innerHTML = "";
+  document.getElementById('task-category').classList.remove('required-input-outline-red');
   newTask = [];
   subtasks = [];
   checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
