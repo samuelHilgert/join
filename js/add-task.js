@@ -404,6 +404,10 @@ function clearSubtaskInput() {
 
 //clear the hole form
 function clearForm() {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  if (taskContactDiv.style.display === "flex") {
+    taskContactDiv.style.display = "none";
+  }
   document.getElementById("task-title").value = "";
   document.getElementById("task-description").value = "";
   document.getElementById("task-date").value = "";
@@ -412,9 +416,7 @@ function clearForm() {
   document.getElementById("task-assignedTo").value = "";
   document.getElementById("subtask-div").innerHTML = "";
   document.getElementById("contactSelection").innerHTML = "";
-  document.getElementById('task-category').classList.remove('required-input-outline-red');
   resetPriority();
-  toggleCategoryDiv();
   dropdownContact = [];
   subtasks = [];
   checkedCheckboxes = [];
