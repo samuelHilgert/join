@@ -282,13 +282,14 @@
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .add-contact-container {
     display: flex;
     justify-content: center;
     margin: 50px;
-    width: 80%;
+    width: 90%;
     max-width: 1440px;
 }
 
@@ -366,7 +367,7 @@
 }
 
 .contact-input-style {
-    width: 78%;
+    width: 85%;
     height: auto;
     padding: 20px 24px;
     box-sizing: border-box;
