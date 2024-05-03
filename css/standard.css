@@ -428,6 +428,13 @@ body {
   align-items: center;
 }
 
+.d_c_se_fs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
 .d_c_c_fs {
   display: flex;
   flex-direction: column;
