@@ -11,22 +11,22 @@
 </div> 
 -->
 
-<form onsubmit="addTask(); return false;">
+<form class="width-max pad-r-40" onsubmit="addTask(); return false;">
     <div class="d_f_fs_c">
       <h2>Add Task</h2>
     </div>
 
-  <div class="add-task-form-container d_f_c_c gap-40 pad-y-40">
+  <div class="add-task-form-container d_f_c_fs gap-40 pad-y-40">
     <!--BLOCK 1-->
 
     <div class="box d_c_c_s gap-30 width-50">
-      <div class="d_c_c_s gap-10 width-100">
+      <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20">Title<span style="color: red">*</span></span>
         <input id="task-title" class="task-input-style input-login input-font required-input" type="text"
           placeholder="Enter a title" required />
       </div>
 
-      <div class="d_c_c_s gap-10 width-100">
+      <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20">Description</span>
         <textarea id="task-description" cols="30" rows="2" class="task-input-style input-style-description input-font"
           placeholder="Enter a Description"></textarea>
@@ -62,15 +62,13 @@
           placeholder="dd/mm/yyyy" required />
       </div>
 
-      <div class="d_f_c_c width-max">
-        <div class="d_c_c_s gap-10">
+      <div class="d_c_c_fs gap-10 width-max">
           <span class="font-size-20">Prio</span>
-          <div class="d_f_fs_c gap-10 priority-boxes">
+          <div class="priority-boxes d_f_sb_c width-max">
             <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('urgent-btn')" id="urgent-btn"></button>
             <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('medium-btn')" id="medium-btn"></button>
             <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('low-btn')" id="low-btn"></button>
           </div>
-        </div>
       </div>
 
       <div class="d_c_c_s gap-10 width-max">
