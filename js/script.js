@@ -139,6 +139,7 @@ async function initiateIndividualFunctions() {
                 renderAddTaskFormButton();
             } else if (currentPage === 'board') {
                 await renderBoardTasks();
+                renderAddTaskFormButton();
             } else if (currentPage === 'contacts') {
                 await renderContacts();
             }

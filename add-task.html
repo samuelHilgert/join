@@ -1,58 +1,49 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="./assets/img/logo.svg" />
-    <title>Add Task</title>
-    <script src="./js/script.js"></script>
-    <script src="./js/contacts.js"></script>
-    <script src="./js/add-task.js"></script>
-    <script src="./js/renderHTML.js"></script>
-    <script src="./js/sidebar.js"></script>
-    <script src="./js/storage.js"></script>
-    <link rel="stylesheet" href="./css/standard.css" />
-    <link rel="stylesheet" href="./css/fonts.css" />
-    <link rel="stylesheet" href="./css/assets.css" />
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/contacts.css" />
-    <link rel="stylesheet" href="./css/add-task.css" />
-  </head>
 
-  <body onload="init()">
-    <div
-      class="sidebar d_c_sb_c"
-      include-html="../assets/templates/sidebar.html"
-    ></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/img/logo.svg" />
+  <title>Add Task</title>
+  <script src="./js/script.js"></script>
+  <script src="./js/contacts.js"></script>
+  <script src="./js/add-task.js"></script>
+  <script src="./js/renderHTML.js"></script>
+  <script src="./js/sidebar.js"></script>
+  <script src="./js/storage.js"></script>
+  <link rel="stylesheet" href="./css/standard.css" />
+  <link rel="stylesheet" href="./css/fonts.css" />
+  <link rel="stylesheet" href="./css/assets.css" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/contacts.css" />
+  <link rel="stylesheet" href="./css/add-task.css" />
+</head>
 
-    <div class="aot d_f_fs_c pad-x-80 bgC-white">
-      <header
-        class="d_f_sb_c"
-        include-html="../assets/templates/header.html"
-      ></header>
+<body onload="init()">
+  <div class="sidebar d_c_sb_c" include-html="../assets/templates/sidebar.html"></div>
+
+  <div class="aot d_f_fs_c pad-x-80 bgC-white">
+    <header class="d_f_sb_c" include-html="../assets/templates/header.html"></header>
+  </div>
+
+
+  <div class="main-container d_c_fs_fs pad-l-80 pad-y-50">
+    <div class="d_f_fs_c width-max">
+      <h2>Add Task</h2>
     </div>
+    <div class="width-max" include-html="../assets/templates/add-task-form.html"></div>
+  </div>
 
+  <div class="d_f_fs_c gap-8 add-board-message-btn" id="addTaskMessageContainer" style="display: none">
+    <a class="btn-message d_c_c_c">Task added to board</a><img src="assets/img/board-icon_grey.svg" alt="icon"
+      style="padding-right: 24px" />
+  </div>
 
-
-    <div class="main-container d_f_fs_fs pad-l-80 pad-y-50" include-html="../assets/templates/add-task-form.html"></div>
- 
-
-    <div
-      class="d_f_fs_c gap-8 add-board-message-btn"
-      id="addTaskMessageContainer"
-      style="display: none"
-    >
-      <a class="btn-message d_c_c_c">Task added to board</a
-      ><img
-        src="assets/img/board-icon_grey.svg"
-        alt="icon"
-        style="padding-right: 24px"
-      />
+  <div class="d_c_fs_fe pad-x-40 pad-y-40 popup-bg-filter width-max" id="guestMessagePopupAddTask">
+    <div class="d_c_fs_c popup-guest-message bgC-white pad-y-40 pad-x-40 gap-40 text-center" id="guestMessageAddTask">
     </div>
+  </div>
+</body>
 
-    <div class="d_c_fs_fe pad-x-40 pad-y-40 popup-bg-filter width-max" id="guestMessagePopupAddTask">
-      <div class="d_c_fs_c popup-guest-message bgC-white pad-y-40 pad-x-40 gap-40 text-center" id="guestMessageAddTask">
-      </div>
-    </div>
-  </body>
 </html>

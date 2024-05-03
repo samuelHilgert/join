@@ -11,7 +11,6 @@
   background-position-y: 50%;
   background-size: 24px;
   cursor: pointer;
-  border: unset;
 }
 
 .dropdown-add-task {
@@ -88,10 +87,11 @@ input[type="checkbox"] {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .task-btn-style {
-  width: 150px;
+  width: auto;
   height: auto;
   box-sizing: border-box;
   border-radius: 10px;
@@ -259,6 +259,8 @@ input[type="checkbox"] {
 }
 
 .input-prio {
+  min-width:120px;
+  flex:1;
   padding: 18px 0;
   background-color: rgba(255, 255, 255, 1);
 }

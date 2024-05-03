@@ -1,20 +1,4 @@
-<!--
-  <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-40 gap-30" id="boardAddTaskPopupContainer">
-  <div class="d_c_fs_fe popup-close-button width-max">
-    <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeBoardAddTaskPopup()">
-      <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt=""/>
-    </div>
-  </div>
-
-  HIER KOMMT DAS FORM REIN 
-  
-</div> 
--->
-
 <form class="d_c_c_fs width-max pad-r-40" onsubmit="addTask(); return false;">
-    <div class="d_f_fs_c">
-      <h2>Add Task</h2>
-    </div>
 
   <div class="add-task-form-container d_f_c_fs gap-40 pad-y-40 height-max">
     <!--BLOCK 1-->
@@ -64,7 +48,7 @@
 
       <div class="d_c_c_fs gap-10 width-max">
           <span class="font-size-20">Prio</span>
-          <div class="priority-boxes d_f_sb_c width-max">
+          <div class="priority-boxes d_f_sb_c width-max gap-10">
             <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('urgent-btn')" id="urgent-btn"></button>
             <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('medium-btn')" id="medium-btn"></button>
             <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('low-btn')" id="low-btn"></button>
@@ -103,7 +87,7 @@
   </div>
 
   <!--bottom-box-->
-  <div class="d_f_sb_c pad-top-100 bottom-box">
+  <div class="d_f_sb_c pad-top-100 bottom-box width-max">
     <div id="requiredDiv">
       <span id><span style="color: red">*</span>This field is required</span>
     </div>
