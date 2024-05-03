@@ -54,19 +54,15 @@ async function addTask() {
     category: "backlog",
   };
   newTask.push(task);
-  // dropdownContact = []; nicht mehr notwendig
   if ((authorized === 'guest')) {
-    let div = document.getElementById("guestMessagePopupAddTask");
-    let messageText = document.getElementById("guestMessageAddTask");
+    tasks.push(...newTask);
     resetAddTaskValues();
-    showGuestPopupMessage(div, messageText);
   } else {
     users[currentUser].tasks.push(...newTask);
     await setItem("users", JSON.stringify(users));
     resetAddTaskValues();
-    addTaskToBoardMessage();
-    forwardToBoard();
   }
+  addTaskToBoardMessage();
 }
 
 function shakeDiv() {
@@ -75,12 +71,6 @@ function shakeDiv() {
   setTimeout(() => {
     container.classList.remove('shake');
   }, 500);
-}
-
-function forwardToBoard() {
-  setTimeout(function () {
-    window.location.replace("board.html");
-  }, 1600);
 }
 
 function resetAddTaskValues() {
@@ -197,16 +187,6 @@ function markSelectedContacts() {
     }
   }
 }
-
-// Funktion wird nicht mehr benötigt
-//function contactsByCheckbox(index) {
-//  let checkboxes = document.querySelectorAll('input[type="checkbox"]');   // Alle Checkboxen abfragen
-//  checkboxes.forEach(function (checkbox) {   // Für jede Checkbox überprüfen, ob sie angeklickt wurde
-//    if (checkbox.checked) {   // Wenn die Checkbox angeklickt wurde, füge ihren Wert dem Array hinzu
-//      checkedCheckboxes.push(checkbox.value);
-//    }
-//  });
-//}
 
 /**
  * This function renders the selected contacts in the contact selection area.
@@ -526,20 +506,45 @@ function closeDropdown() {
 }
 
 ///////// SEARCHBAR ENDE /////////
-
 function addTaskToBoardMessage() {
-  const container = document.getElementById("addTaskMessageContainer");
-  container.classList.add("add-board-message-btn");
-  container.style.display = "flex";
+  if (document.location.pathname.includes('add-task.html')) {
+    console.log('add-task');
+    const container = document.getElementById("addTaskMessageContainer");
+    container.classList.add("add-board-message-btn");
+    container.style.display = "flex";
 
-  // Timeout verwenden, um die Klasse "show" hinzuzufügen
-  setTimeout(function () {
-    container.classList.add("show");
-
-    // Timeout verwenden, um das Element auszublenden
+    // Timeout verwenden, um die Klasse "show" hinzuzufügen
     setTimeout(function () {
-      container.classList.remove("show");
-      container.style.display = "none";
-    }, 900);
-  }, 100);
+      container.classList.add("show");
+
+      // Timeout verwenden, um das Element auszublenden
+      setTimeout(function () {
+        container.classList.remove("show");
+        container.style.display = "none";
+      }, 900);
+    }, 100);
+
+    if ((authorized === 'guest')) {
+      let div = document.getElementById('guestMessagePopupAddTask');
+      let messageText = document.getElementById('guestMessageAddTask');
+      showGuestPopupMessage(div, messageText);
+    } else {
+      forwardToBoard();
+    }
+  }
+
+  if (document.location.pathname.includes('board.html')) {
+    closeBoardAddTaskPopup();
+    if ((authorized === 'guest')) {
+      let div = document.getElementById('guestMessagePopupBoard');
+      let messageText = document.getElementById('guestMessageBoard');
+      showGuestPopupMessage(div, messageText);
+    }
+  }
+}
+
+function forwardToBoard() {
+  setTimeout(function () {
+    window.location.replace("board.html");
+  }, 1600);
 }

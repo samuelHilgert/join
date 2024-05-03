@@ -138,6 +138,7 @@ async function initiateIndividualFunctions() {
                 await updateTaskContacts();
                 renderAddTaskFormButton();
             } else if (currentPage === 'board') {
+                await updateTaskContacts();
                 await renderBoardTasks();
                 renderAddTaskFormButton();
             } else if (currentPage === 'contacts') {
