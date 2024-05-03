@@ -488,3 +488,7 @@ textarea:focus {
   width: 99%;
   max-width: 1077px;
 }
+
+.box {
+  padding-bottom:50px;
+}
