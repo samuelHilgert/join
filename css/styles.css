@@ -61,6 +61,7 @@ body {
 .sidebar-links {
   height: 229px;
   gap: 15px;
+  padding-bottom: 100px;
 }
 
 .sidebar-menu:hover {
@@ -78,10 +79,8 @@ body {
 }
 
 .sidebar-legal {
-  height: 317px;
   gap: 4px;
   box-sizing: border-box;
-  padding: 243px 0px 0px 0px;
 }
 
 .sidebar-legal-element {
