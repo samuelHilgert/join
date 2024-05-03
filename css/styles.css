@@ -39,6 +39,7 @@ body {
   top: 0;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   padding: 64px 0px 64px 0px;
+  z-index: 2;
 }
 
 .sidebar-logo {
@@ -102,14 +103,16 @@ body {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
   height: 96px;
   width: 100vw;
+  position: relative;
   box-sizing: border-box;
   padding: 20px 40px 20px 348px;
   background-color: rgba(255, 255, 255, 1);
+  z-index: 1;
 }
 
 header {
   width: 100%;
-  max-width: 1920px;
+  max-width: 1440px;
   box-sizing: border-box;
 }
 
@@ -161,7 +164,6 @@ header {
   margin-left: 232px;
   width: calc(100% - 232px);
   box-sizing: border-box;
-  margin-top: 4px;
 }
 
 .summary-container {
