@@ -218,15 +218,22 @@ function showTaskText(todo) {
 }
 
 async function getSubtasksForPopupTask(currentOpenTaskId) {
-  let taskPopupContentSubtasks = document.getElementById(
-    "taskPopupContentSubtasks"
-  );
+  let taskPopupContentSubtasks = document.getElementById("taskPopupContentSubtasks");
+  let subtaskDiv = document.getElementById("subtask-div");
+
   await loadSubtasksByOpenTask();
   taskPopupContentSubtasks.innerHTML = "";
+
   // rendering subtasksOpen with empty check-button
   for (let a = 0; a < subtasksOpen.length; a++) {
     taskPopupContentSubtasks.innerHTML += `
             <div class="d_f_c_c gap-10">
+            <div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
+            <p>${subtasksOpen[a]}</p>
+            </div>
+            `;
+    subtaskDiv.innerHTML += `
+    <div class="d_f_fs_c gap-10 width-max">
             <div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
             <p>${subtasksOpen[a]}</p>
             </div>
@@ -236,6 +243,12 @@ async function getSubtasksForPopupTask(currentOpenTaskId) {
   for (let b = 0; b < subtasksDone.length; b++) {
     taskPopupContentSubtasks.innerHTML += `
             <div class="d_f_c_c gap-10">
+            <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
+            <p>${subtasksDone[b]}</p>
+            </div>
+            `;
+    subtaskDiv.innerHTML += `
+            <div class="d_f_fs_c gap-10 width-max">
             <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
             <p>${subtasksDone[b]}</p>
             </div>
@@ -294,11 +307,12 @@ async function clickSubtaskDone(currentOpenTaskId, b) {
 }
 
 function getContactsForPopupTask(todo) {
-  let taskPopupContentAssignedTo = document.getElementById(
-    "taskPopupContentAssignedTo"
-  );
+  let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
+  let contactSelection = document.getElementById("contactSelection");
+
   const contacts = todo["assignedTo"];
-  taskPopupContentAssignedTo.innerHTML = "";
+  taskPopupContentAssignedTo.innerHTML = '';
+  contactSelection.innerHTML = '';
   for (let index = 0; index < contacts.length; index++) {
     const contact = contacts[index];
     const letters = contactNamesLetters(contact);
@@ -308,6 +322,13 @@ function getContactsForPopupTask(todo) {
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
     <p>${contact}</p>
     </div>
+    `;
+    contactSelection.innerHTML += `
+
+      <div class="d_f_fs_fs pad-r-15 pad-y-10">
+        <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+      </div>
+
     `;
   }
 }
@@ -342,7 +363,7 @@ async function editTask() {
   let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions');
   let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions');
   let addTaskCategory = document.getElementById('addTaskCategory');
-  
+
   let box = document.querySelectorAll('.box');
   box.forEach(function (boxReplace) {
     boxReplace.classList.replace('box', 'box-edit');
@@ -355,6 +376,29 @@ async function editTask() {
   boardTaskEditContainer.style.display = 'flex';
   addTaskFormContainer.style.flexFlow = 'column';
   addTaskPartingline.style.display = 'none';
+
+  let taskTitle = document.getElementById('task-title');
+  let taskDescription = document.getElementById('task-description');
+  let taskDate = document.getElementById('task-date');
+  let urgentBtn = document.getElementById('urgent-btn');
+  let mediumBtn = document.getElementById('medium-btn');
+  let lowBtn = document.getElementById('low-btn');
+  taskTitle.value = tasks[currentOpenTaskId].title;
+  taskDescription.value = tasks[currentOpenTaskId].description;
+  const todo = tasks[currentOpenTaskId];
+  getContactsForPopupTask(todo);
+  taskDate.value = tasks[currentOpenTaskId].dueDate;
+  let prio = tasks[currentOpenTaskId].priority;
+  let prioBtn;
+  if (prio === 'Urgent') {
+    prioBtn = urgentBtn;
+  } else if (prio === 'Medium') {
+    prioBtn = mediumBtn;
+  } else if (prio === 'Low') {
+    prioBtn = lowBtn;
+  }
+  prioBtn.click();
+
 }
 
 async function deleteTask() {
@@ -369,6 +413,10 @@ async function deleteTask() {
 }
 
 function closeBoardTaskPopup() {
+  let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
+  let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
+  boardTaskEditContainer.style.display = 'none';
+  boardTaskShowContainer.style.display = 'flex';
   let popup = document.getElementById("boardTaskPopup");
   let container = document.getElementById("boardTaskPopupContainer");
   moveContainerOut(container);
