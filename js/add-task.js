@@ -42,7 +42,7 @@ async function addTask() {
     if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
       shakeDiv();
       toggleCategoryDiv();
-      document.getElementById('task-category').classList.add('required-input-outline-red');
+      document.getElementById('taskCategory').classList.add('required-input-outline-red');
       return;
     }
     let formattedInputDate = await formatDateCorrect(taskInput.date);
@@ -82,13 +82,13 @@ function shakeDiv() {
 }
 
 function resetAddTaskValues() {
-  document.getElementById("task-title").value = "";
-  document.getElementById("task-description").value = "";
-  document.getElementById("task-date").value = "";
-  document.getElementById("task-category").value = "";
+  document.getElementById("taskTitle").value = "";
+  document.getElementById("taskDescription").value = "";
+  document.getElementById("taskDate").value = "";
+  document.getElementById("taskCategory").value = "";
   document.getElementById("subtask").value = "";
   document.getElementById("contactSelection").innerHTML = "";
-  document.getElementById('task-category').classList.remove('required-input-outline-red');
+  document.getElementById('taskCategory').classList.remove('required-input-outline-red');
   newTask = [];
   subtasks = [];
   checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
@@ -96,10 +96,10 @@ function resetAddTaskValues() {
 
 //get informations from input
 function readTaskInput() {
-  const title = document.getElementById("task-title").value;
-  const description = document.getElementById("task-description").value;
-  const date = document.getElementById("task-date").value;
-  const category = document.getElementById("task-category").value;
+  const title = document.getElementById("taskTitle").value;
+  const description = document.getElementById("taskDescription").value;
+  const date = document.getElementById("taskDate").value;
+  const category = document.getElementById("taskCategory").value;
   const subtask = document.getElementById("subtask").value;
   return {
     title: title,
@@ -237,9 +237,9 @@ function resetPriority() {
 //Return Value from Priority!
 function determinePriority() {
   let prio = "Medium"; // Standardpriorität
-  const urgentBtn = document.getElementById("urgent-btn");
-  const mediumBtn = document.getElementById("medium-btn");
-  const lowBtn = document.getElementById("low-btn");
+  const urgentBtn = document.getElementById("urgentBtn");
+  const mediumBtn = document.getElementById("mediumBtn");
+  const lowBtn = document.getElementById("lowBtn");
   if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
     prio = "Urgent";
   } else if (lowBtn.classList.contains("active-prio-btn-low")) {
@@ -252,15 +252,15 @@ function setActiveClasses(btnId) {
   const clickedButton = document.getElementById(btnId);
   const buttonSVG = clickedButton.querySelector("svg");
   switch (btnId) {
-    case "urgent-btn":
+    case "urgentBtn":
       clickedButton.classList.add("active-prio-btn-urgent");
       buttonSVG.style.fill = "white";
       break;
-    case "medium-btn":
+    case "mediumBtn":
       clickedButton.classList.add("active-prio-btn-medium");
       buttonSVG.style.fill = "white";
       break;
-    case "low-btn":
+    case "lowBtn":
       clickedButton.classList.add("active-prio-btn-low");
       buttonSVG.style.fill = "white";
       break;
@@ -270,7 +270,7 @@ function setActiveClasses(btnId) {
 }
 
 function removeActiveClasses() {
-  const buttons = ["urgent-btn", "medium-btn", "low-btn"];
+  const buttons = ["urgentBtn", "mediumBtn", "lowBtn"];
   buttons.forEach((button) => {
     const buttonElement = document.getElementById(button);
     buttonElement.classList.remove(
@@ -284,12 +284,12 @@ function removeActiveClasses() {
 
 // for category section
 function chooseCategory(category) {
-  document.getElementById("task-category").value = category.innerText;
+  document.getElementById("taskCategory").value = category.innerText;
 }
 
 function toggleCategoryDiv() {
-  var categoryDiv = document.getElementById("category-div");
-  var dropdownIcon = document.getElementById("category-drop-icon");
+  var categoryDiv = document.getElementById("categoryDiv");
+  var dropdownIcon = document.getElementById("categoryDropIcon");
   if (
     categoryDiv.style.display === "none" ||
     categoryDiv.style.display === ""
@@ -307,7 +307,7 @@ function addSubtask() {
   const subtaskInput = document.getElementById("subtask");
   const subtaskValue = subtaskInput.value.trim();
   if (subtaskValue !== "") {
-    const subtaskContainer = document.getElementById("subtask-div");
+    const subtaskContainer = document.getElementById("subtaskDiv");
     subtasks.push(subtaskValue);
     renderSubtasks(subtaskContainer);
     subtaskInput.value = "";
@@ -326,7 +326,7 @@ document.addEventListener("keypress", function (event) {
 });
 
 function getSubtaskIndex(element) {
-  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskContainer = document.getElementById("subtaskDiv");
   const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
     element.parentNode.parentNode
   );
@@ -350,7 +350,7 @@ function renderSubtasks(container) {
 }
 
 function changeIcons() {
-  let iconBox = document.getElementById("dropdown-icon");
+  let iconBox = document.getElementById("dropdownIcon");
   iconBox.classList.remove("input-icon-div");
   iconBox.classList.add("input-icon");
 
@@ -364,7 +364,7 @@ function changeIcons() {
 }
 
 function editSubtask(element) {
-  const subtaskContainer = document.getElementById("subtask-div");
+  const subtaskContainer = document.getElementById("subtaskDiv");
   const subtaskIndex = getSubtaskIndex(element);
   if (subtaskIndex !== -1) {
     const subtaskInput = document.getElementById("subtask");
@@ -384,7 +384,7 @@ function clearSubtaskInput() {
   let subtaskInput = document.getElementById("subtask");
   subtaskInput.value = "";
   subtaskInput.blur();
-  let iconBox = document.getElementById("dropdown-icon");
+  let iconBox = document.getElementById("dropdownIcon");
   iconBox.innerHTML = `
    <div onclick="changeIcons()" class='icon-edit-delete'><img src="assets/img/add.svg" alt="plus" /></div>
   `;
@@ -396,13 +396,13 @@ function clearForm() {
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
   }
-  document.getElementById("task-title").value = "";
-  document.getElementById("task-description").value = "";
-  document.getElementById("task-date").value = "";
-  document.getElementById("task-category").value = "";
+  document.getElementById("taskTitle").value = "";
+  document.getElementById("taskDescription").value = "";
+  document.getElementById("taskDate").value = "";
+  document.getElementById("taskCategory").value = "";
   document.getElementById("subtask").value = "";
-  document.getElementById("task-assignedTo").value = "";
-  document.getElementById("subtask-div").innerHTML = "";
+  document.getElementById("taskAssignedTo").value = "";
+  document.getElementById("subtaskDiv").innerHTML = "";
   document.getElementById("contactSelection").innerHTML = "";
   resetPriority();
   dropdownContact = [];
@@ -421,7 +421,7 @@ function rotateDropdownIcon(icon, isOpen) {
 function setMinimumDate() {
   var currentDate = new Date();
   var minDate = currentDate.toISOString().split("T")[0];
-  document.getElementById("task-date").setAttribute("min", minDate);
+  document.getElementById("taskDate").setAttribute("min", minDate);
 }
 
 async function formatInputDate(input) {
@@ -434,7 +434,7 @@ async function formatInputDate(input) {
 ///////// SEARCHBAR /////////
 
 function clearAssignToInput() {
-  let input = document.getElementById("task-assignedTo");
+  let input = document.getElementById("taskAssignedTo");
   if (input.placeholder === "Search contact") {
     input.placeholder = "Select contacts to assign";
     input.classList.remove("search-placeholder");
@@ -445,7 +445,7 @@ function clearAssignToInput() {
 }
 
 function turnArrow() {
-  let arrow = document.getElementById("turn-dropdown-arrow");
+  let arrow = document.getElementById("turnDropdownArrow");
   if (arrow.classList.contains("rotate-180")) {
     arrow.classList.remove("rotate-180");
   } else {
@@ -456,7 +456,7 @@ function turnArrow() {
 function findMatchingContact() {
   clearAssignToInput();
   let searchInput = document
-    .getElementById("task-assignedTo")
+    .getElementById("taskAssignedTo")
     .value.trim()
     .toLowerCase();
   if (searchInput === "") {
@@ -488,7 +488,7 @@ function updateDropdownMenu(contacts) {
 }
 
 function setFocusOnInputfield() {
-  let inputfield = document.getElementById('task-assignedTo');
+  let inputfield = document.getElementById('taskAssignedTo');
   inputfield.focus();
 }
 
@@ -507,7 +507,7 @@ function handleClickOnDropdown() {
 function closeDropdown() {
   clearAssignToInput();
   turnArrow();
-  let arrow = document.getElementById("turn-dropdown-arrow");
+  let arrow = document.getElementById("turnDropdownArrow");
   let taskContactDiv = document.getElementById("taskContactDiv");
   arrow.classList.remove("rotate-180");
   taskContactDiv.style.display = "none";

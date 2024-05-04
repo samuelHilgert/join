@@ -219,7 +219,7 @@ function showTaskText(todo) {
 
 async function getSubtasksForPopupTask(currentOpenTaskId) {
   let taskPopupContentSubtasks = document.getElementById("taskPopupContentSubtasks");
-  let subtaskDiv = document.getElementById("subtask-div");
+  let subtaskDiv = document.getElementById("subtaskDiv");
 
   await loadSubtasksByOpenTask();
   taskPopupContentSubtasks.innerHTML = "";
@@ -377,12 +377,12 @@ async function editTask() {
   addTaskFormContainer.style.flexFlow = 'column';
   addTaskPartingline.style.display = 'none';
 
-  let taskTitle = document.getElementById('task-title');
-  let taskDescription = document.getElementById('task-description');
-  let taskDate = document.getElementById('task-date');
-  let urgentBtn = document.getElementById('urgent-btn');
-  let mediumBtn = document.getElementById('medium-btn');
-  let lowBtn = document.getElementById('low-btn');
+  let taskTitle = document.getElementById('taskTitle');
+  let taskDescription = document.getElementById('taskDescription');
+  let taskDate = document.getElementById('taskDate');
+  let urgentBtn = document.getElementById('urgentBtn');
+  let mediumBtn = document.getElementById('mediumBtn');
+  let lowBtn = document.getElementById('lowBtn');
   taskTitle.value = tasks[currentOpenTaskId].title;
   taskDescription.value = tasks[currentOpenTaskId].description;
   const todo = tasks[currentOpenTaskId];

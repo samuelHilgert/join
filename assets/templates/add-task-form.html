@@ -6,24 +6,24 @@
     <div class="box d_c_fs_fs gap-30 height-max">
       <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20">Title<span style="color: red">*</span></span>
-        <input id="task-title" class="task-input-style input-login input-font required-input" type="text"
+        <input id="taskTitle" class="task-input-style input-login input-font required-input" type="text"
           placeholder="Enter a title" required />
       </div>
 
       <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20">Description</span>
-        <textarea id="task-description" cols="30" rows="2" class="task-input-style input-style-description input-font"
+        <textarea id="taskDescription" cols="30" rows="2" class="task-input-style input-style-description input-font"
           placeholder="Enter a Description"></textarea>
       </div>
 
       <div class="d_c_c_s width-max position-relativ">
         <span class="font-size-20 mar-bot-10">Assigned to</span>
-        <input id="task-assignedTo"
+        <input id="taskAssignedTo"
           class="task-input-style-black d_f_c_c dropdown-add-task bgC-white width-max input-font"
           placeholder="Select contacts to assign" onclick="openDropdown(); turnArrow()"
           oninput="findMatchingContact()" />
         <!-- deaktiviertes optionsfeld um placeholder anzuzeigen, da bei dropdown nicht mit placeholder im tag gearbeitet werden kann -->
-        <div class="input-icon-dropdown-div" id="turn-dropdown-arrow" onclick="handleClickOnDropdown()">
+        <div class="input-icon-dropdown-div" id="turnDropdownArrow" onclick="handleClickOnDropdown()">
           <img src="../../assets/img/arrow_drop_down.svg" alt="Arrow Down" />
         </div>
         <div class="assigned-div d_c_fs_fs pad-y-10 gap-10" id="taskContactDiv"></div>
@@ -41,7 +41,7 @@
 
       <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20">Due date<span style="color: red">*</span></span>
-        <input id="task-date" class="task-input-style due-date-field input-font required-input" name="date" type="text"
+        <input id="taskDate" class="task-input-style due-date-field input-font required-input" name="date" type="text"
           onfocus="(this.type='date')" onblur="formatInputDate(this)" onclick="setMinimumDate()"
           placeholder="dd/mm/yyyy" required />
       </div>
@@ -49,22 +49,22 @@
       <div class="d_c_c_fs gap-10 width-max">
           <span class="font-size-20">Prio</span>
           <div class="priority-boxes d_f_sb_c width-max gap-10">
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('urgent-btn')" id="urgent-btn"></button>
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('medium-btn')" id="medium-btn"></button>
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('low-btn')" id="low-btn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('urgentBtn')" id="urgentBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('mediumBtn')" id="mediumBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('lowBtn')" id="lowBtn"></button>
           </div>
       </div>
 
       <div class="d_c_c_s gap-10 width-max" id="addTaskCategory">
         <span class="font-size-20">Category<span style="color: red">*</span></span>
         <div class="position-relativ width-100">
-          <input id="task-category" class="task-input-style-black input-login input-font required-input"
+          <input id="taskCategory" class="task-input-style-black input-login input-font required-input"
             placeholder="Select task category" readonly onclick="toggleCategoryDiv()" required />
           <div class="input-icon-div" style="top: 29%" onclick="toggleCategoryDiv()">
-            <img src="../../assets/img/arrow_drop_down.svg" alt="Arrow Down" id="category-drop-icon" />
+            <img src="../../assets/img/arrow_drop_down.svg" alt="Arrow Down" id="categoryDropIcon" />
           </div> 
         </div>
-        <div id="category-div" class="category-div" style="display: none">
+        <div id="categoryDiv" class="category-div" style="display: none">
           <span class="task-category" onclick="chooseCategory(this), toggleCategoryDiv()">Technical Task</span>
           <span class="task-category" onclick="chooseCategory(this), toggleCategoryDiv()">User Story</span>
         </div>
@@ -74,10 +74,10 @@
         <span class="font-size-20">Subtask</span>
         <input onfocus="changeIcons()" id="subtask" class="task-input-style input-login input-font" type="text"
           placeholder="Add new subtask" />
-        <div id="dropdown-icon" class="input-icon-div">
+        <div id="dropdownIcon" class="input-icon-div">
           <img onclick="changeIcons()" src="../../assets/img/add.svg" alt="plus" />
         </div>
-        <div id="subtask-div" class="subtask-div d_f_fs_c"></div>
+        <div id="subtaskDiv" class="subtask-div d_f_fs_c"></div>
       </div>
 
     </div>
