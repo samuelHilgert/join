@@ -341,13 +341,14 @@ async function editTask() {
   let addTaskPartingline = document.getElementById('addTaskPartingline');
   let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions');
   let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions');
-  
+  let addTaskCategory = document.getElementById('addTaskCategory');
   
   let box = document.querySelectorAll('.box');
   box.forEach(function (boxReplace) {
     boxReplace.classList.replace('box', 'box-edit');
   });
 
+  addTaskCategory.style.display = 'none';
   bottomAddTaskOptions.style.display = 'none';
   boardTaskShowContainer.style.display = 'none';
   bottomAddTaskEditOptions.style.display = 'flex';
