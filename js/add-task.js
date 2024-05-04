@@ -29,40 +29,48 @@ function sortContactsForTasks() {
 
 // function to add the task
 async function addTask() {
-  const taskInput = readTaskInput();
-  const selectedCategory = taskInput.category;
-
-  if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
-    shakeDiv();
-    toggleCategoryDiv();
-    document.getElementById('task-category').classList.add('required-input-outline-red');
-    return;
-  }
-  let formattedInputDate = await formatDateCorrect(taskInput.date);
-  const prio = determinePriority();
-  let id = getNextAvailableTaskId();
-  const task = {
-    id: id,
-    label: taskInput.category,
-    title: taskInput.title,
-    description: taskInput.description,
-    dueDate: formattedInputDate,
-    assignedTo: checkedCheckboxes,
-    priority: prio,
-    subtasksOpen: subtasks,
-    subtasksDone: [],
-    category: "backlog",
-  };
-  newTask.push(task);
-  if ((authorized === 'guest')) {
-    tasks.push(...newTask);
-    resetAddTaskValues();
+  if (document.location.pathname === `/board.html`) {
+    let boardTaskEditContainer = document.getElementById('boardTaskEditContainer');
+    let boardTaskShowContainer = document.getElementById('boardTaskShowContainer');
+    boardTaskEditContainer.style.display = 'none';
+    boardTaskShowContainer.style.display = 'flex';
+    console.log('Okay, Änderungen übernommen!');
   } else {
-    users[currentUser].tasks.push(...newTask);
-    await setItem("users", JSON.stringify(users));
-    resetAddTaskValues();
+    const taskInput = readTaskInput();
+    const selectedCategory = taskInput.category;
+
+    if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
+      shakeDiv();
+      toggleCategoryDiv();
+      document.getElementById('task-category').classList.add('required-input-outline-red');
+      return;
+    }
+    let formattedInputDate = await formatDateCorrect(taskInput.date);
+    const prio = determinePriority();
+    let id = getNextAvailableTaskId();
+    const task = {
+      id: id,
+      label: taskInput.category,
+      title: taskInput.title,
+      description: taskInput.description,
+      dueDate: formattedInputDate,
+      assignedTo: checkedCheckboxes,
+      priority: prio,
+      subtasksOpen: subtasks,
+      subtasksDone: [],
+      category: "backlog",
+    };
+    newTask.push(task);
+    if ((authorized === 'guest')) {
+      tasks.push(...newTask);
+      resetAddTaskValues();
+    } else {
+      users[currentUser].tasks.push(...newTask);
+      await setItem("users", JSON.stringify(users));
+      resetAddTaskValues();
+    }
+    addTaskToBoardMessage();
   }
-  addTaskToBoardMessage();
 }
 
 function shakeDiv() {

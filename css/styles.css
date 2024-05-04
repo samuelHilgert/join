@@ -186,6 +186,11 @@ header {
   box-sizing: border-box;
 }
 
+.box {
+width: 50%; 
+box-sizing: border-box;
+}
+
 .search-div {
   width: 50%;
 }
@@ -205,6 +210,14 @@ header {
   right: 60px;
 }
 
+/* add-task popup edit settings on board */
+.box-edit {
+  width: 100%; 
+  box-sizing: border-box;
+  }
+
+
+
 @media screen and (max-width: 630px) {
   .signup-btn-respons {
     position: absolute;
@@ -222,3 +235,5 @@ header {
     padding: 20px 10px;
   }
 }
+
+

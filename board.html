@@ -88,9 +88,24 @@
     </div>
   </div>
 
+  <!-- TASK POPUP -->
   <div class="d_c_c_c popup-bg-filter width-max" id="boardTaskPopup">
     <div class="d_c_sb_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70" id="boardTaskPopupContainer">
-      <div class="d_c_sb_fs gap-30 width-max width-height word-break">
+
+      <!-- EDIT TASK CONTENT -->
+      <div class="d_c_sb_fs gap-30 width-max width-height word-break" id="boardTaskEditContainer">
+        <div class="d_f_fe_c width-max">
+          <div class="d_c_c_c add-contact-container-right-img-wrapper popup-close-button"
+            onclick="closeBoardTaskPopup()">
+            <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="" />
+          </div>
+        </div>
+        <div class="d_c_fs_fs width-max" include-html="../assets/templates/add-task-form.html"></div>
+        
+      </div>
+
+      <!-- SHOW TASK CONTENT -->
+      <div class="d_c_sb_fs gap-30 width-max width-height word-break" id="boardTaskShowContainer">
         <div class="d_f_sb_c width-max">
           <div class="btn-board d_f_c_c width-50" id="taskPopupContentLabel"></div>
           <div class="d_f_fe_c width-max" id="taskCloseButtonRight">
@@ -151,18 +166,20 @@
   </div>
 
   <div class="d_c_c_c popup-bg-filter width-max" id="boardAddTaskPopup">
-    <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-50 gap-30 width-max" id="boardAddTaskPopupContainer">
+    <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-50 gap-30 width-max"
+      id="boardAddTaskPopupContainer">
       <div class="d_f_sb_fs width-max">
         <h2>Add Task</h2>
-      <div class="popup-close-button">
-        <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeBoardAddTaskPopup()">
-          <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="" />
+        <div class="popup-close-button">
+          <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeBoardAddTaskPopup()">
+            <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="" />
+          </div>
         </div>
       </div>
-    </div>
       <div class="d_f_fs_fs width-max" include-html="../assets/templates/add-task-form.html"></div>
     </div>
   </div>
 
 </body>
+
 </html>

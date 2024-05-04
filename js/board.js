@@ -49,7 +49,7 @@ function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
 /********************** GENERAL FUNCTIONS **********************************/
 
 function showGuestMessageOnBoard() {
-  if ((authorized === 'guest'))  {
+  if ((authorized === 'guest')) {
     let div = document.getElementById("guestMessagePopupBoard");
     let messageText = document.getElementById("guestMessageBoard");
     showGuestPopupMessage(div, messageText);
@@ -133,7 +133,7 @@ async function moveTo(currentCategory) {
     if (tasks[id].id === currentDraggedTaskIdString) {
       foundIndex = id;
       tasks[foundIndex].category = currentCategory;
-      if ((authorized === 'user'))  {
+      if ((authorized === 'user')) {
         await saveNewUserDate();
       } else {
         let div = document.getElementById("guestMessagePopupBoard");
@@ -244,7 +244,7 @@ async function getSubtasksForPopupTask(currentOpenTaskId) {
 }
 
 async function loadSubtasksByOpenTask() {
-  if ((authorized === 'user'))  {
+  if ((authorized === 'user')) {
     subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
     subtasksDone = users[currentUser].tasks[currentOpenTaskId].subtasksDone;
   } else {
@@ -326,7 +326,7 @@ function getPriorityIcon(todo) {
 
 function getBgColorTaskPopup(index) {
   let userContact;
-  if ((authorized === 'guest'))  {
+  if ((authorized === 'guest')) {
     userContact = contacts[index];
   } else {
     userContact = users[currentUser]["contacts"][index];
@@ -335,42 +335,25 @@ function getBgColorTaskPopup(index) {
 }
 
 async function editTask() {
-  let taskPopupContentTitle = document.getElementById("taskPopupContentTitle");
-  let taskPopupContentDescription = document.getElementById(
-    "taskPopupContentDescription"
-  );
-  let taskPopupContentDueDate = document.getElementById(
-    "taskPopupContentDueDate"
-  );
-  let taskPopupContentPriority = document.getElementById(
-    "taskPopupContentPriority"
-  );
-  let taskPopupContentAssignedTo = document.getElementById(
-    "taskPopupContentAssignedTo"
-  );
-  let taskPopupContentSubtasks = document.getElementById(
-    "taskPopupContentSubtasks"
-  );
-  document.getElementById("taskPopupContentLabel").style.display = "none";
-  taskPopupContentTitle.innerHTML = `<p>Title</p><input>`;
-  taskPopupContentDescription.innerHTML = `<p>Description</p><input>`;
-  taskPopupContentDueDate.style.flexDirection = "column";
-  taskPopupContentDueDate.style.alignItems = "flex-start";
-  taskPopupContentDueDate.innerHTML = `<p>Due Date</p><input>`;
-  taskPopupContentPriority.innerHTML = `<p>Priority</p><input>`;
-  taskPopupContentPriority.style.flexDirection = "column";
-  taskPopupContentPriority.style.alignItems = "flex-start";
-  taskPopupContentAssignedTo.innerHTML = `
-    <input>
-    <p>Max Mustermann</p>
-    <p>Thorsten Haas</p>
-    <p>Uwe Schmidt</p>
-    `;
-  taskPopupContentSubtasks.innerHTML = `
-    <input>
-    <p>Start Page Layout</p>
-    <p>Implement Recipe</p>
-    `;
+  let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
+  let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
+  let addTaskFormContainer = document.getElementById('addTaskFormContainer');
+  let addTaskPartingline = document.getElementById('addTaskPartingline');
+  let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions');
+  let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions');
+  
+  
+  let box = document.querySelectorAll('.box');
+  box.forEach(function (boxReplace) {
+    boxReplace.classList.replace('box', 'box-edit');
+  });
+
+  bottomAddTaskOptions.style.display = 'none';
+  boardTaskShowContainer.style.display = 'none';
+  bottomAddTaskEditOptions.style.display = 'flex';
+  boardTaskEditContainer.style.display = 'flex';
+  addTaskFormContainer.style.flexFlow = 'column';
+  addTaskPartingline.style.display = 'none';
 }
 
 async function deleteTask() {

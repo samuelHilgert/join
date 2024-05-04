@@ -577,6 +577,14 @@ li {
   display: none;
 }
 
+#boardTaskEditContainer {
+  display: none;
+}
+
+#bottomAddTaskEditOptions {
+  display: none;
+}
+
 .guestPopupLinkStyle {
   color: white;
   text-decoration: underline;
