@@ -434,7 +434,10 @@ function closePopupAutomaticly(div) {
 
 function closePopupBoardTask() {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
+    let addContactMask = document.getElementById('addContactMask');
     boardTaskPopup.style.display = 'none';
+    document.body.style.overflow = 'scroll';
+    addContactMask.style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
 
