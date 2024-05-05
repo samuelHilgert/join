@@ -433,19 +433,6 @@ function closePopupAutomaticly(div) {
     document.body.style.overflow = 'scroll';
 }
 
-function closePopupByClick() {
-    let boardTaskPopup
-   
-    
-    // Zuerst die Popup-Elemente ausblenden
-    boardTaskPopup.style.display = 'none';
-  
-
-    // Dann die Scrollbar des Dokuments aktivieren
-    document.body.style.overflow = 'scroll';
-}
-
-
 function doNotClose(event) {
     event.stopPropagation();
 }

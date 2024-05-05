@@ -79,7 +79,7 @@ function renderContactInformationHTML(
 
 function renderAddContactContainerHTML() {
     return `
-    <div class="add-contact-container" id="addContactContainer">
+    <div class="add-contact-container" id="addContactContainer" onclick='doNotClose(event)'>
             <div class="add-contact-container-left">
                 <img class="add-contact-img" src="./assets/img/logo2.png" alt="">
                 <span class="add-contact-span-big">Add Contact</span>
@@ -128,7 +128,7 @@ function renderEditContactHTML(
     contactId
 ) {
     return `
-    <div class="add-contact-container" id="editContactContainer">
+    <div class="add-contact-container" id="editContactContainer" onclick='doNotClose(event)'>
             <div class="edit-contact-container-left">
                 <img class="edit-contact-img" src="./assets/img/logo2.png" alt="">
                 <span class="add-contact-span-big">Edit Contact</span>
