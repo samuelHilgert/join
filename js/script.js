@@ -304,9 +304,20 @@ function contactNamesLetters(name) {
 function openHeaderPopupLinks() {
     let headerLinks = document.getElementById('headerSymbolPopup');
     if (headerLinks.style.display === 'flex') {
-        headerLinks.style.display = 'none'
+        headerLinks.style.display = 'none';
+        document.removeEventListener('click', handleOutsideClick);
     } else {
-        headerLinks.style.display = 'flex'
+        headerLinks.style.display = 'flex';
+        document.addEventListener('click', handleOutsideClick);
+    }
+}
+
+function handleOutsideClick(event) {
+    let headerPopup = document.getElementById('headerSymbolPopup');
+    let headerIcon = document.getElementById('headerSymbols');
+    if (!headerPopup.contains(event.target) && !headerIcon.contains(event.target)) {
+        headerPopup.style.display = 'none';
+        document.removeEventListener('click', handleOutsideClick);
     }
 }
 
