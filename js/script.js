@@ -434,13 +434,17 @@ function closePopupAutomaticly(div) {
 }
 
 function closePopupByClick() {
-    let boardTaskPopup = document.getElementById('boardTaskPopup');
-    let addContactMask = document.getElementById('addContactMask');
+    let boardTaskPopup
+   
+    
+    // Zuerst die Popup-Elemente ausblenden
     boardTaskPopup.style.display = 'none';
-    document.body.style.overflow = 'scroll';
-    addContactMask.style.display = 'none';
+  
+
+    // Dann die Scrollbar des Dokuments aktivieren
     document.body.style.overflow = 'scroll';
 }
+
 
 function doNotClose(event) {
     event.stopPropagation();

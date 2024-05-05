@@ -90,7 +90,7 @@
   </div>
 
   <!-- TASK POPUP -->
-  <div class="d_c_c_c popup-bg-filter width-max" id="boardTaskPopup" onclick="closePopupBoardTask()">
+  <div class="d_c_c_c popup-bg-filter width-max" id="boardTaskPopup" onclick="closeBoardTaskPopup()">
     <div class="d_c_sb_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70" id="boardTaskPopupContainer" onclick="doNotClose(event)">
 
       <!-- EDIT TASK CONTENT -->
@@ -165,9 +165,9 @@
     </div>
   </div>
 
-  <div class="d_c_c_c popup-bg-filter width-max" id="boardAddTaskPopup">
+  <div class="d_c_c_c popup-bg-filter width-max" id="boardAddTaskPopup" onclick="closeBoardAddTaskPopup()">
     <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-50 gap-30 width-max"
-      id="boardAddTaskPopupContainer">
+      id="boardAddTaskPopupContainer" onclick="doNotClose(event)">
       <div class="d_f_sb_fs width-max">
         <h2>Add Task</h2>
         <div class="popup-close-button">
