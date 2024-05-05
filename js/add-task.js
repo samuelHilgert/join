@@ -307,7 +307,7 @@ function addSubtask() {
   const subtaskInput = document.getElementById("subtask");
   const subtaskValue = subtaskInput.value.trim();
   if (subtaskValue !== "") {
-    const subtaskContainer = document.getElementById("subtaskDiv");
+    const subtaskContainer = document.getElementById("subtaskDivAddTask");
     subtasks.push(subtaskValue);
     renderSubtasks(subtaskContainer);
     subtaskInput.value = "";
@@ -326,7 +326,7 @@ document.addEventListener("keypress", function (event) {
 });
 
 function getSubtaskIndex(element) {
-  const subtaskContainer = document.getElementById("subtaskDiv");
+  const subtaskContainer = document.getElementById("subtaskDivAddTask");
   const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
     element.parentNode.parentNode
   );
@@ -364,7 +364,7 @@ function changeIcons() {
 }
 
 function editSubtask(element) {
-  const subtaskContainer = document.getElementById("subtaskDiv");
+  const subtaskContainer = document.getElementById("subtaskDivAddTask");
   const subtaskIndex = getSubtaskIndex(element);
   if (subtaskIndex !== -1) {
     const subtaskInput = document.getElementById("subtask");
@@ -412,7 +412,7 @@ function clearForm() {
   document.getElementById("taskCategory").value = "";
   document.getElementById("subtask").value = "";
   document.getElementById("taskAssignedTo").value = "";
-  document.getElementById("subtaskDiv").innerHTML = "";
+  document.getElementById("subtaskDivAddTask").innerHTML = "";
   document.getElementById("contactSelection").innerHTML = "";
   resetPriority();
   clearContactDropdown();

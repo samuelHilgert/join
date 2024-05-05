@@ -219,10 +219,11 @@ function showTaskText(todo) {
 
 async function getSubtasksForPopupTask(currentOpenTaskId) {
   let taskPopupContentSubtasks = document.getElementById("taskPopupContentSubtasks");
-  let subtaskDiv = document.getElementById("subtaskDiv");
+  let subtaskDivAddTask = document.getElementById("subtaskDivAddTask");
 
   await loadSubtasksByOpenTask();
   taskPopupContentSubtasks.innerHTML = "";
+  subtaskDivAddTask.innerHTML = "";
 
   // rendering subtasksOpen with empty check-button
   for (let a = 0; a < subtasksOpen.length; a++) {
@@ -232,7 +233,7 @@ async function getSubtasksForPopupTask(currentOpenTaskId) {
             <p>${subtasksOpen[a]}</p>
             </div>
             `;
-    subtaskDiv.innerHTML += `
+            subtaskDivAddTask.innerHTML += `
     <div class="d_f_fs_c gap-10 width-max">
             <div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
             <p>${subtasksOpen[a]}</p>
@@ -247,7 +248,7 @@ async function getSubtasksForPopupTask(currentOpenTaskId) {
             <p>${subtasksDone[b]}</p>
             </div>
             `;
-    subtaskDiv.innerHTML += `
+            subtaskDivAddTask.innerHTML += `
             <div class="d_f_fs_c gap-10 width-max">
             <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
             <p>${subtasksDone[b]}</p>
