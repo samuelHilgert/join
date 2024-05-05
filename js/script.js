@@ -431,3 +431,13 @@ function closePopupAutomaticly(div) {
     div.style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
+
+function closePopupBoardTask() {
+    let boardTaskPopup = document.getElementById('boardTaskPopup');
+    boardTaskPopup.style.display = 'none';
+    document.body.style.overflow = 'scroll';
+}
+
+function doNotClose(event) {
+    event.stopPropagation();
+}

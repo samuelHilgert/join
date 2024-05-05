@@ -1,4 +1,5 @@
 let newTask = [];
+let editCurrentTask = [];
 // let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
@@ -35,6 +36,28 @@ async function addTask() {
     boardTaskEditContainer.style.display = 'none';
     boardTaskShowContainer.style.display = 'flex';
     console.log('Okay, Änderungen übernommen!');
+    const taskInput = readTaskInputEditTask();
+    console.log(taskInput);
+    let formattedInputDate = await formatDateCorrect(taskInput.date);
+    console.log(formattedInputDate);
+    const prio = determinePriority();
+    console.log(prio);
+    let id = currentOpenTaskId;
+    console.log(id);
+    const task = {
+      id: id,
+      label: taskInput.category,
+      title: taskInput.title,
+      description: taskInput.description,
+      dueDate: formattedInputDate,
+      assignedTo: checkedCheckboxes,
+      priority: prio,
+      subtasksOpen: subtasks,
+      subtasksDone: [],
+      category: "backlog",
+    };
+    editCurrentTask.push(task);
+    console.log(editCurrentTask);
   } else {
     const taskInput = readTaskInput();
     const selectedCategory = taskInput.category;
@@ -108,6 +131,20 @@ function readTaskInput() {
     category: category,
   };
 }
+
+//get informations from input
+function readTaskInputEditTask() {
+  const title = document.getElementById("taskTitle").value;
+  const description = document.getElementById("taskDescription").value;
+  const date = document.getElementById("taskDate").value;
+  const subtask = document.getElementById("subtask").value;
+  return {
+    title: title,
+    description: description,
+    date: new Date(date)
+  };
+}
+
 
 async function updateTaskContacts() {
   if ((authorized === 'guest')) {
@@ -307,7 +344,7 @@ function addSubtask() {
   const subtaskInput = document.getElementById("subtask");
   const subtaskValue = subtaskInput.value.trim();
   if (subtaskValue !== "") {
-    const subtaskContainer = document.getElementById("subtaskDiv");
+    const subtaskContainer = document.getElementById("subtaskDivAddTask");
     subtasks.push(subtaskValue);
     renderSubtasks(subtaskContainer);
     subtaskInput.value = "";
@@ -326,7 +363,7 @@ document.addEventListener("keypress", function (event) {
 });
 
 function getSubtaskIndex(element) {
-  const subtaskContainer = document.getElementById("subtaskDiv");
+  const subtaskContainer = document.getElementById("subtaskDivAddTask");
   const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
     element.parentNode.parentNode
   );
@@ -364,7 +401,7 @@ function changeIcons() {
 }
 
 function editSubtask(element) {
-  const subtaskContainer = document.getElementById("subtaskDiv");
+  const subtaskContainer = document.getElementById("subtaskDivAddTask");
   const subtaskIndex = getSubtaskIndex(element);
   if (subtaskIndex !== -1) {
     const subtaskInput = document.getElementById("subtask");
@@ -412,7 +449,7 @@ function clearForm() {
   document.getElementById("taskCategory").value = "";
   document.getElementById("subtask").value = "";
   document.getElementById("taskAssignedTo").value = "";
-  document.getElementById("subtaskDiv").innerHTML = "";
+  document.getElementById("subtaskDivAddTask").innerHTML = "";
   document.getElementById("contactSelection").innerHTML = "";
   resetPriority();
   clearContactDropdown();
