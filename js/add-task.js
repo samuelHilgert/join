@@ -1,5 +1,4 @@
 let newTask = [];
-let editCurrentTask = [];
 // let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
@@ -35,29 +34,30 @@ async function addTask() {
     let boardTaskShowContainer = document.getElementById('boardTaskShowContainer');
     boardTaskEditContainer.style.display = 'none';
     boardTaskShowContainer.style.display = 'flex';
-    console.log('Okay, Änderungen übernommen!');
     const taskInput = readTaskInputEditTask();
-    console.log(taskInput);
     let formattedInputDate = await formatDateCorrect(taskInput.date);
-    console.log(formattedInputDate);
     const prio = determinePriority();
-    console.log(prio);
-    let id = currentOpenTaskId;
-    console.log(id);
-    const task = {
-      id: id,
-      label: taskInput.category,
-      title: taskInput.title,
-      description: taskInput.description,
-      dueDate: formattedInputDate,
-      assignedTo: checkedCheckboxes,
-      priority: prio,
-      subtasksOpen: subtasks,
-      subtasksDone: [],
-      category: "backlog",
-    };
-    editCurrentTask.push(task);
-    console.log(editCurrentTask);
+    if ((authorized === 'guest')) {
+      console.log('Guest');
+      /*
+      tasks.push(...newTask);
+      resetAddTaskValues(); */
+    } else {
+      let currentUserTask = users[currentUser].tasks[currentOpenTaskId];
+      currentUserTask.id = currentOpenTaskId,
+      currentUserTask.title = taskInput.title,
+      currentUserTask.description = taskInput.description,
+      currentUserTask.dueDate = formattedInputDate,
+      currentUserTask.assignedTo = checkedCheckboxes,
+      currentUserTask.priority = prio,
+      currentUserTask.subtasksOpen = subtasksOpen,
+      currentUserTask.subtasksDone = subtasksDone,
+      await setItem("users", JSON.stringify(users));
+      //
+     // 
+     // resetAddTaskValues();
+    }
+    
   } else {
     const taskInput = readTaskInput();
     const selectedCategory = taskInput.category;

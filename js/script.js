@@ -6,6 +6,7 @@ let setResetExpiryTime = 100; // Set the logout time when the user has not used 
 let popupCloseTime = 8000; // Set popup display time
 let authorized = 'none';
 let currentUser;
+let editCurrentTask = [];
 
 /**
  * This is a function to initialize render functions 
@@ -432,7 +433,7 @@ function closePopupAutomaticly(div) {
     document.body.style.overflow = 'scroll';
 }
 
-function closePopupBoardTask() {
+function closePopupByClick() {
     let boardTaskPopup = document.getElementById('boardTaskPopup');
     let addContactMask = document.getElementById('addContactMask');
     boardTaskPopup.style.display = 'none';
