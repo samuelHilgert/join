@@ -1,5 +1,5 @@
 let newTask = [];
-let editTask = [];
+let editCurrentTask = [];
 // let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
@@ -56,8 +56,8 @@ async function addTask() {
       subtasksDone: [],
       category: "backlog",
     };
-    editTask.push(task);
-    console.log(editTask);
+    editCurrentTask.push(task);
+    console.log(editCurrentTask);
   } else {
     const taskInput = readTaskInput();
     const selectedCategory = taskInput.category;
