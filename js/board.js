@@ -219,11 +219,9 @@ function showTaskText(todo) {
 
 async function getSubtasksForPopupTask(currentOpenTaskId) {
   let taskPopupContentSubtasks = document.getElementById("taskPopupContentSubtasks");
-  let subtaskDivAddTask = document.getElementById("subtaskDivAddTask");
 
   await loadSubtasksByOpenTask();
   taskPopupContentSubtasks.innerHTML = "";
-  subtaskDivAddTask.innerHTML = "";
 
   // rendering subtasksOpen with empty check-button
   for (let a = 0; a < subtasksOpen.length; a++) {
@@ -233,23 +231,11 @@ async function getSubtasksForPopupTask(currentOpenTaskId) {
             <p>${subtasksOpen[a]}</p>
             </div>
             `;
-            subtaskDivAddTask.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max">
-            <div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
-            <p>${subtasksOpen[a]}</p>
-            </div>
-            `;
   }
   // rendering subtasksDone with clicked check-button
   for (let b = 0; b < subtasksDone.length; b++) {
     taskPopupContentSubtasks.innerHTML += `
             <div class="d_f_c_c gap-10">
-            <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
-            <p>${subtasksDone[b]}</p>
-            </div>
-            `;
-            subtaskDivAddTask.innerHTML += `
-            <div class="d_f_fs_c gap-10 width-max">
             <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
             <p>${subtasksDone[b]}</p>
             </div>
@@ -364,6 +350,8 @@ async function editTask() {
   let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions');
   let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions');
   let addTaskCategory = document.getElementById('addTaskCategory');
+  let subtaskDivAddTask = document.getElementById('subtaskDivAddTask');
+  
 
   let box = document.querySelectorAll('.box');
   box.forEach(function (boxReplace) {
@@ -400,6 +388,33 @@ async function editTask() {
   }
   prioBtn.click();
 
+  subtaskDivAddTask.innerHTML = ``;
+
+subtasksOpen.forEach((subtask, index) => {
+  subtaskDivAddTask.innerHTML += `
+  <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
+  <span>• ${subtask}</span>
+  <div class='d_f_c_c gap-5'>
+    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+    <div class="subtask-partingline"></div>
+    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
+  </div>
+</div>
+  `;
+});
+
+subtasksDone.forEach((subtask, index) => {
+  subtaskDivAddTask.innerHTML += `
+  <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
+  <span>• ${subtask}</span>
+  <div class='d_f_c_c gap-5'>
+    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+    <div class="subtask-partingline"></div>
+    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
+  </div>
+</div>
+  `;
+});
 }
 
 async function deleteTask() {

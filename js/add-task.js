@@ -27,9 +27,9 @@ function sortContactsForTasks() {
   });
 }
 
-// function to add the task
+// function to add the task 
 async function addTask() {
-  if (document.location.pathname === `/board.html`) {
+  if (document.location.pathname === `/board.html`) {   // edit feature for edit tasks on board
     let boardTaskEditContainer = document.getElementById('boardTaskEditContainer');
     let boardTaskShowContainer = document.getElementById('boardTaskShowContainer');
     boardTaskEditContainer.style.display = 'none';
@@ -39,26 +39,34 @@ async function addTask() {
     const prio = determinePriority();
     if ((authorized === 'guest')) {
       console.log('Guest');
-      /*
-      tasks.push(...newTask);
-      resetAddTaskValues(); */
+        let currentTask = tasks[currentOpenTaskId];
+        currentTask.id = currentOpenTaskId;
+        currentTask.title = taskInput.title;
+        currentTask.description = taskInput.description;
+        currentTask.dueDate = formattedInputDate;
+        currentTask.assignedTo = checkedCheckboxes;
+        currentTask.priority = prio;
+        currentTask.subtasksOpen = subtasksOpen;
+        currentTask.subtasksDone = subtasksDone;
+        await renderBoardTasks();
     } else {
-      let currentUserTask = users[currentUser].tasks[currentOpenTaskId];
-      currentUserTask.id = currentOpenTaskId,
-      currentUserTask.title = taskInput.title,
-      currentUserTask.description = taskInput.description,
-      currentUserTask.dueDate = formattedInputDate,
-      currentUserTask.assignedTo = checkedCheckboxes,
-      currentUserTask.priority = prio,
-      currentUserTask.subtasksOpen = subtasksOpen,
-      currentUserTask.subtasksDone = subtasksDone,
-      await setItem("users", JSON.stringify(users));
+      let currentTask = users[currentUser].tasks[currentOpenTaskId];
+        currentTask.id = currentOpenTaskId;
+        currentTask.title = taskInput.title;
+        currentTask.description = taskInput.description;
+        currentTask.dueDate = formattedInputDate;
+        currentTask.assignedTo = checkedCheckboxes;
+        currentTask.priority = prio;
+        currentTask.subtasksOpen = subtasksOpen;
+        currentTask.subtasksDone = subtasksDone;
+        await setItem("users", JSON.stringify(users));
+
       //
-     // 
-     // resetAddTaskValues();
+      // 
+      // resetAddTaskValues();
     }
-    
-  } else {
+
+  } else { // add-task feature on add-task.html
     const taskInput = readTaskInput();
     const selectedCategory = taskInput.category;
 
@@ -401,20 +409,28 @@ function changeIcons() {
 }
 
 function editSubtask(element) {
-  const subtaskContainer = document.getElementById("subtaskDivAddTask");
-  const subtaskIndex = getSubtaskIndex(element);
-  if (subtaskIndex !== -1) {
-    const subtaskInput = document.getElementById("subtask");
-    subtaskInput.value = subtasks[subtaskIndex];
-    subtasks.splice(subtaskIndex, 1);
-    renderSubtasks(subtaskContainer);
+  if (document.location.pathname === `/board.html`) {
+    console.log('not yet');
+  } else {
+    const subtaskContainer = document.getElementById("subtaskDivAddTask");
+    const subtaskIndex = getSubtaskIndex(element);
+    if (subtaskIndex !== -1) {
+      const subtaskInput = document.getElementById("subtask");
+      subtaskInput.value = subtasks[subtaskIndex];
+      subtasks.splice(subtaskIndex, 1);
+      renderSubtasks(subtaskContainer);
+    }
+    changeIcons();
   }
-  changeIcons();
 }
 
 function deleteSubtask(i) {
-  subtasks.splice(i, 1);
-  document.getElementById(`subtask${i}`).remove();
+  if (document.location.pathname === `/board.html`) {
+    console.log('not yet');
+  } else {
+    subtasks.splice(i, 1);
+    document.getElementById(`subtask${i}`).remove();
+  }
 }
 
 function clearSubtaskInput() {
