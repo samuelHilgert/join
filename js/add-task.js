@@ -390,12 +390,22 @@ function clearSubtaskInput() {
   `;
 }
 
-//clear the hole form
-function clearForm() {
+function clearCategory() {
+  let categoryDiv = document.getElementById("categoryDiv");
+  if (categoryDiv.style.display === "flex") {
+    categoryDiv.style.display = "none";
+  }
+}
+
+function clearContactDropdown() {
   let taskContactDiv = document.getElementById("taskContactDiv");
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
   }
+}
+
+//clear the whole form
+function clearForm() {
   document.getElementById("taskTitle").value = "";
   document.getElementById("taskDescription").value = "";
   document.getElementById("taskDate").value = "";
@@ -405,6 +415,8 @@ function clearForm() {
   document.getElementById("subtaskDiv").innerHTML = "";
   document.getElementById("contactSelection").innerHTML = "";
   resetPriority();
+  clearContactDropdown();
+  clearCategory();
   dropdownContact = [];
   subtasks = [];
   checkedCheckboxes = [];
