@@ -541,7 +541,7 @@ function addTaskToBoardMessage() {
       setTimeout(function () {
         container.classList.remove("show");
         container.style.display = "none";
-      }, 900);
+      }, 1500);
     }, 100);
 
     if ((authorized === 'guest')) {
@@ -566,5 +566,5 @@ function addTaskToBoardMessage() {
 function forwardToBoard() {
   setTimeout(function () {
     window.location.replace("board.html");
-  }, 1600);
+  }, 2000);
 }
