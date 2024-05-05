@@ -215,25 +215,3 @@ box-sizing: border-box;
   width: 100%; 
   box-sizing: border-box;
   }
-
-
-
-@media screen and (max-width: 630px) {
-  .signup-btn-respons {
-    position: absolute;
-    bottom: 1%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .pad-x-60 {
-    padding-right: 0;
-    padding-left: 0;
-  }
-  body {
-    height: 100%;
-    padding: 20px 10px;
-  }
-}
-
-
