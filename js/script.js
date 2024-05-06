@@ -454,6 +454,10 @@ function closePopupAutomaticly(div) {
     document.body.style.overflow = 'scroll';
 }
 
+/**
+ * This function blocks the closing function of the child elements
+ * 
+ */
 function doNotClose(event) {
     event.stopPropagation();
 }

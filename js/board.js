@@ -11,7 +11,6 @@ let subtasksDone = [];
  */
 async function renderBoardTasks() {
   hideSearchMessage();
-
   if (tasks.length === 0) {
     let div = document.getElementById("guestMessagePopupBoard");
     let messageText = document.getElementById("guestMessageBoard");
