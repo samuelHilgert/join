@@ -10,6 +10,16 @@
     .contact-wrapper {
         min-width: 400px;
     }
+
+    .contact-card-header-text {
+        font-size: 36px;
+    }
+
+    .circle-big {
+        min-width: 80px;
+        min-height: 80px;
+        font-size: 27px;
+}
 }
 
 @media screen and (max-width: 1000px) {

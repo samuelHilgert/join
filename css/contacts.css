@@ -21,7 +21,6 @@
 }
 
 .contact-btn-wrapper {
-    width: 456px;
     height: 101px;
     position: sticky;
     top: 0;
@@ -194,7 +193,7 @@
     gap: 21px;
     display: flex;
     flex-direction: column;
-    margin: 110px 0 0 55px;
+    margin: 55px 0 0 55px;
     overflow: hidden;
 }
 
