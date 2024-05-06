@@ -303,12 +303,15 @@ function contactNamesLetters(name) {
  */
 function openHeaderPopupLinks() {
     let headerLinks = document.getElementById('headerSymbolPopup');
+    let circle = document.getElementById('headerCircle');
     if (headerLinks.style.display === 'flex') {
         headerLinks.style.display = 'none';
+        circle.style.backgroundColor='white';
         document.removeEventListener('click', handleOutsideClick);
     } else {
         headerLinks.style.display = 'flex';
         document.addEventListener('click', handleOutsideClick);
+        circle.style.backgroundColor='#E2E6EC';
     }
 }
 
@@ -320,8 +323,10 @@ function openHeaderPopupLinks() {
 function handleOutsideClick(event) {
     let headerPopup = document.getElementById('headerSymbolPopup');
     let headerIcon = document.getElementById('headerSymbols');
+    let circle = document.getElementById('headerCircle');
     if (!headerPopup.contains(event.target) && !headerIcon.contains(event.target)) {
         headerPopup.style.display = 'none';
+        circle.style.backgroundColor='white';
         document.removeEventListener('click', handleOutsideClick);
     }
 }

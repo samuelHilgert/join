@@ -151,6 +151,10 @@ header {
   border-radius: 50%;
 }
 
+.header-circle:hover{
+  background-color: #E2E6EC;
+}
+
 .header-inner-circle {
   box-sizing: border-box;
   width: 27.94px;
