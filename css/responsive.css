@@ -27,7 +27,9 @@
 }
 
 @media screen and (max-width: 1260px) {
-    
+    .contact-success {
+        width: 280px;
+    }
 }
 
 
@@ -48,12 +50,60 @@
         height: 3px;
         order: 2;
     }
-
-    
 }
 
 @media screen and (max-width: 1000px) {
     .mobile-drag-area-category {
         gap: 50px !important;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .contact-wrapper {
+        min-width: 300px;
+    }
+
+    .contact-small {
+        width: 95%;
+        gap: 10px;
+    }
+
+    .contactlist-letterbox {
+        width: 95%;
+    }
+
+    .contact-btn {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .sidebar {
+        height: 80px;
+        width: 100%;
+        left: 0;
+        top: auto;
+        bottom: 0;
+        padding: 0 16px;
+    }
+
+    .sidebar-logo {
+        display: none;
+    }
+
+    .sidebar-links {
+        height: 80px;
+        gap: 15px;
+        padding-bottom: 0px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .sidebar-legal {
+        display: none;
+    }
+
+    .sidebar-menu {
+
     }
 }
