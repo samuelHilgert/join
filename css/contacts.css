@@ -21,7 +21,6 @@
 }
 
 .contact-btn-wrapper {
-    width: 456px;
     height: 101px;
     position: sticky;
     top: 0;
@@ -41,16 +40,20 @@
 }
 
 .contact-list-wrapper {
-    width: 456px;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
+.contactlist-letterbox {
+
+}
+
 .contact-letter {
     width: 352px;
     height: 58px;
-    padding: 17px 36px 17px 36px;
+    padding: 17px 36px 17px 40px;
     font-size: 20px;
     font-family: 'Inter';
     font-weight: 400;
@@ -190,9 +193,15 @@
     gap: 21px;
     display: flex;
     flex-direction: column;
-    margin: 110px 0 0 55px;
+    margin: 35px 0 0 55px;
     overflow: hidden;
 }
+
+.contacts-y-line-blue {
+    height: 73px;
+    background-color: #29abe2;
+    width: 3px;
+  }
 
 .contact-card-header {
     height: 120px;
@@ -310,6 +319,7 @@
 .add-contact-container-right {
     height: 450px;
     width: 60%;
+    min-width: 630px;
     max-width: 864px;
     border-radius: 0px 40px 40px 0px;
     padding-left: 30px;
@@ -389,7 +399,7 @@
 
 .btn-wrapper {
     display: flex;
-    gap: 24px;
+    gap: 15px;
     margin-top: 36px;
 }
 
@@ -452,19 +462,6 @@
 }
 
 .contact-success-wrapper {
-    margin: 190px 0 0 55px;
+    margin: 50px 0 0 55px;
 }
 
-@media (max-width: 1320px) {
-    .contact-right-text-big {
-        font-size: 47px;
-    }
-
-    .contact-right-text-small {
-        font-size: 20px;
-    }
-
-    .contact-wrapper {
-        min-width: 400px;
-    }
-}
