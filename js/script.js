@@ -312,6 +312,11 @@ function openHeaderPopupLinks() {
     }
 }
 
+/**
+ * Handles a click outside a specific element.
+ * Hides the popup when the user clicks outside the popup area and removes the click event listener.
+ * @param {MouseEvent} event - The MouseEvent object representing the click event.
+ */
 function handleOutsideClick(event) {
     let headerPopup = document.getElementById('headerSymbolPopup');
     let headerIcon = document.getElementById('headerSymbols');
