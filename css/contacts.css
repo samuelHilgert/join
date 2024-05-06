@@ -398,7 +398,7 @@
 
 .btn-wrapper {
     display: flex;
-    gap: 24px;
+    gap: 15px;
     margin-top: 36px;
 }
 
@@ -461,6 +461,6 @@
 }
 
 .contact-success-wrapper {
-    margin: 190px 0 0 55px;
+    margin: 50px 0 0 55px;
 }
 
