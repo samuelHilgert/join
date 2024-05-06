@@ -28,8 +28,23 @@
 
 @media screen and (max-width: 1140px) {
     .contact-right {
-        gap: 16px;
+        gap: 8px;
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
     }
+
+    .contact-right-text-big {
+        line-height: 47px;
+    }
+
+    .contacts-y-line-blue {
+        width: 90px;
+        height: 3px;
+        order: 2;
+    }
+
+    
 }
 
 @media screen and (max-width: 1000px) {

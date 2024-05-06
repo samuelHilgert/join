@@ -197,6 +197,12 @@
     overflow: hidden;
 }
 
+.contacts-y-line-blue {
+    height: 73px;
+    background-color: #29abe2;
+    width: 3px;
+  }
+
 .contact-card-header {
     height: 120px;
     gap: 54px;
