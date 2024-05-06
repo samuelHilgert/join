@@ -105,12 +105,22 @@ function verifcatePassword() {
     }
 }
 
+/**
+ * Displays the login message container and a specified container.
+ * @param {HTMLElement} container - The container to display along with the login message container.
+ * @returns {void}
+ */
 function loginMessageDisplay(container) {
     let loginMessageContainer = document.getElementById('loginMessageContainer');
     loginMessageContainer.style.display = 'flex';
     container.style.display = 'flex';
 }
 
+/**
+ * Hides the login message container and a specified container.
+ * @param {HTMLElement} container - The container to hide along with the login message container.
+ * @returns {void}
+ */
 function hideLoginMessageContainer(container) {
     let loginMessageContainer = document.getElementById('loginMessageContainer');
     loginMessageContainer.style.display = 'none';
