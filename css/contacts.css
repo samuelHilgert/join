@@ -455,16 +455,3 @@
     margin: 190px 0 0 55px;
 }
 
-@media (max-width: 1320px) {
-    .contact-right-text-big {
-        font-size: 47px;
-    }
-
-    .contact-right-text-small {
-        font-size: 20px;
-    }
-
-    .contact-wrapper {
-        min-width: 400px;
-    }
-}
