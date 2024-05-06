@@ -295,11 +295,9 @@ async function clickSubtaskDone(currentOpenTaskId, b) {
 
 function getContactsForPopupTask(todo) {
   let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
-  let contactSelection = document.getElementById("contactSelection");
 
   const contacts = todo["assignedTo"];
   taskPopupContentAssignedTo.innerHTML = '';
-  contactSelection.innerHTML = '';
   for (let index = 0; index < contacts.length; index++) {
     const contact = contacts[index];
     const letters = contactNamesLetters(contact);
@@ -309,13 +307,6 @@ function getContactsForPopupTask(todo) {
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
     <p>${contact}</p>
     </div>
-    `;
-    contactSelection.innerHTML += `
-
-      <div class="d_f_fs_fs pad-r-15 pad-y-10">
-        <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
-      </div>
-
     `;
   }
 }

@@ -39,27 +39,27 @@ async function addTask() {
     const prio = determinePriority();
     if ((authorized === 'guest')) {
       console.log('Guest');
-        let currentTask = tasks[currentOpenTaskId];
-        currentTask.id = currentOpenTaskId;
-        currentTask.title = taskInput.title;
-        currentTask.description = taskInput.description;
-        currentTask.dueDate = formattedInputDate;
-        currentTask.assignedTo = checkedCheckboxes;
-        currentTask.priority = prio;
-        currentTask.subtasksOpen = subtasksOpen;
-        currentTask.subtasksDone = subtasksDone;
-        await renderBoardTasks();
+      let currentTask = tasks[currentOpenTaskId];
+      currentTask.id = currentOpenTaskId;
+      currentTask.title = taskInput.title;
+      currentTask.description = taskInput.description;
+      currentTask.dueDate = formattedInputDate;
+      currentTask.assignedTo = checkedCheckboxes;
+      currentTask.priority = prio;
+      currentTask.subtasksOpen = subtasksOpen;
+      currentTask.subtasksDone = subtasksDone;
+      await renderBoardTasks();
     } else {
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
-        currentTask.id = currentOpenTaskId;
-        currentTask.title = taskInput.title;
-        currentTask.description = taskInput.description;
-        currentTask.dueDate = formattedInputDate;
-        currentTask.assignedTo = checkedCheckboxes;
-        currentTask.priority = prio;
-        currentTask.subtasksOpen = subtasksOpen;
-        currentTask.subtasksDone = subtasksDone;
-        await setItem("users", JSON.stringify(users));
+      currentTask.id = currentOpenTaskId;
+      currentTask.title = taskInput.title;
+      currentTask.description = taskInput.description;
+      currentTask.dueDate = formattedInputDate;
+      currentTask.assignedTo = checkedCheckboxes;
+      currentTask.priority = prio;
+      currentTask.subtasksOpen = subtasksOpen;
+      currentTask.subtasksDone = subtasksDone;
+      await setItem("users", JSON.stringify(users));
 
       //
       // 
@@ -176,7 +176,7 @@ function openDropdown() {
     //checkedCheckboxes = [];
     for (let index = 0; index < contactsForTasks.length; index++) {
       const contact = contactsForTasks[index];
-      renderContactsDropwdown(contact, index);
+      renderContactsDropwdown(taskContactDiv, contact, index);
     }
     markSelectedContacts();
   }
@@ -184,7 +184,7 @@ function openDropdown() {
   showContactSelection();
 }
 
-function renderContactsDropwdown(contact, index) {
+function renderContactsDropwdown(taskContactDiv, contact, index) {
   let letters = contactNamesLetters(contact.name);
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
