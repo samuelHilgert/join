@@ -376,6 +376,8 @@ async function editTask() {
   }
   prioBtn.click();
   checkedCheckboxes = todo.assignedTo;
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  taskContactDiv.style.display = "none";
   showContactSelection();
   renderSubtasksPopup();
 
