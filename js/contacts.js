@@ -1,5 +1,3 @@
-
-
 let profileCircleColors = [
     'teal',
     'lightseagreen',
@@ -23,7 +21,6 @@ let profileCircleColors = [
 
 let nextId = 1;
 
-
 /**
  * This function renders the contact page.
  */
@@ -34,22 +31,15 @@ async function renderContacts() {
         showGuestPopupMessageForReload(div, messageText);
         await updateOrLoadData();
     }
-
     sortContacts();
     createUniqueContactId();
     await renderContactList();
     setRandomColor();
 }
 
-
-//TEST//
-
 function loadContacts() {
     return contacts;
 }
-
-//TEST ENDE//
-
 
 /**
  * This function sets a backgroundcolor for the contacts-circle and checks, if the previous contact-circle has 
@@ -70,7 +60,6 @@ function setRandomColor() {
     });
 }
 
-
 /**
  * This is a function to choose a random color from the "profileCircleColors"-array.
  * 
@@ -80,7 +69,6 @@ function getRandomColor() {
     let randomColor = Math.floor(Math.random() * profileCircleColors.length);
     return profileCircleColors[randomColor];
 }
-
 
 /**
  * This function renders the contact list - therefore it iterates trough the contacts-array and checks, 
@@ -110,7 +98,6 @@ async function renderContactList() {
     }
 }
 
-
 /**
  * This function combines all elements with the css class "contact-small" in the variable contacts. 
  * Then a loop runs through contacts, where contact is a temporary variable that represents each individual element in the contacts list. 
@@ -123,7 +110,6 @@ function removeActiveClasslist() {
         contact.classList.remove('contact-small-active:hover');
     });
 }
-
 
 /**
  * This function renders the contact information HTML based on the provided contact data.
@@ -145,7 +131,6 @@ function renderContactInfo(contact, contactId, removeAnimation) {
     return contactInfoHTML;
 }
 
-
 /**
  * This function updates the contact information in the DOM with the provided HTML.
  * 
@@ -157,7 +142,6 @@ function updateContactInfo(contactId, contactInfoHTML) {
     let contactInfo = document.getElementById('contactInfo');
     contactInfo.innerHTML = contactInfoHTML;
 }
-
 
 /**
  * This function opens the contact information for the currently clicked contact. 
@@ -183,7 +167,6 @@ function openContactInfo(contactId, removeAnimation = false) {
     }
 }
 
-
 /**
  * This function starts an temporarily limited animation by removing 'd-none' & adding 'animation-in' 
  * CSS-classes to the container.
@@ -198,7 +181,6 @@ function contactSuccessAnimation() {
     }, 1800);
 }
 
-
 /**
  * This function sorts the contacts array alphabetically by the name property.
  * 
@@ -210,7 +192,6 @@ function sortContacts() {
         return nameA.localeCompare(nameB);
     });
 }
-
 
 /**
  * This function gets the next available ID that's not already used in the contacts array. 
@@ -224,7 +205,6 @@ function getNextAvailableId() {
     }
     return id.toString();
 }
-
 
 /**
  * 
@@ -246,7 +226,6 @@ function getNewContactInput() {
         id: id
     };
 }
-
 
 /**
  * This function adds a newly created contact to the contacts array and performs necessary actions.
@@ -297,7 +276,6 @@ function openAddContactForm() {
     container.classList.remove('d-none');
 }
 
-
 /**
  * This function closes the form for adding a new contact.
  */
@@ -312,7 +290,6 @@ function closeAddContactForm() {
     });
 }
 
-
 /**
  * This function closes the form for adding a new contact without the closing animation.
  */
@@ -320,7 +297,6 @@ function closeAddContactFormWithoutAnimation() {
     let addContactMask = document.getElementById('addContactMask');
     addContactMask.classList.add('d-none');
 }
-
 
 /**
  * This function closes the edit contact form by adding an 'animation-out' class to the container. 
@@ -335,7 +311,6 @@ function closeEditContactForm() {
         editContactContainer.removeEventListener('animationend', animationEndHandler);
     });
 }
-
 
 /**
  * This function opens the edit contact form for the specified contact ID.
@@ -356,7 +331,6 @@ function openEditContactForm(contactId) {
         editContactContainer.classList.add('animation-in');
     }
 }
-
 
 /**
  * This function updates the contact information in the contacts array and performs necessary actions.
@@ -398,7 +372,6 @@ async function editContact(contactId) {
     openContactInfo(contactId, true);
 }
 
-
 /**
  * This function gives each contact in the contacts-array a unique id, starting from 1.
  */
@@ -411,7 +384,6 @@ function createUniqueContactId() {
     }
 }
 
-
 /**
  * This function keeps the background color of contact circles consistent with the color 
  * stored in the contacts array.
@@ -423,7 +395,6 @@ function keepCircleBackgroundcolor() {
     });
 }
 
-
 /**
  * This function clears the contact info and hides the mask.
  */
@@ -433,7 +404,6 @@ function clearContactInfoAndHideMask() {
     let wrapper = document.getElementById('editContactMask');
     wrapper.classList.add('d-none');
 }
-
 
 /**
  * This function deletes a contact from the contacts array and performs necessary actions.
