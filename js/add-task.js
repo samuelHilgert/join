@@ -33,8 +33,6 @@ async function addTask() {
   if (document.location.pathname === `/board.html`) {   // edit feature for edit tasks on board
     let boardTaskEditContainer = document.getElementById('boardTaskEditContainer');
     let boardTaskShowContainer = document.getElementById('boardTaskShowContainer');
-    boardTaskEditContainer.style.display = 'none';
-    boardTaskShowContainer.style.display = 'flex';
     const taskInput = readTaskInputEditTask();
     let formattedInputDate = await formatDateCorrect(taskInput.date);
     const prio = determinePriority();
@@ -48,7 +46,8 @@ async function addTask() {
       currentTask.priority = prio;
       currentTask.subtasksOpen = subtasksOpen;
       currentTask.subtasksDone = subtasksDone;
-      await renderBoardTasks();
+      let id = currentTask.id;
+      await openBoardTaskPopup(id);
     } else {
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
       currentTask.title = taskInput.title;
@@ -59,7 +58,11 @@ async function addTask() {
       currentTask.subtasksOpen = subtasksOpen;
       currentTask.subtasksDone = subtasksDone;
       await setItem("users", JSON.stringify(users));
+      let id = currentTask.id;
+      await openBoardTaskPopup(id);
     }
+    boardTaskEditContainer.style.display = 'none';
+    boardTaskShowContainer.style.display = 'flex';
 
   } else { // add-task feature on add-task.html
     const taskInput = readTaskInput();
