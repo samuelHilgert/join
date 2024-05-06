@@ -334,6 +334,7 @@ function getBgColorTaskPopup(index) {
 }
 
 async function editTask() {
+  console.log('currentOpenTaskId = ' + currentOpenTaskId);
   let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
   let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
   let addTaskFormContainer = document.getElementById('addTaskFormContainer');
@@ -342,7 +343,6 @@ async function editTask() {
   let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions');
   let addTaskCategory = document.getElementById('addTaskCategory');
   let subtaskDivAddTask = document.getElementById('subtaskDivAddTask');
-  
 
   let box = document.querySelectorAll('.box');
   box.forEach(function (boxReplace) {
