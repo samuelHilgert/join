@@ -342,7 +342,6 @@ async function editTask() {
   let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions');
   let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions');
   let addTaskCategory = document.getElementById('addTaskCategory');
-  let subtaskDivAddTask = document.getElementById('subtaskDivAddTask');
 
   let box = document.querySelectorAll('.box');
   box.forEach(function (boxReplace) {
@@ -379,33 +378,39 @@ async function editTask() {
   }
   prioBtn.click();
 
+  renderSubtasks();
+}
+
+function renderSubtasks() {
+  let subtaskDivAddTask = document.getElementById('subtaskDivAddTask');
+
   subtaskDivAddTask.innerHTML = ``;
 
-subtasksOpen.forEach((subtask, index) => {
-  subtaskDivAddTask.innerHTML += `
+  subtasksOpen.forEach((subtask, index) => {
+    subtaskDivAddTask.innerHTML += `
   <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
   <span>• ${subtask}</span>
   <div class='d_f_c_c gap-5'>
-    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksOpen${index}" onclick="editSubtask(this)" />
     <div class="subtask-partingline"></div>
-    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
+    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksOpen${index}" onclick="deleteSubtask(this)" />
   </div>
 </div>
   `;
-});
+  });
 
-subtasksDone.forEach((subtask, index) => {
-  subtaskDivAddTask.innerHTML += `
+  subtasksDone.forEach((subtask, index) => {
+    subtaskDivAddTask.innerHTML += `
   <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
   <span>• ${subtask}</span>
   <div class='d_f_c_c gap-5'>
-    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksDone${index}" onclick="editSubtask(this)" />
     <div class="subtask-partingline"></div>
-    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
+    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksDone${index}" onclick="deleteSubtask(this)"/>
   </div>
 </div>
   `;
-});
+  });
 }
 
 async function deleteTask() {
