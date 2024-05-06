@@ -364,7 +364,7 @@ function addSubtask() {
         } else {
           currentTask.subtasksOpen.push(subtaskValue);
         }
-        renderSubtasks();
+        renderSubtasksPopup();
         subtaskInput.value = "";
         changeIcons();
       }
@@ -386,7 +386,7 @@ function addSubtask() {
           currentTask.subtasksOpen.push(subtaskValue);
           setItem("users", JSON.stringify(users));
         }
-        renderSubtasks();
+        renderSubtasksPopup();
         subtaskInput.value = "";
         changeIcons();
       }
