@@ -18,6 +18,11 @@ async function renderSummary() {
   await updateUpcomingDate();
 }
 
+/**
+ * Retrieves values for summary statistics by filtering tasks into different categories
+ * and calculates the number of tasks for each status. 
+ * Updates global variables for the count of tasks in different status categories.
+ */
 function getValuesForSummary() {
   const allTasksByBacklog = tasks.filter((t) => t["category"] == "backlog");
   const allTasksByInProgress = tasks.filter(
@@ -36,28 +41,45 @@ function getValuesForSummary() {
   allTasks = tasks.length;
 }
 
+/**
+ * Updates the upcoming due date asynchronously by finding the task with the nearest due date.
+ * Retrieves current date and formats it. Calculates the time differences between current date
+ * and task due dates, then finds the task with the smallest difference. Finally, renders the upcoming
+ * due date on the page.
+ * @returns {Promise<void>} A Promise that resolves once the upcoming due date is rendered.
+ */
 async function updateUpcomingDate() {
   let allTaskTimeStamps = [];
   let allTimeStampsDifferences = [];
   let upcomingDate;
   let currentDate = new Date();
   let formattedDate = await formatDateCorrect(currentDate);
-  let datum = new Date(formattedDate);  // Erstelle ein Date-Objekt mit dem gewünschten Datum
-  let timeStampCurrentDate = datum.getTime(); // Hole den Zeitstempel in Millisekunden
+  let datum = new Date(formattedDate);  
+  let timeStampCurrentDate = datum.getTime(); 
   await getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTimeStampsDifferences);
-  let smallestDifference = Math.min(...allTimeStampsDifferences);   // Finde die kleinste Zahl im Array
+  let smallestDifference = Math.min(...allTimeStampsDifferences);  
   let indexOfDifference = allTimeStampsDifferences.indexOf(smallestDifference);
   upcomingDate = allTaskTimeStamps[indexOfDifference];
   let formattedUpcomingDate = formatUpcomingDate(upcomingDate);
   renderUpcomingDueDate(formattedUpcomingDate);
 }
 
+/**
+ * Retrieves the timestamps of all tasks asynchronously and calculates the differences 
+ * between current date and task due dates. Pushes the differences and timestamps into 
+ * arrays for further processing.
+ * @param {Date[]} allTaskTimeStamps - An array to store the due date timestamps of all tasks.
+ * @param {number} timeStampCurrentDate - The timestamp of the current date.
+ * @param {number[]} allTimeStampsDifferences - An array to store the differences between current date
+ *                                              and task due dates.
+ * @returns {Promise<void>} A Promise that resolves once all task timestamps are retrieved and differences are calculated.
+ */
 async function getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTimeStampsDifferences) {
   tasks.forEach(function (task) {
     if (task['dueDate']) {
       const parts = task['dueDate'].split("/");
       const datum = new Date(parts[2], parts[1] - 1, parts[0]);
-      let timeStampTaskDueDate = datum.getTime(); // Hole den Zeitstempel in Millisekunden
+      let timeStampTaskDueDate = datum.getTime(); 
       let dueDateDifference = calculateDifferencesOftimeStamps(timeStampCurrentDate, timeStampTaskDueDate);
       allTimeStampsDifferences.push(dueDateDifference);
       allTaskTimeStamps.push(datum);
@@ -65,10 +87,21 @@ async function getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTi
   });
 }
 
+/**
+ * Berechnet den absoluten Zeitunterschied zwischen zwei Zeitstempeln.
+ * @param {number} reference - Der Referenzzeitstempel.
+ * @param {number} dueDate - Der Zeitstempel des Fälligkeitsdatums.
+ * @returns {number} Der absolute Zeitunterschied zwischen den beiden Zeitstempeln.
+ */
 function calculateDifferencesOftimeStamps(reference, dueDate) {
   return Math.abs(reference - dueDate);
 }
 
+/**
+ * Formatiert ein Datum für die bevorstehende Anzeige.
+ * @param {Date} upcomingDate - Das bevorstehende Datum, das formatiert werden soll.
+ * @returns {string} Das formatierte Datum im Format "Monat Tag, Jahr".
+ */
 function formatUpcomingDate(upcomingDate) {
   let monthNames = [
     "January", "February", "March", "April", "May", "June", "July",
@@ -78,11 +111,18 @@ function formatUpcomingDate(upcomingDate) {
   return formattedUpcomingDate;
 }
 
+/**
+ * Rendert das bevorstehende Fälligkeitsdatum auf der Seite.
+ * @param {string} formattedUpcomingDate - Das formatierte bevorstehende Datum.
+ */
 function renderUpcomingDueDate(formattedUpcomingDate) {
   let upcomingDueDate = document.getElementById("upcomingDueDate");
   upcomingDueDate.innerHTML = `${formattedUpcomingDate}`;
 }
 
+/**
+ * Rendert die Werte der Zusammenfassung auf der Seite.
+ */
 function renderSummaryValues() {
   let allTodosNumber = document.getElementById("allTodosNumber");
   let allDoneNumber = document.getElementById("allDoneNumber");
@@ -143,14 +183,27 @@ function getGreeting() {
   return greeting;
 }
 
+/**
+ * Leitet den Benutzer zur Board-Seite weiter.
+ */
 function forwardingBoard() {
   window.location.href = `./board.html`;
 }
 
+/**
+ * Ändert die Quelle des Bildes eines Elements.
+ * @param {HTMLElement} element - Das HTML-Element, dessen Bildquelle geändert werden soll.
+ * @param {string} src - Die neue Bildquelle.
+ */
 function changeImage(element, src) {
   element.querySelector(".summary-icon").src = src;
 }
 
+/**
+ * Stellt die ursprüngliche Bildquelle eines Elements wieder her.
+ * @param {HTMLElement} element - Das HTML-Element, dessen Bildquelle wiederhergestellt werden soll.
+ * @param {string} defaultSrc - Die ursprüngliche Bildquelle.
+ */
 function restoreImage(element, defaultSrc) {
   element.querySelector(".summary-icon").src = defaultSrc;
 }
