@@ -37,7 +37,6 @@ async function addTask() {
     let formattedInputDate = await formatDateCorrect(taskInput.date);
     const prio = determinePriority();
     if ((authorized === 'guest')) {
-      console.log('Guest');
       let currentTask = tasks[currentOpenTaskId];
       currentTask.title = taskInput.title;
       currentTask.description = taskInput.description;
@@ -349,19 +348,23 @@ function toggleCategoryDiv() {
 function addSubtask() {
   if (document.location.pathname === `/board.html`) {
     if ((authorized === 'guest')) {
-      console.log('Guest');
-      /*
-      let currentTask = tasks[currentOpenTaskId];
-      currentTask.title = taskInput.title;
-      currentTask.description = taskInput.description;
-      currentTask.dueDate = formattedInputDate;
-      currentTask.assignedTo = checkedCheckboxes;
-      currentTask.priority = prio;
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      await renderBoardTasks(); */
+      const subtaskInput = document.getElementById("subtask");
+      const subtaskValue = subtaskInput.value.trim();
+      if (subtaskValue !== "") {
+        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        let currentTask = tasks[currentOpenTaskId];
+        if (currentSubtaskId.includes('subtasksOpen')) {
+          let index = currentSubtaskId.split('Open')[1];
+          currentTask.subtasksOpen[index] = subtaskValue;
+        } else {
+          let index = currentSubtaskId.split('Done')[1];
+          currentTask.subtasksDone[index] = subtaskValue;
+        }
+        renderSubtasks();
+        subtaskInput.value = "";
+        changeIcons();
+      }
     } else {
-      console.log('user');
       const subtaskInput = document.getElementById("subtask");
       const subtaskValue = subtaskInput.value.trim();
       if (subtaskValue !== "") {
@@ -377,7 +380,7 @@ function addSubtask() {
         renderSubtasks();
         subtaskInput.value = "";
         changeIcons();
-      } 
+      }
       /*
       currentTask.subtasksOpen = subtasksOpen;
       currentTask.subtasksDone = subtasksDone;
@@ -448,58 +451,53 @@ function editSubtask(element) {
   if (document.location.pathname === `/board.html`) {
 
     if ((authorized === 'guest')) {
-      console.log('Guest');
-      /*
       let currentTask = tasks[currentOpenTaskId];
-      currentTask.title = taskInput.title;
-      currentTask.description = taskInput.description;
-      currentTask.dueDate = formattedInputDate;
-      currentTask.assignedTo = checkedCheckboxes;
-      currentTask.priority = prio;
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      await renderBoardTasks(); */
+      // currentTask.title = taskInput.title;
+      if (element.id.includes('subtasksOpen')) {
+        currentSubtaskId = element.id; // global var for addSubtask()
+        let index = element.id.split('Open')[1];
+        let currentSubtask = currentTask.subtasksOpen[index];
+        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        if (currentSubtask !== -1) {
+          const subtaskInput = document.getElementById("subtask");
+          subtaskInput.value = currentSubtask; 
+        }
+        // changeIcons(); notwendig?
+      } else {
+        currentSubtaskId = element.id; // global var for addSubtask()
+        let index = element.id.split('Done')[1];
+        let currentSubtask = currentTask.subtasksDone[index];
+        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        if (currentSubtask !== -1) {
+          const subtaskInput = document.getElementById("subtask");
+          subtaskInput.value = currentSubtask;
+        }
+        // changeIcons(); notwendig?
+      }
     } else {
-      console.log('user');
-      console.log(element);
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
       if (element.id.includes('subtasksOpen')) {
         currentSubtaskId = element.id; // global var for addSubtask()
-        console.log('subtasksOpen');
         let index = element.id.split('Open')[1];
-        console.log(index);
         let currentSubtask = currentTask.subtasksOpen[index];
-        console.log(currentSubtask);
         const subtaskContainer = document.getElementById("subtaskDivAddTask");
         if (currentSubtask !== -1) {
           const subtaskInput = document.getElementById("subtask");
           subtaskInput.value = currentSubtask;
-          // subtasks.splice(subtaskIndex, 1);
-          // renderSubtasks(subtaskContainer);
         }
-        // changeIcons(); */
-
-      } else {
-        console.log('subtasksDone');
+        // changeIcons(); notwendig?
+      } else { 
         currentSubtaskId = element.id; // global var for addSubtask()
         let index = element.id.split('Done')[1];
-        console.log(index);
         let currentSubtask = currentTask.subtasksDone[index];
-        console.log(currentSubtask);
         const subtaskContainer = document.getElementById("subtaskDivAddTask");
         if (currentSubtask !== -1) {
           const subtaskInput = document.getElementById("subtask");
           subtaskInput.value = currentSubtask;
-          // subtasks.splice(subtaskIndex, 1);
-          // renderSubtasks(subtaskContainer);
         }
-        // changeIcons(); */
+        // changeIcons(); notwendig?
 
       }
-      /*
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      await setItem("users", JSON.stringify(users)); */
     }
   } else {
     const subtaskContainer = document.getElementById("subtaskDivAddTask");
@@ -517,41 +515,27 @@ function editSubtask(element) {
 function deleteSubtask(i) {
   if (document.location.pathname === `/board.html`) {
     if ((authorized === 'guest')) {
-      console.log('Guest');
-      /*
       let currentTask = tasks[currentOpenTaskId];
-      currentTask.title = taskInput.title;
-      currentTask.description = taskInput.description;
-      currentTask.dueDate = formattedInputDate;
-      currentTask.assignedTo = checkedCheckboxes;
-      currentTask.priority = prio;
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      await renderBoardTasks(); */
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      console.log('user');
-      console.log(i);
       if (i.id.includes('subtasksOpen')) {
         let index = i.id.split('Open')[1];
-        console.log('subtasksOpen');
-        console.log(index);
         currentTask.subtasksOpen.splice([index], 1);
         renderSubtasks();
       } else {
         let index = i.id.split('Done')[1];
-        console.log('subtasksDone');
-        console.log(index);
         currentTask.subtasksDone.splice([index], 1);
         renderSubtasks();
-      } 
-
-      /*
-      
-      /*
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      await setItem("users", JSON.stringify(users)); */
+      }
+    } else {
+      let currentTask = users[currentUser].tasks[currentOpenTaskId];
+      if (i.id.includes('subtasksOpen')) {
+        let index = i.id.split('Open')[1];
+        currentTask.subtasksOpen.splice([index], 1);
+        renderSubtasks();
+      } else {
+        let index = i.id.split('Done')[1];
+        currentTask.subtasksDone.splice([index], 1);
+        renderSubtasks();
+      }
     }
   } else {
     subtasks.splice(i, 1);
@@ -707,7 +691,6 @@ function closeDropdown() {
 ///////// SEARCHBAR ENDE /////////
 function addTaskToBoardMessage() {
   if (document.location.pathname.includes('add-task.html')) {
-    console.log('add-task');
     const container = document.getElementById("addTaskMessageContainer");
     container.classList.add("add-board-message-btn");
     container.style.display = "flex";

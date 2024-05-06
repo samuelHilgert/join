@@ -334,7 +334,6 @@ function getBgColorTaskPopup(index) {
 }
 
 async function editTask() {
-  console.log('currentOpenTaskId = ' + currentOpenTaskId);
   let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
   let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
   let addTaskFormContainer = document.getElementById('addTaskFormContainer');
