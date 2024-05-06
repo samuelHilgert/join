@@ -49,13 +49,30 @@
         width: 90px;
         height: 3px;
         order: 2;
-    }
-
-    
+    }    
 }
 
 @media screen and (max-width: 1000px) {
     .mobile-drag-area-category {
         gap: 50px !important;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .contact-wrapper {
+        min-width: 300px;
+    }
+
+    .contact-small {
+        width: 95%;
+        gap: 10px;
+    }
+
+    .contactlist-letterbox {
+        width: 95%;
+    }
+
+    .contact-btn {
+        width: 95%;
     }
 }
