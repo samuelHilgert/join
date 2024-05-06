@@ -155,4 +155,17 @@
         gap: 0px;
         width: auto;
     }
+
+    .contact-page-wrapper {
+        width: 100%;
+    }
+
+    .contact-wrapper {
+        margin: 0 0 80px 0;
+        width: 50%;
+    }
+
+    .contact-right-wrapper {
+        width: 50%;
+    }
 }
