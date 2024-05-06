@@ -1,6 +1,6 @@
 function renderLetterAndPartinglineHTML(firstLetter) {
     return `
-    <div>
+    <div class="contactlist-letterbox">
         <div class="contact-letter gap-8">
             <p>${firstLetter}</p>
         </div>

@@ -41,16 +41,20 @@
 }
 
 .contact-list-wrapper {
-    width: 456px;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
+.contactlist-letterbox {
+
+}
+
 .contact-letter {
     width: 352px;
     height: 58px;
-    padding: 17px 36px 17px 36px;
+    padding: 17px 36px 17px 40px;
     font-size: 20px;
     font-family: 'Inter';
     font-weight: 400;
