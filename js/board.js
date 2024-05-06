@@ -295,7 +295,6 @@ async function clickSubtaskDone(currentOpenTaskId, b) {
 
 function getContactsForPopupTask(todo) {
   let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
-
   const contacts = todo["assignedTo"];
   taskPopupContentAssignedTo.innerHTML = '';
   for (let index = 0; index < contacts.length; index++) {
@@ -377,10 +376,12 @@ async function editTask() {
   }
   prioBtn.click();
 
-  renderSubtasks();
+  renderSubtasksPopup();
+  checkedCheckboxes = todo.assignedTo;
+  showContactSelection();
 }
 
-function renderSubtasks() {
+function renderSubtasksPopup() {
   let subtaskDivAddTask = document.getElementById('subtaskDivAddTask');
 
   subtaskDivAddTask.innerHTML = ``;

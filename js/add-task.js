@@ -353,14 +353,18 @@ function addSubtask() {
       if (subtaskValue !== "") {
         const subtaskContainer = document.getElementById("subtaskDivAddTask");
         let currentTask = tasks[currentOpenTaskId];
-        if (currentSubtaskId.includes('subtasksOpen')) {
-          let index = currentSubtaskId.split('Open')[1];
-          currentTask.subtasksOpen[index] = subtaskValue;
+        if (currentSubtaskId !== undefined) {
+          if (currentSubtaskId.includes('subtasksOpen')) {
+            let index = currentSubtaskId.split('Open')[1];
+            currentTask.subtasksOpen[index] = subtaskValue;
+          } else {
+            let index = currentSubtaskId.split('Done')[1];
+            currentTask.subtasksDone[index] = subtaskValue;
+          }
         } else {
-          let index = currentSubtaskId.split('Done')[1];
-          currentTask.subtasksDone[index] = subtaskValue;
+          currentTask.subtasksOpen.push(subtaskValue);
         }
-        renderSubtasks();
+        renderSubtasksPopup();
         subtaskInput.value = "";
         changeIcons();
       }
@@ -370,20 +374,24 @@ function addSubtask() {
       if (subtaskValue !== "") {
         const subtaskContainer = document.getElementById("subtaskDivAddTask");
         let currentTask = users[currentUser].tasks[currentOpenTaskId];
-        if (currentSubtaskId.includes('subtasksOpen')) {
-          let index = currentSubtaskId.split('Open')[1];
-          currentTask.subtasksOpen[index] = subtaskValue;
+        if (currentSubtaskId !== undefined) {
+          if (currentSubtaskId.includes('subtasksOpen')) {
+            let index = currentSubtaskId.split('Open')[1];
+            currentTask.subtasksOpen[index] = subtaskValue;
+          } else {
+            let index = currentSubtaskId.split('Done')[1];
+            currentTask.subtasksDone[index] = subtaskValue;
+          }
         } else {
-          let index = currentSubtaskId.split('Done')[1];
-          currentTask.subtasksDone[index] = subtaskValue;
+          currentTask.subtasksOpen.push(subtaskValue);
+          setItem("users", JSON.stringify(users));
         }
-        renderSubtasks();
+        renderSubtasksPopup();
         subtaskInput.value = "";
         changeIcons();
       }
       /*
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
+
       await setItem("users", JSON.stringify(users)); */
     }
   } else {
@@ -460,9 +468,9 @@ function editSubtask(element) {
         const subtaskContainer = document.getElementById("subtaskDivAddTask");
         if (currentSubtask !== -1) {
           const subtaskInput = document.getElementById("subtask");
-          subtaskInput.value = currentSubtask; 
+          subtaskInput.value = currentSubtask;
         }
-        // changeIcons(); notwendig?
+        changeIcons();
       } else {
         currentSubtaskId = element.id; // global var for addSubtask()
         let index = element.id.split('Done')[1];
@@ -472,7 +480,7 @@ function editSubtask(element) {
           const subtaskInput = document.getElementById("subtask");
           subtaskInput.value = currentSubtask;
         }
-        // changeIcons(); notwendig?
+        changeIcons();
       }
     } else {
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
@@ -485,8 +493,8 @@ function editSubtask(element) {
           const subtaskInput = document.getElementById("subtask");
           subtaskInput.value = currentSubtask;
         }
-        // changeIcons(); notwendig?
-      } else { 
+        changeIcons();
+      } else {
         currentSubtaskId = element.id; // global var for addSubtask()
         let index = element.id.split('Done')[1];
         let currentSubtask = currentTask.subtasksDone[index];
@@ -495,8 +503,7 @@ function editSubtask(element) {
           const subtaskInput = document.getElementById("subtask");
           subtaskInput.value = currentSubtask;
         }
-        // changeIcons(); notwendig?
-
+        changeIcons();
       }
     }
   } else {
