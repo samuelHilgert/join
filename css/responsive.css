@@ -92,8 +92,8 @@
     }
 
     .sidebar-links {
-        height: 80px;
-        gap: 15px;
+        height: 100%;
+        gap: 10px;
         padding-bottom: 0px;
         display: flex;
         flex-direction: row;
@@ -104,6 +104,11 @@
     }
 
     .sidebar-menu {
+        flex-direction: column;
+        padding: 8px 53px 8px 53px;
+    }
 
+    .sidebar-icon {
+        height: 24px;
     }
 }
