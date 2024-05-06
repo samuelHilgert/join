@@ -375,10 +375,10 @@ async function editTask() {
     prioBtn = lowBtn;
   }
   prioBtn.click();
-
-  renderSubtasksPopup();
   checkedCheckboxes = todo.assignedTo;
   showContactSelection();
+  renderSubtasksPopup();
+
 }
 
 function renderSubtasksPopup() {
