@@ -19,7 +19,17 @@
         min-width: 80px;
         min-height: 80px;
         font-size: 27px;
+    }
+
+    .contact-card-header {
+        gap: 20px;
+    }
 }
+
+@media screen and (max-width: 1140px) {
+    .contact-right {
+        gap: 16px;
+    }
 }
 
 @media screen and (max-width: 1000px) {
@@ -27,4 +37,3 @@
         gap: 50px !important;
     }
 }
-
