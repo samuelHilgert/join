@@ -26,6 +26,11 @@
     }
 }
 
+@media screen and (max-width: 1260px) {
+    
+}
+
+
 @media screen and (max-width: 1140px) {
     .contact-right {
         gap: 8px;
