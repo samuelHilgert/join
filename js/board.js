@@ -380,7 +380,6 @@ async function editTask() {
   taskContactDiv.style.display = "none";
   showContactSelection();
   renderSubtasksPopup();
-
 }
 
 function renderSubtasksPopup() {
