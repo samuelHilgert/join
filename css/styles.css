@@ -109,6 +109,10 @@ body {
   z-index: 1;
 }
 
+.logo-header {
+  display: none;
+}
+
 header {
   width: 100%;
   max-width: 1440px;

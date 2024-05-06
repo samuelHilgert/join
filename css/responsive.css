@@ -92,11 +92,12 @@
     }
 
     .sidebar-links {
-        height: 80px;
-        gap: 15px;
+        height: 100%;
+        gap: 10px;
         padding-bottom: 0px;
         display: flex;
         flex-direction: row;
+        justify-content: space-around;
     }
 
     .sidebar-legal {
@@ -104,6 +105,54 @@
     }
 
     .sidebar-menu {
+        flex-direction: column;
+        padding: 15px 0 15px 0;
+        gap: 4px;
+        font-size: 14px;
+        line-height: 16.8px;
+        width: 76px;
+        height: 76px;
+        border-radius: 8px;
+    }
 
+    .sidebar-icon {
+        height: 24px;
+    }
+
+    .aot {
+        height: 80px;
+        padding: 20px 16px 20px 16px;
+        justify-content: space-between;
+    }
+
+    header {
+        justify-content: space-between;
+    }
+
+    .header-circle {
+        width: 40px;
+        height: 40px;
+    }
+
+    #headerSymbolPopup {
+        top: 80px;
+        margin-right: 10px;
+    }
+
+    .header-icon-one {
+        display: none;
+    }
+
+    .header-text {
+        display: none;
+    }
+
+    .logo-header {
+        display: flex;
+    }
+
+    .header-symbols {
+        gap: 0px;
+        width: auto;
     }
 }
