@@ -609,7 +609,9 @@ function setMinimumDate() {
 async function formatInputDate(input) {
   let dateByValue = new Date(input.value);
   let formattedDate = await formatDateCorrect(dateByValue);
-  input.valueAsDate = dateByValue;
+  //input.valueAsDate = dateByValue;
+  input.type = 'text';
+  input.value = formattedDate;
 }
 
 
