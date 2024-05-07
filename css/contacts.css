@@ -502,3 +502,26 @@
     cursor: pointer;
     background-color: rgba(225, 225, 225, 1);
 }
+
+.mobile-contactinfo-menu {
+    border-radius: 50%;
+    background-color: rgba(42, 54, 71, 1);
+    height: 56px;
+    width: 56px;
+    border: 1px solid rgba(42, 54, 71, 1);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    z-index: 10;
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+    transition: width 0.3s ease, height 0.3s ease;
+    display: ;
+}
+
+.mobile-contactinfo-menu:hover {
+    cursor: pointer;
+    background-color: #29abe2;
+    border: 1px solid #29abe2;
+    width: 59px;
+    height: 59px;
+}
