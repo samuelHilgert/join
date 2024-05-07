@@ -431,11 +431,13 @@ function clearContactInfoAndHideMask() {
 async function deleteContact(contactId) {
     let index = contacts.findIndex(contact => contact['id'] === contactId);
     if (index != -1) {
-        contacts.splice(index, 1);
+        let deletedContactName = contacts[index].name;
         if ((authorized === 'user')) {
+            await deleteContactInAssignedTo(deletedContactName);
+            contacts.splice(index, 1);
             await saveNewUserDate();
-        }
-        else {
+        } else {
+            contacts.splice(index, 1);
             let div = document.getElementById('guestMessagePopupContacts');
             let messageText = document.getElementById('guestMessageContacts');
             showGuestPopupMessage(div, messageText);
@@ -443,5 +445,16 @@ async function deleteContact(contactId) {
         await renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();
+    }
+}
+
+async function deleteContactInAssignedTo(deletedContactName) {
+    console.log('suche nach = ' + deletedContactName)
+    for (let a = 0; a < tasks.length; a++) {
+        const contactName = tasks[a].assignedTo;
+        const indexOfName = contactName.findIndex(searchName => searchName === deletedContactName);
+        if (indexOfName != -1) {
+            tasks[a].assignedTo.splice(indexOfName, 1);
+        }
     }
 }
