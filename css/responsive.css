@@ -266,3 +266,35 @@
         width: 50%;
     }
 }
+
+@media screen and (max-width: 685px) {
+    .add-contact-container-left {
+        width: 100vw;
+    }
+
+    .add-contact-container-right {
+        width: 100vw;
+    }
+
+    .add-contact-container-wrapper {
+        padding: 30px;
+    }
+
+    .add-contact-container {
+        margin: 0;
+        padding: 20px !important;
+    }
+
+    .contact-input-style {
+        width: auto;
+        margin-right: 0;
+    }
+
+    .add-contact-container-right-bottom {
+        width: 90%;
+    }
+
+    .contact-form {
+        
+    }
+}
