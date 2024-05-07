@@ -75,6 +75,35 @@
     .contact-btn {
         width: 95%;
     }
+
+    .add-contact-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .add-contact-container-left {
+        height: 30%;
+        min-height: 350px;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        border-radius: 40px 40px 0 0;
+    }
+
+    .add-contact-container-right {
+        height: 70%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        min-height: 400px;
+        border-radius: 0 0 40px 40px;
+        padding-left: 30px;
+    }
+
+    .add-contact-img {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 900px) {
