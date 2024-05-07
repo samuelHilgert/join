@@ -361,7 +361,7 @@
 }
 
 .add-contact-container-right-img-wrapper:hover {
-    background-color: rgb(240, 240, 240);
+    background-color: rgba(225, 225, 225, 1);
     cursor: pointer;
 }
 
@@ -486,4 +486,19 @@
     border: 1px solid #29abe2;
     width: 59px;
     height: 59px;
+}
+
+.mobile-close-contact-btn {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    position: absolute;
+    top: 135px;
+    right: 20px;
+    display: none;
+}
+
+.mobile-close-contact-btn:hover {
+    cursor: pointer;
+    background-color: rgba(225, 225, 225, 1);
 }

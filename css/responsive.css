@@ -319,6 +319,10 @@
         align-items: center;
         margin-left: -20px;
     }
+
+    .mobile-close-contact-btn {
+        display: flex;
+    }
 }
 
 
