@@ -175,6 +175,10 @@
 
 
 @media screen and (max-width: 900px) {
+    .contact-page-wrapper {
+        height: calc(100vh - 160px);
+    }
+    
     .sidebar {
         height: 80px;
         width: 100%;
@@ -260,6 +264,7 @@
     .contact-wrapper {
         margin: 0 0 80px 0;
         width: 50%;
+        height: calc(100vh - 160px);
     }
 
     .contact-right-wrapper {
@@ -268,6 +273,18 @@
 }
 
 @media screen and (max-width: 685px) {
+    .contact-right-wrapper {
+        display: none;
+    }
+
+    .contact-wrapper {
+        width: 100vw;
+    }
+
+    .parting-line {
+        width: 100%;
+    }
+    
     .add-contact-container-left {
         width: 90vw;
     }
@@ -319,5 +336,15 @@
 @media screen and (max-width: 530px) {
     .mobile-clear-btn {
         display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .contact-btn-wrapper {
+        display: none;
+    }
+
+    .mobile-add-contact {
+        display: flex;
     }
 }
