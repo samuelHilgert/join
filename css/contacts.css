@@ -393,6 +393,10 @@
     line-height: 24px;
   }
 
+  .contact-input-style:focus {
+    outline: 2px solid #29abe2;
+  }
+
 .btn-wrapper {
     display: flex;
     gap: 15px;
