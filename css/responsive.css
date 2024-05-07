@@ -344,6 +344,20 @@
     .mobile-clear-btn {
         display: none;
     }
+
+    .contact-right {
+        margin-left: 10px;
+        margin-top: 25px;
+    }
+
+    .contact-info {
+        margin-left: 10px;
+        margin-top: 25px;
+    }
+
+    .mobile-close-contact-btn {
+        top: 105px;
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -353,13 +367,5 @@
 
     .mobile-add-contact {
         display: flex;
-    }
-
-    .contact-right {
-        margin-left: 10px;
-    }
-
-    .contact-info {
-        margin-left: 10px;
     }
 }
