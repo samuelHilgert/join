@@ -154,6 +154,7 @@ function hideContactRightWrapper() {
     if (computedStyle.display === 'block') {
         contactRightWrapper.style.display = 'none';
         contactWrapper.classList.remove('d-none');
+        hideMobileContactinfoMenu();
     }
 }
 
@@ -195,6 +196,7 @@ function openContactInfo(contactId, removeAnimation = false) {
         contactElement.classList.add('contact-small-active');
         contactElement.classList.add('contact-small-active:hover');
         showContactRightWrapper();
+        openInvisibleMobileContactinfoMenu(contactId);
     }
 }
 
@@ -426,10 +428,30 @@ function keepCircleBackgroundcolor() {
     });
 }
 
+/**
+ * This function shows the contactinfo menu in the responsive view by removing d-none.
+ */
 function openMobileContactinfoMenu() {
     let mobileContactinfoMenu = document.querySelector('.open-mobile-contactinfo-menu');
     mobileContactinfoMenu.classList.remove('d-none');
-    mobileContactinfoMenu.innerHTML = renderMobileContactinfoMenuHTML();
+}
+
+/**
+ * This function hides the contactinfo menu in the responsive view by adding d-none.
+ */
+function hideMobileContactinfoMenu() {
+    let mobileContactinfoMenu = document.querySelector('.open-mobile-contactinfo-menu');
+    mobileContactinfoMenu.classList.add('d-none');
+}
+
+/**
+ * This function opens the invisible mobile contactinfo menu with the specified contact ID.
+ * 
+ * @param {string} contactId - The ID of the contact to be displayed in the mobile contact info menu.
+ */
+function openInvisibleMobileContactinfoMenu(contactId) {
+    let mobileContactinfoMenu = document.querySelector('.open-mobile-contactinfo-menu');
+    mobileContactinfoMenu.innerHTML = renderMobileContactinfoMenuHTML(contactId);
 }
 
 /**
@@ -468,6 +490,12 @@ async function deleteContact(contactId) {
     }
 }
 
+/**
+ * This function asynchronously deletes the specified contact name from the 'assignedTo' array in tasks.
+ * 
+ * @param {string} deletedContactName - The name of the contact to be deleted from 'assignedTo' arrays in tasks.
+ * @returns {Promise<void>} - A Promise that resolves once the deletion process is complete.
+ */
 async function deleteContactInAssignedTo(deletedContactName) {
     console.log('suche nach = ' + deletedContactName)
     for (let a = 0; a < tasks.length; a++) {
