@@ -245,8 +245,6 @@ function renderAddTaskFormButton() {
 
 }
 
-
-//// TEST ////
 function renderMobileContactinfoMenuHTML(contactId) {
     return `
     <div class="d_f_c_c gap-8 header-icons-wrapper" onclick="openEditContactForm('${contactId}')">
