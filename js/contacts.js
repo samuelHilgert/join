@@ -458,6 +458,7 @@ async function deleteContact(contactId) {
         await renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();
+        hideContactRightWrapper();
     }
 }
 
