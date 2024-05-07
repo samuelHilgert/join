@@ -144,6 +144,23 @@ function updateContactInfo(contactId, contactInfoHTML) {
 }
 
 /**
+ * This function shows the contact right wrapper if it is currently hidden.
+ * If the contact right wrapper is hidden, it sets its display property to empty string to show it,
+ * and adds 'd-none' class to the contact wrapper to hide it.
+ * 
+ */
+function showContactRightWrapper() {
+    let contactRightWrapper = document.querySelector('.contact-right-wrapper');
+    let contactWrapper = document.querySelector('.contact-wrapper');
+    let computedStyle = window.getComputedStyle(contactRightWrapper);
+
+    if (computedStyle.display === 'none') {
+        contactRightWrapper.style.display = 'block';
+        contactWrapper.classList.add('d-none');
+    }
+}
+
+/**
  * This function opens the contact information for the currently clicked contact. 
  * It first searches for the contact in the contacts list using its ID. When the contact is found, 
  * the renderContactInfo function is called to generate the HTML for the contact information, specifying 
@@ -164,6 +181,7 @@ function openContactInfo(contactId, removeAnimation = false) {
         let contactElement = document.getElementById(contactId);
         contactElement.classList.add('contact-small-active');
         contactElement.classList.add('contact-small-active:hover');
+        showContactRightWrapper();
     }
 }
 
