@@ -299,7 +299,7 @@
 }
 
 .add-contact-container-left {
-    height: 450px;
+    height: 550px;
     width: 40%;
     max-width: 576px;
     background-color: rgba(42, 54, 71, 1);
@@ -313,7 +313,7 @@
 }
 
 .add-contact-container-right {
-    height: 450px;
+    height: 550px;
     width: 60%;
     min-width: 630px;
     max-width: 864px;
@@ -426,7 +426,7 @@
 }
 
 .edit-contact-container-left {
-    height: 450px;
+    height: 550px;
     width: 40%;
     max-width: 576px;
     background-color: rgba(42, 54, 71, 1);
