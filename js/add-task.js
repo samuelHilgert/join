@@ -330,8 +330,8 @@ function chooseCategory(category) {
 }
 
 function toggleCategoryDiv() {
-  var categoryDiv = document.getElementById("categoryDiv");
-  var dropdownIcon = document.getElementById("categoryDropIcon");
+  let categoryDiv = document.getElementById("categoryDiv");
+  let dropdownIcon = document.getElementById("categoryDropIcon");
   if (
     categoryDiv.style.display === "none" ||
     categoryDiv.style.display === ""
@@ -736,4 +736,11 @@ function forwardToBoard() {
   setTimeout(function () {
     window.location.replace("board.html");
   }, 2000);
+}
+
+function closeAddTaskMenuDiv() {
+  let taskContactDiv = document.getElementById("taskContactDiv");
+  categoryDiv = document.getElementById("categoryDiv");
+  taskContactDiv.style.display = "none";
+  categoryDiv.style.display = "none";
 }
