@@ -351,6 +351,7 @@ function closeEditContactForm() {
  * @param {string} contactId - the ID of the currently clicked contact
  */
 function openEditContactForm(contactId) {
+    hideMobileContactinfoMenu();
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
         const { name, mail, phone, color } = contact;
