@@ -142,7 +142,7 @@ function renderEditContactHTML(
                 </div>
                 <div class="add-contact-container-right-bottom-wrapper">
                     <div class="add-contact-container-right-bottom">
-                        <div class="circle-big d_f_c_c" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
+                        <div class="circle-big d_f_c_c mobile-margin-top-15" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
                         <form class="contact-form" onsubmit="event.preventDefault(); editContact('${contactId}')">
                             <input id="newName" class="contact-input-style input-name input-font placeholder-black" type="text" value="${name}" required>
                             <input id="newMail" class="contact-input-style input-email input-font placeholder-black" type="email" value="${mail}">

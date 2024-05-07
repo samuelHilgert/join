@@ -139,7 +139,6 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        margin-top: -5px;
     }
 
     .contact-grey-svg {
@@ -172,8 +171,8 @@
         padding-left: 20px;
     }
 
-    .circle-big {
-        margin-top: 20px;
+    .mobile-margin-top-15 {
+        margin-top: 15px;
     }
 }
 
@@ -322,6 +321,10 @@
 
     .mobile-close-contact-btn {
         display: flex;
+    }
+
+    .contact-card-header-icons {
+        display: none;
     }
 }
 
