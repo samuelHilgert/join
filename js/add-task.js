@@ -33,20 +33,14 @@ async function addTask() {
   if (document.location.pathname === `/board.html`) {   // edit feature for edit tasks on board
     let boardTaskEditContainer = document.getElementById('boardTaskEditContainer');
     let boardTaskShowContainer = document.getElementById('boardTaskShowContainer');
-    const taskInput = await readTaskInputEditTask();
+    const taskInput = readTaskInputEditTask();
     let formattedInputDate;
-    if (taskInput.date === 'Invalid Date') {
-      console.log('Fehler Datum');
-      document.getElementById("taskDate").value = "";
-      document.getElementById("taskDate").type='date'
+    if (taskInput.value !== null ) {
+      formattedInputDate = taskInput.date;
     } else {
-      if (taskInput.date.value !== null) {
-        formattedInputDate = taskInput.date;
-      } else {
-        formattedInputDate = taskInput.date;
-        // formattedInputDate = await formatDateCorrect(taskInput.date);
-      }
-    }   
+      formattedInputDate = taskInput.date;
+      // formattedInputDate = await formatDateCorrect(taskInput.date);
+    }
     const prio = determinePriority();
     if ((authorized === 'guest')) {
       let currentTask = tasks[currentOpenTaskId];
@@ -76,7 +70,7 @@ async function addTask() {
     boardTaskShowContainer.style.display = 'flex';
 
   } else { // add-task feature on add-task.html
-    const taskInput = await readTaskInput();
+    const taskInput = readTaskInput();
     const selectedCategory = taskInput.category;
     if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
       shakeDiv();
@@ -84,14 +78,7 @@ async function addTask() {
       document.getElementById('taskCategory').classList.add('required-input-outline-red');
       return;
     }
-    let formattedInputDate; 
-    if (taskInput.date === 'Invalid Date') {
-      console.log('Fehler Datum');
-      document.getElementById("taskDate").value = "";
-      document.getElementById("taskDate").type='date'
-    } else {
-      formattedInputDate = taskInput.date;
-    }   
+    let formattedInputDate = taskInput.date;
     // let formattedInputDate = await formatDateCorrect(taskInput.date);
     const prio = determinePriority();
     let id = getNextAvailableTaskId();
@@ -142,32 +129,31 @@ function resetAddTaskValues() {
 }
 
 //get informations from input
-async function readTaskInput() {
+function readTaskInput() {
   const title = document.getElementById("taskTitle").value;
   const description = document.getElementById("taskDescription").value;
   const date = document.getElementById("taskDate");
   const category = document.getElementById("taskCategory").value;
   const subtask = document.getElementById("subtask").value;
-    return {
-      title: title,
-      description: description,
-      date: date.value,
-      category: category,
-    };
+  return {
+    title: title,
+    description: description,
+    date: date.value,
+    category: category,
+  };
 }
 
 //get informations from input
-async function readTaskInputEditTask() {
+function readTaskInputEditTask() {
   const title = document.getElementById("taskTitle").value;
   const description = document.getElementById("taskDescription").value;
   const date = document.getElementById("taskDate");
   const subtask = document.getElementById("subtask").value;
-    return {
-      title: title,
-      description: description,
-      date: date.value,
-      category: category,
-    };
+  return {
+    title: title,
+    description: description,
+    date: date.value
+  };
 }
 
 
@@ -550,7 +536,7 @@ function deleteSubtask(i) {
       } else {
         let index = i.id.split('Done')[1];
         currentTask.subtasksDone.splice([index], 1);
-        renderSubtasksPopup();
+          renderSubtasksPopup();
       }
     } else {
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
