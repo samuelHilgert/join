@@ -326,6 +326,10 @@
     .contact-card-header-icons {
         display: none;
     }
+
+    .mobile-contactinfo-menu {
+        display: flex;
+    }
 }
 
 

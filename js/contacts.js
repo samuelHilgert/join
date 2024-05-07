@@ -426,6 +426,10 @@ function keepCircleBackgroundcolor() {
     });
 }
 
+function openMobileContactinfoMenu() {
+    let mobileContactinfoMenu = document.querySelector('mobile-contactinfo-menu');
+}
+
 /**
  * This function clears the contact info and hides the mask.
  */
