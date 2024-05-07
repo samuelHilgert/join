@@ -11,6 +11,7 @@ async function setItem(key, value) {
     return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) })
     .then(res => res.json());
 }
+
 /**
  * This function loads the user data from remote server via the url 
  * 

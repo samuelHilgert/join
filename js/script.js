@@ -6,6 +6,7 @@ let setResetExpiryTime = 100; // Set the logout time when the user has not used 
 let popupCloseTime = 8000; // Set popup display time
 let authorized = 'none';
 let currentUser;
+let editCurrentTask = [];
 
 /**
  * This is a function to initialize render functions 
@@ -36,7 +37,7 @@ async function init() {
  * this function formats the date from add-task input and for the upcoming function in summary
  *
  */
-function formatDateCorrect(timeStamp) {
+async function formatDateCorrect(timeStamp) {
     let dateFormatOptions = {
       day: "2-digit",
       month: "2-digit",
@@ -136,8 +137,11 @@ async function initiateIndividualFunctions() {
                await renderSummary();
             } else if (currentPage === 'add-task') {
                 await updateTaskContacts();
+                renderAddTaskFormButton();
             } else if (currentPage === 'board') {
+                await updateTaskContacts();
                 await renderBoardTasks();
+                renderAddTaskFormButton();
             } else if (currentPage === 'contacts') {
                 await renderContacts();
             }
@@ -299,10 +303,31 @@ function contactNamesLetters(name) {
  */
 function openHeaderPopupLinks() {
     let headerLinks = document.getElementById('headerSymbolPopup');
+    let circle = document.getElementById('headerCircle');
     if (headerLinks.style.display === 'flex') {
-        headerLinks.style.display = 'none'
+        headerLinks.style.display = 'none';
+        circle.style.backgroundColor='white';
+        document.removeEventListener('click', handleOutsideClick);
     } else {
-        headerLinks.style.display = 'flex'
+        headerLinks.style.display = 'flex';
+        document.addEventListener('click', handleOutsideClick);
+        circle.style.backgroundColor='#E2E6EC';
+    }
+}
+
+/**
+ * Handles a click outside a specific element.
+ * Hides the popup when the user clicks outside the popup area and removes the click event listener.
+ * @param {MouseEvent} event - The MouseEvent object representing the click event.
+ */
+function handleOutsideClick(event) {
+    let headerPopup = document.getElementById('headerSymbolPopup');
+    let headerIcon = document.getElementById('headerSymbols');
+    let circle = document.getElementById('headerCircle');
+    if (!headerPopup.contains(event.target) && !headerIcon.contains(event.target)) {
+        headerPopup.style.display = 'none';
+        circle.style.backgroundColor='white';
+        document.removeEventListener('click', handleOutsideClick);
     }
 }
 
@@ -427,4 +452,12 @@ function closeGuestPopupMessage(div) {
 function closePopupAutomaticly(div) {
     div.style.display = 'none';
     document.body.style.overflow = 'scroll';
+}
+
+/**
+ * This function blocks the closing function of the child elements
+ * 
+ */
+function doNotClose(event) {
+    event.stopPropagation();
 }

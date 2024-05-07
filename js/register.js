@@ -4,7 +4,6 @@ let checkbox = false;
 let emailExist = false;
 let displayMessageTime = 2500;
 
-
 /**
  * This function loads all already registered users from remote server
  * 

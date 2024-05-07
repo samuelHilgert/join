@@ -1,0 +1,112 @@
+<form class="d_c_c_fs width-max" onsubmit="addTask(); return false;">
+
+  <div class="add-task-form-container d_f_c_fs gap-40 pad-y-40 height-max" id="addTaskFormContainer">
+    <!--BLOCK 1-->
+
+    <div class="box d_c_fs_fs gap-30 height-max">
+      <div class="d_c_c_s gap-10 width-max">
+        <span class="font-size-20">Title<span style="color: red">*</span></span>
+        <input id="taskTitle" class="task-input-style input-login input-font required-input" type="text"
+          placeholder="Enter a title" required />
+      </div>
+
+      <div class="d_c_c_s gap-10 width-max">
+        <span class="font-size-20">Description</span>
+        <textarea id="taskDescription" cols="30" rows="2" class="task-input-style input-style-description input-font"
+          placeholder="Enter a Description"></textarea>
+      </div>
+
+      <div class="d_c_c_s width-max position-relativ">
+        <span class="font-size-20 mar-bot-10">Assigned to</span>
+        <input id="taskAssignedTo"
+          class="task-input-style-black d_f_c_c dropdown-add-task bgC-white width-max input-font"
+          placeholder="Select contacts to assign" onclick="doNotClose(event); openDropdown(); turnArrow()"
+          oninput="findMatchingContact()" />
+        <!-- deaktiviertes optionsfeld um placeholder anzuzeigen, da bei dropdown nicht mit placeholder im tag gearbeitet werden kann -->
+        <div class="input-icon-dropdown-div" id="turnDropdownArrow" onclick="doNotClose(event); handleClickOnDropdown()">
+          <img src="../../assets/img/arrow_drop_down.svg" alt="Arrow Down" />
+        </div>
+        <div class="assigned-div d_c_fs_fs pad-y-10 gap-10" id="taskContactDiv" onclick="doNotClose(event)"></div>
+
+        <div class="d_f_fs_c width-max" id="contactSelection"></div>
+      </div>
+    </div>
+
+    <!--LINE-->
+    <div class="add-task-partingline" id="addTaskPartingline"></div>
+
+    <!--BLOCK 2-->
+
+    <div class="box d_c_fs_fs gap-30 mar-r-15 height-max">
+
+      <div class="d_c_c_s gap-10 width-max">
+        <span class="font-size-20">Due date<span style="color: red">*</span></span>
+        <input id="taskDate" class="task-input-style due-date-field input-font required-input" name="date" type="text"
+          onfocus="(this.type='date')" onblur="formatInputDate(this)" onclick="setMinimumDate()"
+          placeholder="dd/mm/yyyy" required />
+      </div>
+
+      <div class="d_c_c_fs gap-10 width-max">
+          <span class="font-size-20">Prio</span>
+          <div class="priority-boxes d_f_sb_c width-max gap-10">
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('urgentBtn')" id="urgentBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('mediumBtn')" id="mediumBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('lowBtn')" id="lowBtn"></button>
+          </div>
+      </div>
+
+      <div class="d_c_c_s gap-10 width-max" id="addTaskCategory">
+        <span class="font-size-20">Category<span style="color: red">*</span></span>
+        <div class="position-relativ width-100">
+          <input id="taskCategory" class="task-input-style-black input-login input-font required-input"
+            placeholder="Select task category" readonly onclick="doNotClose(event); toggleCategoryDiv()" required />
+          <div class="input-icon-div" style="top: 29%" onclick="doNotClose(event); toggleCategoryDiv()">
+            <img src="../../assets/img/arrow_drop_down.svg" alt="Arrow Down" id="categoryDropIcon" />
+          </div> 
+        </div>
+        <div id="categoryDiv" class="category-div" style="display: none">
+          <span class="task-category" onclick="chooseCategory(this), toggleCategoryDiv()">Technical Task</span>
+          <span class="task-category" onclick="chooseCategory(this), toggleCategoryDiv()">User Story</span>
+        </div>
+      </div>
+
+      <div class="d_c_c_s gap-10 width-max input-dropdown">
+        <span class="font-size-20">Subtask</span>
+        <input onfocus="changeIcons()" id="subtask" class="task-input-style input-login input-font" type="text"
+          placeholder="Add new subtask" />
+        <div id="dropdownIcon" class="input-icon-div">
+          <img onclick="changeIcons()" src="../../assets/img/add.svg" alt="plus" />
+        </div>
+        <div id="subtaskDivAddTask" class="subtask-div d_f_fs_c"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--bottom-box-->
+  <div class="d_f_sb_c pad-top-100 bottom-box width-max" id="bottomAddTaskOptions">
+    <div id="requiredDiv">
+      <span id><span style="color: red">*</span>This field is required</span>
+    </div>
+    <div class="d_f_c_c gap-15">
+      <button class="clear-btn gap-10" type="button" onclick="clearForm()">
+        Clear
+        <svg class="contact-header-svg">
+          <path
+            d="M12 13.4L7.10005 18.3C6.91672 18.4834 6.68338 18.575 6.40005 18.575C6.11672 18.575 5.88338 18.4834 5.70005 18.3C5.51672 18.1167 5.42505 17.8834 5.42505 17.6C5.42505 17.3167 5.51672 17.0834 5.70005 16.9L10.6 12L5.70005 7.10005C5.51672 6.91672 5.42505 6.68338 5.42505 6.40005C5.42505 6.11672 5.51672 5.88338 5.70005 5.70005C5.88338 5.51672 6.11672 5.42505 6.40005 5.42505C6.68338 5.42505 6.91672 5.51672 7.10005 5.70005L12 10.6L16.9 5.70005C17.0834 5.51672 17.3167 5.42505 17.6 5.42505C17.8834 5.42505 18.1167 5.51672 18.3 5.70005C18.4834 5.88338 18.575 6.11672 18.575 6.40005C18.575 6.68338 18.4834 6.91672 18.3 7.10005L13.4 12L18.3 16.9C18.4834 17.0834 18.575 17.3167 18.575 17.6C18.575 17.8834 18.4834 18.1167 18.3 18.3C18.1167 18.4834 17.8834 18.575 17.6 18.575C17.3167 18.575 17.0834 18.4834 16.9 18.3L12 13.4Z" />
+        </svg>
+      </button>
+      <button type="submit" class="btn gap-10">
+        Create Task<img src="../../assets/img/check.svg" />
+      </button>
+    </div>
+  </div>
+
+    <!--bottom-box edit-task on board.html -->
+    <div class="d_f_sb_c pad-top-100 bottom-box width-max" id="bottomAddTaskEditOptions">
+      <div class="d_f_fe_c width-max">
+        <button type="submit" class="btn gap-10">Ok<img src="../../assets/img/check.svg"/></button>
+      </div>
+    </div>
+  
+</form>

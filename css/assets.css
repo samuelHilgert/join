@@ -228,12 +228,14 @@
   background-color: rgba(255, 255, 255, 1);
   margin: 10px;
   color: rgba(0, 0, 0, 1);
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
   cursor: pointer;
   color: rgba(255, 255, 255, 1);
   background-color: #2a3647;
+  transform: scale(1.07); /* Vergrößern um 7% */
 }
 
 .card-small {
@@ -574,6 +576,14 @@ li {
 }
 
 #messagePopupLogoutDiv {
+  display: none;
+}
+
+#boardTaskEditContainer {
+  display: none;
+}
+
+#bottomAddTaskEditOptions {
   display: none;
 }
 

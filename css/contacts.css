@@ -21,7 +21,6 @@
 }
 
 .contact-btn-wrapper {
-    width: 456px;
     height: 101px;
     position: sticky;
     top: 0;
@@ -41,7 +40,7 @@
 }
 
 .contact-list-wrapper {
-    width: 456px;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -50,7 +49,7 @@
 .contact-letter {
     width: 352px;
     height: 58px;
-    padding: 17px 36px 17px 36px;
+    padding: 17px 36px 17px 40px;
     font-size: 20px;
     font-family: 'Inter';
     font-weight: 400;
@@ -133,7 +132,7 @@
 
 .contact-right {
     height: 73px;
-    margin: 110px 0 0 55px;
+    margin: 50px 0 0 55px;
     display: flex;
 }
 
@@ -190,9 +189,15 @@
     gap: 21px;
     display: flex;
     flex-direction: column;
-    margin: 110px 0 0 55px;
+    margin: 35px 0 0 55px;
     overflow: hidden;
 }
+
+.contacts-y-line-blue {
+    height: 73px;
+    background-color: #29abe2;
+    width: 3px;
+  }
 
 .contact-card-header {
     height: 120px;
@@ -282,18 +287,19 @@
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .add-contact-container {
     display: flex;
     justify-content: center;
     margin: 50px;
-    width: 80%;
+    width: 90%;
     max-width: 1440px;
 }
 
 .add-contact-container-left {
-    height: 450px;
+    height: 550px;
     width: 40%;
     max-width: 576px;
     background-color: rgba(42, 54, 71, 1);
@@ -307,8 +313,9 @@
 }
 
 .add-contact-container-right {
-    height: 450px;
+    height: 550px;
     width: 60%;
+    min-width: 630px;
     max-width: 864px;
     border-radius: 0px 40px 40px 0px;
     padding-left: 30px;
@@ -354,7 +361,7 @@
 }
 
 .add-contact-container-right-img-wrapper:hover {
-    background-color: rgb(240, 240, 240);
+    background-color: rgba(225, 225, 225, 1);
     cursor: pointer;
 }
 
@@ -366,7 +373,7 @@
 }
 
 .contact-input-style {
-    width: 78%;
+    width: 85%;
     height: auto;
     padding: 20px 24px;
     box-sizing: border-box;
@@ -386,9 +393,13 @@
     line-height: 24px;
   }
 
+  .contact-input-style:focus {
+    outline: 2px solid #29abe2;
+  }
+
 .btn-wrapper {
     display: flex;
-    gap: 24px;
+    gap: 15px;
     margin-top: 36px;
 }
 
@@ -408,18 +419,18 @@
     height: 100%;
     width: 100%;
     display: flex;
-    margin-top: -40px;
+    margin-top: -55px;
 }
 
 .close-contact-btn {
     position: relative;
     z-index: 10;
-    margin-top: 15px;
-    margin-right: 15px;
+    margin-top: 30px;
+    margin-right: 25px;
 }
 
 .edit-contact-container-left {
-    height: 450px;
+    height: 550px;
     width: 40%;
     max-width: 576px;
     background-color: rgba(42, 54, 71, 1);
@@ -451,5 +462,80 @@
 }
 
 .contact-success-wrapper {
-    margin: 190px 0 0 55px;
+    margin: 50px 0 0 35px;
+}
+
+.mobile-add-contact {
+    border-radius: 50%;
+    background-color: rgba(42, 54, 71, 1);
+    height: 56px;
+    width: 56px;
+    border: 1px solid rgba(42, 54, 71, 1);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    z-index: 10;
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+    display: none;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.mobile-add-contact:hover {
+    cursor: pointer;
+    background-color: #29abe2;
+    border: 1px solid #29abe2;
+    width: 59px;
+    height: 59px;
+}
+
+.mobile-close-contact-btn {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    position: absolute;
+    top: 135px;
+    right: 20px;
+    display: none;
+}
+
+.mobile-close-contact-btn:hover {
+    cursor: pointer;
+    background-color: rgba(225, 225, 225, 1);
+}
+
+.mobile-contactinfo-menu {
+    border-radius: 50%;
+    background-color: rgba(42, 54, 71, 1);
+    height: 56px;
+    width: 56px;
+    border: 1px solid rgba(42, 54, 71, 1);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    z-index: 10;
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+    transition: width 0.3s ease, height 0.3s ease;
+    display: none;
+}
+
+.mobile-contactinfo-menu:hover {
+    cursor: pointer;
+    background-color: #29abe2;
+    border: 1px solid #29abe2;
+    width: 59px;
+    height: 59px;
+}
+
+.open-mobile-contactinfo-menu {
+    background-color: rgba(255, 255, 255, 1);
+    width: 116px;
+    height: 100px;
+    position: absolute;
+    right: 20px;
+    bottom: 100px;
+    border-radius: 20px 20px 0 20px;
+    z-index: 20;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    gap: 20px;
+    padding-left: 20px;
 }

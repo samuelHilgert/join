@@ -81,6 +81,10 @@ body {
   padding-left: 100px;
 }
 
+.pad-r-15 {
+  padding-right: 15px;
+}
+
 .pad-r-40 {
   padding-right: 40px;
 }
@@ -164,6 +168,10 @@ body {
 
 .mar-bot-10 {
   margin-bottom: 10px;
+}
+
+.mar-r-15 {
+  margin-right: 15px;
 }
 
 .space-1 {
@@ -420,6 +428,13 @@ body {
   align-items: center;
 }
 
+.d_c_se_fs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
 .d_c_c_fs {
   display: flex;
   flex-direction: column;
@@ -503,7 +518,7 @@ body {
 }
 
 .width-50 {
-  width: 50%;
+  width: calc(50% - 40.5px);
   box-sizing: border-box;
 }
 

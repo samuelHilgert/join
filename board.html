@@ -7,15 +7,19 @@
   <link rel="icon" type="image/x-icon" href="./assets/img/logo.svg" />
   <title>Board</title>
   <script src="./js/script.js"></script>
+  <script src="./js/storage.js"></script>
   <script src="./js/sidebar.js"></script>
+  <script src="./js/contacts.js"></script>
   <script src="./js/renderHTML.js"></script>
   <script src="./js/board.js"></script>
-  <script src="./js/storage.js"></script>
+  <script src="./js/add-task.js"></script>
   <link rel="stylesheet" href="./css/standard.css" />
   <link rel="stylesheet" href="./css/fonts.css" />
   <link rel="stylesheet" href="./css/assets.css" />
+  <link rel="stylesheet" href="./css/add-task.css" />
   <link rel="stylesheet" href="./css/contacts.css" />
   <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/responsive.css" />
 </head>
 
 <body onload="init()">
@@ -36,7 +40,13 @@
             <img src="../assets/img/search-icon-with-line.svg" alt="" onclick="searchTasksOnBoard()" />
           </div>
         </div>
-        <a class="btn" onclick="openBoardAddTaskPopup(event)">Add task <img src="./assets/img/add.svg" /></a>
+        <a class="btn gap-10" onclick="openBoardAddTaskPopup(event)">Add task
+          <svg width="15" height="14" viewBox="0 0 15 14" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M6.24854 8H1.24854C0.965202 8 0.727702 7.90417 0.536035 7.7125C0.344368 7.52083 0.248535 7.28333 0.248535 7C0.248535 6.71667 0.344368 6.47917 0.536035 6.2875C0.727702 6.09583 0.965202 6 1.24854 6H6.24854V1C6.24854 0.716667 6.34437 0.479167 6.53604 0.2875C6.7277 0.0958333 6.9652 0 7.24854 0C7.53187 0 7.76937 0.0958333 7.96104 0.2875C8.1527 0.479167 8.24854 0.716667 8.24854 1V6H13.2485C13.5319 6 13.7694 6.09583 13.961 6.2875C14.1527 6.47917 14.2485 6.71667 14.2485 7C14.2485 7.28333 14.1527 7.52083 13.961 7.7125C13.7694 7.90417 13.5319 8 13.2485 8H8.24854V13C8.24854 13.2833 8.1527 13.5208 7.96104 13.7125C7.76937 13.9042 7.53187 14 7.24854 14C6.9652 14 6.7277 13.9042 6.53604 13.7125C6.34437 13.5208 6.24854 13.2833 6.24854 13V8Z"
+              fill="white" />
+          </svg>
+        </a>
       </div>
     </div>
     <div class="d_f_c_c width-max gap-10" id="resultMessageDiv"></div>
@@ -80,9 +90,24 @@
     </div>
   </div>
 
-  <div class="d_c_c_c popup-bg-filter width-max" id="boardTaskPopup">
-    <div class="d_c_sb_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70" id="boardTaskPopupContainer">
-      <div class="d_c_sb_fs gap-30 width-max width-height word-break">
+  <!-- TASK POPUP -->
+  <div class="d_c_c_c popup-bg-filter width-max" id="boardTaskPopup" onclick="closeBoardTaskPopup()">
+    <div class="d_c_sb_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70" id="boardTaskPopupContainer" onclick="doNotClose(event)">
+
+
+      <!-- EDIT TASK CONTENT -->
+      <div class="d_c_sb_fs gap-30 width-max word-break" id="boardTaskEditContainer">
+        <div class="d_f_fe_c width-max">
+          <div class="d_c_c_c add-contact-container-right-img-wrapper popup-close-button"
+            onclick="closeBoardTaskPopup()">
+            <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="" />
+          </div>
+        </div>
+        <div class="d_c_fs_fs width-max" include-html="../assets/templates/add-task-form.html"></div>
+      </div>
+
+      <!-- SHOW TASK CONTENT -->
+      <div class="d_c_sb_fs gap-30 width-max width-height word-break" id="boardTaskShowContainer">
         <div class="d_f_sb_c width-max">
           <div class="btn-board d_f_c_c width-50" id="taskPopupContentLabel"></div>
           <div class="d_f_fe_c width-max" id="taskCloseButtonRight">
@@ -98,7 +123,7 @@
           <div class="d_f_fs_c width-max gap-30" id="taskPopupContentDueDate"></div>
           <div class="d_f_fs_c width-max gap-30" id="taskPopupContentPriority"></div>
         </div>
-        <div class="d_c_c_fs width-max gap-10">
+        <div class="d_c_c_fs width-max gap-10" >
           <div class="d_f_fs_c width-max gap-30">
             <p>Assigned To:</p>
           </div>
@@ -116,7 +141,8 @@
 
           <div class="d_f_c_c gap-8 header-icons-wrapper cursor-pointer" onclick="deleteTask()">
             <svg class="task-popup-svg" viewBox="0 0 16 18">
-              <path d="M3 18C2.45 18 1.97917 17.8042 1.5875 17.4125C1.19583 17.0208 1 16.55 1 16V3C0.716667 3 0.479167 2.90417 0.2875 2.7125C0.0958333 2.52083 0 2.28333 0 2C0 1.71667 0.0958333 1.47917 0.2875 1.2875C0.479167 1.09583 0.716667 1 1 1H5C5 0.716667 5.09583 0.479167 5.2875 0.2875C5.47917 0.0958333 5.71667 0 6 0H10C10.2833 0 10.5208 0.0958333 10.7125 0.2875C10.9042 0.479167 11 0.716667 11 1H15C15.2833 1 15.5208 1.09583 15.7125 1.2875C15.9042 1.47917 16 1.71667 16 2C16 2.28333 15.9042 2.52083 15.7125 2.7125C15.5208 2.90417 15.2833 3 15 3V16C15 16.55 14.8042 17.0208 14.4125 17.4125C14.0208 17.8042 13.55 18 13 18H3ZM3 3V16H13V3H3ZM5 13C5 13.2833 5.09583 13.5208 5.2875 13.7125C5.47917 13.9042 5.71667 14 6 14C6.28333 14 6.52083 13.9042 6.7125 13.7125C6.90417 13.5208 7 13.2833 7 13V6C7 5.71667 6.90417 5.47917 6.7125 5.2875C6.52083 5.09583 6.28333 5 6 5C5.71667 5 5.47917 5.09583 5.2875 5.2875C5.09583 5.47917 5 5.71667 5 6V13ZM9 13C9 13.2833 9.09583 13.5208 9.2875 13.7125C9.47917 13.9042 9.71667 14 10 14C10.2833 14 10.5208 13.9042 10.7125 13.7125C10.9042 13.5208 11 13.2833 11 13V6C11 5.71667 10.9042 5.47917 10.7125 5.2875C10.5208 5.09583 10.2833 5 10 5C9.71667 5 9.47917 5.09583 9.2875 5.2875C9.09583 5.47917 9 5.71667 9 6V13Z" />
+              <path
+                d="M3 18C2.45 18 1.97917 17.8042 1.5875 17.4125C1.19583 17.0208 1 16.55 1 16V3C0.716667 3 0.479167 2.90417 0.2875 2.7125C0.0958333 2.52083 0 2.28333 0 2C0 1.71667 0.0958333 1.47917 0.2875 1.2875C0.479167 1.09583 0.716667 1 1 1H5C5 0.716667 5.09583 0.479167 5.2875 0.2875C5.47917 0.0958333 5.71667 0 6 0H10C10.2833 0 10.5208 0.0958333 10.7125 0.2875C10.9042 0.479167 11 0.716667 11 1H15C15.2833 1 15.5208 1.09583 15.7125 1.2875C15.9042 1.47917 16 1.71667 16 2C16 2.28333 15.9042 2.52083 15.7125 2.7125C15.5208 2.90417 15.2833 3 15 3V16C15 16.55 14.8042 17.0208 14.4125 17.4125C14.0208 17.8042 13.55 18 13 18H3ZM3 3V16H13V3H3ZM5 13C5 13.2833 5.09583 13.5208 5.2875 13.7125C5.47917 13.9042 5.71667 14 6 14C6.28333 14 6.52083 13.9042 6.7125 13.7125C6.90417 13.5208 7 13.2833 7 13V6C7 5.71667 6.90417 5.47917 6.7125 5.2875C6.52083 5.09583 6.28333 5 6 5C5.71667 5 5.47917 5.09583 5.2875 5.2875C5.09583 5.47917 5 5.71667 5 6V13ZM9 13C9 13.2833 9.09583 13.5208 9.2875 13.7125C9.47917 13.9042 9.71667 14 10 14C10.2833 14 10.5208 13.9042 10.7125 13.7125C10.9042 13.5208 11 13.2833 11 13V6C11 5.71667 10.9042 5.47917 10.7125 5.2875C10.5208 5.09583 10.2833 5 10 5C9.71667 5 9.47917 5.09583 9.2875 5.2875C9.09583 5.47917 9 5.71667 9 6V13Z" />
             </svg>
             <span class="task-popup-span">Delete</span>
           </div>
@@ -125,24 +151,44 @@
 
           <div class="d_f_c_c gap-8 header-icons-wrapper cursor-pointer" onclick="editTask()">
             <svg class="task-popup-svg" viewBox="0 0 19 19">
-              <path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z"/>
+              <path
+                d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z" />
             </svg>
             <span class="task-popup-span">Edit</span>
           </div>
-          
-        </div>
 
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="d_c_c_c popup-bg-filter width-max" include-html="../assets/templates/add-task.html"
-    id="boardAddTaskPopup"></div>
+      <!-- ADD TASK POPUP -->
+  <div class="d_c_c_c popup-bg-filter width-max" id="boardAddTaskPopup" onclick="closeBoardAddTaskPopup()">
 
+    <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-50 gap-30 width-max" id="boardAddTaskPopupContainer" onclick="doNotClose(event)">
+
+      <div class="d_f_sb_fs width-max">
+        <h2>Add Task</h2>
+
+        <div class="popup-close-button">
+          <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeBoardAddTaskPopup()">
+            <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="" />
+          </div>
+        </div>
+
+      </div>
+
+      <div class="d_f_fs_fs width-max" include-html="../assets/templates/add-task-form.html"></div>
+    </div>
+    
+  </div>
+
+      <!-- GUEST MESSAGES -->
   <div class="d_c_fs_fe pad-x-40 pad-y-40 popup-bg-filter width-max" id="guestMessagePopupBoard">
     <div class="d_c_fs_c popup-guest-message bgC-white pad-y-40 pad-x-40 gap-40 text-center" id="guestMessageBoard">
     </div>
   </div>
+
 </body>
 
 </html>

@@ -11,7 +11,6 @@
   background-position-y: 50%;
   background-size: 24px;
   cursor: pointer;
-  border: unset;
 }
 
 .dropdown-add-task {
@@ -75,7 +74,7 @@ input[type="checkbox"] {
   z-index: 5;
 }
 
-#dropdown-arrow {
+#dropdownArrow {
   z-index: 10;
 }
 
@@ -88,12 +87,12 @@ input[type="checkbox"] {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .task-btn-style {
-  width: 136px;
+  width: auto;
   height: auto;
-  padding: 16px 24px;
   box-sizing: border-box;
   border-radius: 10px;
   border: none;
@@ -260,7 +259,9 @@ input[type="checkbox"] {
 }
 
 .input-prio {
-  padding: 18px 20px;
+  min-width:120px;
+  flex:1;
+  padding: 18px 0;
   background-color: rgba(255, 255, 255, 1);
 }
 
@@ -417,6 +418,10 @@ input:focus {
   outline: 2px solid red;
 }
 
+.required-input-outline-red {
+  outline: 2px solid red;
+}
+
 textarea:focus {
   outline: 2px solid rgb(143, 208, 237);
 }
@@ -467,4 +472,25 @@ textarea:focus {
 
 .add-board-message-btn.show {
   bottom: 50%;
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.bottom-box {
+  width: 99%;
+  max-width: 1077px;
+}
+
+.box {
+  padding-bottom:50px;
 }
