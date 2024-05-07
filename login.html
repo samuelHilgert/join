@@ -16,16 +16,16 @@
     <link rel="stylesheet" href="./css/responsiveLogin.css" />
   </head>
 
-  <body class="d_c_se_c pad-x-80 gap-30 pad-y-70" onload="loadUsers()">
+  <body class="d_c_se_c pad-x-80 gap-30 pad-y-70 mobile-login-body" onload="loadUsers()">
     <div class="topline">
       <div><img class="logo" src="./assets/img/logo.svg" alt="" /></div>
-      <div class="d_f_c_c gap-40">
+      <div class="d_f_c_c gap-40 mobile-signup-div">
         <p>Not a Join user?</p>
         <a class="btn" href="./signup.html">SignUp</a>
       </div>
     </div>
 
-    <div class="login-form-container d_c_c_c bgC-white pad-y-40 pad-x-20">
+    <div class="login-form-container d_c_c_c bgC-white pad-y-40 pad-x-20 mobile-login-form-container">
       <h2>Log in</h2>
       <div class="space-20"></div>
       <div class="d_f_c_c div-underline">
@@ -33,10 +33,10 @@
       </div>
       <div class="space-30"></div>
       <form
-        class="d_c_c_c gap-50 width-max pad-x-60"
+        class="d_c_c_c gap-50 width-max pad-x-60 mobile-login-form"
         onsubmit="checkLoginAccess(); return false;"
       >
-        <div class="form-div gap-50 width-max">
+        <div class="form-div gap-50 width-max mobile-inputs">
           <div class="d_c_c_c gap-20 width-max">
             <input
               class="input-style input-email"
