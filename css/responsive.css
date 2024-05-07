@@ -273,7 +273,7 @@
     }
 
     .add-contact-container-right {
-        width: 100vw;
+        
     }
 
     .add-contact-container-wrapper {
@@ -281,18 +281,12 @@
     }
 
     .add-contact-container {
+        width: 100vw;
         margin: 0;
         padding: 20px !important;
     }
 
-    .contact-input-style {
-        width: auto;
-        margin-right: 0;
-    }
-
-    .add-contact-container-right-bottom {
-        width: 90%;
-    }
+    
 
     .contact-form {
         
