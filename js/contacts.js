@@ -427,7 +427,9 @@ function keepCircleBackgroundcolor() {
 }
 
 function openMobileContactinfoMenu() {
-    let mobileContactinfoMenu = document.querySelector('mobile-contactinfo-menu');
+    let mobileContactinfoMenu = document.querySelector('.open-mobile-contactinfo-menu');
+    mobileContactinfoMenu.classList.remove('d-none');
+    mobileContactinfoMenu.innerHTML = renderMobileContactinfoMenuHTML();
 }
 
 /**
