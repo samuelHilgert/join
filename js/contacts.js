@@ -144,6 +144,21 @@ function updateContactInfo(contactId, contactInfoHTML) {
 }
 
 /**
+ * This function hides the contact right wrapper if it is currently shown.
+ * 
+ */
+function hideContactRightWrapper() {
+    let contactRightWrapper = document.querySelector('.contact-right-wrapper');
+    let contactWrapper = document.querySelector('.contact-wrapper');
+    let computedStyle = window.getComputedStyle(contactRightWrapper);
+
+    if (computedStyle.display === 'block') {
+        contactRightWrapper.style.display = 'none';
+        contactWrapper.classList.remove('d-none');
+    }
+}
+
+/**
  * This function shows the contact right wrapper if it is currently hidden.
  * If the contact right wrapper is hidden, it sets its display property to empty string to show it,
  * and adds 'd-none' class to the contact wrapper to hide it.
