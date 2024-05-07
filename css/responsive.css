@@ -26,6 +26,7 @@
     }
 }
 
+
 @media screen and (max-width: 1260px) {
     .contact-success {
         width: 280px;
@@ -52,11 +53,13 @@
     }
 }
 
+
 @media screen and (max-width: 1000px) {
     .mobile-drag-area-category {
         gap: 50px !important;
     }
 }
+
 
 @media screen and (max-width: 980px) {
     .contact-wrapper {
@@ -75,7 +78,10 @@
     .contact-btn {
         width: 95%;
     }
+}
 
+
+@media screen and (max-width: 965px) {
     .add-contact-container {
         flex-direction: column;
         align-items: center;
@@ -147,7 +153,26 @@
         font-size: 20px;
         line-height: 24px;
     }
+
+    .edit-contact-img {
+        display: none;
+    }
+
+    .edit-contact-container-left {
+        height: 30%;
+        min-height: 300px;
+        width: 100%;
+        min-width: 100%;
+        border-radius: 40px 40px 0 0;
+        padding-left: 20px;
+        padding-right: 0;
+    }
+
+    .circle-big {
+        margin-top: 20px;
+    }
 }
+
 
 @media screen and (max-width: 900px) {
     .sidebar {
