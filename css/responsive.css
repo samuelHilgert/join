@@ -279,6 +279,7 @@
 @media screen and (max-width: 685px) {
     .contact-right-wrapper {
         display: none;
+        width: 100%;
     }
 
     .contact-wrapper {
@@ -335,9 +336,7 @@
     .add-contact-container-left {
         gap: 8px;
     }
-}
 
-@media screen and (max-width: 530px) {
     .mobile-clear-btn {
         display: none;
     }
@@ -350,5 +349,13 @@
 
     .mobile-add-contact {
         display: flex;
+    }
+
+    .contact-right {
+        margin-left: 10px;
+    }
+
+    .contact-info {
+        margin-left: 10px;
     }
 }
