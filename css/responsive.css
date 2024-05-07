@@ -80,6 +80,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
+        position: relative;
     }
 
     .add-contact-container-left {
@@ -100,6 +101,26 @@
         min-height: 400px;
         border-radius: 0 0 40px 40px;
         padding-left: 30px;
+    }
+
+    .close-contact-btn {
+        position: absolute;
+        top: 30px;
+        right: 20px;
+        z-index: 40;
+        margin: 0;
+    }
+
+    .add-contact-container-right-img-wrapper {
+        margin-top: 0;
+    }
+
+    .add-contact-container-right-img {
+        filter: brightness(0) invert(1);
+    }
+
+    .add-contact-container-right-img-wrapper:hover {
+        background-color: rgba(41, 171, 226, 1);
     }
 
     .add-contact-img {
