@@ -151,7 +151,6 @@ function hideContactRightWrapper() {
     let contactRightWrapper = document.querySelector('.contact-right-wrapper');
     let contactWrapper = document.querySelector('.contact-wrapper');
     let computedStyle = window.getComputedStyle(contactRightWrapper);
-
     if (computedStyle.display === 'block') {
         contactRightWrapper.style.display = 'none';
         contactWrapper.classList.remove('d-none');
@@ -168,7 +167,6 @@ function showContactRightWrapper() {
     let contactRightWrapper = document.querySelector('.contact-right-wrapper');
     let contactWrapper = document.querySelector('.contact-wrapper');
     let computedStyle = window.getComputedStyle(contactRightWrapper);
-
     if (computedStyle.display === 'none') {
         contactRightWrapper.style.display = 'block';
         contactWrapper.classList.add('d-none');
