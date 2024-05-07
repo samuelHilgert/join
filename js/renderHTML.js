@@ -213,7 +213,7 @@ function renderAddTaskFormButton() {
     </defs>
   </svg> 
     `;
-  
+
     let mediumBtn = document.getElementById('mediumBtn');
     mediumBtn.innerHTML = `
     <p>Medium</p>
@@ -231,7 +231,7 @@ function renderAddTaskFormButton() {
     </defs>
   </svg> 
     `;
-  
+
     let lowBtn = document.getElementById('lowBtn');
     lowBtn.innerHTML = `
     <p>Low</p>
@@ -242,10 +242,10 @@ function renderAddTaskFormButton() {
       d="M10.2485 15.2544C10.0139 15.2548 9.7854 15.18 9.59655 15.0409L0.693448 8.47117C0.459502 8.29839 0.30383 8.03981 0.260675 7.75233C0.217521 7.46485 0.290421 7.17201 0.463337 6.93824C0.636253 6.70446 0.895021 6.54891 1.18272 6.50578C1.47041 6.46266 1.76347 6.53551 1.99741 6.7083L10.2485 12.7908L18.4997 6.7083C18.7336 6.53551 19.0267 6.46266 19.3144 6.50578C19.602 6.54891 19.8608 6.70446 20.0337 6.93824C20.2066 7.17201 20.2795 7.46485 20.2364 7.75233C20.1932 8.03981 20.0376 8.29839 19.8036 8.47117L10.9005 15.0409C10.7117 15.18 10.4831 15.2548 10.2485 15.2544Z" />
     </svg>
     `;
-  
-  }
 
-  function renderMobileContactinfoMenuHTML() {
+}
+
+function renderMobileContactinfoMenuHTML(contactId) {
     return `
     <div class="d_f_c_c gap-8 header-icons-wrapper" onclick="openEditContactForm('${contactId}')">
         <svg class="contact-header-svg" xmlns="http://www.w3.org/2000/svg">
@@ -262,4 +262,4 @@ function renderAddTaskFormButton() {
         <span class="contact-header-span">Delete</span>
     </div>
     `;
-  }
+}
