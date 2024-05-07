@@ -526,22 +526,22 @@ function deleteSubtask(i) {
       if (i.id.includes('subtasksOpen')) {
         let index = i.id.split('Open')[1];
         currentTask.subtasksOpen.splice([index], 1);
-        renderSubtasks();
+        renderSubtasksPopup();
       } else {
         let index = i.id.split('Done')[1];
         currentTask.subtasksDone.splice([index], 1);
-        renderSubtasks();
+          renderSubtasksPopup();
       }
     } else {
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
       if (i.id.includes('subtasksOpen')) {
         let index = i.id.split('Open')[1];
         currentTask.subtasksOpen.splice([index], 1);
-        renderSubtasks();
+        renderSubtasksPopup();
       } else {
         let index = i.id.split('Done')[1];
         currentTask.subtasksDone.splice([index], 1);
-        renderSubtasks();
+        renderSubtasksPopup();
       }
     }
   } else {
