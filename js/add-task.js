@@ -36,10 +36,10 @@ async function addTask() {
     const taskInput = readTaskInputEditTask();
     let formattedInputDate;
     if (taskInput.value !== null ) {
-      console.log('dueDate nicht leer');
-      formattedInputDate = await formatDateCorrect(taskInput.date);
+      formattedInputDate = taskInput.date;
     } else {
-      formattedInputDate = await formatDateCorrect(taskInput.date);
+      formattedInputDate = taskInput.date;
+      // formattedInputDate = await formatDateCorrect(taskInput.date);
     }
     const prio = determinePriority();
     if ((authorized === 'guest')) {
@@ -72,14 +72,14 @@ async function addTask() {
   } else { // add-task feature on add-task.html
     const taskInput = readTaskInput();
     const selectedCategory = taskInput.category;
-
     if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
       shakeDiv();
       toggleCategoryDiv();
       document.getElementById('taskCategory').classList.add('required-input-outline-red');
       return;
     }
-    let formattedInputDate = await formatDateCorrect(taskInput.date);
+    let formattedInputDate = taskInput.date;
+    // let formattedInputDate = await formatDateCorrect(taskInput.date);
     const prio = determinePriority();
     let id = getNextAvailableTaskId();
     const task = {
@@ -132,13 +132,13 @@ function resetAddTaskValues() {
 function readTaskInput() {
   const title = document.getElementById("taskTitle").value;
   const description = document.getElementById("taskDescription").value;
-  const date = document.getElementById("taskDate").value;
+  const date = document.getElementById("taskDate");
   const category = document.getElementById("taskCategory").value;
   const subtask = document.getElementById("subtask").value;
   return {
     title: title,
     description: description,
-    date: new Date(date),
+    date: date.value,
     category: category,
   };
 }
@@ -147,12 +147,12 @@ function readTaskInput() {
 function readTaskInputEditTask() {
   const title = document.getElementById("taskTitle").value;
   const description = document.getElementById("taskDescription").value;
-  const date = document.getElementById("taskDate").value;
+  const date = document.getElementById("taskDate");
   const subtask = document.getElementById("subtask").value;
   return {
     title: title,
     description: description,
-    date: new Date(date)
+    date: date.value
   };
 }
 
@@ -617,7 +617,7 @@ async function formatInputDate(input) {
   let formattedDate = await formatDateCorrect(dateByValue);
   input.type = 'text';
   input.value = formattedDate;
-  input.valueAsDate = dateByValue;
+  // input.valueAsDate = dateByValue;
 }
 
 
