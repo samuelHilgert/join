@@ -34,7 +34,13 @@ async function addTask() {
     let boardTaskEditContainer = document.getElementById('boardTaskEditContainer');
     let boardTaskShowContainer = document.getElementById('boardTaskShowContainer');
     const taskInput = readTaskInputEditTask();
-    let formattedInputDate = await formatDateCorrect(taskInput.date);
+    let formattedInputDate;
+    if (taskInput.value !== null ) {
+      console.log('dueDate nicht leer');
+      formattedInputDate = await formatDateCorrect(taskInput.date);
+    } else {
+      formattedInputDate = await formatDateCorrect(taskInput.date);
+    }
     const prio = determinePriority();
     if ((authorized === 'guest')) {
       let currentTask = tasks[currentOpenTaskId];
