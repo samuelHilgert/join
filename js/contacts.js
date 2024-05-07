@@ -401,7 +401,9 @@ async function editContact(contactId) {
     let newMail = document.getElementById('newMail').value;
     let newPhone = document.getElementById('newPhone').value;
     await updateContactInformation(contactId, newName, newMail, newPhone);
+    sortContacts();
     closeEditContactForm();
+    await renderContactList();
     keepCircleBackgroundcolor();
     openContactInfo(contactId, true);
 }
