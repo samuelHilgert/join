@@ -1,7 +1,7 @@
 @media screen and (max-width: 620px) {
   .mobile-signup-div {
     position: absolute;
-    top: 770px;
+    top: 832px;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 285px;
@@ -14,6 +14,7 @@
 
   .mobile-links {
     padding-bottom: 32px;
+    padding-top: 112px;
   }
 }
 
@@ -49,12 +50,20 @@
   .mobile-login-form {
     gap: 30px;
   }
+  .mobile-signup-div {
+    top: 832px;
+  }
 
   .mobile-login-btns {
     flex-direction: column;
   }
-
+}
+@media screen and (max-width: 620px) {
   .mobile-login-btn {
     width: 100%;
+  }
+
+  .mobile-links {
+    padding-top: 116px;
   }
 }
