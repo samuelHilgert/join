@@ -1,3 +1,9 @@
+@media screen and (max-width: 1200px) {
+  .mobile-signup-inputs {
+    min-width: 332px;
+  }
+}
+
 @media screen and (max-width: 620px) {
   .mobile-signup-div {
     position: absolute;
@@ -50,6 +56,10 @@
   .mobile-signup-form {
     padding-left: 20px;
     padding-right: 20px;
+  }
+
+  .mobile-signup-inputs {
+    min-width: 100%;
   }
   .mobile-signup-container {
     width: inherit;

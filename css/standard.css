@@ -474,7 +474,6 @@ body {
   align-items: flex-end;
 }
 
-
 .bgC-white {
   background-color: white;
 }
@@ -496,7 +495,7 @@ body {
 }
 
 .cursor-pointer {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .list-style {
@@ -543,4 +542,3 @@ body {
 .d-none {
   display: none;
 }
-
