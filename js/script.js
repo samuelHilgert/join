@@ -281,21 +281,7 @@ function renderLettersByName(lettersDiv) {
     }
 }
 
-/**
- * This function renders the letters of first and last name of the user or the contacts
- * 
- */
-function contactNamesLetters(name) {
-    let letters;
-    let firstLetter = name.charAt(0); // first letter of first name
-    let spaceIndex = name.indexOf(' '); // index from space between first and last name
-    let secondLetter = ''; // initialise of second letter
-    if (spaceIndex !== -1 && spaceIndex < name.length - 1) {
-        secondLetter = name.charAt(spaceIndex + 1); // second letter of last name
-    }
-    letters = firstLetter + secondLetter;
-    return letters;
-}
+////// HIER STAND function contactNamesLetters(name) //////
 
 /**
  * This function creates the popup menu with links for header

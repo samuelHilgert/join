@@ -28,6 +28,27 @@ function sortContactsForTasks() {
   });
 }
 
+
+/**
+ * This function renders the letters of first and last name of the user or the contacts
+ * 
+ */
+function contactNamesLetters(name) {
+  let letters;
+  let firstLetter = name.charAt(0); // first letter of first name
+  let spaceIndex = name.indexOf(' '); // index from space between first and last name
+  let secondLetter = ''; // initialise of second letter
+  if (spaceIndex !== -1 && spaceIndex < name.length - 1) {
+      secondLetter = name.charAt(spaceIndex + 1); // second letter of last name
+  }
+  letters = firstLetter + secondLetter;
+  return letters;
+}
+
+
+
+
+
 // function to add the task 
 async function addTask() {
   if (document.location.pathname === `/board.html`) {   // edit feature for edit tasks on board
