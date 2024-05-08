@@ -1,23 +1,84 @@
-@media screen and (max-width: 1320px) {
-
-}
+@media screen and (max-width: 1320px) {}
 
 
-@media screen and (max-width: 1260px) {
-
-}
+@media screen and (max-width: 1260px) {}
 
 
-@media screen and (max-width: 1140px) {
-
-}
+@media screen and (max-width: 1140px) {}
 
 
-@media screen and (max-width: 1000px) {
-
-}
+@media screen and (max-width: 1000px) {}
 
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 980px) {}
 
+@media screen and (max-width: 900px) {
+    .mobile-main-container {
+        margin-left: 0;
+        width: 100%;
+        padding-bottom: 150px;
+    }
+
+    .search-board-input {
+        width: 100%;
+    }
+
+    .search-div {
+        width: 100%;
+    }
+
+    .mobile-header-board {
+        flex-direction: column;
+    }
+
+    .drag-area-container {
+        flex-direction: column;
+        gap: 30px;
+        margin: 0;
+    }
+
+    .mobile-drag-area-category {
+        width: 100%;
+        box-sizing: border-box;
+        gap: 0px !important;
+    }
+
+    .drag-area-category-headline {
+        font-size: 27px;
+        font-weight: 700;
+        line-height: 32.4px;
+    }
+
+    .mobile-drag-area-alt {
+        flex-direction: row;
+        min-height: 0px;
+        gap: 15px;
+        overflow: scroll;
+    }
+
+    .drag-area-no-tasks {
+        width: 100%;
+    }
+
+    .headline-board-columns img {
+        height: 30px;
+        width: 30px;
+    }
+
+    .todo {
+        width: 252px !important;
+        height: 244px !important;
+    }
+
+    #addTaskMobileBtnBoardHeader {
+        display: flex;
+    }
+
+    #addTaskBtnBoardHeader {
+        display: none;
+    }
+
+    .add-task-btn-board-header {
+        padding: 20px 20px;
+    }
 }

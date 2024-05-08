@@ -20,6 +20,7 @@
   padding: 10px 14px;
   border: none;
   outline: none;
+  box-sizing: border-box;
 }
 
 .search-icon img:hover {
@@ -235,7 +236,8 @@
   cursor: pointer;
   color: rgba(255, 255, 255, 1);
   background-color: #2a3647;
-  transform: scale(1.07); /* Vergrößern um 7% */
+  transform: scale(1.07);
+  /* Vergrößern um 7% */
 }
 
 .card-small {
@@ -274,6 +276,10 @@
   background-color: rgba(209, 209, 209, 1);
 }
 
+.drag-area-container {
+  gap: 10px;
+}
+
 .drag-area-category {
   height: 100%;
   flex: 1;
@@ -284,8 +290,8 @@
 .drag-area-no-tasks {
   padding: 10px;
   margin: 10px;
+  width: 252px;
   min-height: 50px;
-  width: 100%;
   background-color: rgba(231, 231, 231, 1);
   border-radius: 10px;
   border: 1px dashed black;
@@ -309,11 +315,14 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 10px;
+  padding: 0;
   border-radius: 10px;
 }
 
-
+.add-task-btn-board-header svg {
+  width: 15px;
+  height: 14px;
+}
 
 .task-popup-svg {
   height: 18px;
@@ -335,10 +344,6 @@
   color: rgba(42, 54, 71, 1);
 }
 
-
-
-
-
 .drag-area-highlight {
   padding: 10px;
   height: auto;
@@ -353,7 +358,8 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   padding: 10px;
-  margin: 10px;
+  margin: 10px 0;
+  width: 252px !important;
   height: auto;
   cursor: pointer;
   box-sizing: border-box;
@@ -623,4 +629,8 @@ li {
   height: 24px;
   width: 1px;
   background-color: #d1d1d1;
+}
+
+#addTaskMobileBtnBoardHeader {
+  display: none;
 }
