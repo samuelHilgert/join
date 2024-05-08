@@ -645,21 +645,22 @@ function turnArrow() {
 
 function findMatchingContact() {
   clearAssignToInput();
-  let searchInput = document
-    .getElementById("taskAssignedTo")
-    .value.trim()
-    .toLowerCase();
+  let searchInput = document.getElementById("taskAssignedTo").value.trim().toLowerCase();
+  //console.log("Sucheingabe:", searchInput); // Log der Sucheingabe
   if (searchInput === "") {
-    openDropdown();
-    updateDropdownMenu(contactsForTasks);
-  } else {
-    let filteredContacts = contactsForTasks.filter((contact) =>
-      contact.name.toLowerCase().includes(searchInput)
-    );
-    if (!isDropdownOpen()) {
       openDropdown();
-    }
-    updateDropdownMenu(filteredContacts);
+      updateDropdownMenu(contactsForTasks);
+  } else {
+      let filteredContacts = contactsForTasks.filter(contact => {
+          let isValidContact = contact && contact.name && typeof contact.name === 'string';
+          //console.log("Verarbeiteter Kontakt:", contact); // Log jeden Kontakts vor der Filterung
+          return isValidContact && contact.name.toLowerCase().includes(searchInput);
+      });
+      //console.log("Gefilterte Kontakte:", filteredContacts); // Log der gefilterten Kontakte
+      if (!isDropdownOpen()) {
+          openDropdown();
+      }
+      updateDropdownMenu(filteredContacts);
   }
 }
 
@@ -673,7 +674,11 @@ function updateDropdownMenu(contacts) {
   taskContactDiv.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
-    renderContactsDropwdown(contact, i);
+    if (!contact || !contact.name) {
+      console.error("Ungültiger Kontakt oder Name bei updateDropdownMenu:", contact);
+      continue; // Überspringe ungültige Kontakte
+    }
+    renderContactsDropwdown(taskContactDiv, contact, i);
   }
 }
 
