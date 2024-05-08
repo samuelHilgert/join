@@ -753,7 +753,10 @@ function forwardToBoard() {
 
 function closeAddTaskMenuDiv() {
   let taskContactDiv = document.getElementById("taskContactDiv");
-  categoryDiv = document.getElementById("categoryDiv");
+  let categoryDiv = document.getElementById("categoryDiv");
+  if (taskContactDiv.style.display === "flex") {
+    closeDropdown();
+  }
   taskContactDiv.style.display = "none";
   categoryDiv.style.display = "none";
 }
