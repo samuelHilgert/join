@@ -83,20 +83,18 @@ function getPrioForTask(task) {
 }
 
 function getContactsForTask(task) {
-  let contactsForTaskDiv = document.getElementById(`contactsIn${task["id"]}`);
-  const contacts = task["assignedTo"];
-  contactsForTaskDiv.innerHTML = "";
-  for (let c = 0; c < contacts.length; c++) {
-    const contact = contacts[c];
-    const letters = contactNamesLetters(contact);
-    const backgroundColor = getBgColorTaskPopup(c);
-    const marginRightClass = contacts.length > 1 ? "mar-r--8" : "";
+  let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
+    contactsForTaskDiv.innerHTML = "";
+    task.assignedTo.forEach((contactName, index) => {
+        const backgroundColor = getBgColorTaskPopup(task, index);
+        const letters = contactNamesLetters(contactName);
+    const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
     contactsForTaskDiv.innerHTML += `
     <div class="d_f_fs_c gap-10 width-max ${marginRightClass}">
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
     </div>
     `;
-  }
+  });
 }
 
 function updateProgressBar(task) {
@@ -300,7 +298,7 @@ function getContactsForPopupTask(todo) {
   for (let index = 0; index < contacts.length; index++) {
     const contact = contacts[index];
     const letters = contactNamesLetters(contact);
-    const backgroundColor = getBgColorTaskPopup(index);
+    const backgroundColor = getBgColorTaskPopup(todo, index);
     taskPopupContentAssignedTo.innerHTML += `
     <div class="d_f_fs_c gap-10 width-max">
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
@@ -308,6 +306,17 @@ function getContactsForPopupTask(todo) {
     </div>
     `;
   }
+}
+
+function getBgColorTaskPopup(task, index) {
+  // Zugriff auf den Namen des Kontakts im Task
+  const contactName = task.assignedTo[index];
+  
+  // Suche in der globalen Kontaktliste nach dem entsprechenden Kontakt
+  const contactInfo = contacts.find(contact => contact.name === contactName);
+
+  // Gib die Farbe des gefundenen Kontakts zurück, oder einen Standardwert, falls nicht gefunden
+  return contactInfo ? contactInfo.color : "#FFFFFF"; // Standard weiß, wenn keine Farbe definiert ist
 }
 
 function getPriorityIcon(todo) {
@@ -320,16 +329,6 @@ function getPriorityIcon(todo) {
     imgSrc = "prio-low.svg";
   }
   return imgSrc;
-}
-
-function getBgColorTaskPopup(index) {
-  let userContact;
-  if ((authorized === 'guest')) {
-    userContact = contacts[index];
-  } else {
-    userContact = users[currentUser]["contacts"][index];
-  }
-  return userContact.color;
 }
 
 async function editTask() {
