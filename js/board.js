@@ -90,8 +90,9 @@ function getContactsForTask(task) {
     const contact = contacts[c];
     const letters = contactNamesLetters(contact);
     const backgroundColor = getBgColorTaskPopup(c);
+    const marginRightClass = contacts.length > 1 ? "mar-r--8" : "";
     contactsForTaskDiv.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max">
+    <div class="d_f_fs_c gap-10 width-max ${marginRightClass}">
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
     </div>
     `;

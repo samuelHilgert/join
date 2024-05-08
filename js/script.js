@@ -295,7 +295,7 @@ function contactNamesLetters(name) {
     }
     letters = firstLetter + secondLetter;
     return letters;
-}
+  }
 
 /**
  * This function creates the popup menu with links for header
