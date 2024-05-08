@@ -301,7 +301,7 @@ function getContactsForPopupTask(todo) {
     const letters = contactNamesLetters(contact);
     const backgroundColor = getBgColorTaskPopup(index);
     taskPopupContentAssignedTo.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max">
+    <div class="d_f_fs_c gap-10 width-max" style="margin-right: -10px;">
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
     <p>${contact}</p>
     </div>
