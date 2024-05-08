@@ -182,6 +182,10 @@
         height: calc(100vh - 160px);
     }
 
+    .mobile-header-menu {
+        display: flex;
+    }
+
     .sidebar {
         height: 80px;
         width: 100%;

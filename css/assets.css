@@ -455,6 +455,10 @@ li {
   z-index: 9999;
 }
 
+.mobile-header-menu {
+  display: none;
+}
+
 #headerSymbolPopup {
   display: none;
   margin-right: 20px;
