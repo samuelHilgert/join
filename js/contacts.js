@@ -154,6 +154,7 @@ function hideContactRightWrapper() {
     if (computedStyle.display === 'block') {
         contactRightWrapper.style.display = 'none';
         contactWrapper.classList.remove('d-none');
+        hideMobileContactinfoMenu();
     }
 }
 
@@ -195,6 +196,7 @@ function openContactInfo(contactId, removeAnimation = false) {
         contactElement.classList.add('contact-small-active');
         contactElement.classList.add('contact-small-active:hover');
         showContactRightWrapper();
+        openInvisibleMobileContactinfoMenu(contactId);
     }
 }
 
@@ -349,6 +351,7 @@ function closeEditContactForm() {
  * @param {string} contactId - the ID of the currently clicked contact
  */
 function openEditContactForm(contactId) {
+    hideMobileContactinfoMenu();
     let contact = contacts.find(contact => contact['id'] === contactId);
     if (contact) {
         const { name, mail, phone, color } = contact;
@@ -398,7 +401,9 @@ async function editContact(contactId) {
     let newMail = document.getElementById('newMail').value;
     let newPhone = document.getElementById('newPhone').value;
     await updateContactInformation(contactId, newName, newMail, newPhone);
+    sortContacts();
     closeEditContactForm();
+    await renderContactList();
     keepCircleBackgroundcolor();
     openContactInfo(contactId, true);
 }
@@ -426,8 +431,30 @@ function keepCircleBackgroundcolor() {
     });
 }
 
+/**
+ * This function shows the contactinfo menu in the responsive view by removing d-none.
+ */
 function openMobileContactinfoMenu() {
-    let mobileContactinfoMenu = document.querySelector('mobile-contactinfo-menu');
+    let mobileContactinfoMenu = document.querySelector('.open-mobile-contactinfo-menu');
+    mobileContactinfoMenu.classList.remove('d-none');
+}
+
+/**
+ * This function hides the contactinfo menu in the responsive view by adding d-none.
+ */
+function hideMobileContactinfoMenu() {
+    let mobileContactinfoMenu = document.querySelector('.open-mobile-contactinfo-menu');
+    mobileContactinfoMenu.classList.add('d-none');
+}
+
+/**
+ * This function opens the invisible mobile contactinfo menu with the specified contact ID.
+ * 
+ * @param {string} contactId - The ID of the contact to be displayed in the mobile contact info menu.
+ */
+function openInvisibleMobileContactinfoMenu(contactId) {
+    let mobileContactinfoMenu = document.querySelector('.open-mobile-contactinfo-menu');
+    mobileContactinfoMenu.innerHTML = renderMobileContactinfoMenuHTML(contactId);
 }
 
 /**
@@ -466,6 +493,12 @@ async function deleteContact(contactId) {
     }
 }
 
+/**
+ * This function asynchronously deletes the specified contact name from the 'assignedTo' array in tasks.
+ * 
+ * @param {string} deletedContactName - The name of the contact to be deleted from 'assignedTo' arrays in tasks.
+ * @returns {Promise<void>} - A Promise that resolves once the deletion process is complete.
+ */
 async function deleteContactInAssignedTo(deletedContactName) {
     console.log('suche nach = ' + deletedContactName)
     for (let a = 0; a < tasks.length; a++) {

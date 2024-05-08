@@ -176,13 +176,13 @@ function loginErrorReset() {
 function showLoginMessage() {
     let messageFormLogin = document.getElementById('messageFormLogin');
     if (successEmail === false && successPassword === false) {
-        messageFormLogin.innerHTML = 'email not found';
+        messageFormLogin.innerHTML = 'Email not found';
     }
     if (successPassword === false && successEmail === true) {
-        messageFormLogin.innerHTML = 'password is not correct!';
+        messageFormLogin.innerHTML = 'Password is not correct!';
     }
     if (successEmail === true && successPassword === true) {
-        messageFormLogin.innerHTML = 'login successfully';
+        messageFormLogin.innerHTML = 'Login successfully';
     }
 }
 
