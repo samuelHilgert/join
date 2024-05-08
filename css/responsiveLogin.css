@@ -1,0 +1,39 @@
+
+@media screen and (max-width: 620px) {
+  .mobile-signup-div{
+    position: absolute;
+    top: 770px;
+    left: 25%;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+
+.mobile-login-form-container {
+padding-right: 0;
+padding-left: 0;
+}
+
+.mobile-login-body {
+padding-top: 38px;
+padding-bottom: 26px;
+}
+
+.mobile-inputs{
+width: 90%;
+margin: auto;
+}
+}
+
+
+@media screen and (max-width: 450px) {
+.mobile-login-form {
+  padding-right: 0;
+  padding-left: 0;
+}
+.mobile-login-body {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+}
