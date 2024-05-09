@@ -10,6 +10,11 @@
   .mobile-add-task-form {
     gap: 20px;
   }
+
+  .mobile-task-options {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }
 
 @media screen and (max-width: 1066px) {
@@ -52,7 +57,7 @@
     align-items: center;
     gap: 30px;
   }
-  
+
   .add-task-partingline {
     display: none;
   }
@@ -63,14 +68,19 @@
 
   .mobile-add-task-main-container {
     margin-left: 0px;
+    padding-left: 0;
     width: 100% !important;
   }
 
-  .mobile-add-task-headline{
+  .mobile-add-task-headline {
     padding-left: 15%;
-    position: fixed;
     background-color: rgb(246, 247, 249);
-    margin-top: -29px;
+    margin-top: 64px;
+
+    flex: 1;
+    position: sticky;
+    top: 0;
+    transition: all 225ms ease-in-out;
   }
 
   .mobile-box {
@@ -78,24 +88,50 @@
     padding-bottom: 0;
     margin-right: 0;
   }
+
+  .mobile-clear-btn {
+    display: none;
+  }
+
+  .mobile-task-options {
+    padding-left: 15%;
+    padding-right: 15%;
+    position: fixed;
+    background-color: rgb(246, 247, 249);
+    padding-top: 12px;
+    padding-bottom: 28px;
+  }
 }
 
 @media screen and (max-width: 600px) {
-  .mobile-add-task-headline{
+  .mobile-add-task-headline {
     padding-left: 10%;
   }
 
   .mobile-box {
     width: 80%;
   }
+
+  .mobile-task-options {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 }
 
 @media screen and (max-width: 500px) {
-  .mobile-add-task-headline{
+  .mobile-add-task-headline {
     padding-left: 5%;
   }
 
   .mobile-box {
     width: 90%;
   }
+
+  .mobile-task-options {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media screen and (max-width: 500px) {
 }
