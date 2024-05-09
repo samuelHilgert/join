@@ -4,7 +4,7 @@
     padding-right: 0;
   }
 
-  .main-container{
+  .mobile-add-task-main-container{
     padding-left: 18px;
   }
   .mobile-add-task-form{
@@ -36,7 +36,7 @@
   .mobile-add-task-form{
     gap: 40px;
   }
-  .main-container{
+  .mobile-add-task-main-container{
     margin-left: 0px;
     width: 100% !important;
   }
@@ -55,7 +55,7 @@
     font-size: 20px;
   }
  
-  .main-container{
+  .mobile-add-task-main-container{
     margin-left: 0px;
     width: 100% !important;
   }
