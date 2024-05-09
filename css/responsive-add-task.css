@@ -61,8 +61,19 @@
   }
   .mobile-add-task-form{
     flex-direction: column;
+    align-items: center;
   }
   .add-task-partingline{
     display: none;
+  }
+  .mobile-box{
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+
+  .mobile-box{
+    width: 90%;
   }
 }
