@@ -1,9 +1,49 @@
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1398px) {
     .mobile-main-container {
-        margin-left: 0;
-        padding-left: 20px;
+        padding-left: 40px;
         padding-right: 20px;
+        padding-bottom: 150px;
+    }
+
+    .summary {
+        width: 60%;
+    }
+
+    .mobile-summary-container {
+        gap:20px;
+    }
+}
+
+@media screen and (max-width: 1168px) {
+    .mobile-main-container {
+        padding-left: 20px;
+    }
+
+    .summary {
+        width: 70%;
+    }
+
+    .mobile-summary-container {
+        gap:10px;
+    }
+}
+
+@media screen and (max-width: 1082px) {
+    .summary {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1044px) {
+    .summary {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 996px) {
+    .mobile-main-container {
+        padding-left: 40px;
+        padding-right: 20px;
         padding-bottom: 150px;
     }
 
@@ -11,11 +51,40 @@
     #summaryWelcome {
         display: none;
     }
+}
+
+@media screen and (max-width: 900px) {
+    .mobile-main-container {
+        margin-left: 0;
+        padding-left: 40px;
+        padding-right: 20px;
+        width:80%;
+        height: calc(100% - 30px);
+        box-sizing: border-box;
+    }
+
+    .summary-container {
+        width: 100%;
+        height: calc(100% - 430px);
+        box-sizing: border-box;
+        margin:0;
+      }
 
     .mobile-summary-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
+        margin-bottom:20px;
+        height:auto;
+    }
+
+    .mobile-summary-h2 {
+        font-size:32px; 
+        line-height: 24px;
+    } 
+
+    .mobile-summary-h5 {
+       font-size: 18px;
     }
 
     .div-line-blue {
@@ -28,10 +97,6 @@
         align-items: flex-start;
     }
 
-    .mobile-card-upcoming {
-        gap: 20px;
-    }
-
     #allTodosNumber h3,
     #allDoneNumber h3,
     #allUrgentNumber h3,
@@ -40,6 +105,38 @@
     #allAwaitFeedbackNumber h3 {
         font-size: 47px;
     }
+
+    .card {
+       height:130px;
+      }
 }
 
+@media screen and (max-width: 710px) {
+    .mobile-main-container {
+        padding-left: 20px;
+        width:90%;
+    }
+}
 
+@media screen and (max-width: 630px) {
+    .mobile-main-container {
+        width:100%;
+        padding-bottom: 0px;
+    }
+}
+
+@media screen and (max-width: 562px) {
+    .mobile-summary {
+        gap:10px;
+    }
+
+    #allTodosNumber h3,
+    #allDoneNumber h3,
+    #allUrgentNumber h3,
+    #allTasksNumber h3,
+    #allInProgressNumber h3,
+    #allAwaitFeedbackNumber h3 {
+        font-size: 36px;
+    }
+
+}

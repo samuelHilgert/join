@@ -26,21 +26,21 @@
     <header class="d_f_sb_c" include-html="../assets/templates/header.html"></header>
   </div>
 
-  <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-30 gap-30 mobile-main-container">
-   
+  <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-30 gap-10 mobile-main-container">
+
     <div class="summary-header width-max d_f_fs_c gap-30 mobile-summary-header">
       <div>
-        <h2>Join 360</h2>
+        <h2 class="mobile-summary-h2">Join 360</h2>
       </div>
       <div class="y-line-blue" id="summaryYLine"></div>
       <div>
-        <h5>Key Metrics at a Glance</h5>
+        <h5 class="mobile-summary-h5">Key Metrics at a Glance</h5>
       </div>
       <div class="div-line-blue"></div>
     </div>
 
-    <div class="summary-container d_f_se_c gap-50 width-max mobile-summary-container">
-      <div class="summary d_f_sb_fs width-max">
+    <div class="summary-container d_f_fs_c gap-50 width-max mobile-summary-container">
+      <div class="summary d_f_sb_fs width-max gap-20 mobile-summary">
         <div class="card d_f_c_c gap-30 mobile-card" onmouseover="changeImage(this, './assets/img/task-hover.svg')"
           onmouseout="restoreImage(this, './assets/img/task.svg')" onclick="forwardingBoard()">
           <img class="summary-icon" src="./assets/img/task.svg" />
@@ -60,7 +60,7 @@
         </div>
 
         <div class="card card-upcoming d_f_c_c gap-40 mobile-card-upcoming" onclick="forwardingBoard()">
-          <div class="d_f_c_c gap-20 height-max width-max">
+          <div class="d_f_c_c gap-30 height-max width-max">
             <div class="d_f_c_c gap-20">
               <img class="summary-icon" src="./assets/img/urgent.svg" />
               <div class="d_c_c_c" id="allUrgentNumber"></div>
@@ -95,7 +95,7 @@
         </div>
       </div>
 
-      <div class="summary-welcome d_c_c_fs gap-30" id="summaryWelcome">
+      <div class="summary-welcome d_c_c_fs gap-10" id="summaryWelcome">
         <h4 id="greeting"></h4>
         <p id="userNameDiv">Guest</p>
       </div>
