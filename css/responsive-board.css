@@ -11,13 +11,19 @@
 @media screen and (max-width: 1000px) {}
 
 
-@media screen and (max-width: 980px) {}
+@media screen and (max-width: 996px) {
+    .mobile-main-container {
+        padding-left: 40px;
+        padding-right: 20px;
+        padding-bottom: 150px;
+    }
+}
+
 
 @media screen and (max-width: 900px) {
     .mobile-main-container {
         margin-left: 0;
         width: 100%;
-        padding-bottom: 150px;
     }
 
     .search-board-input {
@@ -26,10 +32,6 @@
 
     .search-div {
         width: 100%;
-    }
-
-    .mobile-header-board {
-        flex-direction: column;
     }
 
     .drag-area-container {
@@ -77,6 +79,10 @@
 
     #addTaskBtnBoardHeader {
         display: none;
+    }
+
+    #searchkMobileBtnBoardHeader {
+        display:none;
     }
 
     .add-task-btn-board-header {

@@ -302,7 +302,6 @@
 .drag-area-no-tasks {
   padding: 10px;
   margin: 10px;
-  width: 252px;
   min-height: 50px;
   background-color: rgba(231, 231, 231, 1);
   border-radius: 10px;
@@ -371,10 +370,11 @@
   border-radius: 12px;
   padding: 10px;
   margin: 10px 0;
-  width: 252px !important;
-  height: auto;
-  cursor: pointer;
+  width:100%;
+  max-width:320px;
   box-sizing: border-box;
+  height: 270px;
+  cursor: pointer;
 }
 
 .todo p {
