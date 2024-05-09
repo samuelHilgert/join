@@ -13,6 +13,10 @@
     width: 285px;
   }
 
+  .mobile-logo{
+    width: 80px;
+  }
+
   .mobile-checkbox-policy {
     width: 244px;
   }
@@ -45,9 +49,6 @@
     margin: auto;
   }
 
-  .mobile-remember-me {
-    padding-right: 25%;
-  }
   .mobile-login-form {
     padding-right: 0;
     padding-left: 0;
@@ -70,19 +71,37 @@
   .mobile-login-form {
     gap: 30px;
   }
+
   .mobile-signup-div {
     top: 832px;
+  }
+
+  .mobile-signup-form {
+   gap: 30px;
   }
 
   .mobile-login-btns {
     flex-direction: column;
   }
 
+  .mobile-remember-me {
+    padding-right: 30%;
+  }
+
   .mobile-login-btn {
     width: 100%;
+    font-size: 20px;
+  }
+  
+  .mobile-signup-btn{
+    font-size: 20px;
   }
 
   .mobile-links {
     padding-top: 116px;
+  }
+
+  .mobile-login-signup-headline{
+    font-size: 48px;
   }
 }
