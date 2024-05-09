@@ -1,77 +1,65 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="./assets/img/logo.svg" />
-    <title>Summary</title>
-    <script src="./js/script.js"></script>
-    <script src="./js/storage.js"></script>
-    <script src="./js/renderHTML.js"></script>
-    <script src="./js/sidebar.js"></script>
-    <script src="./js/summary.js"></script>
-    <link rel="stylesheet" href="./css/standard.css" />
-    <link rel="stylesheet" href="./css/fonts.css" />
-    <link rel="stylesheet" href="./css/assets.css" />
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/responsive-contacts-header-sidebar.css">
-    <link rel="stylesheet" href="./css/responsive-summary.css" />   
-  </head>
 
-  <body onload="init()">
-    <div
-      class="sidebar d_c_sb_c"
-      include-html="../assets/templates/sidebar.html"
-    ></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/img/logo.svg" />
+  <title>Summary</title>
+  <script src="./js/script.js"></script>
+  <script src="./js/storage.js"></script>
+  <script src="./js/renderHTML.js"></script>
+  <script src="./js/sidebar.js"></script>
+  <script src="./js/summary.js"></script>
+  <link rel="stylesheet" href="./css/standard.css" />
+  <link rel="stylesheet" href="./css/fonts.css" />
+  <link rel="stylesheet" href="./css/assets.css" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/responsive-contacts-header-sidebar.css">
+  <link rel="stylesheet" href="./css/responsive-summary.css" />
+</head>
 
-    <div class="aot d_f_fs_c pad-x-80 bgC-white">
-      <header
-        class="d_f_sb_c"
-        include-html="../assets/templates/header.html"
-      ></header>
+<body onload="init()">
+  <div class="sidebar d_c_sb_c" include-html="../assets/templates/sidebar.html"></div>
+
+  <div class="aot d_f_fs_c pad-x-80 bgC-white">
+    <header class="d_f_sb_c" include-html="../assets/templates/header.html"></header>
+  </div>
+
+  <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-50 gap-30 mobile-main-container">
+    <div class="d_f_c_c gap-30 mobile-summary-header">
+      <div>
+        <h2>Join 360</h2>
+      </div>
+      <div class="y-line-blue" id="summaryYLine"></div>
+      <div>
+        <h5>Key Metrics at a Glance</h5>
+      </div>
+      <div class="div-line-blue"></div>
     </div>
 
-    <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-50 gap-30 mobile-main-container">
-      <div class="d_f_c_c gap-30 mobile-summary-header">
-        <div>
-          <h2>Join 360</h2>
-        </div>
-        <div class="y-line-blue" id="summaryYLine"></div>
-        <div>
-          <h5>Key Metrics at a Glance</h5>
-        </div>
-        <div class="div-line-blue"></div>
-      </div>
-
-      <div class="summary-container d_f_se_c gap-50 mobile-summary-container">
-        <div class="summary d_f_sb_fs">
-          <div
-            class="card d_f_c_c gap-30"
-            onmouseover="changeImage(this, './assets/img/task-hover.svg')"
-            onmouseout="restoreImage(this, './assets/img/task.svg')"
-            onclick="forwardingBoard()"
-          >
-            <img class="summary-icon" src="./assets/img/task.svg" />
-            <div>
-              <div id="allTodosNumber"></div>
-              <div>To-do</div>
-            </div>
+    <div class="summary-container d_f_se_c gap-50 width-max mobile-summary-container">
+      <div class="summary d_f_sb_fs width-max">
+        <div class="card d_f_c_c gap-30 mobile-card" onmouseover="changeImage(this, './assets/img/task-hover.svg')"
+          onmouseout="restoreImage(this, './assets/img/task.svg')" onclick="forwardingBoard()">
+          <img class="summary-icon" src="./assets/img/task.svg" />
+          <div>
+            <div id="allTodosNumber"></div>
+            <div class="summary-category-text">To-do</div>
           </div>
+        </div>
 
-          <div
-            class="card d_f_c_c gap-30"
-            onmouseover="changeImage(this, './assets/img/done-hover.svg')"
-            onmouseout="restoreImage(this, './assets/img/done.svg')"
-            onclick="forwardingBoard()"
-          >
-            <img class="summary-icon" src="./assets/img/done.svg" />
-            <div>
-              <div id="allDoneNumber"></div>
-              <div>Done</div>
-            </div>
+        <div class="card d_f_c_c gap-30 mobile-card" onmouseover="changeImage(this, './assets/img/done-hover.svg')"
+          onmouseout="restoreImage(this, './assets/img/done.svg')" onclick="forwardingBoard()">
+          <img class="summary-icon" src="./assets/img/done.svg" />
+          <div>
+            <div id="allDoneNumber"></div>
+            <div class="summary-category-text">Done</div>
           </div>
+        </div>
 
-          <div class="card d_f_se_c gap-40" onclick="forwardingBoard()">
+        <div class="card card-upcoming d_f_c_c gap-40 mobile-card-upcoming" onclick="forwardingBoard()">
+          <div class="d_f_c_c gap-20 height-max width-max">
             <div class="d_f_c_c gap-20">
               <img class="summary-icon" src="./assets/img/urgent.svg" />
               <div class="d_c_c_c" id="allUrgentNumber"></div>
@@ -82,53 +70,41 @@
               <p>Upcoming Deadline</p>
             </div>
           </div>
+        </div>
 
-          <div
-            class="card card-small d_f_c_c gap-30 text-center"
-            onclick="forwardingBoard()"
-          >
-            <div>
-              <div id="allTasksNumber"></div>
-              <div>Tasks in Board</div>
-            </div>
-          </div>
-
-          <div
-            class="card card-small d_f_c_c gap-30 text-center"
-            onclick="forwardingBoard()"
-          >
-            <div>
-              <div id="allInProgressNumber"></div>
-              <div>Tasks In Progress</div>
-            </div>
-          </div>
-
-          <div
-            class="card card-small d_f_c_c gap-30 text-center"
-            onclick="forwardingBoard()"
-          >
-            <div>
-              <div id="allAwaitFeedbackNumber"></div>
-              <div>Awaiting Feedback</div>
-            </div>
+        <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
+          <div>
+            <div id="allTasksNumber"></div>
+            <div>Tasks in Board</div>
           </div>
         </div>
 
-        <div class="summary-welcome d_c_c_fs gap-30" id="summaryWelcome">
-          <h4 id="greeting"></h4>
-          <p id="userNameDiv">Guest</p>
+        <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
+          <div>
+            <div id="allInProgressNumber"></div>
+            <div>Tasks In Progress</div>
+          </div>
+        </div>
+
+        <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
+          <div>
+            <div id="allAwaitFeedbackNumber"></div>
+            <div>Awaiting Feedback</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div
-      class="d_c_fs_fe pad-x-40 pad-y-40 popup-bg-filter width-max"
-      id="guestMessagePopupSummary"
-    >
-      <div
-        class="d_c_fs_c popup-guest-message bgC-white pad-y-40 pad-x-40 gap-40 text-center"
-        id="guestMessageSummary"
-      ></div>
+      <div class="summary-welcome d_c_c_fs gap-30" id="summaryWelcome">
+        <h4 id="greeting"></h4>
+        <p id="userNameDiv">Guest</p>
+      </div>
     </div>
-  </body>
+  </div>
+
+  <div class="d_c_fs_fe pad-x-40 pad-y-40 popup-bg-filter width-max" id="guestMessagePopupSummary">
+    <div class="d_c_fs_c popup-guest-message bgC-white pad-y-40 pad-x-40 gap-40 text-center" id="guestMessageSummary">
+    </div>
+  </div>
+</body>
+
 </html>

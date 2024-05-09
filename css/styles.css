@@ -196,8 +196,10 @@ header {
 
 .summary {
   display: flex;
-  width: 63%;
+  width: 100%;
   flex-wrap: wrap;
+  padding:0 20px;
+  gap:20px;
 }
 
 .summary-welcome {
