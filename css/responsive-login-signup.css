@@ -5,16 +5,15 @@
 }
 
 @media screen and (max-width: 620px) {
-  
-.mobile-second-signup-div{
-  display: flex !important;
-}
+  .mobile-second-signup-div {
+    display: flex !important;
+  }
 
-.mobile-signup-div{
-  display: none;
-}
+  .mobile-signup-div {
+    display: none;
+  }
 
-  .mobile-logo{
+  .mobile-logo {
     width: 80px;
   }
 
@@ -25,7 +24,7 @@
   .mobile-login-body {
     padding-top: 38px;
     padding-bottom: 26px;
-    height: 100%;
+    height: 100vh;
   }
 
   .mobile-links {
@@ -64,11 +63,12 @@
   .mobile-signup-inputs {
     min-width: 100%;
   }
+
   .mobile-signup-container {
     width: inherit;
   }
 
-  .mobile-signup-arrow{
+  .mobile-signup-arrow {
     padding-left: 20px !important;
   }
 }
@@ -78,17 +78,15 @@
     gap: 30px;
   }
 
-
-
   .mobile-signup-form {
-   gap: 30px;
+    gap: 30px;
   }
 
   .mobile-login-btns {
     flex-direction: column;
   }
 
-  .mobile-signup-checkbox{
+  .mobile-signup-checkbox {
     height: 20px !important;
     width: 20px !important;
   }
@@ -101,8 +99,8 @@
     width: 100%;
     font-size: 18px;
   }
-  
-  .mobile-signup-btn{
+
+  .mobile-signup-btn {
     font-size: 18px;
   }
 
@@ -110,7 +108,7 @@
     padding-top: 116px;
   }
 
-  .mobile-login-signup-headline{
+  .mobile-login-signup-headline {
     font-size: 48px;
   }
 }
