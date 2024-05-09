@@ -310,8 +310,16 @@ function getContactsForPopupTask(todo) {
 
 function getBgColorTaskPopup(task, index) {
   const contactName = task.assignedTo[index];
-  const contactInfo = contacts.find(contact => contact.name === contactName);
-  return contactInfo ? contactInfo.color : "#FFFFFF"; 
+  let contactInfo;
+  if (authorized === 'user') {
+      contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
+  } else {
+      contactInfo = contacts.find(contact => contact.name === contactName);
+  }
+  if (!contactInfo || !contactInfo.color) {
+      return "blue";  // Standardfarbe, wenn keine Farbe gefunden wurde
+  }
+  return contactInfo.color;
 }
 
 function getPriorityIcon(todo) {
