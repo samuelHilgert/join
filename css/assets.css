@@ -560,9 +560,9 @@ li {
 #signUpMessageContainer {
   display: none;
   justify-content: center;
-  position: absolute;
-  bottom: -40%;
-  height: 300px;
+  position: fixed;
+  bottom: 0;
+  height: 50%;
   width: 50%;
   box-sizing: border-box;
 }
@@ -570,7 +570,7 @@ li {
 #messageFormSignUp {
   display: none;
   min-width: 50%;
-  height: auto;
+  height: 100px;
   box-sizing: border-box;
   position: absolute;
   z-index: 9999;
