@@ -1,1 +1,68 @@
-@media screen and (max-width: 1140px) {}
+@media screen and (max-width: 1208px) {
+
+  .mobile-add-task-container{
+    padding-right: 0;
+  }
+
+  .mobile-add-task-main-container{
+    padding-left: 18px;
+  }
+  .mobile-add-task-form{
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 1066px) {
+
+  .mobile-task-btn-style{
+    font-size: 18px;
+    min-width: 92px;
+  }
+}
+
+@media screen and (max-width: 975px) {
+
+  .mobile-task-btn-style{
+    font-size: 17px;
+    gap: 5px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+
+  .mobile-task-btn-style{
+    font-size: 18px;
+  }
+  .mobile-add-task-form{
+    gap: 40px;
+  }
+  .mobile-add-task-main-container{
+    margin-left: 0px;
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .mobile-add-task-form{
+    gap: 20px;
+  }
+}
+
+
+@media screen and (max-width: 670px) {
+
+  .mobile-task-btn-style{
+    font-size: 20px;
+  }
+ 
+  .mobile-add-task-main-container{
+    margin-left: 0px;
+    width: 100% !important;
+  }
+  .mobile-add-task-form{
+    flex-direction: column;
+  }
+  .add-task-partingline{
+    display: none;
+  }
+}
