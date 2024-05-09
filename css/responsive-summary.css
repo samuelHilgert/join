@@ -1,0 +1,7 @@
+@media screen and (max-width: 900px) {
+    .mobile-main-container {
+        margin-left: 0;
+        width: 100%;
+        padding-bottom: 150px;
+    }
+}
