@@ -186,7 +186,7 @@ function generateGuestMessageTextForReload(div, messageText) {
 function generateGuestMessageText(div, messageText) {
     messageText.innerHTML = `
     <div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
-    <h5>You are not logged in!</h5>
+    <h5>You are not signed in!</h5>
     <div class="d_c_c_c gap-10">
         <p>Please note that we will not save your changes.</p>
         <p>Please log in to access all features.</p>
