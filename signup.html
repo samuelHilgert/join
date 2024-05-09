@@ -20,7 +20,7 @@
     onload="loadUsers()"
   >
     <div class="topline">
-      <div><img class="logo" src="./assets/img/logo.svg" alt="" /></div>
+      <div><img class="logo mobile-logo" src="./assets/img/logo.svg" alt="" /></div>
     </div>
 
     <div
@@ -29,11 +29,12 @@
       <div class="d_f_fs_c width-max">
         <a class="a-style back-arrow" href="./login.html"
           ><img
-            style="padding-left: 20px"
+            style="padding-left: 72px"
+            class="mobile-signup-arrow"
             src="./assets/img/arrow-left-line.svg"
         /></a>
         <div class="d_f_c_c width-max mobile-login-form-container">
-          <h2 style="padding-right: 32px">Sign up</h2>
+          <h2 style="padding-right: 32px" class="mobile-login-signup-headline">Sign up</h2>
         </div>
       </div>
       <div class="space-20"></div>
@@ -81,7 +82,7 @@
         </div>
 
         <div class="d_f_c_c gap-20 mobile-checkbox-policy">
-          <input type="checkbox" id="signUpCheckbox" name="signUpCheckbox" />
+          <input type="checkbox" id="signUpCheckbox" name="signUpCheckbox" class="mobile-signup-checkbox" />
           <label for="signUpCheckbox"
             >I accept the
             <a class="a-style" href="./privacy-policy.html" target="_blank"
@@ -90,7 +91,7 @@
           >
         </div>
         <div class="d_f_c_c gap-20">
-          <button class="btn" id="registerBtn">Sign up</button>
+          <button class="btn mobile-login-btn" id="registerBtn">Sign up</button>
         </div>
       </form>
     </div>
