@@ -46,7 +46,7 @@
           <img class="summary-icon" src="./assets/img/task.svg" />
           <div class="d_c_c_c gap-10">
             <div id="allTodosNumber"></div>
-            <div class="summary-category-text">To-do</div>
+            <div class="summary-category-text mobile-summary-category-text">To-do</div>
           </div>
         </div>
 
@@ -55,42 +55,42 @@
           <img class="summary-icon" src="./assets/img/done.svg" />
           <div class="d_c_c_c gap-10">
             <div id="allDoneNumber"></div>
-            <div class="summary-category-text">Done</div>
+            <div class="summary-category-text mobile-summary-category-text">Done</div>
           </div>
         </div>
 
         <div class="card card-upcoming d_f_c_c gap-40 mobile-card-upcoming" onclick="forwardingBoard()">
           <div class="d_f_c_c gap-30 height-max width-max">
-            <div class="d_f_c_c gap-20">
+            <div class="d_f_c_c gap-20 mobile-card-upcoming-gap">
               <img class="summary-icon" src="./assets/img/urgent.svg" />
               <div class="d_c_c_c" id="allUrgentNumber"></div>
             </div>
             <div class="y-line-grey"></div>
             <div class="d_c_c_fs gap-10">
-              <p><b id="upcomingDueDate">October 16, 2022</b></p>
-              <p>Upcoming Deadline</p>
+              <p class="mobile-summary-category-text"><b id="upcomingDueDate">October 16, 2022</b></p>
+              <p class="mobile-summary-category-text">Upcoming Deadline</p>
             </div>
           </div>
         </div>
 
         <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
-          <div class="d_c_c_c gap-10">
+          <div class="d_c_c_c gap-10 ">
             <div id="allTasksNumber"></div>
-            <div>Tasks in Board</div>
+            <div class="mobile-summary-category-text">Tasks in Board</div>
           </div>
         </div>
 
         <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
           <div class="d_c_c_c gap-10">
             <div id="allInProgressNumber"></div>
-            <div>Tasks In Progress</div>
+            <div class="mobile-summary-category-text">Tasks In Progress</div>
           </div>
         </div>
 
         <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
           <div class="d_c_c_c gap-10">
             <div id="allAwaitFeedbackNumber"></div>
-            <div>Awaiting Feedback</div>
+            <div class="mobile-summary-category-text">Awaiting Feedback</div>
           </div>
         </div>
       </div>

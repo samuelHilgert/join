@@ -10,7 +10,7 @@
     }
 
     .mobile-summary-container {
-        gap:20px;
+        gap: 20px;
     }
 }
 
@@ -24,7 +24,7 @@
     }
 
     .mobile-summary-container {
-        gap:10px;
+        gap: 10px;
     }
 }
 
@@ -58,7 +58,7 @@
         margin-left: 0;
         padding-left: 40px;
         padding-right: 20px;
-        width:80%;
+        width: 80%;
         height: calc(100% - 30px);
         box-sizing: border-box;
     }
@@ -67,24 +67,24 @@
         width: 100%;
         height: calc(100% - 430px);
         box-sizing: border-box;
-        margin:0;
-      }
+        margin: 0;
+    }
 
     .mobile-summary-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
-        margin-bottom:20px;
-        height:auto;
+        margin-bottom: 20px;
+        height: auto;
     }
 
     .mobile-summary-h2 {
-        font-size:32px; 
+        font-size: 32px;
         line-height: 24px;
-    } 
+    }
 
     .mobile-summary-h5 {
-       font-size: 18px;
+        font-size: 18px;
     }
 
     .div-line-blue {
@@ -107,27 +107,28 @@
     }
 
     .card {
-       height:130px;
-      }
+        height: 130px;
+    }
 }
 
 @media screen and (max-width: 710px) {
     .mobile-main-container {
         padding-left: 20px;
-        width:90%;
+        width: 90%;
     }
 }
 
 @media screen and (max-width: 630px) {
     .mobile-main-container {
-        width:100%;
-        padding-bottom: 0px;
+        width: 100%;
     }
+
 }
 
 @media screen and (max-width: 562px) {
     .mobile-summary {
-        gap:10px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
 
     #allTodosNumber h3,
@@ -139,4 +140,91 @@
         font-size: 36px;
     }
 
+    .card {
+        padding: 0 30px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .summary-icon {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media screen and (max-width: 462px) {
+    .mobile-main-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .card {
+        padding: 0 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .mobile-main-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .mobile-card {
+        gap: 15px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+
+    #allTodosNumber h3,
+    #allDoneNumber h3,
+    #allUrgentNumber h3,
+    #allTasksNumber h3,
+    #allInProgressNumber h3,
+    #allAwaitFeedbackNumber h3 {
+        font-size: 30px;
+    }
+
+    .mobile-summary-category-text {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+
+    #allTodosNumber h3,
+    #allDoneNumber h3,
+    #allUrgentNumber h3,
+    #allTasksNumber h3,
+    #allInProgressNumber h3,
+    #allAwaitFeedbackNumber h3 {
+        font-size: 28px;
+    }
+
+    .mobile-summary-category-text {
+        font-size: 14px;
+    }
+
+    .card {
+        height: 110px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .y-line-grey {
+        height:70px;
+    }
+
+    .mobile-card-upcoming-gap {
+        gap:10px;
+    }
+
+}
+
+@media screen and (max-width: 375px) {
+    .card {
+        height: 110px;
+    }
 }

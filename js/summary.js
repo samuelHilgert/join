@@ -132,7 +132,7 @@ function renderSummaryValues() {
   );
   allTodosNumber.innerHTML = `<h3>${allTodos}</h3>`;
   allDoneNumber.innerHTML = `<h3>${allDones}</h3>`;
-  allUrgentNumber.innerHTML = `<h3>${allUrgents}</h3><p>Urgent</p>`;
+  allUrgentNumber.innerHTML = `<h3>${allUrgents}</h3><p class="mobile-summary-category-text">Urgent</p>`;
   allTasksNumber.innerHTML = `<h3>${allTasks}</h3>`;
   allInProgressNumber.innerHTML = `<h3>${allInProgress}</h3>`;
   allAwaitFeedbackNumber.innerHTML = `<h3>${allAwaitFeedback}</h3>`;
