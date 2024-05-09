@@ -26,8 +26,9 @@
     <header class="d_f_sb_c" include-html="../assets/templates/header.html"></header>
   </div>
 
-  <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-50 gap-30 mobile-main-container">
-    <div class="d_f_c_c gap-30 mobile-summary-header">
+  <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-30 gap-30 mobile-main-container">
+   
+    <div class="summary-header width-max d_f_fs_c gap-30 mobile-summary-header">
       <div>
         <h2>Join 360</h2>
       </div>
@@ -43,7 +44,7 @@
         <div class="card d_f_c_c gap-30 mobile-card" onmouseover="changeImage(this, './assets/img/task-hover.svg')"
           onmouseout="restoreImage(this, './assets/img/task.svg')" onclick="forwardingBoard()">
           <img class="summary-icon" src="./assets/img/task.svg" />
-          <div>
+          <div class="d_c_c_c gap-10">
             <div id="allTodosNumber"></div>
             <div class="summary-category-text">To-do</div>
           </div>
@@ -52,7 +53,7 @@
         <div class="card d_f_c_c gap-30 mobile-card" onmouseover="changeImage(this, './assets/img/done-hover.svg')"
           onmouseout="restoreImage(this, './assets/img/done.svg')" onclick="forwardingBoard()">
           <img class="summary-icon" src="./assets/img/done.svg" />
-          <div>
+          <div class="d_c_c_c gap-10">
             <div id="allDoneNumber"></div>
             <div class="summary-category-text">Done</div>
           </div>
@@ -73,21 +74,21 @@
         </div>
 
         <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
-          <div>
+          <div class="d_c_c_c gap-10">
             <div id="allTasksNumber"></div>
             <div>Tasks in Board</div>
           </div>
         </div>
 
         <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
-          <div>
+          <div class="d_c_c_c gap-10">
             <div id="allInProgressNumber"></div>
             <div>Tasks In Progress</div>
           </div>
         </div>
 
         <div class="card d_f_c_c gap-30 text-center mobile-card-small" onclick="forwardingBoard()">
-          <div>
+          <div class="d_c_c_c gap-10">
             <div id="allAwaitFeedbackNumber"></div>
             <div>Awaiting Feedback</div>
           </div>

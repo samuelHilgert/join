@@ -228,9 +228,12 @@
 .card {
   display: flex;
   border-radius: 30px;
-  padding: 40px 40px;
-  height:130px;
-  flex: 1;
+  padding: 0 40px;
+  padding-top:10px;
+  padding-bottom:10px;
+  height:100%;
+  flex:1;
+  box-sizing: border-box;
   background-color: rgba(255, 255, 255, 1);
   margin: 10px 0;
   color: rgba(0, 0, 0, 1);
@@ -246,11 +249,13 @@
 }
 
 .card-upcoming {
-  min-width: 100%;
-  box-sizing: border-box;
   border-radius: 30px;
-  padding: 40px 20px;
-  height:210px;
+  padding: 0 20px;
+  padding-top:10px;
+  padding-bottom:10px;
+  height:100%;
+  min-width:100%;
+  box-sizing: border-box;
   gap:20px;
 }
 
