@@ -221,13 +221,21 @@
   height: 100px;
 }
 
+.summary-category-text {
+  white-space: nowrap;
+}
+
 .card {
   display: flex;
-  flex: 1;
   border-radius: 30px;
-  padding: 38px 76px;
+  padding: 0 40px;
+  padding-top:10px;
+  padding-bottom:10px;
+  height:100%;
+  flex:1;
+  box-sizing: border-box;
   background-color: rgba(255, 255, 255, 1);
-  margin: 10px;
+  margin: 10px 0;
   color: rgba(0, 0, 0, 1);
   transition: transform 0.3s ease;
 }
@@ -240,10 +248,15 @@
   /* Vergrößern um 7% */
 }
 
-.card-small {
-  padding: 38px 48px;
-  min-width: 100px;
-  max-width: 10px;
+.card-upcoming {
+  border-radius: 30px;
+  padding: 0 20px;
+  padding-top:10px;
+  padding-bottom:10px;
+  height:100%;
+  min-width:100%;
+  box-sizing: border-box;
+  gap:20px;
 }
 
 .summary-icon {

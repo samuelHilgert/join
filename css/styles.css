@@ -191,13 +191,21 @@ header {
 
 .summary-container {
   width: 100%;
+  height: calc(100% - 650px);
   box-sizing: border-box;
+}
+
+.summary-header {
+  height:100px;
 }
 
 .summary {
   display: flex;
-  width: 63%;
+  width: 100%;
+  height:100%;
   flex-wrap: wrap;
+  padding:0 20px;
+  gap:20px;
 }
 
 .summary-welcome {
