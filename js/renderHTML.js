@@ -189,7 +189,7 @@ function generateGuestMessageText(div, messageText) {
     <h5>You are not signed in!</h5>
     <div class="d_c_c_c gap-10">
         <p>Please note that we will not save your changes.</p>
-        <p>Please log in to access all features.</p>
+        <p>Please sign in to get access to all features.</p>
     </div>
     <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
     `;
