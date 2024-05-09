@@ -309,14 +309,9 @@ function getContactsForPopupTask(todo) {
 }
 
 function getBgColorTaskPopup(task, index) {
-  // Zugriff auf den Namen des Kontakts im Task
   const contactName = task.assignedTo[index];
-  
-  // Suche in der globalen Kontaktliste nach dem entsprechenden Kontakt
   const contactInfo = contacts.find(contact => contact.name === contactName);
-
-  // Gib die Farbe des gefundenen Kontakts zurück, oder einen Standardwert, falls nicht gefunden
-  return contactInfo ? contactInfo.color : "#FFFFFF"; // Standard weiß, wenn keine Farbe definiert ist
+  return contactInfo ? contactInfo.color : "#FFFFFF"; 
 }
 
 function getPriorityIcon(todo) {
