@@ -5,13 +5,14 @@
 }
 
 @media screen and (max-width: 620px) {
-  .mobile-signup-div {
-    position: absolute;
-    top: 832px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 285px;
-  }
+  
+.mobile-second-signup-div{
+  display: flex !important;
+}
+
+.mobile-signup-div{
+  display: none;
+}
 
   .mobile-logo{
     width: 80px;
@@ -24,6 +25,7 @@
   .mobile-login-body {
     padding-top: 38px;
     padding-bottom: 26px;
+    height: 100%;
   }
 
   .mobile-links {
@@ -76,9 +78,7 @@
     gap: 30px;
   }
 
-  .mobile-signup-div {
-    top: 832px;
-  }
+
 
   .mobile-signup-form {
    gap: 30px;
@@ -99,11 +99,11 @@
 
   .mobile-login-btn {
     width: 100%;
-    font-size: 20px;
+    font-size: 18px;
   }
   
   .mobile-signup-btn{
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .mobile-links {
