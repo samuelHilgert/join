@@ -58,7 +58,7 @@ function showGuestMessageOnBoard() {
 /*********************** END GENERAL FUNCTIONS ********************************/
 
 function generateTodoHTML(task) {
-  return `<div class="todo d_c_fs_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
+  return `<div class="todo d_c_sb_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
             <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
             <h6><b>${task["title"]}</b></h6>
             <p>${task["description"]}</p>

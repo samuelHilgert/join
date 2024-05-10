@@ -69,8 +69,7 @@
     }
 
     .todo {
-        min-width: 252px !important;
-        min-height: 244px !important;
+        min-width: 200px !important;
     }
 
     #addTaskMobileBtnBoardHeader {
