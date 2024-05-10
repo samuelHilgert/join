@@ -75,18 +75,22 @@
   .mobile-add-task-headline {
     padding-left: 15%;
     background-color: rgb(246, 247, 249);
-    margin-top: 64px;
-
-    flex: 1;
-    position: sticky;
-    top: 0;
-    transition: all 225ms ease-in-out;
+    position: fixed;
+    top: 80px;
   }
 
-  .mobile-box {
+  .mobile-box-1 {
     width: 70%;
     padding-bottom: 0;
     margin-right: 0;
+    margin-top: 100px;
+  }
+
+  .mobile-box-2 {
+    width: 70%;
+    padding-bottom: 0;
+    margin-right: 0;
+    margin-bottom: 230px;
   }
 
   .mobile-clear-btn {
@@ -99,7 +103,7 @@
     position: fixed;
     background-color: rgb(246, 247, 249);
     padding-top: 12px;
-    padding-bottom: 28px;
+    bottom: 21px;
   }
 }
 
@@ -108,7 +112,11 @@
     padding-left: 10%;
   }
 
-  .mobile-box {
+  .mobile-box-1 {
+    width: 80%;
+  }
+
+  .mobile-box-2 {
     width: 80%;
   }
 
@@ -123,7 +131,11 @@
     padding-left: 5%;
   }
 
-  .mobile-box {
+  .mobile-box-1 {
+    width: 90%;
+  }
+
+  .mobile-box-2 {
     width: 90%;
   }
 
