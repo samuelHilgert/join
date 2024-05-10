@@ -3,6 +3,7 @@
   height: auto;
   padding: 20px 24px;
   box-sizing: border-box;
+  border: unset;
   border-radius: 10px;
   border: 1px solid rgba(209, 209, 209, 1);
   background-repeat: no-repeat;
@@ -18,7 +19,7 @@
 
 .search-board-input {
   padding: 10px 14px;
-  border: none;
+  border: unset;
   outline: none;
   box-sizing: border-box;
 }
@@ -87,13 +88,13 @@
   align-items: center;
   cursor: pointer;
   border-radius: 8px;
+  border:unset;
   padding: 15px 24px;
   background-color: #2a3647;
   color: white;
   font-size: 21px;
   font-weight: bold;
   line-height: 25.2px;
-  border: none;
   text-wrap: nowrap;
 }
 
@@ -105,7 +106,7 @@
   font-size: 21px;
   font-weight: bold;
   line-height: 25.2px;
-  border: none;
+  border:unset;
   text-wrap: nowrap;
 }
 
