@@ -69,8 +69,8 @@
 
     <div class="drag-area-container d_f_se_fs width-max">
 
-      <div class="drag-area-category d_c_c_c gap-10 mobile-drag-area-category">
-        <div class="headline-board-columns d_f_sb_c width-max">
+      <div class="drag-area-category d_c_c_fs gap-10 mobile-drag-area-category">
+        <div class="headline-board-columns d_f_sb_c width-max mobile-headline-board-columns">
           <p class="drag-area-category-headline">To do</p>
           <img class="cursor-pointer" src="./assets/img/plus-button.svg" onclick="openBoardAddTaskPopup(event)" />
         </div>
@@ -78,8 +78,8 @@
           ondragleave="removeHighlight('backlog')" ondragover="allowDrop(event); highlight('backlog')"></div>
       </div>
 
-      <div class="drag-area-category d_c_c_c gap-10 mobile-drag-area-category">
-        <div class="headline-board-columns d_f_sb_c width-max">
+      <div class="drag-area-category d_c_c_fs gap-10 mobile-drag-area-category">
+        <div class="headline-board-columns d_f_sb_c width-max mobile-headline-board-columns">
           <p class="drag-area-category-headline">In progress</p>
           <img class="cursor-pointer" src="./assets/img/plus-button.svg" onclick="openBoardAddTaskPopup(event)" />
         </div>
@@ -87,8 +87,8 @@
           ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"></div>
       </div>
 
-      <div class="drag-area-category d_c_c_c gap-10 mobile-drag-area-category">
-        <div class="headline-board-columns d_f_sb_c width-max">
+      <div class="drag-area-category d_c_c_fs gap-10 mobile-drag-area-category">
+        <div class="headline-board-columns d_f_sb_c width-max mobile-headline-board-columns">
           <p class="drag-area-category-headline">Await feedback</p>
           <img class="cursor-pointer" src="./assets/img/plus-button.svg" onclick="openBoardAddTaskPopup(event)" />
         </div>
@@ -97,8 +97,8 @@
         </div>
       </div>
 
-      <div class="drag-area-category d_c_c_c gap-10 mobile-drag-area-category">
-        <div class="headline-board-columns d_f_sb_c width-max">
+      <div class="drag-area-category d_c_c_fs gap-10 mobile-drag-area-category">
+        <div class="headline-board-columns d_f_sb_c width-max mobile-headline-board-columns">
           <p class="drag-area-category-headline">Done</p>
         </div>
         <div class="drag-area-alt d_c_fs_c mobile-drag-area-alt" id="done" ondrop="moveTo('done')"
