@@ -587,11 +587,10 @@ function restoreImagePopupTask(element, defaultSrc) {
 }
 
 function showSubtasksByHovering(element) {
-let progessSubtaskDiv = document.getElementById(`progessSubtaskDiv${element}`);
 let statusText = document.getElementById(`statusText${element}`);
 statusText.style.display = 'block';
 
-progessSubtaskDiv.onmouseout = function() {
+statusText.onmouseout = function() {
   statusText.style.display = 'none';
 };
 }
