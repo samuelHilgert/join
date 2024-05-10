@@ -62,11 +62,11 @@ function generateTodoHTML(task) {
             <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
             <h6><b>${task["title"]}</b></h6>
             <p>${task["description"]}</p>
-            <div class="d_f_c_c width-max">
-                <div class="progress">
+            <div class="d_c_fs_fs width-max gap-10" id="progessSubtaskDiv${task["id"]}">
+                <div class="progress" onmouseover="showSubtasksByHovering(${task["id"]})">
                     <div class="progress-bar" id="progressBar${task["id"]}"></div>
                 </div>
-                <div class="statusText"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
+                <div class="statusText" id="statusText${task["id"]}"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
             </div>
             <div class="d_f_sb_c width-max">
             <div class="d_f_c_c" id="contactsIn${task["id"]}">
@@ -584,4 +584,14 @@ function changeImage(element, src) {
 
 function restoreImagePopupTask(element, defaultSrc) {
   element.querySelector(".delete").src = defaultSrc;
+}
+
+function showSubtasksByHovering(element) {
+let progessSubtaskDiv = document.getElementById(`progessSubtaskDiv${element}`);
+let statusText = document.getElementById(`statusText${element}`);
+statusText.style.display = 'block';
+
+progessSubtaskDiv.onmouseout = function() {
+  statusText.style.display = 'none';
+};
 }
