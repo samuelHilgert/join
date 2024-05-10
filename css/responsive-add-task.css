@@ -105,6 +105,10 @@
     padding-top: 12px;
     bottom: 21px;
   }
+
+  .header-fixed{
+    position: fixed;
+  }
 }
 
 @media screen and (max-width: 600px) {
