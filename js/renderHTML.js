@@ -195,8 +195,7 @@ function generateGuestMessageText(div, messageText) {
     `;
 }
 
-function renderAddTaskFormButton() {
-    let urgentBtn = document.getElementById('urgentBtn');
+function renderAddTaskFormButton(urgentBtn, mediumBtn, lowBtn) {
     urgentBtn.innerHTML = `
     <p>Urgent</p>
     <svg class="category-svg-urgent">
@@ -214,7 +213,6 @@ function renderAddTaskFormButton() {
   </svg> 
     `;
 
-    let mediumBtn = document.getElementById('mediumBtn');
     mediumBtn.innerHTML = `
     <p>Medium</p>
     <svg class="category-svg-medium">
@@ -232,7 +230,6 @@ function renderAddTaskFormButton() {
   </svg> 
     `;
 
-    let lowBtn = document.getElementById('lowBtn');
     lowBtn.innerHTML = `
     <p>Low</p>
     <svg class="category-svg-low">

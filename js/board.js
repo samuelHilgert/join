@@ -379,6 +379,9 @@ async function editTask() {
     prioBtn = lowBtn;
   }
 
+
+  renderAddTaskFormButton(urgentBtn, mediumBtn, lowBtn);
+
   prioBtn.click();
   checkedCheckboxes = todo.assignedTo;
   let taskContactDiv = document.getElementById("taskContactDiv-3");
