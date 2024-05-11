@@ -23,26 +23,24 @@
 </body>
 
 <script>
-/**
- * this is a function to initiate the animation on index.html
- * 
- */
-function indexHTMLAnimation() {
-    if (document.location.pathname === `/index.html`) { 
+    /**
+     * this is a function to initiate the animation on index.html
+     * 
+     */
+    function indexHTMLAnimation() {
         let logoAnimation = document.querySelector('.logo-animation');
-        logoAnimation.addEventListener('animationend', function() { // "animationend" is the name of the event. Its a fixed term.
-        setTimeout(forward, 1000);
+        logoAnimation.addEventListener('animationend', function () { // "animationend" is the name of the event. Its a fixed term.
+            setTimeout(forward, 1000);
         });
     }
-}
 
-/**
- * this function forwards the user to login after the animation 
- * 
- */
-function forward() {
-    window.location.href = 'login.html';
-}
+    /**
+     * this function forwards the user to login after the animation 
+     * 
+     */
+    function forward() {
+        window.location.href = '/login.html';
+    }
 </script>
 
 </html>

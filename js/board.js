@@ -59,7 +59,7 @@ function showGuestMessageOnBoard() {
 /*********************** END GENERAL FUNCTIONS ********************************/
 
 function generateTodoHTML(task) {
-  return `<div class="todo d_c_sb_fs gap-10 width-max" ontouchstart="handleTouchStart(event)" ontouchend="handleTouchEnd(event)" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
+  return `<div class="todo d_c_sb_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
             <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
             <h6><b>${task["title"]}</b></h6>
             <p>${task["description"]}</p>
@@ -608,22 +608,3 @@ function showSubtasksByHovering(element) {
   };
 }
 
-
-
-function handleTouchStart(event) {
-  console.log(event);
-  touchStartTime = new Date().getTime();    // Startzeit speichern
-  console.log('start = ' + touchStartTime);
-}
-
-function handleTouchEnd(event) {
-  console.log(event);
-  let touchEndTime = new Date().getTime();      // Endzeit berechnen
-  let touchDuration = touchEndTime - touchStartTime;     // Zeitdifferenz berechnen
-  let longTapThreshold = 500;   // Schwelle für Long Tap (z.B. 500 Millisekunden)
-  if (touchDuration >= longTapThreshold) {    // Überprüfen, ob es sich um einen Long Tap handelt
-    console.log('Long Tap');         // Long Tap erkannt 
-    // Führe hier die Aktion für den Long Tap aus
-    console.log('ende = ' + touchEndTime);
-  }
-}
