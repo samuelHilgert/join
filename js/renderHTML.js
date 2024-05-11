@@ -199,7 +199,7 @@ function renderAddTaskFormButton() {
     let urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
     let mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
     let lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
-    
+
     urgentBtn.innerHTML = `
     <p>Urgent</p>
     <svg class="category-svg-urgent">
@@ -264,3 +264,50 @@ function renderMobileContactinfoMenuHTML(contactId) {
     </div>
     `;
 }
+
+
+
+/////////// START RENDERING FOR BOARD ////////////
+
+/**
+ * This function generates the todo content for the todos on board
+ * 
+ * @param {string} task - the current task
+ */
+function generateTodoHTML(task) {
+    return `<div class="todo d_c_sb_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
+              <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
+              <h6><b>${task["title"]}</b></h6>
+              <p>${task["description"]}</p>
+              <div class="d_c_fs_fs width-max gap-10" id="progessSubtaskDiv${task["id"]}">
+                  <div class="progress" onmouseover="showSubtasksByHovering(${task["id"]})">
+                      <div class="progress-bar" id="progressBar${task["id"]}"></div>
+                  </div>
+                  <div class="statusText" id="statusText${task["id"]}"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
+              </div>
+              <div class="d_f_sb_c width-max">
+              <div class="d_f_c_c" id="contactsIn${task["id"]}">
+              </div>
+              <div id="prioIn${task["id"]}"></div>
+              </div>`;
+}
+
+
+/**
+ * This function generates the "assignedTo" contacts of the todo
+ * 
+ * @param {string} marginRightClass - the 
+ *  * @param {string} backgroundColor - the backgroundColor for the contacts
+ *  * @param {string} letters - the letters of the contacts
+ */
+function renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters) {
+    return `<div class="d_f_fs_c gap-10 width-max ${marginRightClass}">
+    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    </div>
+    `;
+}
+
+
+
+
+/////////// END OF RENDERING FOR BOARD ////////////

@@ -13,7 +13,6 @@ let touchStartTime;
  */
 async function renderBoardTasks() {
   await reloadTasksOnBoard();
-
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
     const allTasksSameCategory = tasks.filter((t) => t["category"] == category);
@@ -52,21 +51,28 @@ async function reloadTasksOnBoard() {
   }
 }
 
+
+/**
+ * This function initiate all functions for generate the todos for each category
+ * 
+ * @param {string} allTasksSameCategory - the category name for the current category 
+ * @param {string} categoryTableColumn - the category column container for the todos
+ */
 function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
   for (let k = 0; k < allTasksSameCategory.length; k++) {
     const task = allTasksSameCategory[k];
-
-
-    categoryTableColumn.innerHTML += generateTodoHTML(task);
-
+    categoryTableColumn.innerHTML += generateTodoHTML(task); // outsourced in renderHTML.js
     updateProgressBar(task);
     getContactsForTask(task);
     getPrioForTask(task);
   }
 }
 
-/********************** GENERAL FUNCTIONS **********************************/
 
+/**
+ * This function initiate the guest message on board
+ * 
+ */
 function showGuestMessageOnBoard() {
   if ((authorized === 'guest')) {
     let div = document.getElementById("guestMessagePopupBoard");
@@ -75,26 +81,11 @@ function showGuestMessageOnBoard() {
   }
 }
 
-/*********************** END GENERAL FUNCTIONS ********************************/
-
-function generateTodoHTML(task) {
-  return `<div class="todo d_c_sb_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
-            <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
-            <h6><b>${task["title"]}</b></h6>
-            <p>${task["description"]}</p>
-            <div class="d_c_fs_fs width-max gap-10" id="progessSubtaskDiv${task["id"]}">
-                <div class="progress" onmouseover="showSubtasksByHovering(${task["id"]})">
-                    <div class="progress-bar" id="progressBar${task["id"]}"></div>
-                </div>
-                <div class="statusText" id="statusText${task["id"]}"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
-            </div>
-            <div class="d_f_sb_c width-max">
-            <div class="d_f_c_c" id="contactsIn${task["id"]}">
-            </div>
-            <div id="prioIn${task["id"]}"></div>
-            </div>`;
-}
-
+/**
+ * This function generates the current priority of the todo
+ * 
+ * @param {string} task - the current task
+ */
 function getPrioForTask(task) {
   let prioForTaskDiv = document.getElementById(`prioIn${task["id"]}`);
   prioForTaskDiv.innerHTML += `
@@ -102,6 +93,12 @@ function getPrioForTask(task) {
     `;
 }
 
+
+/**
+ * This function generates the current "assignedTo" contacts of the todo
+ * 
+ * @param {string} task - the current task
+ */
 function getContactsForTask(task) {
   let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
   contactsForTaskDiv.innerHTML = "";
@@ -109,11 +106,7 @@ function getContactsForTask(task) {
     const backgroundColor = getBgColorTaskPopup(task, index);
     const letters = contactNamesLetters(contactName);
     const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
-    contactsForTaskDiv.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max ${marginRightClass}">
-    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
-    </div>
-    `;
+    contactsForTaskDiv.innerHTML += renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters); // outsourced in renderHTML.js
   });
 }
 
@@ -623,4 +616,5 @@ function showSubtasksByHovering(element) {
     statusText.style.display = 'none';
   };
 }
+
 
