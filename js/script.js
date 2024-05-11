@@ -97,17 +97,60 @@ function firstLogin() {
  * 
  */
 async function includeHTML() {
-    let includeElements = document.querySelectorAll('[include-html]'); // Es wird nach Begriff gesucht 
-    for (let i = 0; i < includeElements.length; i++) { // Es wird durchiteriert
-        const element = includeElements[i]; // alle elemente sollen angesprochen werden 
-        file = element.getAttribute("include-html"); // es wird der Wert des Begriffs gesucht, indem Fall der Pfad: "./header.html"
-        let resp = await fetch(file); // Es besteht jetzt nur Zugang, noch nicht der Text. Ladevorgang wird als Variable deklariert, um weiter arbeiten zu können
-        if (resp.ok) { // Abfrage, um auf Fehler zu prüfen
-            element.innerHTML = await resp.text(); // wenn gefunden, Datei wird aufgerufen und Inhalt ausgegeben 
+    let includeElements = document.querySelectorAll('[include-html]');
+    for (let i = 0; i < includeElements.length; i++) {
+        const element = includeElements[i];
+        let file = element.getAttribute("include-html");
+        let resp = await fetch(file);
+        if (resp.ok) {
+            let html = await resp.text();
+            if (file.includes("add-task-form.html")) {
+                html = addDynamicIDs(html, i + 1); // Funktion, die dynamische IDs hinzufügt, beginnend bei 1
+            }
+            element.innerHTML = html;
         } else {
-            element.innerHTML = 'Page not found'; // wenn nicht gefunden, Ausgabe Fehlermeldung text
+            element.innerHTML = 'Page not found';
         }
     }
+}
+
+function addDynamicIDs(html, index) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    
+    // Aktualisiere alle IDs
+    doc.querySelectorAll('[id]').forEach(el => {
+        el.id += `-${index}`;
+    });
+
+    // Aktualisiere alle Event-Attribute wie onclick, oninput und onsubmit
+    doc.querySelectorAll('[onclick], [oninput], [onsubmit]').forEach(el => {
+        ['onclick', 'oninput', 'onsubmit'].forEach(attr => {
+            if (el.hasAttribute(attr)) {
+                let originalAttribute = el.getAttribute(attr);
+                let modifiedAttribute = modifyEventAttribute(originalAttribute, index);
+                el.setAttribute(attr, modifiedAttribute);
+            }
+        });
+    });
+
+    return doc.body.innerHTML; // Gibt das modifizierte HTML zurück
+}
+
+function modifyEventAttribute(attributeString, index) {
+    // Zerlege den Attributstring in einzelne Funktionen, falls mehrere Aufrufe in einem Attribut sind
+    return attributeString.split(';').map(funcCall => {
+        // Ersetze nur, wenn die Funktion bereits einen Aufruf enthält (öffnende Klammer)
+        if (funcCall.includes('(')) {
+            // Füge den Index als erstes Argument hinzu, falls noch keine Argumente vorhanden sind
+            if (funcCall.includes('()')) {
+                return funcCall.replace('()', `(${index})`);
+            } else {
+                return funcCall.replace('(', `(${index}, `);
+            }
+        }
+        return funcCall;
+    }).join(';'); // Füge die modifizierten Funktionen wieder zu einem String zusammen
 }
 
 /**
