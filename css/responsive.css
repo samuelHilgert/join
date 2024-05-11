@@ -1,0 +1,378 @@
+@media screen and (max-width: 1320px) {
+    .contact-right-text-big {
+        font-size: 47px;
+    }
+
+    .contact-right-text-small {
+        font-size: 20px;
+    }
+
+    .contact-wrapper {
+        min-width: 400px;
+    }
+
+    .contact-card-header-text {
+        font-size: 36px;
+    }
+
+    .circle-big {
+        min-width: 80px;
+        min-height: 80px;
+        font-size: 27px;
+    }
+
+    .contact-card-header {
+        gap: 20px;
+    }
+}
+
+
+@media screen and (max-width: 1260px) {
+    .contact-success {
+        width: 280px;
+    }
+}
+
+
+@media screen and (max-width: 1140px) {
+    .contact-right {
+        gap: 8px;
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contact-right-text-big {
+        line-height: 47px;
+    }
+
+    .contacts-y-line-blue {
+        width: 90px;
+        height: 3px;
+        order: 2;
+    }
+}
+
+
+@media screen and (max-width: 1000px) {
+    .mobile-drag-area-category {
+        gap: 50px !important;
+    }
+}
+
+
+@media screen and (max-width: 980px) {
+    .contact-wrapper {
+        min-width: 300px;
+    }
+
+    .contact-small {
+        width: 95%;
+        gap: 10px;
+    }
+
+    .contactlist-letterbox {
+        width: 95%;
+    }
+
+    .contact-btn {
+        width: 95%;
+    }
+}
+
+
+@media screen and (max-width: 965px) {
+    .add-contact-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        position: relative;
+    }
+
+    .add-contact-container-left {
+        height: 20%;
+        min-height: 200px;
+        width: 100%;
+        min-width: 100%;
+        border-radius: 40px 40px 0 0;
+        padding-right: 0;
+        padding-left: 20px;
+    }
+
+    .add-contact-container-right {
+        height: 70%;
+        width: 100%;
+        border-radius: 0 0 40px 40px;
+        padding-left: 20px;
+    }
+
+    .btn-wrapper {
+        margin-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    .close-contact-btn {
+        position: absolute;
+        top: 30px;
+        right: 20px;
+        z-index: 40;
+        margin: 0;
+    }
+
+    .add-contact-container-right-img-wrapper {
+        margin-top: 0;
+    }
+
+    .add-contact-container-right-img {
+        filter: brightness(0) invert(1);
+    }
+
+    .add-contact-container-right-img-wrapper:hover {
+        background-color: rgba(41, 171, 226, 1);
+    }
+
+    .add-contact-img {
+        display: none;
+    }
+
+    .add-contact-container-right-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .contact-grey-svg {
+        margin-left: -30px;
+    }
+
+    .contact-form {
+        gap: 15px;
+        width: 100%;
+    }
+
+    .contact-input-style {
+        width: calc(100% - 20px);
+        margin-right: 20px;
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .edit-contact-img {
+        display: none;
+    }
+
+    .edit-contact-container-left {
+        height: 20%;
+        min-height: 200px;
+        width: 100%;
+        min-width: 100%;
+        border-radius: 40px 40px 0 0;
+        padding-right: 0;
+        padding-left: 20px;
+    }
+
+    .mobile-margin-top-15 {
+        margin-top: 15px;
+    }
+}
+
+
+@media screen and (max-width: 900px) {
+    .contact-page-wrapper {
+        height: calc(100vh - 160px);
+    }
+
+    .sidebar {
+        height: 80px;
+        width: 100%;
+        left: 0;
+        top: auto;
+        bottom: 0;
+        padding: 0 16px;
+    }
+
+    .sidebar-logo {
+        display: none;
+    }
+
+    .sidebar-links {
+        height: 100%;
+        gap: 10px;
+        padding-bottom: 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .sidebar-legal {
+        display: none;
+    }
+
+    .sidebar-menu {
+        flex-direction: column;
+        padding: 15px 0 15px 0;
+        gap: 4px;
+        font-size: 14px;
+        line-height: 16.8px;
+        width: 76px;
+        height: 76px;
+        border-radius: 8px;
+    }
+
+    .sidebar-icon {
+        height: 24px;
+    }
+
+    .aot {
+        height: 80px;
+        padding: 20px 16px 20px 16px;
+        justify-content: space-between;
+    }
+
+    header {
+        justify-content: space-between;
+    }
+
+    .header-circle {
+        width: 40px;
+        height: 40px;
+    }
+
+    #headerSymbolPopup {
+        top: 80px;
+        margin-right: 10px;
+    }
+
+    .header-icon-one {
+        display: none;
+    }
+
+    .header-text {
+        display: none;
+    }
+
+    .logo-header {
+        display: flex;
+    }
+
+    .header-symbols {
+        gap: 0px;
+        width: auto;
+    }
+
+    .contact-page-wrapper {
+        width: 100%;
+    }
+
+    .contact-wrapper {
+        margin: 0 0 80px 0;
+        width: 50%;
+        height: calc(100vh - 160px);
+    }
+
+    .contact-right-wrapper {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 685px) {
+    .contact-right-wrapper {
+        display: none;
+        width: 100%;
+    }
+
+    .contact-wrapper {
+        width: 100vw;
+    }
+
+    .parting-line {
+        width: 100%;
+    }
+
+    .add-contact-container-left {
+        width: 90vw;
+    }
+
+    .add-contact-container-right {
+        width: 90vw;
+        min-width: 90vw;
+    }
+
+    .add-contact-container-wrapper {
+        padding: 30px;
+    }
+
+    .add-contact-container {
+        width: 90vw;
+        margin: 0;
+        margin: 50px !important;
+    }
+
+    .contact-input-style {
+        width: 95%;
+        margin-right: 0;
+    }
+
+    .contact-form {
+        justify-content: center;
+        align-items: center;
+        margin-left: -20px;
+    }
+
+    .mobile-close-contact-btn {
+        display: flex;
+    }
+
+    .contact-card-header-icons {
+        display: none;
+    }
+
+    .mobile-contactinfo-menu {
+        display: flex;
+    }
+}
+
+
+@media screen and (max-width: 530px) {
+    .add-contact-span-big {
+        font-size: 47px;
+        line-height: 56px;
+    }
+
+    .add-contact-span-small {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .add-contact-container-left {
+        gap: 8px;
+    }
+
+    .mobile-clear-btn {
+        display: none;
+    }
+
+    .contact-right {
+        margin-left: 10px;
+        margin-top: 25px;
+    }
+
+    .contact-info {
+        margin-left: 10px;
+        margin-top: 25px;
+    }
+
+    .mobile-close-contact-btn {
+        top: 105px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .contact-btn-wrapper {
+        display: none;
+    }
+
+    .mobile-add-contact {
+        display: flex;
+    }
+}
