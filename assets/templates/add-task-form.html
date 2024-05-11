@@ -1,9 +1,9 @@
 <form class="d_c_c_fs width-max" onsubmit="addTask(); return false;">
 
-  <div class="add-task-form-container d_f_c_fs gap-40 pad-y-40 height-max" id="addTaskFormContainer">
+  <div class="add-task-form-container d_f_c_fs gap-40 pad-y-40 height-max max-width-1098 mobile-add-task-form" id="addTaskFormContainer">
     <!--BLOCK 1-->
 
-    <div class="box d_c_fs_fs gap-30 height-max">
+    <div class="box d_c_fs_fs gap-30 height-max mobile-box-1">
       <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20">Title<span style="color: red">*</span></span>
         <input id="taskTitle" class="task-input-style input-login input-font required-input" type="text"
@@ -37,7 +37,7 @@
 
     <!--BLOCK 2-->
 
-    <div class="box d_c_fs_fs gap-30 mar-r-15 height-max">
+    <div class="box d_c_fs_fs gap-30 mar-r-15 height-max mobile-box-2">
 
       <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20">Due date<span style="color: red">*</span></span>
@@ -49,9 +49,9 @@
       <div class="d_c_c_fs gap-10 width-max">
           <span class="font-size-20">Prio</span>
           <div class="priority-boxes d_f_sb_c width-max gap-10">
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('urgentBtn')" id="urgentBtn"></button>
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('mediumBtn')" id="mediumBtn"></button>
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10" onclick="setPriority('lowBtn')" id="lowBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style" onclick="setPriority('urgentBtn')" id="urgentBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style" onclick="setPriority('mediumBtn')" id="mediumBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style" onclick="setPriority('lowBtn')" id="lowBtn"></button>
           </div>
       </div>
 
@@ -79,17 +79,16 @@
         </div>
         <div id="subtaskDivAddTask" class="subtask-div d_f_fs_c"></div>
       </div>
-
     </div>
   </div>
 
   <!--bottom-box-->
-  <div class="d_f_sb_c pad-top-100 bottom-box width-max" id="bottomAddTaskOptions">
+  <div class="d_f_sb_c pad-top-100 bottom-box width-max mobile-task-options" id="bottomAddTaskOptions">
     <div id="requiredDiv">
       <span id><span style="color: red">*</span>This field is required</span>
     </div>
     <div class="d_f_c_c gap-15">
-      <button class="clear-btn gap-10" type="button" onclick="clearForm()">
+      <button class="clear-btn gap-10 mobile-clear-btn" type="button" onclick="clearForm()">
         Clear
         <svg class="contact-header-svg">
           <path
@@ -104,7 +103,7 @@
 
     <!--bottom-box edit-task on board.html -->
     <div class="d_f_sb_c pad-top-100 bottom-box width-max" id="bottomAddTaskEditOptions">
-      <div class="d_f_fe_c width-max">
+      <div class="d_f_fe_c width-max" id="btnDivOk">
         <button type="submit" class="btn gap-10">Ok<img src="../../assets/img/check.svg"/></button>
       </div>
     </div>

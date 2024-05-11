@@ -19,7 +19,9 @@
   <link rel="stylesheet" href="./css/add-task.css" />
   <link rel="stylesheet" href="./css/contacts.css" />
   <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/responsive-general.css" />
   <link rel="stylesheet" href="./css/responsive-contacts-header-sidebar.css" />
+  <link rel="stylesheet" href="./css/responsive-board.css" />
 </head>
 
 <body onload="init()">
@@ -29,19 +31,21 @@
     <header class="d_f_sb_c" include-html="../assets/templates/header.html"></header>
   </div>
 
-  <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-50 gap-30">
-    <div class="d_f_sb_c gap-30 width-max">
+  <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-30 gap-30 mobile-main-container">
+
+    <div class="d_f_sb_c width-max" id="searchkMobileBtnBoardHeader">
       <h2>Board</h2>
-      <div class="search-div d_f_c_c gap-30">
-        <div class="input-style input-style-search d_f_sb_c width-max gap-20">
+      <div class="d_f_c_c gap-30 ">
+        <div class="input-style input-style-search d_f_sb_c gap-20">
           <input class="search-board-input" type="text" id="searchBoardInput" placeholder="Find Task" required
             onkeypress="searchTasksByKeyPress(event)" />
           <div class="search-icon">
             <img src="../assets/img/search-icon-with-line.svg" alt="" onclick="searchTasksOnBoard()" />
           </div>
         </div>
-        <a class="btn gap-10" onclick="openBoardAddTaskPopup(event)">Add task
-          <svg width="15" height="14" viewBox="0 0 15 14" xmlns="http://www.w3.org/2000/svg">
+        <a class="btn gap-10 add-task-btn-board-header popup-btn" data-popup-type="addTask"
+          onclick="openBoardAddTaskPopup(this)" id="addTaskBtnBoardHeader">Add task
+          <svg viewBox="0 0 15 14">
             <path
               d="M6.24854 8H1.24854C0.965202 8 0.727702 7.90417 0.536035 7.7125C0.344368 7.52083 0.248535 7.28333 0.248535 7C0.248535 6.71667 0.344368 6.47917 0.536035 6.2875C0.727702 6.09583 0.965202 6 1.24854 6H6.24854V1C6.24854 0.716667 6.34437 0.479167 6.53604 0.2875C6.7277 0.0958333 6.9652 0 7.24854 0C7.53187 0 7.76937 0.0958333 7.96104 0.2875C8.1527 0.479167 8.24854 0.716667 8.24854 1V6H13.2485C13.5319 6 13.7694 6.09583 13.961 6.2875C14.1527 6.47917 14.2485 6.71667 14.2485 7C14.2485 7.28333 14.1527 7.52083 13.961 7.7125C13.7694 7.90417 13.5319 8 13.2485 8H8.24854V13C8.24854 13.2833 8.1527 13.5208 7.96104 13.7125C7.76937 13.9042 7.53187 14 7.24854 14C6.9652 14 6.7277 13.9042 6.53604 13.7125C6.34437 13.5208 6.24854 13.2833 6.24854 13V8Z"
               fill="white" />
@@ -49,61 +53,75 @@
         </a>
       </div>
     </div>
+
+    <div class="d_f_sb_c width-max" id="addTaskMobileBtnBoardHeader">
+      <h2>Board</h2>
+      <a class="btn gap-10 add-task-btn-board-header" id="addTaskBtnBoardHeaderMobile" onclick="openBoardAddTaskPopup(this)">
+        <svg viewBox="0 0 15 14">
+          <path
+            d="M6.24854 8H1.24854C0.965202 8 0.727702 7.90417 0.536035 7.7125C0.344368 7.52083 0.248535 7.28333 0.248535 7C0.248535 6.71667 0.344368 6.47917 0.536035 6.2875C0.727702 6.09583 0.965202 6 1.24854 6H6.24854V1C6.24854 0.716667 6.34437 0.479167 6.53604 0.2875C6.7277 0.0958333 6.9652 0 7.24854 0C7.53187 0 7.76937 0.0958333 7.96104 0.2875C8.1527 0.479167 8.24854 0.716667 8.24854 1V6H13.2485C13.5319 6 13.7694 6.09583 13.961 6.2875C14.1527 6.47917 14.2485 6.71667 14.2485 7C14.2485 7.28333 14.1527 7.52083 13.961 7.7125C13.7694 7.90417 13.5319 8 13.2485 8H8.24854V13C8.24854 13.2833 8.1527 13.5208 7.96104 13.7125C7.76937 13.9042 7.53187 14 7.24854 14C6.9652 14 6.7277 13.9042 6.53604 13.7125C6.34437 13.5208 6.24854 13.2833 6.24854 13V8Z"
+            fill="white" />
+        </svg>
+      </a>
+    </div>
+
     <div class="d_f_c_c width-max gap-10" id="resultMessageDiv"></div>
+
     <div class="drag-area-container d_f_se_fs width-max">
 
-      <div class="drag-area-category d_c_c_c gap-10">
-        <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
-          <p>To do</p>
-          <img class="cursor-pointer" src="./assets/img/plus-button.svg" onclick="openBoardAddTaskPopup(event)" />
+      <div class="drag-area-category d_c_c_fs gap-10 mobile-drag-area-category">
+        <div class="headline-board-columns d_f_sb_c width-max mobile-headline-board-columns">
+          <p class="drag-area-category-headline">To do</p>
+          <img class="cursor-pointer" src="./assets/img/plus-button.svg" id="imgBacklog" onclick="openBoardAddTaskPopup(this)" />
         </div>
-        <div class="drag-area-alt d_c_fs_c" id="backlog" ondrop="moveTo('backlog')"
+        <div class="drag-area-alt d_c_fs_c mobile-drag-area-alt" id="backlog" ondrop="moveTo('backlog')"
           ondragleave="removeHighlight('backlog')" ondragover="allowDrop(event); highlight('backlog')"></div>
       </div>
 
-      <div class="drag-area-category d_c_c_c gap-10">
-        <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
-          <p>In progress</p>
-          <img class="cursor-pointer" src="./assets/img/plus-button.svg" onclick="openBoardAddTaskPopup(event)" />
+      <div class="drag-area-category d_c_c_fs gap-10 mobile-drag-area-category">
+        <div class="headline-board-columns d_f_sb_c width-max mobile-headline-board-columns">
+          <p class="drag-area-category-headline">In progress</p>
+          <img class="cursor-pointer" src="./assets/img/plus-button.svg" id="imgInProgress" onclick="openBoardAddTaskPopup(this)" />
         </div>
-        <div class="drag-area-alt d_c_fs_c" id="inProgress" ondrop="moveTo('inProgress')"
+        <div class="drag-area-alt d_c_fs_c mobile-drag-area-alt" id="inProgress" ondrop="moveTo('inProgress')"
           ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"></div>
       </div>
 
-      <div class="drag-area-category d_c_c_c gap-10">
-        <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
-          <p>Await feedback</p>
-          <img class="cursor-pointer" src="./assets/img/plus-button.svg" onclick="openBoardAddTaskPopup(event)" />
+      <div class="drag-area-category d_c_c_fs gap-10 mobile-drag-area-category">
+        <div class="headline-board-columns d_f_sb_c width-max mobile-headline-board-columns">
+          <p class="drag-area-category-headline">Await feedback</p>
+          <img class="cursor-pointer" src="./assets/img/plus-button.svg" id="imgAwaitFeedback" onclick="openBoardAddTaskPopup(this)" />
         </div>
-        <div class="drag-area-alt d_c_fs_c" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
+        <div class="drag-area-alt d_c_fs_c mobile-drag-area-alt" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
           ondragleave="removeHighlight('awaitFeedback')" ondragover="allowDrop(event); highlight('awaitFeedback')">
         </div>
       </div>
 
-      <div class="drag-area-category d_c_c_c gap-10">
-        <div class="headline-board-columns pad-x-30 d_f_sb_c width-max">
-          <p>Done</p>
+      <div class="drag-area-category d_c_c_fs gap-10 mobile-drag-area-category">
+        <div class="headline-board-columns d_f_sb_c width-max mobile-headline-board-columns">
+          <p class="drag-area-category-headline">Done</p>
         </div>
-        <div class="drag-area-alt d_c_fs_c" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
-          ondragover="allowDrop(event); highlight('done')"></div>
+        <div class="drag-area-alt d_c_fs_c mobile-drag-area-alt" id="done" ondrop="moveTo('done')"
+          ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')"></div>
       </div>
     </div>
   </div>
 
   <!-- TASK POPUP -->
   <div class="d_c_c_c popup-bg-filter width-max" id="boardTaskPopup" onclick="closeBoardTaskPopup()">
-    <div class="d_c_sb_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70" id="boardTaskPopupContainer" onclick="doNotClose(event)">
-
+    <div class="d_c_sb_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70" id="boardTaskPopupContainer"
+      onclick="doNotClose(event)">
 
       <!-- EDIT TASK CONTENT -->
       <div class="d_c_sb_fs gap-30 width-max word-break" id="boardTaskEditContainer">
         <div class="d_f_fe_c width-max">
-          <div class="d_c_c_c add-contact-container-right-img-wrapper popup-close-button"
-            onclick="closeBoardTaskPopup()">
-            <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="" />
+          <div class="d_c_c_c close-popup-button-board popup-close-button" onclick="closeBoardTaskPopup()">
+            <img class="close-popup-button-board-img" src="./assets/img/close.svg" alt="" />
           </div>
         </div>
-        <div class="d_c_fs_fs width-max" include-html="../assets/templates/add-task-form.html"></div>
+        <div class="d_c_fs_fs width-max popup" id="editTaskPopup" include-html="../assets/templates/add-task-form.html">
+        
+        </div>
       </div>
 
       <!-- SHOW TASK CONTENT -->
@@ -111,9 +129,8 @@
         <div class="d_f_sb_c width-max">
           <div class="btn-board d_f_c_c width-50" id="taskPopupContentLabel"></div>
           <div class="d_f_fe_c width-max" id="taskCloseButtonRight">
-            <div class="d_c_c_c add-contact-container-right-img-wrapper popup-close-button"
-              onclick="closeBoardTaskPopup()">
-              <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="" />
+            <div class="d_c_c_c close-popup-button-img-board popup-close-button" onclick="closeBoardTaskPopup()">
+              <img class="close-popup-button-board-img" src="./assets/img/close.svg" alt="" />
             </div>
           </div>
         </div>
@@ -123,7 +140,7 @@
           <div class="d_f_fs_c width-max gap-30" id="taskPopupContentDueDate"></div>
           <div class="d_f_fs_c width-max gap-30" id="taskPopupContentPriority"></div>
         </div>
-        <div class="d_c_c_fs width-max gap-10" >
+        <div class="d_c_c_fs width-max gap-10">
           <div class="d_f_fs_c width-max gap-30">
             <p>Assigned To:</p>
           </div>
@@ -149,7 +166,8 @@
 
           <div class="icon-separator"></div>
 
-          <div class="d_f_c_c gap-8 header-icons-wrapper cursor-pointer" onclick="editTask()">
+          <div class="d_f_c_c gap-8 header-icons-wrapper cursor-pointer popup-btn" data-popup-type="editTask"
+            onclick="editTask()">
             <svg class="task-popup-svg" viewBox="0 0 19 19">
               <path
                 d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z" />
@@ -162,9 +180,10 @@
     </div>
   </div>
 
-      <!-- ADD TASK POPUP -->
+  <!-- ADD TASK POPUP -->
   <div class="d_c_c_c popup-bg-filter width-max" id="boardAddTaskPopup" onclick="closeBoardAddTaskPopup()">
-    <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-50 gap-30 width-max" id="boardAddTaskPopupContainer" onclick="doNotClose(event)">
+    <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-50 gap-30 width-max"
+      id="boardAddTaskPopupContainer" onclick="doNotClose(event)">
       <div class="d_f_sb_fs width-max">
         <h2>Add Task</h2>
         <div class="popup-close-button">
@@ -174,9 +193,10 @@
         </div>
       </div>
 
-      <div class="d_f_fs_fs width-max" include-html="../assets/templates/add-task-form.html"></div>
+      <div class="d_f_fs_fs width-max popup" id="addTaskPopup" include-html="../assets/templates/add-task-form.html">
+      </div>
     </div>
-    
+
   </div>
 
   <!-- GUEST MESSAGES -->

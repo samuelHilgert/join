@@ -18,12 +18,11 @@ body {
     color: #000000;
     font-size: 16px;
     font-weight: normal;
-    line-height: 19.2 px;
 }
 
 h2 {
     font-family: 'Inter';
-    font-size: 61px;
+    font-size: 48px;
     font-weight: 700;
     color: rgba(0, 0, 0, 1);
     line-height: 73.2px;
@@ -31,11 +30,11 @@ h2 {
 }
 
 h3 {
-    font-size: 64px;
+    font-size: 47px;
 }
 
 h4 {
-    font-size: 47px;
+    font-size: 38px;
     font-weight: normal;
 }
 
@@ -79,7 +78,7 @@ a {
 }
 
 #userNameDiv {
-    font-size: 64px;
+    font-size: 52px;
     color: rgba(41, 171, 226, 1);
     font-weight: bold;
 }

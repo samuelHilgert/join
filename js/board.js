@@ -58,15 +58,15 @@ function showGuestMessageOnBoard() {
 /*********************** END GENERAL FUNCTIONS ********************************/
 
 function generateTodoHTML(task) {
-  return `<div class="todo d_c_fs_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
+  return `<div class="todo d_c_sb_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
             <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
             <h6><b>${task["title"]}</b></h6>
             <p>${task["description"]}</p>
-            <div class="d_f_c_c width-max">
-                <div class="progress">
+            <div class="d_c_fs_fs width-max gap-10" id="progessSubtaskDiv${task["id"]}">
+                <div class="progress" onmouseover="showSubtasksByHovering(${task["id"]})">
                     <div class="progress-bar" id="progressBar${task["id"]}"></div>
                 </div>
-                <div class="statusText"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
+                <div class="statusText" id="statusText${task["id"]}"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
             </div>
             <div class="d_f_sb_c width-max">
             <div class="d_f_c_c" id="contactsIn${task["id"]}">
@@ -83,19 +83,18 @@ function getPrioForTask(task) {
 }
 
 function getContactsForTask(task) {
-  let contactsForTaskDiv = document.getElementById(`contactsIn${task["id"]}`);
-  const contacts = task["assignedTo"];
+  let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
   contactsForTaskDiv.innerHTML = "";
-  for (let c = 0; c < contacts.length; c++) {
-    const contact = contacts[c];
-    const letters = contactNamesLetters(contact);
-    const backgroundColor = getBgColorTaskPopup(c);
+  task.assignedTo.forEach((contactName, index) => {
+    const backgroundColor = getBgColorTaskPopup(task, index);
+    const letters = contactNamesLetters(contactName);
+    const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
     contactsForTaskDiv.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max">
+    <div class="d_f_fs_c gap-10 width-max ${marginRightClass}">
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
     </div>
     `;
-  }
+  });
 }
 
 function updateProgressBar(task) {
@@ -299,7 +298,7 @@ function getContactsForPopupTask(todo) {
   for (let index = 0; index < contacts.length; index++) {
     const contact = contacts[index];
     const letters = contactNamesLetters(contact);
-    const backgroundColor = getBgColorTaskPopup(index);
+    const backgroundColor = getBgColorTaskPopup(todo, index);
     taskPopupContentAssignedTo.innerHTML += `
     <div class="d_f_fs_c gap-10 width-max">
     <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
@@ -307,6 +306,20 @@ function getContactsForPopupTask(todo) {
     </div>
     `;
   }
+}
+
+function getBgColorTaskPopup(task, index) {
+  const contactName = task.assignedTo[index];
+  let contactInfo;
+  if (authorized === 'user') {
+    contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
+  } else {
+    contactInfo = contacts.find(contact => contact.name === contactName);
+  }
+  if (!contactInfo || !contactInfo.color) {
+    return "blue";  // Standardfarbe, wenn keine Farbe gefunden wurde
+  }
+  return contactInfo.color;
 }
 
 function getPriorityIcon(todo) {
@@ -321,24 +334,25 @@ function getPriorityIcon(todo) {
   return imgSrc;
 }
 
-function getBgColorTaskPopup(index) {
-  let userContact;
-  if ((authorized === 'guest')) {
-    userContact = contacts[index];
-  } else {
-    userContact = users[currentUser]["contacts"][index];
-  }
-  return userContact.color;
-}
-
 async function editTask() {
-  let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
   let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
-  let addTaskFormContainer = document.getElementById('addTaskFormContainer');
-  let addTaskPartingline = document.getElementById('addTaskPartingline');
-  let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions');
-  let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions');
-  let addTaskCategory = document.getElementById('addTaskCategory');
+  let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
+  let btnDivOk = document.getElementById("btnDivOk-3");
+  btnDivOk.style.display = "flex";
+  boardTaskEditContainer.style.display = 'flex';
+  boardTaskShowContainer.style.display = 'none';
+
+  let addTaskFormContainer = document.getElementById('addTaskFormContainer-3');
+  let addTaskPartingline = document.getElementById('addTaskPartingline-3');
+  let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions-3');
+  let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions-3');
+  let addTaskCategory = document.getElementById('addTaskCategory-3');
+  let taskTitle = document.getElementById('taskTitle-3');
+  let taskDescription = document.getElementById('taskDescription-3');
+  let taskDate = document.getElementById('taskDate-3');
+  let urgentBtn = document.getElementById('urgentBtn-3');
+  let mediumBtn = document.getElementById('mediumBtn-3');
+  let lowBtn = document.getElementById('lowBtn-3');
 
   let box = document.querySelectorAll('.box');
   box.forEach(function (boxReplace) {
@@ -347,23 +361,16 @@ async function editTask() {
 
   addTaskCategory.style.display = 'none';
   bottomAddTaskOptions.style.display = 'none';
-  boardTaskShowContainer.style.display = 'none';
   bottomAddTaskEditOptions.style.display = 'flex';
-  boardTaskEditContainer.style.display = 'flex';
   addTaskFormContainer.style.flexFlow = 'column';
   addTaskPartingline.style.display = 'none';
 
-  let taskTitle = document.getElementById('taskTitle');
-  let taskDescription = document.getElementById('taskDescription');
-  let taskDate = document.getElementById('taskDate');
-  let urgentBtn = document.getElementById('urgentBtn');
-  let mediumBtn = document.getElementById('mediumBtn');
-  let lowBtn = document.getElementById('lowBtn');
   taskTitle.value = tasks[currentOpenTaskId].title;
   taskDescription.value = tasks[currentOpenTaskId].description;
   const todo = tasks[currentOpenTaskId];
   getContactsForPopupTask(todo);
   taskDate.value = tasks[currentOpenTaskId].dueDate;
+
   let prio = tasks[currentOpenTaskId].priority;
   let prioBtn;
   if (prio === 'Urgent') {
@@ -373,16 +380,17 @@ async function editTask() {
   } else if (prio === 'Low') {
     prioBtn = lowBtn;
   }
+
   prioBtn.click();
   checkedCheckboxes = todo.assignedTo;
-  let taskContactDiv = document.getElementById("taskContactDiv");
+  let taskContactDiv = document.getElementById("taskContactDiv-3");
   taskContactDiv.style.display = "none";
   showContactSelection();
   renderSubtasksPopup();
 }
 
 function renderSubtasksPopup() {
-  let subtaskDivAddTask = document.getElementById('subtaskDivAddTask');
+  let subtaskDivAddTask = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
 
   subtaskDivAddTask.innerHTML = ``;
 
@@ -446,7 +454,15 @@ function closeBoardTaskPopup() {
  * this functions initiate all functions for the popup add-task
  *
  */
-function openBoardAddTaskPopup() {
+function openBoardAddTaskPopup(element) {
+  console.log(element.id);
+  if (element.id.includes('Progress')) {
+    setCategory = 'inProgress';
+  } else if (element.id.includes('AwaitFeedback')) {
+    setCategory = 'awaitFeedback';
+  }
+  changeTemplateIndex();
+  renderAddTaskFormButton();
   let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
   let container = document.getElementById("boardAddTaskPopupContainer");
   boardAddTaskPopup.style.display = "flex";
@@ -581,4 +597,13 @@ function changeImage(element, src) {
 
 function restoreImagePopupTask(element, defaultSrc) {
   element.querySelector(".delete").src = defaultSrc;
+}
+
+function showSubtasksByHovering(element) {
+  let statusText = document.getElementById(`statusText${element}`);
+  statusText.style.display = 'block';
+
+  statusText.onmouseout = function () {
+    statusText.style.display = 'none';
+  };
 }

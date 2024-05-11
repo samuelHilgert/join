@@ -123,7 +123,7 @@
         margin-top: 0;
     }
 
-    .mobile-add-contact-container-right-img {
+    .add-contact-container-right-img {
         filter: brightness(0) invert(1);
     }
 
@@ -180,10 +180,6 @@
 @media screen and (max-width: 900px) {
     .contact-page-wrapper {
         height: calc(100vh - 160px);
-    }
-
-    .mobile-header-menu {
-        display: flex;
     }
 
     .sidebar {

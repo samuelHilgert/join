@@ -52,12 +52,10 @@ async function updateUpcomingDate() {
   let allTaskTimeStamps = [];
   let allTimeStampsDifferences = [];
   let upcomingDate;
-  let currentDate = new Date();
-  let formattedDate = await formatDateCorrect(currentDate);
-  let datum = new Date(formattedDate);  
-  let timeStampCurrentDate = datum.getTime(); 
+  let datum = new Date();
+  let timeStampCurrentDate = datum.getTime();
   await getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTimeStampsDifferences);
-  let smallestDifference = Math.min(...allTimeStampsDifferences);  
+  let smallestDifference = Math.min(...allTimeStampsDifferences);
   let indexOfDifference = allTimeStampsDifferences.indexOf(smallestDifference);
   upcomingDate = allTaskTimeStamps[indexOfDifference];
   let formattedUpcomingDate = formatUpcomingDate(upcomingDate);
@@ -79,7 +77,7 @@ async function getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTi
     if (task['dueDate']) {
       const parts = task['dueDate'].split("/");
       const datum = new Date(parts[2], parts[1] - 1, parts[0]);
-      let timeStampTaskDueDate = datum.getTime(); 
+      let timeStampTaskDueDate = datum.getTime();
       let dueDateDifference = calculateDifferencesOftimeStamps(timeStampCurrentDate, timeStampTaskDueDate);
       allTimeStampsDifferences.push(dueDateDifference);
       allTaskTimeStamps.push(datum);
@@ -134,7 +132,7 @@ function renderSummaryValues() {
   );
   allTodosNumber.innerHTML = `<h3>${allTodos}</h3>`;
   allDoneNumber.innerHTML = `<h3>${allDones}</h3>`;
-  allUrgentNumber.innerHTML = `<h3>${allUrgents}</h3><p>Urgent</p>`;
+  allUrgentNumber.innerHTML = `<h3>${allUrgents}</h3><p class="mobile-summary-category-text">Urgent</p>`;
   allTasksNumber.innerHTML = `<h3>${allTasks}</h3>`;
   allInProgressNumber.innerHTML = `<h3>${allInProgress}</h3>`;
   allAwaitFeedbackNumber.innerHTML = `<h3>${allAwaitFeedback}</h3>`;

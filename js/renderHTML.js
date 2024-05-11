@@ -137,7 +137,7 @@ function renderEditContactHTML(
             <div class="add-contact-container-right">
                 <div class="d_f_fe_c close-contact-btn">
                     <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeEditContactForm()">
-                        <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
+                        <img class="add-contact-container-right-img mobile-add-contact-container-right-img" src="./assets/img/close.svg" alt="">
                     </div>
                 </div>
                 <div class="add-contact-container-right-bottom-wrapper">
@@ -186,17 +186,20 @@ function generateGuestMessageTextForReload(div, messageText) {
 function generateGuestMessageText(div, messageText) {
     messageText.innerHTML = `
     <div onclick="closeGuestPopupMessage(${div.id})"><a class="link-style guestPopupLinkStyle">Close</a></div>
-    <h5>You are not logged in!</h5>
+    <h5>You are not signed in!</h5>
     <div class="d_c_c_c gap-10">
         <p>Please note that we will not save your changes.</p>
-        <p>Please log in to access all features.</p>
+        <p>Please sign in to get access to all features.</p>
     </div>
     <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
     `;
 }
 
 function renderAddTaskFormButton() {
-    let urgentBtn = document.getElementById('urgentBtn');
+    let urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
+    let mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
+    let lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
+    
     urgentBtn.innerHTML = `
     <p>Urgent</p>
     <svg class="category-svg-urgent">
@@ -214,7 +217,6 @@ function renderAddTaskFormButton() {
   </svg> 
     `;
 
-    let mediumBtn = document.getElementById('mediumBtn');
     mediumBtn.innerHTML = `
     <p>Medium</p>
     <svg class="category-svg-medium">
@@ -232,7 +234,6 @@ function renderAddTaskFormButton() {
   </svg> 
     `;
 
-    let lowBtn = document.getElementById('lowBtn');
     lowBtn.innerHTML = `
     <p>Low</p>
     <svg class="category-svg-low">

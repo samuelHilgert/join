@@ -13,30 +13,35 @@
     <link rel="stylesheet" href="./css/fonts.css" />
     <link rel="stylesheet" href="./css/assets.css" />
     <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/responsive-login.css" />
+    <link rel="stylesheet" href="./css/responsive-login-signup.css" />
   </head>
 
-  <body class="d_c_se_c pad-x-80 gap-30 pad-y-70" onload="loadUsers()">
+  <body
+    class="d_c_se_c pad-x-80 gap-30 pad-y-70 mobile-login-body"
+    onload="loadUsers()"
+  >
     <div class="topline">
-      <div><img class="logo" src="./assets/img/logo.svg" alt="" /></div>
-      <div class="d_f_c_c gap-40">
+      <div><img class="logo mobile-logo" src="./assets/img/logo.svg" alt="" /></div>
+      <div class="d_f_c_c gap-40 mobile-signup-div">
         <p>Not a Join user?</p>
-        <a class="btn" href="./signup.html">SignUp</a>
+        <a class="btn mobile-signup-btn" href="./signup.html">SignUp</a>
       </div>
     </div>
 
-    <div class="login-form-container d_c_c_c bgC-white pad-y-40 pad-x-20">
-      <h2>Log in</h2>
+    <div
+      class="login-form-container d_c_c_c bgC-white pad-y-40 pad-x-20 mobile-login-form-container"
+    >
+      <h2 class="mobile-login-signup-headline">Log in</h2>
       <div class="space-20"></div>
       <div class="d_f_c_c div-underline">
         <div class="text-underline"></div>
       </div>
       <div class="space-30"></div>
       <form
-        class="d_c_c_c gap-50 width-max pad-x-60"
+        class="d_c_c_c gap-50 width-max pad-x-60 mobile-login-form"
         onsubmit="checkLoginAccess(); return false;"
       >
-        <div class="form-div gap-50 width-max">
+        <div class="form-div gap-50 width-max mobile-inputs">
           <div class="d_c_c_c gap-20 width-max">
             <input
               class="input-style input-email"
@@ -54,27 +59,35 @@
             />
           </div>
         </div>
-        <div class="d_f_c_c gap-20">
-          <input type="checkbox" id="loginCheckbox" name="loginCheckbox" />
+        <div class="d_f_c_c gap-20 mobile-remember-me">
+          <input type="checkbox" id="loginCheckbox" name="loginCheckbox" class="mobile-signup-checkbox" />
           <label for="loginCheckbox">Remember me</label>
         </div>
-        <div class="d_f_c_c gap-20">
-          <button class="btn" id="loginBtn">Log in</button>
-          <button class="btn btn-alt" onclick="guestLogin()">
+        <div class="d_f_c_c gap-20 mobile-login-btns">
+          <button class="btn mobile-login-btn" id="loginBtn">Log in</button>
+          <button class="btn btn-alt mobile-login-btn" onclick="guestLogin()">
             Guest Log in
           </button>
         </div>
       </form>
     </div>
 
-    <div class="legal-links d_f_c_c gap-40 pad-y-70">
-      <a class="a-style" onclick="openExternalLink('privacy-policy')">Privacy Policy</a>
-      <a class="a-style" onclick="openExternalLink('legal-notice')">Legal notice</a>
+    <div style="display: none;" class="d_f_c_c gap-40 mobile-second-signup-div" >
+      <p>Not a Join user?</p>
+      <a class="btn mobile-signup-btn" href="./signup.html">SignUp</a>
+    </div>
+
+    <div class="legal-links d_f_c_c gap-40 pad-y-70 mobile-links">
+      <a class="a-style" onclick="openExternalLink('privacy-policy')"
+        >Privacy Policy</a
+      >
+      <a class="a-style" onclick="openExternalLink('legal-notice')"
+        >Legal notice</a
+      >
     </div>
 
     <div class="" id="loginMessageContainer">
       <a class="btn-message d_f_c_c" id="messageFormLogin">Message</a>
     </div>
-
   </body>
 </html>

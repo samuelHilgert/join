@@ -3,6 +3,7 @@
   height: auto;
   padding: 20px 24px;
   box-sizing: border-box;
+  border: unset;
   border-radius: 10px;
   border: 1px solid rgba(209, 209, 209, 1);
   background-repeat: no-repeat;
@@ -18,8 +19,9 @@
 
 .search-board-input {
   padding: 10px 14px;
-  border: none;
+  border: unset;
   outline: none;
+  box-sizing: border-box;
 }
 
 .search-icon img:hover {
@@ -86,13 +88,13 @@
   align-items: center;
   cursor: pointer;
   border-radius: 8px;
+  border: unset;
   padding: 15px 24px;
   background-color: #2a3647;
   color: white;
   font-size: 21px;
   font-weight: bold;
   line-height: 25.2px;
-  border: none;
   text-wrap: nowrap;
 }
 
@@ -104,7 +106,7 @@
   font-size: 21px;
   font-weight: bold;
   line-height: 25.2px;
-  border: none;
+  border: unset;
   text-wrap: nowrap;
 }
 
@@ -220,13 +222,20 @@
   height: 100px;
 }
 
+.summary-category-text {
+  white-space: nowrap;
+}
+
 .card {
   display: flex;
-  flex: 1;
   border-radius: 30px;
-  padding: 38px 76px;
+  padding: 0 40px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  height: 100%;
+  flex: 1;
+  box-sizing: border-box;
   background-color: rgba(255, 255, 255, 1);
-  margin: 10px;
   color: rgba(0, 0, 0, 1);
   transition: transform 0.3s ease;
 }
@@ -235,13 +244,19 @@
   cursor: pointer;
   color: rgba(255, 255, 255, 1);
   background-color: #2a3647;
-  transform: scale(1.07); /* Vergrößern um 7% */
+  transform: scale(1.07);
+  /* Vergrößern um 7% */
 }
 
-.card-small {
-  padding: 38px 48px;
-  min-width: 100px;
-  max-width: 10px;
+.card-upcoming {
+  border-radius: 30px;
+  padding: 0 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  height: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+  gap: 20px;
 }
 
 .summary-icon {
@@ -252,6 +267,7 @@
 .back-arrow {
   width: 32px;
   height: 32px;
+  position: absolute;
 }
 
 .div-underline {
@@ -274,6 +290,10 @@
   background-color: rgba(209, 209, 209, 1);
 }
 
+.drag-area-container {
+  gap: 10px;
+}
+
 .drag-area-category {
   height: 100%;
   flex: 1;
@@ -285,7 +305,6 @@
   padding: 10px;
   margin: 10px;
   min-height: 50px;
-  width: 100%;
   background-color: rgba(231, 231, 231, 1);
   border-radius: 10px;
   border: 1px dashed black;
@@ -309,11 +328,14 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 10px;
+  padding: 0;
   border-radius: 10px;
 }
 
-
+.add-task-btn-board-header svg {
+  width: 15px;
+  height: 14px;
+}
 
 .task-popup-svg {
   height: 18px;
@@ -329,15 +351,11 @@
 }
 
 .task-popup-span {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-weight: 400;
   font-size: 16px;
   color: rgba(42, 54, 71, 1);
 }
-
-
-
-
 
 .drag-area-highlight {
   padding: 10px;
@@ -352,11 +370,14 @@
   background-color: white;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08);
   border-radius: 12px;
-  padding: 10px;
-  margin: 10px;
-  height: auto;
-  cursor: pointer;
+  padding: 20px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 280px;
   box-sizing: border-box;
+  height: auto;
+  min-height: 280px;
+  cursor: pointer;
 }
 
 .todo p {
@@ -375,9 +396,10 @@ li {
 }
 
 .progress {
+  cursor: pointer;
   border-radius: 8px;
   background-color: rgb(230, 230, 230);
-  width: 50%;
+  width: 100%;
   margin-right: 5px;
   box-sizing: border-box;
 }
@@ -393,7 +415,8 @@ li {
 }
 
 .statusText {
-  width: 50%;
+  display: none;
+  width: 100%;
   margin-left: 5px;
   box-sizing: border-box;
 }
@@ -425,6 +448,23 @@ li {
   z-index: 9999;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.close-popup-button-board {
+  border-radius: 50%;
+  height: 33px;
+  width: 33px;
+  margin-top: -8px;
+}
+
+.close-popup-button-board:hover {
+  background-color: rgba(225, 225, 225, 1);
+  cursor: pointer;
+}
+
+.close-popup-button-board-img {
+  width: 25px;
+  height: 25px;
 }
 
 .close-button-div:hover {
@@ -537,9 +577,9 @@ li {
 #signUpMessageContainer {
   display: none;
   justify-content: center;
-  position: absolute;
-  bottom: -40%;
-  height: 300px;
+  position: fixed;
+  bottom: 0;
+  height: 50%;
   width: 50%;
   box-sizing: border-box;
 }
@@ -547,7 +587,7 @@ li {
 #messageFormSignUp {
   display: none;
   min-width: 50%;
-  height: auto;
+  height: 100px;
   box-sizing: border-box;
   position: absolute;
   z-index: 9999;
@@ -623,4 +663,16 @@ li {
   height: 24px;
   width: 1px;
   background-color: #d1d1d1;
+}
+
+#addTaskMobileBtnBoardHeader {
+  display: none;
+}
+
+#btnDivOk-3 {
+  display:none;
+}
+
+#btnDivOk-4 {
+  display:none;
 }

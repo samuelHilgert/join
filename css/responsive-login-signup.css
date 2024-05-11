@@ -1,0 +1,114 @@
+@media screen and (max-width: 1200px) {
+  .mobile-signup-inputs {
+    min-width: 332px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .mobile-second-signup-div {
+    display: flex !important;
+  }
+
+  .mobile-signup-div {
+    display: none;
+  }
+
+  .mobile-logo {
+    width: 80px;
+  }
+
+  .mobile-checkbox-policy {
+    width: 244px;
+  }
+
+  .mobile-login-body {
+    padding-top: 38px;
+    padding-bottom: 26px;
+    height: 100vh;
+  }
+
+  .mobile-links {
+    padding-bottom: 32px;
+    padding-top: 112px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .mobile-login-form-container {
+    padding-right: 0;
+    padding-left: 0;
+    width: inherit;
+  }
+
+  .mobile-login-body {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .mobile-inputs {
+    width: 90%;
+    margin: auto;
+  }
+
+  .mobile-login-form {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .mobile-signup-form {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .mobile-signup-inputs {
+    min-width: 100%;
+  }
+
+  .mobile-signup-container {
+    width: inherit;
+  }
+
+  .mobile-signup-arrow {
+    margin-left: 20px !important;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .mobile-login-form {
+    gap: 30px;
+  }
+
+  .mobile-signup-form {
+    gap: 30px;
+  }
+
+  .mobile-login-btns {
+    flex-direction: column;
+  }
+
+  .mobile-signup-checkbox {
+    height: 20px !important;
+    width: 20px !important;
+  }
+
+  .mobile-remember-me {
+    padding-right: 30%;
+  }
+
+  .mobile-login-btn {
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .mobile-signup-btn {
+    font-size: 18px;
+  }
+
+  .mobile-links {
+    padding-top: 116px;
+  }
+
+  .mobile-login-signup-headline {
+    font-size: 48px;
+  }
+}
