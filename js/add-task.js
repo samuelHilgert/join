@@ -31,12 +31,12 @@ function sortContactsForTasks() {
 
 // function to add the task 
 async function addTask() {
-  if (document.location.pathname === `/board.html`) {   // edit feature for edit tasks on board
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {   // edit feature for edit tasks on board
     let boardTaskEditContainer = document.getElementById('boardTaskEditContainer');
     let boardTaskShowContainer = document.getElementById('boardTaskShowContainer');
     const taskInput = readTaskInputEditTask();
     let formattedInputDate;
-    if (taskInput.value !== null ) {
+    if (taskInput.value !== null) {
       formattedInputDate = taskInput.date;
     } else {
       formattedInputDate = taskInput.date;
@@ -104,7 +104,12 @@ async function addTask() {
       await setItem("users", JSON.stringify(users));
       resetAddTaskValues();
     }
-    addTaskToBoardMessage();
+    if (document.location.pathname === `/board.html` && templateIndex === 3) {
+      closeBoardAddTaskPopup();
+    } else {
+      addTaskToBoardMessage();
+    }
+
   }
 }
 
@@ -351,7 +356,9 @@ function toggleCategoryDiv() {
 
 //for subtasks section
 function addSubtask() {
-  if (document.location.pathname === `/board.html`) {
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    console.log('board');
+    console.log('3');
     if ((authorized === 'guest')) {
       const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
       const subtaskValue = subtaskInput.value.trim();
@@ -396,9 +403,10 @@ function addSubtask() {
         changeIcons();
       }
       /*
-
+ 
       await setItem("users", JSON.stringify(users)); */
     }
+
   } else {
     const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
     const subtaskValue = subtaskInput.value.trim();
@@ -535,7 +543,7 @@ function deleteSubtask(i) {
       } else {
         let index = i.id.split('Done')[1];
         currentTask.subtasksDone.splice([index], 1);
-          renderSubtasksPopup();
+        renderSubtasksPopup();
       }
     } else {
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
@@ -647,19 +655,19 @@ function findMatchingContact() {
   let searchInput = document.getElementById(`taskAssignedTo-${templateIndex}`).value.trim().toLowerCase();
   //console.log("Sucheingabe:", searchInput); // Log der Sucheingabe
   if (searchInput === "") {
-      openDropdown();
-      updateDropdownMenu(contactsForTasks);
+    openDropdown();
+    updateDropdownMenu(contactsForTasks);
   } else {
-      let filteredContacts = contactsForTasks.filter(contact => {
-          let isValidContact = contact && contact.name && typeof contact.name === 'string';
-          //console.log("Verarbeiteter Kontakt:", contact); // Log jeden Kontakts vor der Filterung
-          return isValidContact && contact.name.toLowerCase().includes(searchInput);
-      });
-      //console.log("Gefilterte Kontakte:", filteredContacts); // Log der gefilterten Kontakte
-      if (!isDropdownOpen()) {
-          openDropdown();
-      }
-      updateDropdownMenu(filteredContacts);
+    let filteredContacts = contactsForTasks.filter(contact => {
+      let isValidContact = contact && contact.name && typeof contact.name === 'string';
+      //console.log("Verarbeiteter Kontakt:", contact); // Log jeden Kontakts vor der Filterung
+      return isValidContact && contact.name.toLowerCase().includes(searchInput);
+    });
+    //console.log("Gefilterte Kontakte:", filteredContacts); // Log der gefilterten Kontakte
+    if (!isDropdownOpen()) {
+      openDropdown();
+    }
+    updateDropdownMenu(filteredContacts);
   }
 }
 

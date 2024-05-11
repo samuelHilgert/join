@@ -337,6 +337,8 @@ function getPriorityIcon(todo) {
 async function editTask() {
   let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
   let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
+  let btnDivOk = document.getElementById("btnDivOk-3");
+  btnDivOk.style.display = "flex";
   boardTaskEditContainer.style.display = 'flex';
   boardTaskShowContainer.style.display = 'none';
 
@@ -388,7 +390,7 @@ async function editTask() {
 }
 
 function renderSubtasksPopup() {
-  let subtaskDivAddTask = document.getElementById('subtaskDivAddTask-3');
+  let subtaskDivAddTask = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
 
   subtaskDivAddTask.innerHTML = ``;
 
@@ -457,8 +459,6 @@ function openBoardAddTaskPopup() {
   renderAddTaskFormButton();
   let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
   let container = document.getElementById("boardAddTaskPopupContainer");
-  let btnDivOk = document.getElementById("btnDivOk-4");
-  btnDivOk.style.display = "none";
   boardAddTaskPopup.style.display = "flex";
   document.body.style.overflow = "hidden";
   moveContainerIn(container);
