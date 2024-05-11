@@ -458,9 +458,15 @@ function closeBoardTaskPopup() {
 function openBoardAddTaskPopup() {
   let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
   let container = document.getElementById("boardAddTaskPopupContainer");
+  let btnDivOk = document.getElementById("btnDivOk-4");
+  btnDivOk.style.display = "none";
   boardAddTaskPopup.style.display = "flex";
   document.body.style.overflow = "hidden";
   moveContainerIn(container);
+  let urgentBtn = document.getElementById('urgentBtn-4');
+  let mediumBtn = document.getElementById('mediumBtn-4');
+  let lowBtn = document.getElementById('lowBtn-4');
+  renderAddTaskFormButton(urgentBtn, mediumBtn, lowBtn);
 }
 
 function closeBoardAddTaskPopup() {
