@@ -6,18 +6,13 @@ let subtasksOpen = [];
 let subtasksDone = [];
 let touchStartTime;
 
+
 /**
- *
+ * This function renders the tasks on board
  *
  */
 async function renderBoardTasks() {
-  hideSearchMessage();
-  if (tasks.length === 0) {
-    let div = document.getElementById("guestMessagePopupBoard");
-    let messageText = document.getElementById("guestMessageBoard");
-    showGuestPopupMessageForReload(div, messageText);
-    await updateOrLoadData();
-  }
+  await reloadTasksOnBoard();
 
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
@@ -26,10 +21,34 @@ async function renderBoardTasks() {
     categoryTableColumn.innerHTML = '';
     document.getElementById(category).classList.remove('drag-area-highlight');
     if (allTasksSameCategory.length === 0) {
-      categoryTableColumn.innerHTML = `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
+      categoryTableColumn.innerHTML = showNoTaskDiv();
     } else {
       showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
     }
+  }
+}
+
+
+/**
+ * This function show the "no tasks" div, when no todos could find in a category
+ *
+ */
+function showNoTaskDiv() {
+  return `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
+}
+
+
+/**
+ * This function checks, whether the tasks are empty.
+ * If its true, the example tasks will load again
+ * 
+ */
+async function reloadTasksOnBoard() {
+  if (tasks.length === 0) {
+    let div = document.getElementById("guestMessagePopupBoard");
+    let messageText = document.getElementById("guestMessageBoard");
+    showGuestPopupMessageForReload(div, messageText);
+    await updateOrLoadData();
   }
 }
 
@@ -515,12 +534,9 @@ function displaySearchMessage(matchingIndices) {
 }
 
 async function renderAfterSearch() {
-  await renderBoardTasks();
-}
-
-function hideSearchMessage() {
   let resultMessageDiv = document.getElementById("resultMessageDiv");
   resultMessageDiv.style.display = "none";
+  await renderBoardTasks();
 }
 
 /**

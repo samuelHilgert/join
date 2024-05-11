@@ -8,6 +8,7 @@ let authorized = 'none';
 let currentUser;
 let editCurrentTask = [];
 
+
 /**
  * This is a function to initialize render functions 
  * 
@@ -33,6 +34,7 @@ async function init() {
     }
 }
 
+
 /**
  * this function formats the date from add-task input and for the upcoming function in summary
  *
@@ -48,6 +50,7 @@ async function formatDateCorrect(timeStamp) {
     return formattedDate;
 }
 
+
 /**
  * This functions includes all functions for unauthorized access
  * 
@@ -57,6 +60,7 @@ async function unauthorizedFunctions() {
     await includeHTML();
     getCurrentlySidebarLink();
 }
+
 
 /**
  * This function checks if the user used the login. If not the authorized status get the status 'none'. In this case user will not get an access.
@@ -76,6 +80,7 @@ function setAuthorizedStatus() {
     }
 }
 
+
 /**
  * This function secures unauthorized opening of pages via the URL by copying and pasting without logged in as user or guest
  * 
@@ -91,6 +96,7 @@ function checkFalseOpening() {
 function firstLogin() {
     return window.location.href = `./login.html`;
 }
+
 
 /**
  * This is a function to include outsourced html elements
@@ -117,25 +123,12 @@ async function includeHTML() {
 function addDynamicIDs(html, index) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
-    
-    // Aktualisiere alle IDs
-    doc.querySelectorAll('[id]').forEach(el => {
+    doc.querySelectorAll('[id]').forEach(el => {     // Aktualisiere alle IDs
         el.id += `-${index}`;
     });
-
-    // Aktualisiere alle Event-Attribute wie onclick, oninput und onsubmit
-  /*  doc.querySelectorAll('[onclick], [oninput], [onsubmit]').forEach(el => {
-        ['onclick', 'oninput', 'onsubmit'].forEach(attr => {
-            if (el.hasAttribute(attr)) {
-                let originalAttribute = el.getAttribute(attr);
-                let modifiedAttribute = modifyEventAttribute(originalAttribute, index);
-                el.setAttribute(attr, modifiedAttribute);
-            }
-        }); 
-    });*/
-
     return doc.body.innerHTML; // Gibt das modifizierte HTML zurück
 }
+
 
 function modifyEventAttribute(attributeString, index) {
     // Zerlege den Attributstring in einzelne Funktionen, falls mehrere Aufrufe in einem Attribut sind
@@ -153,6 +146,7 @@ function modifyEventAttribute(attributeString, index) {
     }).join(';'); // Füge die modifizierten Funktionen wieder zu einem String zusammen
 }
 
+
 /**
  * This function loads the value, whether the user logged in with the remember option
  * The data is initiate in login.js
@@ -165,6 +159,7 @@ async function loadLoggedTime() {
         console.error('Loading error:', e);
     }
 }
+
 
 /**
  * This is a query which page is visited and launch functions
@@ -192,6 +187,7 @@ async function initiateIndividualFunctions() {
     }
 }
 
+
 /**
  * This function resets the expiration time for the logout
  * 
@@ -200,6 +196,7 @@ async function resetExpiryTime() {
     rememberStatus[0].expiryDate = new Date().getMinutes() + setResetExpiryTime; // global variable that can be changed
     await setItem('remember_status', JSON.stringify(rememberStatus));
 }
+
 
 /**
  * This function loads the user data from the remote server to the local array "users"
@@ -212,6 +209,7 @@ async function loadUserData() {
         console.error('Loading error:', e);
     }
 }
+
 
 /**
  * This is a function that checks whether a guest or user has logged in
@@ -242,6 +240,7 @@ async function updateOrLoadData() {
     }
 }
 
+
 /**
  * This is a function which includes the sample contacts from the contacts.json JSON-Document 
  * 
@@ -253,6 +252,7 @@ async function loadExamples() {
     tasks = await respTasks.json();
 }
 
+
 /**
  * This function moves the data in local arrays and on the server
  * 
@@ -263,6 +263,7 @@ async function saveNewUserDate() {
     await setItem('users', JSON.stringify(users));
 }
 
+
 /**
  * This function renders header elements
  * 
@@ -272,6 +273,7 @@ function renderHeader() {
     hideHelpIcon();
     renderLettersByName(lettersDiv);
 }
+
 
 /**
  * This function is included in setInterval in init()
@@ -284,6 +286,7 @@ function startExpiryCheckInterval(rememberStatus) {
         checkExpiryAndReset(rememberStatus);
     }, 30000); // repeat query every 30 seconds
 }
+
 
 /**
  * The logout time is reset every time the user clicks on an HTML document
@@ -299,6 +302,7 @@ function checkExpiryAndReset(rememberStatus) {
     }
 }
 
+
 /**
  * This function checks whether help.html is clicked. If this is the case, the help icon will be hidden
  * 
@@ -310,6 +314,7 @@ function hideHelpIcon() {
         helpIcon.style.display = 'none';
     }
 }
+
 
 /**
  * This function generates the initials of the username or guest
@@ -323,6 +328,7 @@ function renderLettersByName(lettersDiv) {
         lettersDiv.innerHTML = contactNamesLetters(userName);
     }
 }
+
 
 /**
  * This function renders the letters of first and last name of the user or the contacts
@@ -339,6 +345,7 @@ function contactNamesLetters(name) {
     letters = firstLetter + secondLetter;
     return letters;
   }
+
 
 /**
  * This function creates the popup menu with links for header
@@ -358,6 +365,7 @@ function openHeaderPopupLinks() {
     }
 }
 
+
 /**
  * Handles a click outside a specific element.
  * Hides the popup when the user clicks outside the popup area and removes the click event listener.
@@ -374,6 +382,7 @@ function handleOutsideClick(event) {
     }
 }
 
+
 /**
  * This function opens the external links with an extension of the url address
  *
@@ -383,6 +392,7 @@ function openExternalLink(link) {
     let targetUrl = url + '?external';
     window.open(targetUrl, '_blank');
 }
+
 
 /**
  * This function sets the animation of elements
@@ -395,6 +405,7 @@ function moveContainerIn(container) {
     container.classList.add('animation-in');
 }
 
+
 /**
  * This function sets the animation of elements
  *
@@ -405,6 +416,7 @@ function moveContainerOut(container) {
     container.classList.add('outside');
     container.classList.add('animation-out');
 }
+
 
 /**
  * This function sets the animation of elements
@@ -417,6 +429,7 @@ function moveContainerUp(container) {
     container.classList.add('animation-up');
 }
 
+
 /**
  * This function sets the animation of elements
  *
@@ -428,6 +441,7 @@ function moveContainerDown(container) {
     container.classList.add('animation-down');
 }
 
+
 /**
  * This function closes every popup
  * 
@@ -435,6 +449,7 @@ function moveContainerDown(container) {
 function displayNonePopup(popup) {
     popup.style.display = 'none';
 }
+
 
 /**
  * This function resets the localStorage and redirects the user to login after logout
@@ -448,6 +463,7 @@ function clickLogout() {
         window.location.href = `./login.html?msg=you are logged out`;
     }, 500);
 }
+
 
 /**
  * This function initialize the popup message after reloading tasks or contacts
@@ -464,6 +480,7 @@ function showGuestPopupMessageForReload(div, messageText) {
     }, popupCloseTime);
 }
 
+
 /**
  * This function initialize the message popup for the limited access as guest
  * 
@@ -479,6 +496,7 @@ function showGuestPopupMessage(div, messageText) {
     }, popupCloseTime);
 }
 
+
 /**
  * This function closes the message popup by onclick
  * 
@@ -488,6 +506,7 @@ function closeGuestPopupMessage(div) {
     document.body.style.overflow = 'scroll';
 }
 
+
 /**
  * This function will automatically close the message popup after some time
  * 
@@ -496,6 +515,7 @@ function closePopupAutomaticly(div) {
     div.style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
+
 
 /**
  * This function blocks the closing function of the child elements
