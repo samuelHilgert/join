@@ -296,7 +296,7 @@ function determinePriority() {
 }
 
 function setActiveClasses(btnId) {
-  const clickedButton = document.getElementById(btnId);
+  const clickedButton = document.getElementById(`${btnId}-${templateIndex}`);
   const buttonSVG = clickedButton.querySelector("svg");
   switch (btnId) {
     case "urgentBtn":
