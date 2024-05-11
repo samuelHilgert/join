@@ -331,11 +331,11 @@ function removeActiveClasses() {
 
 // for category section
 function chooseCategory(category) {
-  document.getElementById("taskCategory").value = category.innerText;
+  document.getElementById(`taskCategory-${templateIndex}`).value = category.innerText;
 }
 
 function toggleCategoryDiv() {
-  let categoryDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
   let dropdownIcon = document.getElementById(`categoryDropIcon-${templateIndex}`);
   if (
     categoryDiv.style.display === "none" ||
