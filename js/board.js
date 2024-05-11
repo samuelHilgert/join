@@ -455,7 +455,6 @@ function closeBoardTaskPopup() {
  *
  */
 function openBoardAddTaskPopup(element) {
-  console.log(element.id);
   if (element.id.includes('Progress')) {
     setCategory = 'inProgress';
   } else if (element.id.includes('AwaitFeedback')) {

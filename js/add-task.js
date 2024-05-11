@@ -96,9 +96,6 @@ async function addTask() {
       subtasksDone: [],
       category: setCategory,
     };
-    if (setCategory === 'inProgess') {
-      console.log('Kategorie gewechselt in = ' + setCategory);
-    }
 
     newTask.push(task);
     if ((authorized === 'guest')) {
@@ -111,10 +108,8 @@ async function addTask() {
     }
     if (document.location.pathname === `/board.html` && templateIndex === 3) {
       closeBoardAddTaskPopup();
-    } else {
-      addTaskToBoardMessage();
     }
-
+      addTaskToBoardMessage();
   }
 }
 
@@ -362,8 +357,6 @@ function toggleCategoryDiv() {
 //for subtasks section
 function addSubtask() {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    console.log('board');
-    console.log('3');
     if ((authorized === 'guest')) {
       const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
       const subtaskValue = subtaskInput.value.trim();
