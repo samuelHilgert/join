@@ -7,6 +7,7 @@ let checkedCheckboxes = []; // Array zur Speicherung der ausgewählten Checkboxe
 let contactsLoaded = false;
 let currentSubtaskId;
 let templateIndex = 3;
+let setCategory = "backlog";
 
 /**
  * This function gets the next available ID that's not already used in the tasks array.
@@ -93,8 +94,12 @@ async function addTask() {
       priority: prio,
       subtasksOpen: subtasks,
       subtasksDone: [],
-      category: "backlog",
+      category: setCategory,
     };
+    if (setCategory === 'inProgess') {
+      console.log('Kategorie gewechselt in = ' + setCategory);
+    }
+
     newTask.push(task);
     if ((authorized === 'guest')) {
       tasks.push(...newTask);

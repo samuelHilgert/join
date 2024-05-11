@@ -84,10 +84,10 @@ function getPrioForTask(task) {
 
 function getContactsForTask(task) {
   let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
-    contactsForTaskDiv.innerHTML = "";
-    task.assignedTo.forEach((contactName, index) => {
-        const backgroundColor = getBgColorTaskPopup(task, index);
-        const letters = contactNamesLetters(contactName);
+  contactsForTaskDiv.innerHTML = "";
+  task.assignedTo.forEach((contactName, index) => {
+    const backgroundColor = getBgColorTaskPopup(task, index);
+    const letters = contactNamesLetters(contactName);
     const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
     contactsForTaskDiv.innerHTML += `
     <div class="d_f_fs_c gap-10 width-max ${marginRightClass}">
@@ -312,12 +312,12 @@ function getBgColorTaskPopup(task, index) {
   const contactName = task.assignedTo[index];
   let contactInfo;
   if (authorized === 'user') {
-      contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
+    contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
   } else {
-      contactInfo = contacts.find(contact => contact.name === contactName);
+    contactInfo = contacts.find(contact => contact.name === contactName);
   }
   if (!contactInfo || !contactInfo.color) {
-      return "blue";  // Standardfarbe, wenn keine Farbe gefunden wurde
+    return "blue";  // Standardfarbe, wenn keine Farbe gefunden wurde
   }
   return contactInfo.color;
 }
@@ -386,7 +386,7 @@ async function editTask() {
   let taskContactDiv = document.getElementById("taskContactDiv-3");
   taskContactDiv.style.display = "none";
   showContactSelection();
-  renderSubtasksPopup(); 
+  renderSubtasksPopup();
 }
 
 function renderSubtasksPopup() {
@@ -454,7 +454,13 @@ function closeBoardTaskPopup() {
  * this functions initiate all functions for the popup add-task
  *
  */
-function openBoardAddTaskPopup() {
+function openBoardAddTaskPopup(element) {
+  console.log(element.id);
+  if (element.id.includes('Progress')) {
+    setCategory = 'inProgress';
+  } else if (element.id.includes('AwaitFeedback')) {
+    setCategory = 'awaitFeedback';
+  }
   changeTemplateIndex();
   renderAddTaskFormButton();
   let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
@@ -594,10 +600,10 @@ function restoreImagePopupTask(element, defaultSrc) {
 }
 
 function showSubtasksByHovering(element) {
-let statusText = document.getElementById(`statusText${element}`);
-statusText.style.display = 'block';
+  let statusText = document.getElementById(`statusText${element}`);
+  statusText.style.display = 'block';
 
-statusText.onmouseout = function() {
-  statusText.style.display = 'none';
-};
+  statusText.onmouseout = function () {
+    statusText.style.display = 'none';
+  };
 }
