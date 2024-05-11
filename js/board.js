@@ -379,9 +379,6 @@ async function editTask() {
     prioBtn = lowBtn;
   }
 
-
-  renderAddTaskFormButton(urgentBtn, mediumBtn, lowBtn);
-
   prioBtn.click();
   checkedCheckboxes = todo.assignedTo;
   let taskContactDiv = document.getElementById("taskContactDiv-3");
@@ -463,10 +460,6 @@ function openBoardAddTaskPopup() {
   boardAddTaskPopup.style.display = "flex";
   document.body.style.overflow = "hidden";
   moveContainerIn(container);
-  let urgentBtn = document.getElementById('urgentBtn-4');
-  let mediumBtn = document.getElementById('mediumBtn-4');
-  let lowBtn = document.getElementById('lowBtn-4');
-  renderAddTaskFormButton(urgentBtn, mediumBtn, lowBtn);
 }
 
 function closeBoardAddTaskPopup() {

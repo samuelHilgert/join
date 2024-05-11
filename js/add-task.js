@@ -6,6 +6,7 @@ let matchingContactNames = [];
 let checkedCheckboxes = []; // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
 let contactsLoaded = false;
 let currentSubtaskId;
+let templateIndex = 3;
 
 /**
  * This function gets the next available ID that's not already used in the tasks array.
@@ -116,13 +117,13 @@ function shakeDiv() {
 }
 
 function resetAddTaskValues() {
-  document.getElementById("taskTitle").value = "";
-  document.getElementById("taskDescription").value = "";
-  document.getElementById("taskDate").value = "";
-  document.getElementById("taskCategory").value = "";
-  document.getElementById("subtask").value = "";
-  document.getElementById("contactSelection").innerHTML = "";
-  document.getElementById('taskCategory').classList.remove('required-input-outline-red');
+  document.getElementById(`taskTitle-${templateIndex}`).value = "";
+  document.getElementById(`taskDescription-${templateIndex}`).value = "";
+  document.getElementById(`taskDate-${templateIndex}`).value = "";
+  document.getElementById(`taskCategory-${templateIndex}`).value = "";
+  document.getElementById(`subtask-${templateIndex}`).value = "";
+  document.getElementById(`contactSelection-${templateIndex}`).innerHTML = "";
+  document.getElementById(`taskCategory-${templateIndex}`).classList.remove('required-input-outline-red');
   newTask = [];
   subtasks = [];
   checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
@@ -130,11 +131,10 @@ function resetAddTaskValues() {
 
 //get informations from input
 function readTaskInput() {
-  const title = document.getElementById("taskTitle").value;
-  const description = document.getElementById("taskDescription").value;
-  const date = document.getElementById("taskDate");
-  const category = document.getElementById("taskCategory").value;
-  const subtask = document.getElementById("subtask").value;
+  const title = document.getElementById(`taskTitle-${templateIndex}`).value;
+  const description = document.getElementById(`taskDescription-${templateIndex}`).value;
+  const date = document.getElementById(`taskDate-${templateIndex}`);
+  const category = document.getElementById(`taskCategory-${templateIndex}`).value;
   return {
     title: title,
     description: description,
@@ -145,10 +145,9 @@ function readTaskInput() {
 
 //get informations from input
 function readTaskInputEditTask() {
-  const title = document.getElementById("taskTitle").value;
-  const description = document.getElementById("taskDescription").value;
-  const date = document.getElementById("taskDate");
-  const subtask = document.getElementById("subtask").value;
+  const title = document.getElementById(`taskTitle-${templateIndex}`).value;
+  const description = document.getElementById(`taskDescription-${templateIndex}`).value;
+  const date = document.getElementById(`taskDate-${templateIndex}`);
   return {
     title: title,
     description: description,
@@ -170,7 +169,7 @@ async function updateTaskContacts() {
 function openDropdown() {
   sortContactsForTasks();
   clearAssignToInput();
-  let taskContactDiv = document.getElementById("taskContactDiv");
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
   } else {
@@ -251,8 +250,8 @@ function markSelectedContacts() {
  * If the name is found in the array, the initials and background colors are extracted from it.
  */
 function showContactSelection() {
-  let contactSelection = document.getElementById("contactSelection");
-  let taskContactDiv = document.getElementById("taskContactDiv");
+  let contactSelection = document.getElementById(`contactSelection-${templateIndex}`);
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   if (taskContactDiv.style.display === "none") {
     contactSelection.style.display = "flex";
   } else {
@@ -285,9 +284,9 @@ function resetPriority() {
 //Return Value from Priority!
 function determinePriority() {
   let prio = "Medium"; // Standardpriorität
-  const urgentBtn = document.getElementById("urgentBtn");
-  const mediumBtn = document.getElementById("mediumBtn");
-  const lowBtn = document.getElementById("lowBtn");
+  const urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
+  const mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
+  const lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
   if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
     prio = "Urgent";
   } else if (lowBtn.classList.contains("active-prio-btn-low")) {
@@ -318,7 +317,7 @@ function setActiveClasses(btnId) {
 }
 
 function removeActiveClasses() {
-  const buttons = ["urgentBtn", "mediumBtn", "lowBtn"];
+  const buttons = [`urgentBtn-${templateIndex}`, `mediumBtn-${templateIndex}`, `lowBtn-${templateIndex}`];
   buttons.forEach((button) => {
     const buttonElement = document.getElementById(button);
     buttonElement.classList.remove(
@@ -336,8 +335,8 @@ function chooseCategory(category) {
 }
 
 function toggleCategoryDiv() {
-  let categoryDiv = document.getElementById("categoryDiv");
-  let dropdownIcon = document.getElementById("categoryDropIcon");
+  let categoryDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  let dropdownIcon = document.getElementById(`categoryDropIcon-${templateIndex}`);
   if (
     categoryDiv.style.display === "none" ||
     categoryDiv.style.display === ""
@@ -354,10 +353,10 @@ function toggleCategoryDiv() {
 function addSubtask() {
   if (document.location.pathname === `/board.html`) {
     if ((authorized === 'guest')) {
-      const subtaskInput = document.getElementById("subtask");
+      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
       const subtaskValue = subtaskInput.value.trim();
       if (subtaskValue !== "") {
-        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
         let currentTask = tasks[currentOpenTaskId];
         if (currentSubtaskId !== undefined) {
           if (currentSubtaskId.includes('subtasksOpen')) {
@@ -375,10 +374,10 @@ function addSubtask() {
         changeIcons();
       }
     } else {
-      const subtaskInput = document.getElementById("subtask");
+      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
       const subtaskValue = subtaskInput.value.trim();
       if (subtaskValue !== "") {
-        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
         let currentTask = users[currentUser].tasks[currentOpenTaskId];
         if (currentSubtaskId !== undefined) {
           if (currentSubtaskId.includes('subtasksOpen')) {
@@ -401,10 +400,10 @@ function addSubtask() {
       await setItem("users", JSON.stringify(users)); */
     }
   } else {
-    const subtaskInput = document.getElementById("subtask");
+    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
     const subtaskValue = subtaskInput.value.trim();
     if (subtaskValue !== "") {
-      const subtaskContainer = document.getElementById("subtaskDivAddTask");
+      const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
       subtasks.push(subtaskValue);
       renderSubtasks(subtaskContainer);
       subtaskInput.value = "";
@@ -416,7 +415,7 @@ function addSubtask() {
 //Event handler to add subtask with enter-key
 document.addEventListener("keypress", function (event) {
   if (event.keyCode === 13) {
-    if (document.activeElement.id === "subtask") {
+    if (document.activeElement.id === `subtask-${templateIndex}`) {
       event.preventDefault();
       addSubtask();
     }
@@ -424,7 +423,7 @@ document.addEventListener("keypress", function (event) {
 });
 
 function getSubtaskIndex(element) {
-  const subtaskContainer = document.getElementById("subtaskDivAddTask");
+  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
   const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
     element.parentNode.parentNode
   );
@@ -448,7 +447,7 @@ function renderSubtasks(container) {
 }
 
 function changeIcons() {
-  let iconBox = document.getElementById("dropdownIcon");
+  let iconBox = document.getElementById(`dropdownIcon-${templateIndex}`);
   iconBox.classList.remove("input-icon-div");
   iconBox.classList.add("input-icon");
 
@@ -471,9 +470,9 @@ function editSubtask(element) {
         currentSubtaskId = element.id; // global var for addSubtask()
         let index = element.id.split('Open')[1];
         let currentSubtask = currentTask.subtasksOpen[index];
-        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
         if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById("subtask");
+          const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
           subtaskInput.value = currentSubtask;
         }
         changeIcons();
@@ -481,9 +480,9 @@ function editSubtask(element) {
         currentSubtaskId = element.id; // global var for addSubtask()
         let index = element.id.split('Done')[1];
         let currentSubtask = currentTask.subtasksDone[index];
-        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
         if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById("subtask");
+          const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
           subtaskInput.value = currentSubtask;
         }
         changeIcons();
@@ -494,9 +493,9 @@ function editSubtask(element) {
         currentSubtaskId = element.id; // global var for addSubtask()
         let index = element.id.split('Open')[1];
         let currentSubtask = currentTask.subtasksOpen[index];
-        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
         if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById("subtask");
+          const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
           subtaskInput.value = currentSubtask;
         }
         changeIcons();
@@ -504,19 +503,19 @@ function editSubtask(element) {
         currentSubtaskId = element.id; // global var for addSubtask()
         let index = element.id.split('Done')[1];
         let currentSubtask = currentTask.subtasksDone[index];
-        const subtaskContainer = document.getElementById("subtaskDivAddTask");
+        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
         if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById("subtask");
+          const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
           subtaskInput.value = currentSubtask;
         }
         changeIcons();
       }
     }
   } else {
-    const subtaskContainer = document.getElementById("subtaskDivAddTask");
+    const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
     const subtaskIndex = getSubtaskIndex(element);
     if (subtaskIndex !== -1) {
-      const subtaskInput = document.getElementById("subtask");
+      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
       subtaskInput.value = subtasks[subtaskIndex];
       subtasks.splice(subtaskIndex, 1);
       renderSubtasks(subtaskContainer);
@@ -552,29 +551,29 @@ function deleteSubtask(i) {
     }
   } else {
     subtasks.splice(i, 1);
-    document.getElementById(`subtask${i}`).remove();
+    document.getElementById(`subtask-${templateIndex}-${i}`).remove();
   }
 }
 
 function clearSubtaskInput() {
-  let subtaskInput = document.getElementById("subtask");
+  let subtaskInput = document.getElementById(`subtask-${templateIndex}`);
   subtaskInput.value = "";
   subtaskInput.blur();
-  let iconBox = document.getElementById("dropdownIcon");
+  let iconBox = document.getElementById(`dropdownIcon-${templateIndex}`);
   iconBox.innerHTML = `
    <div onclick="changeIcons()" class='icon-edit-delete'><img src="assets/img/add.svg" alt="plus" /></div>
   `;
 }
 
 function clearCategory() {
-  let categoryDiv = document.getElementById("categoryDiv");
+  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
   if (categoryDiv.style.display === "flex") {
     categoryDiv.style.display = "none";
   }
 }
 
 function clearContactDropdown() {
-  let taskContactDiv = document.getElementById("taskContactDiv");
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
   }
@@ -582,14 +581,14 @@ function clearContactDropdown() {
 
 //clear the whole form
 function clearForm() {
-  document.getElementById("taskTitle").value = "";
-  document.getElementById("taskDescription").value = "";
-  document.getElementById("taskDate").value = "";
-  document.getElementById("taskCategory").value = "";
-  document.getElementById("subtask").value = "";
-  document.getElementById("taskAssignedTo").value = "";
-  document.getElementById("subtaskDivAddTask").innerHTML = "";
-  document.getElementById("contactSelection").innerHTML = "";
+  document.getElementById(`taskTitle-${templateIndex}`).value = "";
+  document.getElementById(`taskDescription-${templateIndex}`).value = "";
+  document.getElementById(`taskDate-${templateIndex}`).value = "";
+  document.getElementById(`taskCategory-${templateIndex}`).value = "";
+  document.getElementById(`subtask-${templateIndex}`).value = "";
+  document.getElementById(`taskAssignedTo-${templateIndex}`).value = "";
+  document.getElementById(`subtaskDivAddTask-${templateIndex}`).innerHTML = "";
+  document.getElementById(`contactSelection-${templateIndex}`).innerHTML = "";
   resetPriority();
   clearContactDropdown();
   clearCategory();
@@ -609,7 +608,7 @@ function rotateDropdownIcon(icon, isOpen) {
 function setMinimumDate() {
   var currentDate = new Date();
   var minDate = currentDate.toISOString().split("T")[0];
-  document.getElementById("taskDate").setAttribute("min", minDate);
+  document.getElementById(`taskDate-${templateIndex}`).setAttribute("min", minDate);
 }
 
 async function formatInputDate(input) {
@@ -624,7 +623,7 @@ async function formatInputDate(input) {
 ///////// SEARCHBAR /////////
 
 function clearAssignToInput() {
-  let input = document.getElementById("taskAssignedTo");
+  let input = document.getElementById(`taskAssignedTo-${templateIndex}`);
   if (input.placeholder === "Search contact") {
     input.placeholder = "Select contacts to assign";
     input.classList.remove("search-placeholder");
@@ -635,7 +634,7 @@ function clearAssignToInput() {
 }
 
 function turnArrow() {
-  let arrow = document.getElementById("turnDropdownArrow");
+  let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
   if (arrow.classList.contains("rotate-180")) {
     arrow.classList.remove("rotate-180");
   } else {
@@ -645,7 +644,7 @@ function turnArrow() {
 
 function findMatchingContact() {
   clearAssignToInput();
-  let searchInput = document.getElementById("taskAssignedTo").value.trim().toLowerCase();
+  let searchInput = document.getElementById(`taskAssignedTo-${templateIndex}`).value.trim().toLowerCase();
   //console.log("Sucheingabe:", searchInput); // Log der Sucheingabe
   if (searchInput === "") {
       openDropdown();
@@ -665,12 +664,12 @@ function findMatchingContact() {
 }
 
 function isDropdownOpen() {
-  let taskContactDiv = document.getElementById("taskContactDiv");
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   return taskContactDiv.style.display === "flex";
 }
 
 function updateDropdownMenu(contacts) {
-  let taskContactDiv = document.getElementById("taskContactDiv");
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   taskContactDiv.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
@@ -683,7 +682,7 @@ function updateDropdownMenu(contacts) {
 }
 
 function setFocusOnInputfield() {
-  let inputfield = document.getElementById('taskAssignedTo');
+  let inputfield = document.getElementById(`taskAssignedTo-${templateIndex}`);
   inputfield.focus();
 }
 
@@ -702,8 +701,8 @@ function handleClickOnDropdown() {
 function closeDropdown() {
   clearAssignToInput();
   turnArrow();
-  let arrow = document.getElementById("turnDropdownArrow");
-  let taskContactDiv = document.getElementById("taskContactDiv");
+  let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   arrow.classList.remove("rotate-180");
   taskContactDiv.style.display = "none";
 }
@@ -752,8 +751,8 @@ function forwardToBoard() {
 }
 
 function closeAddTaskMenuDiv() {
-  let taskContactDiv = document.getElementById("taskContactDiv");
-  let categoryDiv = document.getElementById("categoryDiv");
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
   if (taskContactDiv.style.display === "flex") {
     closeDropdown();
   }
