@@ -335,17 +335,22 @@ function getPriorityIcon(todo) {
 }
 
 async function editTask() {
- 
+  let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
   let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
   boardTaskEditContainer.style.display = 'flex';
-  
-   /*
-  let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
-  let addTaskFormContainer = document.getElementById('addTaskFormContainer');
-  let addTaskPartingline = document.getElementById('addTaskPartingline');
-  let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions');
-  let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions');
-  let addTaskCategory = document.getElementById('addTaskCategory');
+  boardTaskShowContainer.style.display = 'none';
+
+  let addTaskFormContainer = document.getElementById('addTaskFormContainer-3');
+  let addTaskPartingline = document.getElementById('addTaskPartingline-3');
+  let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions-3');
+  let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions-3');
+  let addTaskCategory = document.getElementById('addTaskCategory-3');
+  let taskTitle = document.getElementById('taskTitle-3');
+  let taskDescription = document.getElementById('taskDescription-3');
+  let taskDate = document.getElementById('taskDate-3');
+  let urgentBtn = document.getElementById('urgentBtn-3');
+  let mediumBtn = document.getElementById('mediumBtn-3');
+  let lowBtn = document.getElementById('lowBtn-3');
 
   let box = document.querySelectorAll('.box');
   box.forEach(function (boxReplace) {
@@ -354,23 +359,16 @@ async function editTask() {
 
   addTaskCategory.style.display = 'none';
   bottomAddTaskOptions.style.display = 'none';
-  boardTaskShowContainer.style.display = 'none';
   bottomAddTaskEditOptions.style.display = 'flex';
-
   addTaskFormContainer.style.flexFlow = 'column';
   addTaskPartingline.style.display = 'none';
 
-  let taskTitle = document.getElementById('taskTitle');
-  let taskDescription = document.getElementById('taskDescription');
-  let taskDate = document.getElementById('taskDate');
-  let urgentBtn = document.getElementById('urgentBtn');
-  let mediumBtn = document.getElementById('mediumBtn');
-  let lowBtn = document.getElementById('lowBtn');
   taskTitle.value = tasks[currentOpenTaskId].title;
   taskDescription.value = tasks[currentOpenTaskId].description;
   const todo = tasks[currentOpenTaskId];
   getContactsForPopupTask(todo);
   taskDate.value = tasks[currentOpenTaskId].dueDate;
+
   let prio = tasks[currentOpenTaskId].priority;
   let prioBtn;
   if (prio === 'Urgent') {
@@ -380,16 +378,17 @@ async function editTask() {
   } else if (prio === 'Low') {
     prioBtn = lowBtn;
   }
+
   prioBtn.click();
   checkedCheckboxes = todo.assignedTo;
-  let taskContactDiv = document.getElementById("taskContactDiv");
+  let taskContactDiv = document.getElementById("taskContactDiv-3");
   taskContactDiv.style.display = "none";
   showContactSelection();
-  renderSubtasksPopup(); */
+  renderSubtasksPopup(); 
 }
 
 function renderSubtasksPopup() {
-  let subtaskDivAddTask = document.getElementById('subtaskDivAddTask');
+  let subtaskDivAddTask = document.getElementById('subtaskDivAddTask-3');
 
   subtaskDivAddTask.innerHTML = ``;
 
