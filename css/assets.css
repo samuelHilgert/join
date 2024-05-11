@@ -88,7 +88,7 @@
   align-items: center;
   cursor: pointer;
   border-radius: 8px;
-  border:unset;
+  border: unset;
   padding: 15px 24px;
   background-color: #2a3647;
   color: white;
@@ -106,7 +106,7 @@
   font-size: 21px;
   font-weight: bold;
   line-height: 25.2px;
-  border:unset;
+  border: unset;
   text-wrap: nowrap;
 }
 
@@ -230,10 +230,10 @@
   display: flex;
   border-radius: 30px;
   padding: 0 40px;
-  padding-top:30px;
-  padding-bottom:30px;
-  height:100%;
-  flex:1;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  height: 100%;
+  flex: 1;
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 1);
   color: rgba(0, 0, 0, 1);
@@ -251,12 +251,12 @@
 .card-upcoming {
   border-radius: 30px;
   padding: 0 20px;
-  padding-top:30px;
-  padding-bottom:30px;
-  height:100%;
-  min-width:100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  height: 100%;
+  min-width: 100%;
   box-sizing: border-box;
-  gap:20px;
+  gap: 20px;
 }
 
 .summary-icon {
@@ -267,6 +267,7 @@
 .back-arrow {
   width: 32px;
   height: 32px;
+  position: absolute;
 }
 
 .div-underline {
@@ -350,7 +351,7 @@
 }
 
 .task-popup-span {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-weight: 400;
   font-size: 16px;
   color: rgba(42, 54, 71, 1);
@@ -371,11 +372,11 @@
   border-radius: 12px;
   padding: 20px;
   margin: 10px 0;
-  width:100%;
-  max-width:280px;
+  width: 100%;
+  max-width: 280px;
   box-sizing: border-box;
   height: auto;
-  min-height:280px;
+  min-height: 280px;
   cursor: pointer;
 }
 
@@ -395,7 +396,7 @@ li {
 }
 
 .progress {
-  cursor:pointer;
+  cursor: pointer;
   border-radius: 8px;
   background-color: rgb(230, 230, 230);
   width: 100%;
@@ -414,7 +415,7 @@ li {
 }
 
 .statusText {
-  display:none;
+  display: none;
   width: 100%;
   margin-left: 5px;
   box-sizing: border-box;
