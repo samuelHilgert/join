@@ -453,6 +453,7 @@ function closeBoardTaskPopup() {
  *
  */
 function openBoardAddTaskPopup() {
+  changeTemplateIndex();
   let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
   let container = document.getElementById("boardAddTaskPopupContainer");
   let btnDivOk = document.getElementById("btnDivOk-4");

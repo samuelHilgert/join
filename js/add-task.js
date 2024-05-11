@@ -759,3 +759,7 @@ function closeAddTaskMenuDiv() {
   taskContactDiv.style.display = "none";
   categoryDiv.style.display = "none";
 }
+
+function changeTemplateIndex() {
+  templateIndex = 4;
+}
