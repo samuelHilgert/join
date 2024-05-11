@@ -124,15 +124,15 @@ function addDynamicIDs(html, index) {
     });
 
     // Aktualisiere alle Event-Attribute wie onclick, oninput und onsubmit
-    doc.querySelectorAll('[onclick], [oninput], [onsubmit]').forEach(el => {
+  /*  doc.querySelectorAll('[onclick], [oninput], [onsubmit]').forEach(el => {
         ['onclick', 'oninput', 'onsubmit'].forEach(attr => {
             if (el.hasAttribute(attr)) {
                 let originalAttribute = el.getAttribute(attr);
                 let modifiedAttribute = modifyEventAttribute(originalAttribute, index);
                 el.setAttribute(attr, modifiedAttribute);
             }
-        });
-    });
+        }); 
+    });*/
 
     return doc.body.innerHTML; // Gibt das modifizierte HTML zurück
 }
