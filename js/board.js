@@ -110,6 +110,7 @@ function getContactsForTask(task) {
   });
 }
 
+
 function updateProgressBar(task) {
   let stubtasksOpenLength = task.subtasksOpen.length;
   let stubtasksDoneLength = task.subtasksDone.length;
@@ -133,9 +134,11 @@ function updateProgressBar(task) {
   progressBar.classList.add("blue");
 }
 
+
 function startDragging(id) {
   currentDraggedTaskId = id;
 }
+
 
 async function moveTo(currentCategory) {
   const currentDraggedTaskIdString = String(currentDraggedTaskId);
@@ -156,21 +159,26 @@ async function moveTo(currentCategory) {
   await renderBoardTasks();
 }
 
+
 function allowDrop(event) {
   event.preventDefault();
 }
+
 
 function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
+
 function removeHighlight(id) {
   document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
+
 function doNotClose(event) {
   event.stopPropagation();
 }
+
 
 async function openBoardTaskPopup(openId) {
   let boardTaskPopup = document.getElementById("boardTaskPopup");
@@ -187,12 +195,14 @@ async function openBoardTaskPopup(openId) {
   await renderBoardTaskPopupContent(currentOpenTaskId);
 }
 
+
 async function renderBoardTaskPopupContent(currentOpenTaskId) {
   const todo = tasks[currentOpenTaskId];
   showTaskText(todo, currentOpenTaskId);
   getContactsForPopupTask(todo);
   await getSubtasksForPopupTask(currentOpenTaskId);
 }
+
 
 function showTaskText(todo) {
   let taskPopupContentLabel = document.getElementById("taskPopupContentLabel");
@@ -228,6 +238,7 @@ function showTaskText(todo) {
     `;
 }
 
+
 async function getSubtasksForPopupTask(currentOpenTaskId) {
   let taskPopupContentSubtasks = document.getElementById("taskPopupContentSubtasks");
 
@@ -254,6 +265,7 @@ async function getSubtasksForPopupTask(currentOpenTaskId) {
   }
 }
 
+
 async function loadSubtasksByOpenTask() {
   if ((authorized === 'user')) {
     subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
@@ -263,6 +275,7 @@ async function loadSubtasksByOpenTask() {
     subtasksDone = tasks[currentOpenTaskId].subtasksDone;
   }
 }
+
 
 async function clickSubtaskOpen(currentOpenTaskId, a) {
   let divSubtaskOpen = document.getElementById(
@@ -284,6 +297,7 @@ async function clickSubtaskOpen(currentOpenTaskId, a) {
   }
 }
 
+
 async function clickSubtaskDone(currentOpenTaskId, b) {
   let divSubtaskDone = document.getElementById(
     `taskId${currentOpenTaskId}SubtaskDoneId${b}`
@@ -304,6 +318,7 @@ async function clickSubtaskDone(currentOpenTaskId, b) {
   }
 }
 
+
 function getContactsForPopupTask(todo) {
   let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
   const contacts = todo["assignedTo"];
@@ -321,6 +336,7 @@ function getContactsForPopupTask(todo) {
   }
 }
 
+
 function getBgColorTaskPopup(task, index) {
   const contactName = task.assignedTo[index];
   let contactInfo;
@@ -335,6 +351,7 @@ function getBgColorTaskPopup(task, index) {
   return contactInfo.color;
 }
 
+
 function getPriorityIcon(todo) {
   let imgSrc;
   if (todo["priority"] === "Urgent") {
@@ -346,6 +363,7 @@ function getPriorityIcon(todo) {
   }
   return imgSrc;
 }
+
 
 async function editTask() {
   let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
@@ -402,6 +420,7 @@ async function editTask() {
   renderSubtasksPopup();
 }
 
+
 function renderSubtasksPopup() {
   let subtaskDivAddTask = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
 
@@ -434,6 +453,7 @@ function renderSubtasksPopup() {
   });
 }
 
+
 async function deleteTask() {
   document.getElementById("boardTaskPopup").style.display = "none";
   document.body.style.overflow = "scroll";
@@ -444,6 +464,7 @@ async function deleteTask() {
   }
   await renderBoardTasks();
 }
+
 
 function closeBoardTaskPopup() {
   let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
@@ -460,6 +481,7 @@ function closeBoardTaskPopup() {
   }, 500);
   document.body.style.overflow = "scroll";
 }
+
 
 /********************** ADD-TASK POPUP OPENED **********************************/
 
@@ -481,6 +503,7 @@ function openBoardAddTaskPopup(element) {
   document.body.style.overflow = "hidden";
   moveContainerIn(container);
 }
+
 
 function closeBoardAddTaskPopup() {
   let popup = document.getElementById("boardAddTaskPopup");
@@ -514,6 +537,7 @@ async function searchTasksOnBoard() {
   resetSearch();
 }
 
+
 function displaySearchMessage(matchingIndices) {
   let resultMessageDiv = document.getElementById("resultMessageDiv");
   resultMessageDiv.style.display = "flex";
@@ -526,11 +550,13 @@ function displaySearchMessage(matchingIndices) {
   }
 }
 
+
 async function renderAfterSearch() {
   let resultMessageDiv = document.getElementById("resultMessageDiv");
   resultMessageDiv.style.display = "none";
   await renderBoardTasks();
 }
+
 
 /**
  * this function includes search querys whehter a search is allowed or not, here only one query set
@@ -541,6 +567,7 @@ async function setQueryForSearch(matchingIndices, search) {
     await findTasksIndices(matchingIndices, search);
   }
 }
+
 
 /**
  * this function iterates all tasks, whether the task description or task name includes the search result
@@ -559,6 +586,7 @@ async function findTasksIndices(matchingIndices, search) {
     }
   }
 }
+
 
 /**
  * this function creates all categegories and the corresponding tasks with the parameter "allTasksSameCategory"
@@ -580,6 +608,7 @@ async function generateCategoriesBySearch(matchingIndices) {
   }
 }
 
+
 /**
  * after the search results are displayed, the search input field is reset
  *
@@ -587,6 +616,7 @@ async function generateCategoriesBySearch(matchingIndices) {
 function resetSearch() {
   document.getElementById("searchBoardInput").value = '';
 }
+
 
 /**
  * the search function should also start, when the key-button "enter" is pressed
@@ -598,20 +628,22 @@ function searchTasksByKeyPress(event) {
   }
 }
 
+
 /*********************** END SEARCH FUNCTION ********************************/
 
 function changeImage(element, src) {
   element.querySelector(".delete").src = src;
 }
 
+
 function restoreImagePopupTask(element, defaultSrc) {
   element.querySelector(".delete").src = defaultSrc;
 }
 
+
 function showSubtasksByHovering(element) {
   let statusText = document.getElementById(`statusText${element}`);
   statusText.style.display = 'block';
-
   statusText.onmouseout = function () {
     statusText.style.display = 'none';
   };
