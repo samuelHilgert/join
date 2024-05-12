@@ -9,6 +9,7 @@ function renderLetterAndPartinglineHTML(firstLetter) {
     `;
 }
 
+
 function renderContactListHTML(
     id,
     firstLetter,
@@ -28,6 +29,7 @@ function renderContactListHTML(
     </div>
     `;
 }
+
 
 function renderContactInformationHTML(
     color,
@@ -77,6 +79,7 @@ function renderContactInformationHTML(
     `;
 }
 
+
 function renderAddContactContainerHTML() {
     return `
     <div class="add-contact-container" id="addContactContainer" onclick='doNotClose(event)'>
@@ -117,6 +120,7 @@ function renderAddContactContainerHTML() {
         </div>
     `;
 }
+
 
 function renderEditContactHTML(
     color,
@@ -163,6 +167,7 @@ function renderEditContactHTML(
     `;
 }
 
+
 /**
  * This function returns the text for the pop-up messages when contacts or tasks are reloaded
  * 
@@ -179,6 +184,7 @@ function generateGuestMessageTextForReload(div, messageText) {
     `;
 }
 
+
 /**
  * This function returns the text for the popup messages when the user is a guest and has used a function
  * 
@@ -194,6 +200,7 @@ function generateGuestMessageText(div, messageText) {
     <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
     `;
 }
+
 
 function renderAddTaskFormButton() {
     let urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
@@ -246,6 +253,7 @@ function renderAddTaskFormButton() {
 
 }
 
+
 function renderMobileContactinfoMenuHTML(contactId) {
     return `
     <div class="d_f_c_c gap-8 header-icons-wrapper" onclick="openEditContactForm('${contactId}')">
@@ -264,7 +272,6 @@ function renderMobileContactinfoMenuHTML(contactId) {
     </div>
     `;
 }
-
 
 
 /////////// START RENDERING FOR BOARD ////////////

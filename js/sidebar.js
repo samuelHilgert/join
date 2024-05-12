@@ -16,9 +16,11 @@ function setBackgroundcolorSidebarLinks() {
     });
 }
 
+
 function getSidebarLinks() {
     return document.querySelectorAll('.sidebar-links .sidebar-menu');
 }
+
 
 /**
  * Adds event listeners to the sidebar menu links when the DOM content is loaded.
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 
 /**
  * Redirects the user to legal or summary pages based on the current URL.
@@ -53,6 +56,7 @@ function backToLegalOrSummary() {
     }
 }
 
+
 /**
  * Sets the background color for the sidebar links based on the current page.
  */
@@ -63,6 +67,7 @@ function setBackgroundcolorSidebarLinks() {
         link.classList.toggle('sidebar-bg-focus', isActive);
     });
 }
+
 
 /**
  * Adds event listeners to the sidebar menu links when the DOM content is loaded.
@@ -78,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
 /**
  * Sets the background color for the sidebar link based on the current URL.
  * @param {string} currentUrl The URL of the current page.
@@ -90,6 +96,7 @@ function setSidebarLinkBackground(currentUrl) {
     }
 }
 
+
 /**
  * Handles the behavior of the sidebar links for external pages.
  * If the current URL contains 'external', hides the sidebar links.
@@ -101,6 +108,7 @@ function handleExternalLink(currentUrl) {
         sidebarLinks.style.display = 'none';
     }
 }
+
 
 /**
  * Handles the behavior of the sidebar links for legal pages.
@@ -117,6 +125,7 @@ function handleLegalPages(currentUrl) {
     }
 }
 
+
 /**
  * Sets the background color and hides header symbols for a legal sidebar element.
  * @param {number} index The index of the legal sidebar element.
@@ -127,6 +136,7 @@ function setLegalSidebarBackground(index) {
     let headerSymbols = document.getElementById('headerSymbols');
     headerSymbols.style.display = 'none';
 }
+
 
 /**
  * Checks the current URL and performs actions for sidebar links, external links, and legal pages.
@@ -139,6 +149,7 @@ function getCurrentlySidebarLink() {
     handleLegalPages(currentUrl);
 }
 
+
 /**
  * Changes the background color for a specific sidebar menu link.
  * @param {number} position The position of the sidebar menu link.
@@ -147,6 +158,7 @@ function changeBgColorSidebarLink(position) {
     let sidebarMenu = document.getElementsByClassName('sidebar-menu')[position];
     sidebarMenu.style.backgroundColor = 'rgba(9, 25, 49, 1)';
 }
+
 
 /**
  * Opens a legal link in the sidebar, considering if it's an external link.

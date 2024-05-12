@@ -4,11 +4,11 @@ let checkbox = false;
 let emailExist = false;
 let displayMessageTime = 2500;
 
+
 /**
  * This function loads all already registered users from remote server
  * 
  */
-
 async function loadUsers() {
     try {
         users = JSON.parse(await getItem('users'));
@@ -16,6 +16,7 @@ async function loadUsers() {
         console.error('Loading error:', e);
     }
 }
+
 
 /**
  * This function checks the individual requirements for successful registration
@@ -26,6 +27,7 @@ function register() {
     registerBtn.disabled = true; // registerBtn ist die id vom button Absenden
     checkboxClicked();
 }
+
 
 /**
  * This function checks whether the checkbox was clicked by user
@@ -48,8 +50,8 @@ function checkboxClicked() {
         }, displayMessageTime);
         signUpErrorReset();
     }
-
 }
+
 
 /**
  * This function checks whether email already exist
@@ -75,6 +77,7 @@ async function checkEmailExist() {
         signUpPasswordsMatched();
     }
 }
+
 
 /**
  * This function checks whether the two passwords match
@@ -111,6 +114,7 @@ async function signUpPasswordsMatched() {
     }
 }
 
+
 /**
  * This function resets the password values 
  * 
@@ -122,6 +126,7 @@ function signUpErrorReset() {
     registerBtn.disabled = false;
 }
 
+
 /**
  * This function set message display to none
  * 
@@ -132,11 +137,13 @@ function messageDisplay(container) {
     container.style.display = 'flex';
 }
 
+
 function hideMessageContainer(container) {
     let signUpMessageContainer = document.getElementById('signUpMessageContainer');
     signUpMessageContainer.style.display = 'none';
     container.style.display = 'none';
 }
+
 
 /**
  * If the login requirements are successful, the user data are passed to the "users" array.
@@ -146,6 +153,7 @@ async function pushUserData() {
     pushInArray();
     await pushOnRemoteServer();
 }
+
 
 /**
  * The user data are passed to the "users" array.
@@ -161,6 +169,7 @@ function pushInArray() {
     });
 }
 
+
 /**
  * The user data are passed on the remote server.
  * 
@@ -168,6 +177,7 @@ function pushInArray() {
 async function pushOnRemoteServer() {
     await setItem('users', JSON.stringify(users));
 }
+
 
 /**
  * This function includes all output messages in the various cases of the register process.
@@ -190,6 +200,7 @@ function showSignUpMessage() {
     }
 }
 
+
 /**
  * This function resets all values
  * 
@@ -204,6 +215,7 @@ function resetSingUpForm() {
     registerSuccess = false;
     checkbox = false;
 }
+
 
 /**
  * This function returns the user to login.html with a success message in the URL

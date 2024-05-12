@@ -93,6 +93,7 @@ function checkFalseOpening() {
     }
 }
 
+
 function firstLogin() {
     return window.location.href = `./login.html`;
 }
@@ -119,6 +120,7 @@ async function includeHTML() {
         }
     }
 }
+
 
 function addDynamicIDs(html, index) {
     const parser = new DOMParser();
@@ -280,7 +282,6 @@ function renderHeader() {
  * It checks whether the time to log out has expired if the user did not use the reminder option.
  *
  */
-
 function startExpiryCheckInterval(rememberStatus) {
     setInterval(function () {
         checkExpiryAndReset(rememberStatus);

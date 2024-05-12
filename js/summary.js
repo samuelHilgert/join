@@ -6,6 +6,7 @@ let allInProgress;
 let allAwaitFeedback;
 let allTasks;
 
+
 /**
  * This function includes render functions for summary.html
  *
@@ -17,6 +18,7 @@ async function renderSummary() {
   renderSummaryValues();
   await updateUpcomingDate();
 }
+
 
 /**
  * Retrieves values for summary statistics by filtering tasks into different categories
@@ -41,6 +43,7 @@ function getValuesForSummary() {
   allTasks = tasks.length;
 }
 
+
 /**
  * Updates the upcoming due date asynchronously by finding the task with the nearest due date.
  * Retrieves current date and formats it. Calculates the time differences between current date
@@ -61,6 +64,7 @@ async function updateUpcomingDate() {
   let formattedUpcomingDate = formatUpcomingDate(upcomingDate);
   renderUpcomingDueDate(formattedUpcomingDate);
 }
+
 
 /**
  * Retrieves the timestamps of all tasks asynchronously and calculates the differences 
@@ -85,6 +89,7 @@ async function getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTi
   });
 }
 
+
 /**
  * Berechnet den absoluten Zeitunterschied zwischen zwei Zeitstempeln.
  * @param {number} reference - Der Referenzzeitstempel.
@@ -94,6 +99,7 @@ async function getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTi
 function calculateDifferencesOftimeStamps(reference, dueDate) {
   return Math.abs(reference - dueDate);
 }
+
 
 /**
  * Formatiert ein Datum für die bevorstehende Anzeige.
@@ -109,6 +115,7 @@ function formatUpcomingDate(upcomingDate) {
   return formattedUpcomingDate;
 }
 
+
 /**
  * Rendert das bevorstehende Fälligkeitsdatum auf der Seite.
  * @param {string} formattedUpcomingDate - Das formatierte bevorstehende Datum.
@@ -117,6 +124,7 @@ function renderUpcomingDueDate(formattedUpcomingDate) {
   let upcomingDueDate = document.getElementById("upcomingDueDate");
   upcomingDueDate.innerHTML = `${formattedUpcomingDate}`;
 }
+
 
 /**
  * Rendert die Werte der Zusammenfassung auf der Seite.
@@ -138,6 +146,7 @@ function renderSummaryValues() {
   allAwaitFeedbackNumber.innerHTML = `<h3>${allAwaitFeedback}</h3>`;
 }
 
+
 /**
  * This function checks whether username exists in localStorage or sessionStorage for a greet
  *
@@ -154,6 +163,7 @@ function getUserNameForGreet() {
   }
 }
 
+
 /**
  * This function displays the greeting text
  */
@@ -161,6 +171,7 @@ function displayGreeting() {
   let greeting = getGreeting();
   document.getElementById("greeting").innerHTML = greeting;
 }
+
 
 /**
  * This function generates a greeting text based on the current time of day
@@ -181,12 +192,14 @@ function getGreeting() {
   return greeting;
 }
 
+
 /**
  * Leitet den Benutzer zur Board-Seite weiter.
  */
 function forwardingBoard() {
   window.location.href = `./board.html`;
 }
+
 
 /**
  * Ändert die Quelle des Bildes eines Elements.
@@ -196,6 +209,7 @@ function forwardingBoard() {
 function changeImage(element, src) {
   element.querySelector(".summary-icon").src = src;
 }
+
 
 /**
  * Stellt die ursprüngliche Bildquelle eines Elements wieder her.
