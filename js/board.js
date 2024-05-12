@@ -467,6 +467,7 @@ async function deleteTask() {
 
 
 function closeBoardTaskPopup() {
+  checkedCheckboxes = [];
   let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
   let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
   boardTaskEditContainer.style.display = 'none';
@@ -480,6 +481,7 @@ function closeBoardTaskPopup() {
     showGuestMessageOnBoard();
   }, 500);
   document.body.style.overflow = "scroll";
+  console.log('contacts =', checkedCheckboxes);
 }
 
 
@@ -507,6 +509,8 @@ function openBoardAddTaskPopup(element) {
 
 
 function closeBoardAddTaskPopup() {
+  clearForm();
+  checkedCheckboxes = [];
   let popup = document.getElementById("boardAddTaskPopup");
   let container = document.getElementById("boardAddTaskPopupContainer");
   moveContainerOut(container);
