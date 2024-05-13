@@ -41,9 +41,9 @@ async function init() {
  */
 async function formatDateCorrect(timeStamp) {
     let dateFormatOptions = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
     };
     let formattedTimeStamp = timeStamp.toLocaleDateString("de-DE", dateFormatOptions);
     formattedDate = formattedTimeStamp.replace(/\./g, '/');  // replace the period with a slash
@@ -174,7 +174,7 @@ async function initiateIndividualFunctions() {
         if (document.location.pathname === `/${currentPage}.html`) {
             await resetExpiryTime();
             if (currentPage === 'summary') {
-               await renderSummary();
+                await renderSummary();
             } else if (currentPage === 'add-task') {
                 await updateTaskContacts();
                 renderAddTaskFormButton();
@@ -230,7 +230,7 @@ async function updateOrLoadData() {
                 let respContacts = await fetch('./JSON/contacts.json');
                 contacts = await respContacts.json();  // load and save example contacts in array contacts
                 await saveNewUserDate(); // save new arrays content in user on the remote server
-            } 
+            }
             if (userData.tasks.length === 0) {
                 let respTasks = await fetch('./JSON/tasks.json');
                 tasks = await respTasks.json(); // load and save example tasks in array tasks
@@ -260,9 +260,11 @@ async function loadExamples() {
  * 
  */
 async function saveNewUserDate() {
-    users[currentUser].contacts = contacts;
-    users[currentUser].tasks = tasks;
-    await setItem('users', JSON.stringify(users));
+    if ((authorized === 'user')) {
+        users[currentUser].contacts = contacts;
+        users[currentUser].tasks = tasks;
+        await setItem('users', JSON.stringify(users));
+    }
 }
 
 
@@ -345,7 +347,7 @@ function contactNamesLetters(name) {
     }
     letters = firstLetter + secondLetter;
     return letters;
-  }
+}
 
 
 /**
@@ -357,12 +359,12 @@ function openHeaderPopupLinks() {
     let circle = document.getElementById('headerCircle');
     if (headerLinks.style.display === 'flex') {
         headerLinks.style.display = 'none';
-        circle.style.backgroundColor='white';
+        circle.style.backgroundColor = 'white';
         document.removeEventListener('click', handleOutsideClick);
     } else {
         headerLinks.style.display = 'flex';
         document.addEventListener('click', handleOutsideClick);
-        circle.style.backgroundColor='#E2E6EC';
+        circle.style.backgroundColor = '#E2E6EC';
     }
 }
 
@@ -378,7 +380,7 @@ function handleOutsideClick(event) {
     let circle = document.getElementById('headerCircle');
     if (!headerPopup.contains(event.target) && !headerIcon.contains(event.target)) {
         headerPopup.style.display = 'none';
-        circle.style.backgroundColor='white';
+        circle.style.backgroundColor = 'white';
         document.removeEventListener('click', handleOutsideClick);
     }
 }
@@ -519,8 +521,9 @@ function closePopupAutomaticly(div) {
 
 
 /**
- * This function blocks the closing function of the child elements
+ * This function stops closing the div after closing the parent div
  * 
+ * @param {string} event - the element of the div
  */
 function doNotClose(event) {
     event.stopPropagation();
