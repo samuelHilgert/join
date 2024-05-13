@@ -1,9 +1,8 @@
 let newTask = [];
-// let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
 let matchingContactNames = [];
-let checkedCheckboxes = []; // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
+let checkedCheckboxes = [];
 let contactsLoaded = false;
 let currentSubtaskId;
 let templateIndex = 3;
@@ -24,6 +23,10 @@ function getNextAvailableTaskId() {
 }
 
 
+/**
+ * This function sorts the contacts
+ * 
+ */
 function sortContactsForTasks() {
   contactsForTasks.sort((a, b) => {
     const nameA = a.name.toLowerCase();
@@ -33,98 +36,193 @@ function sortContactsForTasks() {
 }
 
 
-// function to add the task
+/**
+ * This function includes all functions to adds the newly created task to the board
+ * 
+ */
 async function addTask() {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    // edit feature for edit tasks on board
-    let boardTaskEditContainer = document.getElementById(
-      "boardTaskEditContainer"
-    );
-    let boardTaskShowContainer = document.getElementById(
-      "boardTaskShowContainer"
-    );
-    const taskInput = readTaskInputEditTask();
-    let formattedInputDate;
-    if (taskInput.value !== null) {
-      formattedInputDate = taskInput.date;
-    } else {
-      formattedInputDate = taskInput.date;
-      // formattedInputDate = await formatDateCorrect(taskInput.date);
-    }
-    const prio = determinePriority();
-    if (authorized === "guest") {
-      let currentTask = tasks[currentOpenTaskId];
-      currentTask.title = taskInput.title;
-      currentTask.description = taskInput.description;
-      currentTask.dueDate = formattedInputDate;
-      currentTask.assignedTo = checkedCheckboxes;
-      currentTask.priority = prio;
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      let id = currentTask.id;
-      await openBoardTaskPopup(id);
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      currentTask.title = taskInput.title;
-      currentTask.description = taskInput.description;
-      currentTask.dueDate = formattedInputDate;
-      currentTask.assignedTo = checkedCheckboxes;
-      currentTask.priority = prio;
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      await setItem("users", JSON.stringify(users));
-      let id = currentTask.id;
-      await openBoardTaskPopup(id);
-    }
-    boardTaskEditContainer.style.display = "none";
-    boardTaskShowContainer.style.display = "flex";
+    await initiateFunctionsForAddTaskOnBoard(); // editing an already task on board
   } else {
-    // add-task feature on add-task.html
-    const taskInput = readTaskInput();
-    const selectedCategory = taskInput.category;
-    if (
-      selectedCategory !== "Technical Task" &&
-      selectedCategory !== "User Story"
-    ) {
-      shakeDiv();
-      toggleCategoryDiv();
-      document
-        .getElementById(`taskCategory-${templateIndex}`)
-        .classList.add("required-input-outline-red");
-      return;
-    }
-    let formattedInputDate = taskInput.date;
-    // let formattedInputDate = await formatDateCorrect(taskInput.date);
-    const prio = determinePriority();
-    let id = getNextAvailableTaskId();
-    const task = {
-      id: id,
-      label: taskInput.category,
-      title: taskInput.title,
-      description: taskInput.description,
-      dueDate: formattedInputDate,
-      assignedTo: checkedCheckboxes,
-      priority: prio,
-      subtasksOpen: subtasks,
-      subtasksDone: [],
-      category: setCategory,
-    };
-
-    newTask.push(task);
-    if (authorized === "guest") {
-      tasks.push(...newTask);
-      resetAddTaskValues();
-    } else {
-      users[currentUser].tasks.push(...newTask);
-      await setItem("users", JSON.stringify(users));
-      resetAddTaskValues();
-    }
-    if (document.location.pathname === `/board.html` && templateIndex === 3) {
-      closeBoardAddTaskPopup();
-    }
-    addTaskToBoardMessage();
+    await initiateFunctionsForAddTaskForm(); // added a new task to board
   }
 }
+
+
+/////////////////////////////// EDIT ADD-TASK FORM ON BOARD ////////////////////////////////
+
+
+/**
+ * This function resets the values by editing the current task on board.html
+ * 
+ */
+async function initiateFunctionsForAddTaskOnBoard() {
+  let editDiv = document.getElementById("boardTaskEditContainer");
+  let showDiv = document.getElementById("boardTaskShowContainer");
+  let taskInput = readTaskInputEditTask();
+  let formattedInputDate = setFormattedInputDate(formattedInputDate, taskInput);
+  const prio = determinePriority();
+  let currentTask;
+  setValuesAfterEditing(currentTask);
+  let id = currentTask.id;
+  await openBoardTaskPopup(id);
+  editDiv.style.display = "none";
+  showDiv.style.display = "flex";
+}
+
+
+/**
+ * This function gets the input.values
+ * 
+ */
+function readTaskInputEditTask() {
+  let title = document.getElementById(`taskTitle-${templateIndex}`).value;
+  let description = document.getElementById(`taskDescription-${templateIndex}`).value;
+  let date = document.getElementById(`taskDate-${templateIndex}`);
+  return {
+    title: title,
+    description: description,
+    date: date.value,
+  };
+}
+
+
+/**
+ * This function sets the formattedInputDate 
+ * 
+ * @param {string} formattedInputDate - the variable to be filled with the formattedInputDate value
+ * @param {string} taskInput - the input.values from the new task
+ */
+function setFormattedInputDate(formattedInputDate, taskInput) {
+  if (taskInput.value !== null) {
+    formattedInputDate = taskInput.date;
+    return formattedInputDate;
+  } else {
+    formattedInputDate = taskInput.date;
+    return formattedInputDate;
+  }
+}
+
+
+/**
+ * This function returns the value from priority
+ * 
+ */
+function determinePriority() {
+  let prio = "Medium"; // Standardpriorität
+  const urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
+  const mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
+  const lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
+  if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
+    prio = "Urgent";
+  } else if (lowBtn.classList.contains("active-prio-btn-low")) {
+    prio = "Low";
+  }
+  return prio;
+}
+
+
+/**
+ * This function sets and saves the currentTask with the values of taskInput.values
+ * 
+ * @param {string} currentTask - variable to be filled with the new values
+ */
+async function setValuesAfterEditing(currentTask) {
+  if (authorized === "guest") {
+    currentTask = tasks[currentOpenTaskId];
+    setValuesFromBoardForm(currentTask);
+  } else {
+    currentTask = users[currentUser].tasks[currentOpenTaskId];
+    setValuesFromBoardForm(currentTask);
+    await setItem("users", JSON.stringify(users));
+  }
+}
+
+
+/**
+ * This function sets the currentTask with the values of taskInput.values 
+ * 
+ * @param {string} currentTask - variable to be filled with the new values
+ */
+function setValuesFromBoardForm(currentTask) {
+  currentTask.title = taskInput.title;
+  currentTask.description = taskInput.description;
+  currentTask.dueDate = formattedInputDate;
+  currentTask.assignedTo = checkedCheckboxes;
+  currentTask.priority = prio;
+  currentTask.subtasksOpen = subtasksOpen;
+  currentTask.subtasksDone = subtasksDone;
+}
+
+
+/////////////////////////////// END EDIT ADD-TASK FORM ON BOARD ////////////////////////////////
+
+
+///////////////////////////////// ADD-TASK FORM ON HTML AND BOARD ////////////////////////////////////
+
+
+/**
+ * This function adds the values by added a new task to board
+ * 
+ */
+async function initiateFunctionsForAddTaskForm() {
+  const taskInput = readTaskInput();
+  const selectedCategory = taskInput.category;
+  if (
+    selectedCategory !== "Technical Task" &&
+    selectedCategory !== "User Story"
+  ) {
+    shakeDiv();
+    toggleCategoryDiv();
+    document
+      .getElementById(`taskCategory-${templateIndex}`)
+      .classList.add("required-input-outline-red");
+    return;
+  }
+  let formattedInputDate = taskInput.date;
+  // let formattedInputDate = await formatDateCorrect(taskInput.date);
+  const prio = determinePriority();
+  let id = getNextAvailableTaskId();
+  const task = {
+    id: id,
+    label: taskInput.category,
+    title: taskInput.title,
+    description: taskInput.description,
+    dueDate: formattedInputDate,
+    assignedTo: checkedCheckboxes,
+    priority: prio,
+    subtasksOpen: subtasks,
+    subtasksDone: [],
+    category: setCategory,
+  };
+
+  newTask.push(task);
+  if (authorized === "guest") {
+    tasks.push(...newTask);
+    resetAddTaskValues();
+  } else {
+    users[currentUser].tasks.push(...newTask);
+    await setItem("users", JSON.stringify(users));
+    resetAddTaskValues();
+  }
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    closeBoardAddTaskPopup();
+  }
+  addTaskToBoardMessage();
+}
+
+
+///////////////////////////////// END ADD-TASK FORM ON HTML ////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
 
 
 function shakeDiv() {
@@ -171,19 +269,7 @@ function readTaskInput() {
 }
 
 
-//get informations from input
-function readTaskInputEditTask() {
-  const title = document.getElementById(`taskTitle-${templateIndex}`).value;
-  const description = document.getElementById(
-    `taskDescription-${templateIndex}`
-  ).value;
-  const date = document.getElementById(`taskDate-${templateIndex}`);
-  return {
-    title: title,
-    description: description,
-    date: date.value,
-  };
-}
+
 
 
 async function updateTaskContacts() {
@@ -326,19 +412,7 @@ function resetPriority() {
 }
 
 
-//Return Value from Priority!
-function determinePriority() {
-  let prio = "Medium"; // Standardpriorität
-  const urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
-  const mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
-  const lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
-  if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
-    prio = "Urgent";
-  } else if (lowBtn.classList.contains("active-prio-btn-low")) {
-    prio = "Low";
-  }
-  return prio;
-}
+
 
 
 function setActiveClasses(btnId) {
