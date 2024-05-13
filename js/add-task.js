@@ -303,79 +303,91 @@ function resetAddTaskValues() {
 ///////////////////////////////// END ADD-TASK FORM ON HTML ////////////////////////////////////
 
 
+///////////////////////////////////////// ADD-SUBTASKS /////////////////////////////////////////
 
 
-
-
-
-//for subtasks section
-function addSubtask() {
+/**
+ * This function includes all functions to add the newly subtasks
+ * 
+ */
+async function addSubtask() {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    if (authorized === "guest") {
-      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-      const subtaskValue = subtaskInput.value.trim();
-      if (subtaskValue !== "") {
-        const subtaskContainer = document.getElementById(
-          `subtaskDivAddTask-${templateIndex}`
-        );
-        let currentTask = tasks[currentOpenTaskId];
-        if (currentSubtaskId !== undefined) {
-          if (currentSubtaskId.includes("subtasksOpen")) {
-            let index = currentSubtaskId.split("Open")[1];
-            currentTask.subtasksOpen[index] = subtaskValue;
-          } else {
-            let index = currentSubtaskId.split("Done")[1];
-            currentTask.subtasksDone[index] = subtaskValue;
-          }
-        } else {
-          currentTask.subtasksOpen.push(subtaskValue);
-        }
-        renderSubtasksPopup();
-        subtaskInput.value = "";
-        changeIcons();
-      }
-    } else {
-      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-      const subtaskValue = subtaskInput.value.trim();
-      if (subtaskValue !== "") {
-        const subtaskContainer = document.getElementById(
-          `subtaskDivAddTask-${templateIndex}`
-        );
-        let currentTask = users[currentUser].tasks[currentOpenTaskId];
-        if (currentSubtaskId !== undefined) {
-          if (currentSubtaskId.includes("subtasksOpen")) {
-            let index = currentSubtaskId.split("Open")[1];
-            currentTask.subtasksOpen[index] = subtaskValue;
-          } else {
-            let index = currentSubtaskId.split("Done")[1];
-            currentTask.subtasksDone[index] = subtaskValue;
-          }
-        } else {
-          currentTask.subtasksOpen.push(subtaskValue);
-          setItem("users", JSON.stringify(users));
-        }
-        renderSubtasksPopup();
-        subtaskInput.value = "";
-        changeIcons();
-      }
-      /*
- 
-      await setItem("users", JSON.stringify(users)); */
-    }
+    await initiateFunctionsForAddSubtasksOnBoard(); // editing subtasks which are already exist on board
   } else {
-    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-    const subtaskValue = subtaskInput.value.trim();
-    if (subtaskValue !== "") {
-      const subtaskContainer = document.getElementById(
-        `subtaskDivAddTask-${templateIndex}`
-      );
-      subtasks.push(subtaskValue);
-      renderSubtasks(subtaskContainer);
-      subtaskInput.value = "";
-      changeIcons();
-    }
+    await initiateFunctionsForAddSubtasksForm(); // added new subtasks 
   }
 }
+
+
+/**
+ * This function includes all functions for editing the subtasks in existing tasks
+ * 
+ */
+async function initiateFunctionsForAddSubtasksOnBoard() {
+  const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+  const subtaskValue = subtaskInput.value.trim();
+  if (subtaskValue !== "") {
+    if (authorized === "guest") {
+      let currentTask = tasks[currentOpenTaskId];
+      editExistSubtask(currentTask, subtaskValue);
+    } else {
+      let currentTask = users[currentUser].tasks[currentOpenTaskId];
+      editExistSubtask(currentTask, subtaskValue);
+    }
+    await saveNewUserDate(); // outsourced in script.js
+    renderSubtasksPopup(); // outsourced in board.js
+    subtaskInput.value = "";
+    changeIcons(); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
+ * This function includes all functions for editing the subtasks in existing tasks
+ * 
+ * @param {string} currentTask - current task
+ * @param {string} subtaskValue - input.value for new subtask
+ */
+function editExistSubtask(currentTask, subtaskValue) {
+  if (currentSubtaskId !== undefined) {
+    if (currentSubtaskId.includes("subtasksOpen")) {
+      let index = currentSubtaskId.split("Open")[1];
+      currentTask.subtasksOpen[index] = subtaskValue;
+    } else {
+      let index = currentSubtaskId.split("Done")[1];
+      currentTask.subtasksDone[index] = subtaskValue;
+    }
+  } else {
+    currentTask.subtasksOpen.push(subtaskValue);
+  }
+}
+
+
+/**
+ * This function adds new subtasks on the add-task-form
+ * 
+ */
+async function initiateFunctionsForAddSubtasksForm() {
+  const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+  const subtaskValue = subtaskInput.value.trim();
+  if (subtaskValue !== "") {
+    const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+    subtasks.push(subtaskValue);
+    renderSubtasks(subtaskContainer); // outsourced in board.js
+    subtaskInput.value = "";
+    changeIcons(); // outsourced in renderHTML.js
+  }
+}
+
+
+///////////////////////////////////// END ADD-SUBTASKS //////////////////////////////////////
+
+
+
+
+
+
+
 
 
 //Event handler to add subtask with enter-key
@@ -400,38 +412,6 @@ function getSubtaskIndex(element) {
 }
 
 
-function renderSubtasks(container) {
-  container.innerHTML = "";
-  subtasks.forEach((subtask, index) => {
-    container.innerHTML += `
-      <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
-        <span>• ${subtask}</span>
-        <div class='d_f_c_c gap-5'>
-          <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
-          <div class="subtask-partingline"></div>
-          <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
-        </div>
-      </div>
-    `;
-  });
-}
-
-
-function changeIcons() {
-  let iconBox = document.getElementById(`dropdownIcon-${templateIndex}`);
-  iconBox.classList.remove("input-icon-div");
-  iconBox.classList.add("input-icon");
-
-  iconBox.innerHTML = `
-    <div class="d_f_c_c gap-5 padding-right-36">
-    <div onclick='clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/close.svg" alt="cross" /></div>
-      <div class='input-spacer'></div>
-      <div onclick='addSubtask(),clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/check-black.svg" alt="check" /></div>
-    </div>
-  `;
-}
-
-
 function editSubtask(element) {
   if (document.location.pathname === `/board.html`) {
     if (authorized === "guest") {
@@ -450,7 +430,7 @@ function editSubtask(element) {
           );
           subtaskInput.value = currentSubtask;
         }
-        changeIcons();
+        changeIcons(); // 
       } else {
         currentSubtaskId = element.id; // global var for addSubtask()
         let index = element.id.split("Done")[1];

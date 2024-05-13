@@ -437,7 +437,7 @@ function renderAssignedToContactsForOpenTask(contact, letters, backgroundColor) 
  * @param {number} index - index of the current subtask
  */
 function renderOpenSubtasksInEditForm(subtask, index) {
-    return     `
+    return `
     <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
     <span>• ${subtask}</span>
     <div class='d_f_c_c gap-5'>
@@ -457,7 +457,7 @@ function renderOpenSubtasksInEditForm(subtask, index) {
  * @param {number} index - index of the current subtask
  */
 function renderDoneSubtasksInEditForm(subtask, index) {
-   return `
+    return `
     <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
     <span>• ${subtask}</span>
     <div class='d_f_c_c gap-5'>
@@ -616,3 +616,43 @@ function searchResultMessageMoreFound(matchingIndices) {
 
 
 /////////// END OF RENDERING FOR BOARD ////////////
+
+
+/**
+ * This functions changes the icons in the subtask inputfield 
+ * 
+ */
+function changeIcons() {
+    let iconBox = document.getElementById(`dropdownIcon-${templateIndex}`);
+    iconBox.classList.remove("input-icon-div");
+    iconBox.classList.add("input-icon");
+    iconBox.innerHTML = `
+      <div class="d_f_c_c gap-5 padding-right-36">
+      <div onclick='clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/close.svg" alt="cross" /></div>
+        <div class='input-spacer'></div>
+        <div onclick='addSubtask(),clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/check-black.svg" alt="check" /></div>
+      </div>
+    `;
+}
+
+
+/**
+* This function renders the subtasks
+*
+* @param {string} container - container for the subtasks
+*/
+function renderSubtasks(container) {
+    container.innerHTML = "";
+    subtasks.forEach((subtask, index) => {
+        container.innerHTML += `
+        <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
+          <span>• ${subtask}</span>
+          <div class='d_f_c_c gap-5'>
+            <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+            <div class="subtask-partingline"></div>
+            <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
+          </div>
+        </div>
+      `;
+    });
+}
