@@ -3,7 +3,7 @@
   <div class="add-task-form-container d_f_c_fs gap-40 pad-y-40 height-max max-width-1098 mobile-add-task-form mobile-board-add-task-form-container" id="addTaskFormContainer">
     <!--BLOCK 1-->
 
-    <div class="box d_c_fs_fs gap-30 height-max mobile-box-1 mobile-board-box-1">
+    <div class="box d_c_fs_fs gap-30 height-max mobile-box-1 mobile-board-box-1 mobile-board-box">
       <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20 mobile-font-size-16">Title<span style="color: red">*</span></span>
         <input id="taskTitle" class="task-input-style input-login input-font required-input mobile-input-font" type="text"
@@ -37,7 +37,7 @@
 
     <!--BLOCK 2-->
 
-    <div class="box d_c_fs_fs gap-30 mar-r-15 height-max mobile-box-2">
+    <div class="box d_c_fs_fs gap-30 mar-r-15 height-max mobile-box-2 mobile-board-box">
 
       <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20 mobile-font-size-16">Due date<span style="color: red">*</span></span>
@@ -49,9 +49,9 @@
       <div class="d_c_c_fs gap-10 width-max">
           <span class="font-size-20 mobile-font-size-16">Prio</span>
           <div class="priority-boxes d_f_sb_c width-max gap-10">
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style" onclick="setPriority('urgentBtn')" id="urgentBtn"></button>
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style" onclick="setPriority('mediumBtn')" id="mediumBtn"></button>
-            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style" onclick="setPriority('lowBtn')" id="lowBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style mobile-board-task-btn-style" onclick="setPriority('urgentBtn')" id="urgentBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style mobile-board-task-btn-style" onclick="setPriority('mediumBtn')" id="mediumBtn"></button>
+            <button type="button" class="task-btn-style input-prio d_f_c_c gap-10 mobile-task-btn-style mobile-board-task-btn-style" onclick="setPriority('lowBtn')" id="lowBtn"></button>
           </div>
       </div>
 

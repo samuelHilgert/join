@@ -1,8 +1,4 @@
 @media screen and (max-width: 1208px) {
-  .mobile-add-task-container {
-    padding-right: 0;
-  }
-
   .mobile-add-task-main-container {
     padding-left: 18px;
   }
@@ -50,6 +46,14 @@
 
   .mobile-board-assigned-div {
     display: none;
+  }
+
+  .mobile-board-box {
+    width: 100%;
+  }
+
+  .mobile-board-task-btn-style {
+    font-size: 20px;
   }
 }
 
