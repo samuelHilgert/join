@@ -828,29 +828,56 @@ function closeDropdown() {
 
 
 ///////// SEARCHBAR ENDE /////////
+
+/**
+ * This function handles the display of success messages and specific actions based on the page URL.
+ * It determines the context (Add Task or Board) and performs actions accordingly.
+ */
 function addTaskToBoardMessage() {
   if (document.location.pathname.includes("add-task.html")) {
     showSuccessMessage();
-    if (authorized === "guest") {
-      let div = document.getElementById("guestMessagePopupAddTask");
-      let messageText = document.getElementById("guestMessageAddTask");
-      showGuestPopupMessage(div, messageText);
-    } else {
-      forwardToBoard();
-    }
+    handleAddTaskPageActions();
   }
   if (document.location.pathname.includes("board.html")) {
     closeBoardAddTaskPopup();
     showSuccessMessage();
-    if (authorized === "guest") {
-      let div = document.getElementById("guestMessagePopupBoard");
-      let messageText = document.getElementById("guestMessageBoard");
-      showGuestPopupMessage(div, messageText);
-    }
+    handleBoardPageActions();
   }
 }
 
 
+/**
+ * This function handles specific actions on the 'Add Task' page
+ * and manages the guest message popup and navigation for authenticated users.
+ */
+function handleAddTaskPageActions() {
+  if (authorized === "guest") {
+    let div = document.getElementById("guestMessagePopupAddTask");
+    let messageText = document.getElementById("guestMessageAddTask");
+    showGuestPopupMessage(div, messageText);
+  } else {
+    forwardToBoard();
+  }
+}
+
+
+/**
+ * This function handles specific actions on the 'Board' page
+ * and manages the guest message popup and navigation for authenticated users.
+ */
+function handleBoardPageActions() {
+  if (authorized === "guest") {
+    let div = document.getElementById("guestMessagePopupBoard");
+    let messageText = document.getElementById("guestMessageBoard");
+    showGuestPopupMessage(div, messageText);
+  }
+}
+
+
+/**
+ * This function displays a success message with an animation that shows and then hides the message.
+ * It animates the success message container to provide visual feedback to the user.
+ */
 function showSuccessMessage() {
   let container = document.getElementById("addTaskMessageContainer");
   container.classList.add("add-board-message-btn");
@@ -865,6 +892,9 @@ function showSuccessMessage() {
 }
 
 
+/**
+ * This function navigates to the board page after a delay.
+ */
 function forwardToBoard() {
   setTimeout(function () {
     window.location.replace("board.html");
