@@ -481,7 +481,6 @@ function closeBoardTaskPopup() {
     showGuestMessageOnBoard();
   }, 500);
   document.body.style.overflow = "scroll";
-  console.log('contacts =', checkedCheckboxes);
 }
 
 
