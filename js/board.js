@@ -195,7 +195,7 @@ function removeHighlight(id) {
 }
 
 
-/********************** TODO POPUP OPENED **********************************/
+////////////////////// TODO POPUP OPENED ////////////////////// 
 
 /**
  * This function initiates the rendering of the todo when it is open
@@ -314,60 +314,62 @@ function getAllDoneSubtasks(taskPopupContentSubtasks) {
 }
 
 
-
-
-
-
-
-
-async function clickSubtaskOpen(currentOpenTaskId, a) {
-  let divSubtaskOpen = document.getElementById(
-    `taskId${currentOpenTaskId}SubtaskOpenId${a}`
-  );
+/**
+ * This function switches the subtask status between open and done
+ *  
+ * @param {number} pos - index of the current subtask
+ */
+async function clickSubtaskToSwitch(pos, element) {
   let clickedButton = "check-button-clicked.svg";
-  divSubtaskOpen.innerHTML = `
-    <img src="../assets/img/${clickedButton}" id="taskId${currentOpenTaskId}checkButtonDoneId${a}" onclick="clickSubtaskDone(${currentOpenTaskId}, ${a})"></img>
-    `;
-  if ((authorized === 'user')) {
-    subtasksDone.push(subtasksOpen[a]);
-    subtasksOpen.splice(a, 1);
-    await saveNewUserDate();
-    getSubtasksForPopupTask(currentOpenTaskId);
-  } else {
-    tasks[currentOpenTaskId].subtasksDone.push(subtasksOpen[a]);
-    tasks[currentOpenTaskId].subtasksOpen.splice(a, 1);
-    getSubtasksForPopupTask(currentOpenTaskId);
-  }
-}
-
-
-async function clickSubtaskDone(currentOpenTaskId, b) {
-  let divSubtaskDone = document.getElementById(
-    `taskId${currentOpenTaskId}SubtaskDoneId${b}`
-  );
   let emptyButton = "check-button-empty.svg";
-  divSubtaskDone.innerHTML = `
-    <img src="../assets/img/${emptyButton}" id="taskId${currentOpenTaskId}checkButtonOpenId${b}" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${b})"></img>
-    `;
-  if ((authorized === 'user')) {
-    subtasksOpen.push(subtasksDone[b]);
-    subtasksDone.splice(b, 1);
-    await saveNewUserDate();
-    getSubtasksForPopupTask(currentOpenTaskId);
+  if (element.id.includes('Open')) {
+    element.innerHTML = `<img src="../assets/img/${clickedButton}">`;
+    await saveSwitchedToDoneSubtasks(pos);
   } else {
-    tasks[currentOpenTaskId].subtasksOpen.push(subtasksDone[b]);
-    tasks[currentOpenTaskId].subtasksDone.splice(b, 1);
-    getSubtasksForPopupTask(currentOpenTaskId);
+    console.log('Done');
+    element.innerHTML = `<img src="../assets/img/${emptyButton}">`;
+    await saveSwitchedToOpenSubtasks(pos);
+  }
+  getSubtasksForPopupTask();
+}
+
+
+/**
+ * This function removes the current subtask from the "open" subtasks array and moves it to the "done" subtasks array.
+ * If the user is registered, the data is stored remotely
+ * 
+ * @param {number} pos - index of the current subtask
+ */
+async function saveSwitchedToDoneSubtasks(pos) {
+  if ((authorized === 'user')) {
+    subtasksDone.push(subtasksOpen[pos]);
+    subtasksOpen.splice(pos, 1);
+    await saveNewUserDate();
+  } else {
+    tasks[currentOpenTaskId].subtasksDone.push(subtasksOpen[pos]);
+    tasks[currentOpenTaskId].subtasksOpen.splice(pos, 1);
   }
 }
 
 
+/**
+ * This function removes the current subtask from the "done" ubtasks array and moves it to the "open" subtasks array.
+ * If the user is registered, the data is stored remotely
+ * 
+ * @param {number} pos - index of the current subtask
+ */
+async function saveSwitchedToOpenSubtasks(pos) {
+  if ((authorized === 'user')) {
+    subtasksOpen.push(subtasksDone[pos]);
+    subtasksDone.splice(pos, 1);
+    await saveNewUserDate();
+  } else {
+    tasks[currentOpenTaskId].subtasksOpen.push(subtasksDone[pos]);
+    tasks[currentOpenTaskId].subtasksDone.splice(pos, 1);
+  }
+}
 
-
-
-
-
-
+////////////////////// END TODO POPUP OPENED ////////////////////// 
 
 
 async function editTask() {

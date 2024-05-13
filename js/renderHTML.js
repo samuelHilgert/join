@@ -336,7 +336,7 @@ function getPriorityIcon(todo) {
 function renderOpenSubtasks(a) {
     return `
 <div class="d_f_c_c gap-10">
-<div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
+<div id="taskId${currentOpenTaskId}SubtaskOpenId${a}" onclick="clickSubtaskToSwitch(${a}, this)"><img src="../assets/img/check-button-empty.svg"></div>
 <p>${subtasksOpen[a]}</p>
 </div>
 `;
@@ -351,7 +351,7 @@ function renderOpenSubtasks(a) {
 function renderDoneSubtasks(b) {
     return `
     <div class="d_f_c_c gap-10">
-    <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
+    <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}" onclick="clickSubtaskToSwitch(${b}, this)"><img src="../assets/img/check-button-clicked.svg"></div>
     <p>${subtasksDone[b]}</p>
     </div>
     `;
