@@ -76,9 +76,10 @@
 }
 
 @media screen and (max-width: 500px) {
-    .mobile-task-options {
-        padding-left: 5%;
-        padding-right: 5%;
+    .mobile-board-add-task-popup-container {
+        width: 95%;
+        height: 95%;
+        padding: 10px 20px;
     }
 
     .mobile-font-size-16 {
@@ -107,5 +108,11 @@
 
     .mobile-task-btn-style {
         font-size: 16px;
+    }
+
+    .mobile-board-required-div {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 10px
     }
 }
