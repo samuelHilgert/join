@@ -26,6 +26,10 @@ body {
   hyphens: auto;
 }
 
+.z-index-30 {
+  z-index: 30;
+}
+
 .pad-x {
   padding-right: 80px;
   padding-left: 80px;
