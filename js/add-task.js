@@ -96,7 +96,9 @@ function determinePriority() {
 /**
  * This function sets and saves the currentTask with the values of taskInput.values
  * 
- * @param {string} currentTask - variable to be filled with the new values
+ * @param {string} taskInput - new task with input.values
+ * @param {string} formattedInputDate - formatted date from input.value
+ * @param {string} prio - selected priority
  */
 async function setValuesAfterEditing(taskInput, formattedInputDate, prio) {
   if (authorized === "guest") {
@@ -115,7 +117,10 @@ async function setValuesAfterEditing(taskInput, formattedInputDate, prio) {
 /**
  * This function sets the currentTask with the values of taskInput.values 
  * 
- * @param {string} currentTask - variable to be filled with the new values
+ * @param {string} currentTask - current task
+ * @param {string} taskInput - new task with input.values
+ * @param {string} formattedInputDate - formatted date from input.value
+ * @param {string} prio - selected priority
  */
 function setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio) {
   currentTask.title = taskInput.title;
@@ -145,22 +150,39 @@ async function initiateFunctionsForAddTaskForm() {
   const prio = determinePriority();
   let id = getNextAvailableTaskId();
   const task = getTaskValues(taskInput, formattedInputDate, prio, id);
-
   newTask.push(task);
-  if (authorized === "guest") {
-    tasks.push(...newTask);
-    resetAddTaskValues();
-  } else {
-    users[currentUser].tasks.push(...newTask);
-    await setItem("users", JSON.stringify(users));
-    resetAddTaskValues();
-  }
+  await saveNewTask();
+  resetAddTaskValues();
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
     closeBoardAddTaskPopup();
   }
   addTaskToBoardMessage();
 }
 
+
+/**
+ * This function gets the input.values from the add-task-form
+ * 
+ */
+function readTaskInput() {
+  const title = document.getElementById(`taskTitle-${templateIndex}`).value;
+  const description = document.getElementById(`taskDescription-${templateIndex}`).value;
+  const date = document.getElementById(`taskDate-${templateIndex}`);
+  const category = document.getElementById(`taskCategory-${templateIndex}`).value;
+  return {
+    title: title,
+    description: description,
+    date: date.value,
+    category: category,
+  };
+}
+
+
+/**
+ * This function checks, whether the category inputfield is selected.
+ * 
+ * @param {string} taskInput - new task with input.values
+ */
 function checkCategorySelection(taskInput) {
   const selectedCategory = taskInput.category;
   if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
@@ -221,11 +243,12 @@ function getNextAvailableTaskId() {
 
 
 /**
- * This function
+ * This function gets the values from input.values
  *
- * @param {string} formattedInputDate - 
- * @param {string} prio - 
- * @param {number} id - 
+ * @param {string} taskInput - new task with input.values
+ * @param {string} formattedInputDate - formatted date from input.value
+ * @param {string} prio - selected priority
+ * @param {number} id - new id for the task
  */
 function getTaskValues(taskInput, formattedInputDate, prio, id) {
   return {
@@ -241,21 +264,26 @@ function getTaskValues(taskInput, formattedInputDate, prio, id) {
     category: setCategory,
   };
 }
-///////////////////////////////// END ADD-TASK FORM ON HTML ////////////////////////////////////
 
 
+/**
+ * This function saves the new task in the array tasks and remote for the user
+ * 
+ */
+async function saveNewTask() {
+  if (authorized === "guest") {
+    tasks.push(...newTask);
+  } else {
+    users[currentUser].tasks.push(...newTask);
+    await setItem("users", JSON.stringify(users));
+  }
+}
 
 
-
-
-
-
-
-
-
-
-
-
+/**
+ * This function resets the values from the inputfields
+ * 
+ */
 function resetAddTaskValues() {
   document.getElementById(`taskTitle-${templateIndex}`).value = "";
   document.getElementById(`taskDescription-${templateIndex}`).value = "";
@@ -263,32 +291,17 @@ function resetAddTaskValues() {
   document.getElementById(`taskCategory-${templateIndex}`).value = "";
   document.getElementById(`subtask-${templateIndex}`).value = "";
   document.getElementById(`contactSelection-${templateIndex}`).innerHTML = "";
-  document
-    .getElementById(`taskCategory-${templateIndex}`)
-    .classList.remove("required-input-outline-red");
+  document.getElementById(`taskCategory-${templateIndex}`).classList.remove("required-input-outline-red");
   newTask = [];
   subtasks = [];
   checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
 }
 
 
-//get informations from input
-function readTaskInput() {
-  const title = document.getElementById(`taskTitle-${templateIndex}`).value;
-  const description = document.getElementById(
-    `taskDescription-${templateIndex}`
-  ).value;
-  const date = document.getElementById(`taskDate-${templateIndex}`);
-  const category = document.getElementById(
-    `taskCategory-${templateIndex}`
-  ).value;
-  return {
-    title: title,
-    description: description,
-    date: date.value,
-    category: category,
-  };
-}
+///////////////////////////////// END ADD-TASK FORM ON HTML ////////////////////////////////////
+
+
+
 
 
 
