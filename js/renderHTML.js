@@ -92,7 +92,7 @@ function renderAddContactContainerHTML() {
             <div class="add-contact-container-right">
                 <div class="d_f_fe_c close-contact-btn">
                     <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeAddContactForm()">
-                        <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
+                        <img class="add-contact-container-right-img mobile-add-contact-container-right-img" src="./assets/img/close.svg" alt="">
                     </div>
                 </div>
                 <div class="add-contact-container-right-bottom-wrapper">
