@@ -1,4 +1,3 @@
-
 let registerSuccess = false;
 let checkbox = false;
 let emailExist = false;
@@ -80,38 +79,60 @@ async function checkEmailExist() {
 
 
 /**
- * This function checks whether the two passwords match
+ * Checks if the passwords provided during sign-up match.
  * 
+ * @async
+ * @function signUpPasswordsMatched
+ * @type {HTMLElement}
  */
 async function signUpPasswordsMatched() {
     let container = document.getElementById('messageFormSignUp');
     if (password.value === confirmPassword.value) {
-        registerSuccess = true;
-        pushUserData();
-        showSignUpMessage();
-        messageDisplay(container);
-        moveContainerUp(container);
-        setTimeout(function () {
-            moveContainerDown(container);
-        }, 1500);
-        setTimeout(function () {
-            hideMessageContainer(container);
-        }, displayMessageTime);
-        resetSingUpForm();
-        setTimeout(firstLogin, 1500);
+        handleSuccessfulRegistration(container);
+    } else {
+        handlePasswordMismatch(container);
     }
-    else {
-        showSignUpMessage();
-        messageDisplay(container);
-        moveContainerUp(container);
-        setTimeout(function () {
-            moveContainerDown(container);
-        }, 1500);
-        setTimeout(function () {
-            hideMessageContainer(container);
-        }, displayMessageTime);
-        resetSingUpForm();
-    }
+}
+
+
+/**
+ * Handles the scenario when passwords match during sign-up.
+ * 
+ * @param {HTMLElement} container - The container element for displaying messages.
+ */
+async function handleSuccessfulRegistration(container) {
+    registerSuccess = true;
+    pushUserData();
+    showSignUpMessage();
+    messageDisplay(container);
+    moveContainerUp(container);
+    setTimeout(function () {
+        moveContainerDown(container);
+    }, 1500);
+    setTimeout(function () {
+        hideMessageContainer(container);
+    }, displayMessageTime);
+    resetSingUpForm();
+    setTimeout(firstLogin, 1500);
+}
+
+
+/**
+ * Handles the scenario when passwords do not match during sign-up.
+ * 
+ * @param {HTMLElement} container - The container element for displaying messages.
+ */
+async function handlePasswordMismatch(container) {
+    showSignUpMessage();
+    messageDisplay(container);
+    moveContainerUp(container);
+    setTimeout(function () {
+        moveContainerDown(container);
+    }, 1500);
+    setTimeout(function () {
+        hideMessageContainer(container);
+    }, displayMessageTime);
+    resetSingUpForm();
 }
 
 
@@ -138,7 +159,13 @@ function messageDisplay(container) {
 }
 
 
+/**
+ * Hides the message container and its parent container.
+ * 
+ * @param {HTMLElement} container - The container element to be hidden.
+ */
 function hideMessageContainer(container) {
+    /** @type {HTMLElement} */
     let signUpMessageContainer = document.getElementById('signUpMessageContainer');
     signUpMessageContainer.style.display = 'none';
     container.style.display = 'none';
@@ -224,5 +251,4 @@ function resetSingUpForm() {
 function backToLogin() {
     window.location.href = './login.html?msg=Du hast dich erfolgreich registriert'; // queryParameter 
 }
-
 
