@@ -1,46 +1,59 @@
 #resultMessageDiv {
-    display: none;
-  }
+  display: none;
+}
 
-  #mobilePopupFilterTodoSettings {
-    display: none;
-  }
+#mobilePopupFilterTodoSettings {
+  display: none;
+}
 
-  .popup-content-todo-settings {
-    background-color: white;
-    width: 100%;
-    height: auto;
-    border-radius: 30px;
-    position: absolute;
-    z-index: 9999;
-    color: #2a3647;
-  }
+#mobileTodoSettingsCategoryMenu {
+  display: none;
+}
 
-  .close-popup-todo-settings {
-    border-radius: 50%;
-    height: 27px;
-    width: 27px;
-  }
+.mobile-todo-settings-categories {
+  color: #2a3647;
+  height:auto;
+}
 
-  .close-popup-button-todo-settings-img {
-    width: 20px;
-    height: 20px;
-  }
+.mobile-category-cursor-style:hover {
+  font-weight:bold;
+}
 
-  .close-popup-button-board {
-    border-radius: 50%;
-    height: 33px;
-    width: 33px;
-    margin-top: -8px;
-  }
-  
-  .close-popup-todo-settings:hover,
-  .close-popup-button-board:hover {
-    background-color: rgba(225, 225, 225, 1);
-    cursor: pointer;
-  }
-  
-  .close-popup-button-board-img {
-    width: 25px;
-    height: 25px;
-  }
+.popup-content-todo-settings {
+  background-color: white;
+  width: 100%;
+  height: auto;
+  border-radius: 30px;
+  position: absolute;
+  z-index: 9999;
+  color: #2a3647;
+}
+
+.close-popup-todo-settings {
+  border-radius: 50%;
+  height: 27px;
+  width: 27px;
+}
+
+.close-popup-button-todo-settings-img {
+  width: 20px;
+  height: 20px;
+}
+
+.close-popup-button-board {
+  border-radius: 50%;
+  height: 33px;
+  width: 33px;
+  margin-top: -8px;
+}
+
+.close-popup-todo-settings:hover,
+.close-popup-button-board:hover {
+  background-color: rgba(225, 225, 225, 1);
+  cursor: pointer;
+}
+
+.close-popup-button-board-img {
+  width: 25px;
+  height: 25px;
+}
