@@ -356,9 +356,18 @@ function renderMobileTodoSettings(taskId) {
 </div>
 
 </div>
+
+<div class="d_c_fs_fs width-max" id="mobileTodoSettingsCategoryMenu"> 
+<div class="d_c_fs_fs mobile-todo-settings-categories width-max pad-x-40 gap-10" id="mobileTodoSettingsCategories">
+</div>
+</div>
     `;
 }
 
+
+function renderMobileCategories(category) {
+    return `<div class="mobile-category-cursor-style cursor-pointer" id="mobileMove${category}" onclick="mobileMoveToCategory(this)">${category}</div>`;
+}
 
 
 /////////// END OF RENDERING FOR BOARD ////////////

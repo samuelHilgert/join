@@ -661,12 +661,12 @@ function showSubtasksByHovering(element) {
 
 
 function startTimer(taskId) {
-  timerMobileTodo = setTimeout(function() {
-        mobilePopupFilterTodoSettings.style.display = 'flex';
-        let mobileTodoSettings = document.getElementById('mobilePopupContentTodoSettings');
-        mobileTodoSettings.innerHTML = renderMobileTodoSettings(taskId);
-        getMobileCurrentOpenTaskId(taskId);
-    }, longTapDuration);
+  timerMobileTodo = setTimeout(function () {
+    mobilePopupFilterTodoSettings.style.display = 'flex';
+    let mobileTodoSettings = document.getElementById('mobilePopupContentTodoSettings');
+    mobileTodoSettings.innerHTML = renderMobileTodoSettings(taskId);
+    getMobileCurrentOpenTaskId(taskId);
+  }, longTapDuration);
 }
 
 function getMobileCurrentOpenTaskId(taskId) {
@@ -685,16 +685,51 @@ function getMobileCurrentOpenTaskId(taskId) {
 }
 
 function clearTimer() {
-    clearTimeout(timerMobileTodo);
+  clearTimeout(timerMobileTodo);
 }
 
 
 
 function mobileTodoMove() {
   console.log('Move');
+  mobileTodoSettingsCategoryMenu.style.display = 'flex';
+  let categoriesMenu = document.getElementById('mobileTodoSettingsCategories');
+  categoriesMenu.innerHTML = '';
+  for (let index = 0; index < categories.length; index++) {
+    const category = categories[index];
+    categoriesMenu.innerHTML += renderMobileCategories(category);
+  }
 }
 
-
+async function mobileMoveToCategory(element) {
+  console.log(element);
+  if (element.id.includes('backlog')) {
+    console.log('backlog');
+    tasks[currentOpenTaskId].category = 'backlog';
+  } 
+  if (element.id.includes('inProgress')) {
+    console.log('inProgress');
+    tasks[currentOpenTaskId].category = 'inProgress';
+  }
+   if (element.id.includes('awaitFeedback')) {
+    console.log('awaitFeedback');
+    tasks[currentOpenTaskId].category = 'awaitFeedback';
+  }
+   if (element.id.includes('done')) {
+    console.log('done');
+    tasks[currentOpenTaskId].category = 'done';
+  }
+  resetMobileTodoSettings();
+  await renderBoardTasks();
+  
+  if ((authorized === 'user')) {
+    await saveNewUserDate();
+  } else {
+    let div = document.getElementById("guestMessagePopupBoard");
+    let messageText = document.getElementById("guestMessageBoard");
+    showGuestPopupMessage(div, messageText);
+  }
+}
 
 function mobileTodoEdit(taskId) {
   console.log(taskId);
@@ -702,8 +737,6 @@ function mobileTodoEdit(taskId) {
   openBoardTaskPopup(taskId);
   editTask();
 }
-
-
 
 async function mobileTodoDelete() {
   await deleteTask();
