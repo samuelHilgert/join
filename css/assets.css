@@ -177,7 +177,7 @@
 .logo-animation {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 38%;
   transform: translate(0, 0);
   animation: moveLogo 2s 1 forwards, shrinkLogo 0.7s 1 forwards;
   /* Zwei Animationen kombinieren */
@@ -185,13 +185,14 @@
   /* Pause von 1 Sekunde vor Beginn der Animation */
 }
 
+
 .move {
   position: absolute;
 }
 
 @keyframes moveLogo {
   to {
-    top: -120px;
+    top: -170px;
     left: -76px;
   }
 }
