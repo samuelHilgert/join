@@ -15,37 +15,83 @@ async function checkLoginAccess() {
 
 
 /**
- * This is a function to check whether email and password are correct
- * 
+ * Iterates through the user login process.
+ * Checks for success, handles success and failure accordingly.
+ * @returns {Promise<void>}
  */
 async function iterateUsers() {
     if (successCheck()) {
-        successEmail = true;
-        successPassword = true;
-        indexByEmail = getUserId(loginEmail.value);
-        if (loginCheckbox.checked) {
-            let expiryDate = new Date().getMinutes() + setExpiryTime;
-            remember = true;
-            await saveToLocalStorage(expiryDate);
-        }
-        else {
-            remember = false;
-            // expiryDateString = expiryDate.toLocaleString('de-DE')
-            let expiryDate = new Date().getMinutes() + setExpiryTime;
-            await saveToLocalStorage(expiryDate);
-        }
-        let container = document.getElementById('messageFormLogin');
-        showLoginMessage();
-        loginMessageDisplay(container);
-        moveContainerUp(container);
-        setTimeout(forwardToSummary, 1500);
+        await handleSuccess();
     } else {
-        verificateEmail();
-        verifcatePassword();
+        handleFailure();
     }
 }
 
 
+/**
+ * Handles the success scenario of user login.
+ * Sets flags for success email and password,
+ * Retrieves user ID by email,
+ * Handles remember login option,
+ * Displays login message and moves container up.
+ * @returns {Promise<void>}
+ */
+async function handleSuccess() {
+    successEmail = true;
+    successPassword = true;
+    indexByEmail = getUserId(loginEmail.value);
+    if (loginCheckbox.checked) {
+        await handleRememberLogin();
+    } else {
+        await handleForgetLogin();
+    }
+    let container = document.getElementById('messageFormLogin');
+    showLoginMessage();
+    loginMessageDisplay(container);
+    moveContainerUp(container);
+    setTimeout(forwardToSummary, 1500);
+}
+
+
+/**
+ * Handles the failure scenario of user login.
+ * Verifies email and password.
+ */
+function handleFailure() {
+    verificateEmail();
+    verifcatePassword();
+}
+
+
+/**
+ * Handles the process of remembering login credentials.
+ * Sets the expiry date, updates the remember status, saves to local storage.
+ * @returns {Promise<void>}
+ */
+async function handleRememberLogin() {
+    let expiryDate = new Date().getMinutes() + setExpiryTime;
+    remember = true;
+    await saveToLocalStorage(expiryDate);
+}
+
+
+/**
+ * Handles the process of forgetting login credentials.
+ * Resets the remember status, sets the expiry date, saves to local storage.
+ * @returns {Promise<void>}
+ */
+async function handleForgetLogin() {
+    remember = false;
+    let expiryDate = new Date().getMinutes() + setExpiryTime;
+    await saveToLocalStorage(expiryDate);
+}
+
+
+/**
+ * Saves user ID and remember status to the local storage, pushes remember status into an array, and updates it on the remote server.
+ * @param {number} expiryDate - The expiry date for remembering the login credentials.
+ * @returns {Promise<void>}
+ */
 async function saveToLocalStorage(expiryDate) {
     let id = indexByEmail;
     localStorage.setItem('user', id);
@@ -55,6 +101,11 @@ async function saveToLocalStorage(expiryDate) {
 }
 
 
+/**
+ * Pushes remember status into an array.
+ * @param {number} expiryDate - The expiry date for remembering the login credentials.
+ * @returns {void}
+ */
 function pushRememberStatusInArray(expiryDate) {
     rememberStatus.push({
         remember_status: remember,
@@ -63,9 +114,14 @@ function pushRememberStatusInArray(expiryDate) {
 }
 
 
+/**
+ * Updates remember status on the remote server.
+ * @returns {Promise<void>}
+ */
 async function pushRememberStatusOnRemoteServer() {
     await setItem('remember_status', JSON.stringify(rememberStatus));
 }
+
 
 /**
  * This is a function to check whether email not exists
@@ -220,6 +276,10 @@ function guestLogin() {
 }
 
 
+/**
+ * Redirects the user to the summary page with a message indicating they are logged in as a guest.
+ * @returns {void}
+ */
 function forwardSummaryAsGuest() {
     window.location.href = `./summary.html?msg=Du bist als Gast angemeldet`;
 }
