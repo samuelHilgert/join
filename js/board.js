@@ -6,7 +6,7 @@ let subtasksOpen = [];
 let subtasksDone = [];
 let timerMobileTodo;
 let longTapDuration = 1000; // time for the long tap
-let widthForMobileSettings = 768; // width For Mobile Settings
+let widthForMobileSettings = 430; // width For Mobile Settings
 
 
 /**
@@ -527,6 +527,9 @@ async function deleteTask() {
   await saveNewUserDate(); // outsourced in script.js
   await renderBoardTasks();
 }
+
+
+
 
 
 
