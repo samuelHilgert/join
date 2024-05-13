@@ -6,7 +6,8 @@ let subtasksOpen = [];
 let subtasksDone = [];
 let timerMobileTodo;
 let longTapDuration = 1000; // time for the long tap
-let widthForMobileSettings = 768;
+let widthForMobileSettings = 768; // width For Mobile Settings
+
 
 /**
  * This function renders the tasks on board
@@ -82,6 +83,7 @@ function showGuestMessageOnBoard() {
   }
 }
 
+
 /**
  * This function generates the current priority of the todo
  * 
@@ -112,35 +114,42 @@ function getContactsForTask(task) {
 }
 
 
+/**
+ * This function generates the progressBar of the todo
+ * 
+ * @param {string} task - the current task
+ */
 function updateProgressBar(task) {
   let stubtasksOpenLength = task.subtasksOpen.length;
   let stubtasksDoneLength = task.subtasksDone.length;
   let allSubtasksByTask = stubtasksOpenLength + stubtasksDoneLength;
-
-  let subtasksLengthDiv = document.getElementById(
-    `subtasksLength${task["id"]}`
-  );
-  subtasksLengthDiv.innerHTML = `${allSubtasksByTask}`;
-
-  let stubtasksDoneLengthDiv = document.getElementById(
-    `stubtasksDoneLength${task["id"]}`
-  );
-  stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
-
-  // progessBar
+  let subtasksLengthDiv = document.getElementById(`subtasksLength${task["id"]}`);
+  let stubtasksDoneLengthDiv = document.getElementById(`stubtasksDoneLength${task["id"]}`);
   let progressBar = document.getElementById(`progressBar${task["id"]}`);
   let percent = (stubtasksDoneLength / allSubtasksByTask) * 100;
   let result = percent.toFixed(2);
+  subtasksLengthDiv.innerHTML = `${allSubtasksByTask}`;
+  stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
   progressBar.style.width = `${result}%`;
   progressBar.classList.add("blue");
 }
 
 
+/**
+ * This function starts the drag of the todo
+ * 
+ * @param {number} id - the current todo id
+ */
 function startDragging(id) {
   currentDraggedTaskId = id;
 }
 
 
+/**
+ * This function moves the todo to the new category after drop
+ * 
+ * @param {string} currentCategory - the final category after dragging
+ */
 async function moveTo(currentCategory) {
   const currentDraggedTaskIdString = String(currentDraggedTaskId);
   let foundIndex;
@@ -148,40 +157,53 @@ async function moveTo(currentCategory) {
     if (tasks[id].id === currentDraggedTaskIdString) {
       foundIndex = id;
       tasks[foundIndex].category = currentCategory;
-      if ((authorized === 'user')) {
-        await saveNewUserDate();
-      } else {
-        let div = document.getElementById("guestMessagePopupBoard");
-        let messageText = document.getElementById("guestMessageBoard");
-        showGuestPopupMessage(div, messageText);
-      }
+      await saveNewUserDate();
+      showGuestMessageOnBoard();
     }
   }
   await renderBoardTasks();
 }
 
 
+/**
+ * This function allows the element only to drop at the final position
+ * 
+ * @param {string} event - the result of current position
+ */
 function allowDrop(event) {
   event.preventDefault();
 }
 
 
+/**
+ * This function adds a class for highlighting the final category column
+ * 
+ * @param {number} id - the current todo id
+ */
 function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
 
+/**
+ * This function removes the class for the highlighting the last category column
+ * 
+ * @param {number} id - the current todo id
+ */
 function removeHighlight(id) {
   document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
 
-function doNotClose(event) {
-  event.stopPropagation();
-}
+/********************** TODO POPUP OPENED **********************************/
 
-
+/**
+ * This function initiates the rendering of the task when it is open
+ * 
+ * @param {number} openId - the id of the current todo
+ */
 async function openBoardTaskPopup(openId) {
+  console.log(openId);
   let boardTaskPopup = document.getElementById("boardTaskPopup");
   let container = document.getElementById("boardTaskPopupContainer");
   document.body.style.overflow = "hidden";
@@ -484,6 +506,24 @@ function closeBoardTaskPopup() {
   document.body.style.overflow = "scroll";
 }
 
+function changeImage(element, src) {
+  element.querySelector(".delete").src = src;
+}
+
+
+function restoreImagePopupTask(element, defaultSrc) {
+  element.querySelector(".delete").src = defaultSrc;
+}
+
+
+function showSubtasksByHovering(element) {
+  let statusText = document.getElementById(`statusText${element}`);
+  statusText.style.display = 'block';
+  statusText.onmouseout = function () {
+    statusText.style.display = 'none';
+  };
+}
+
 
 /********************** ADD-TASK POPUP OPENED **********************************/
 
@@ -637,24 +677,6 @@ function searchTasksByKeyPress(event) {
 
 
 /*********************** END SEARCH FUNCTION ********************************/
-
-function changeImage(element, src) {
-  element.querySelector(".delete").src = src;
-}
-
-
-function restoreImagePopupTask(element, defaultSrc) {
-  element.querySelector(".delete").src = defaultSrc;
-}
-
-
-function showSubtasksByHovering(element) {
-  let statusText = document.getElementById(`statusText${element}`);
-  statusText.style.display = 'block';
-  statusText.onmouseout = function () {
-    statusText.style.display = 'none';
-  };
-}
 
 
 /*********************** START MOBILE TODOS ********************************/
