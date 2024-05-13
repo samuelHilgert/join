@@ -136,6 +136,20 @@ function updateProgressBar(task) {
 
 
 /**
+ * This function displays the subtasks satus text under the progressbar by hovering
+ * 
+ * @param {string} element - the id of the current todo
+ */
+function showSubtasksByHovering(element) {
+  let statusText = document.getElementById(`statusText${element}`);
+  statusText.style.display = 'block';
+  statusText.onmouseout = function () {
+  statusText.style.display = 'none';
+  };
+}
+
+
+/**
  * This function starts the drag of the todo
  * 
  * @param {number} id - the current todo id
@@ -519,6 +533,10 @@ function renderSubtasksPopup() {
 /////////////////////////// MORE OPTIONS FOR TODOS ///////////////////////////// 
 
 
+/**
+ * This functions deletes the current todo from board 
+ * 
+ */
 async function deleteTask() {
   document.getElementById("boardTaskPopup").style.display = "none";
   document.body.style.overflow = "scroll";
@@ -529,51 +547,49 @@ async function deleteTask() {
 }
 
 
+/////////////////////////// END MORE OPTIONS FOR TODOS ///////////////////////////// 
 
 
+///////////////////////////////// ADD-TASK POPUP /////////////////////////////////// 
 
 
-
-
-
-
-
-
-
-
-function showSubtasksByHovering(element) {
-  let statusText = document.getElementById(`statusText${element}`);
-  statusText.style.display = 'block';
-  statusText.onmouseout = function () {
-    statusText.style.display = 'none';
-  };
+/**
+ * This functions initiate all functions for the popup add-task form on board.html
+ * 
+ * @param {string} element - the div-element of the clicked add-task-button
+ */
+function openBoardAddTaskPopup(element) {
+  clearForm(); // outsourced in add-task.js
+  document.getElementById(`bottomAddTaskEditOptions-4`).style.display = 'none';
+  changeTodoCategoryByColumn(element);
+  changeTemplateIndex(); // outsourced in add-task.js
+  renderAddTaskFormButton(); // outsourced in renderHTML.js
+  let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
+  let container = document.getElementById("boardAddTaskPopupContainer");
+  boardAddTaskPopup.style.display = "flex";
+  document.body.style.overflow = "hidden";
+  moveContainerIn(container); // outsourced in script.js
 }
 
 
-/********************** ADD-TASK POPUP OPENED **********************************/
-
 /**
- * this functions initiate all functions for the popup add-task
- *
+ * This functions changes the category after clicking the Add Task button from the category
+ * 
+ * @param {string} element - the div-element of the clicked add-task-button
  */
-function openBoardAddTaskPopup(element) {
-  clearForm();
-  document.getElementById(`bottomAddTaskEditOptions-4`).style.display = 'none';
+function changeTodoCategoryByColumn(element) {
   if (element.id.includes('Progress')) {
     setCategory = 'inProgress';
   } else if (element.id.includes('AwaitFeedback')) {
     setCategory = 'awaitFeedback';
   }
-  changeTemplateIndex();
-  renderAddTaskFormButton();
-  let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
-  let container = document.getElementById("boardAddTaskPopupContainer");
-  boardAddTaskPopup.style.display = "flex";
-  document.body.style.overflow = "hidden";
-  moveContainerIn(container);
 }
 
 
+/**
+ * This functions closes the popup add-task form
+ * 
+ */
 function closeBoardAddTaskPopup() {
   clearForm();
   checkedCheckboxes = [];
@@ -589,7 +605,18 @@ function closeBoardAddTaskPopup() {
   templateIndex = 3;
 }
 
-/*********************** END ADD TASK POPUP OPENED ********************************/
+
+//////////////////////////////// END ADD-TASK POPUP ////////////////////////////////
+
+
+
+
+
+
+
+
+
+
 
 
 /********************** SEARCH FUNCTION **********************************/
