@@ -89,7 +89,7 @@ async function addTask() {
       shakeDiv();
       toggleCategoryDiv();
       document
-        .getElementById("taskCategory")
+        .getElementById(`taskCategory-${templateIndex}`)
         .classList.add("required-input-outline-red");
       return;
     }
@@ -128,7 +128,7 @@ async function addTask() {
 
 
 function shakeDiv() {
-  let container = document.getElementById("requiredDiv");
+  let container = document.getElementById(`requiredDiv-${templateIndex}`);
   container.classList.add("shake");
   setTimeout(() => {
     container.classList.remove("shake");
