@@ -157,7 +157,7 @@ async function moveTo(currentCategory) {
     if (tasks[id].id === currentDraggedTaskIdString) {
       foundIndex = id;
       tasks[foundIndex].category = currentCategory;
-      await saveNewUserDate();
+      await saveNewUserDate();  // outsourced in script.js
       showGuestMessageOnBoard();
     }
   }
@@ -344,7 +344,7 @@ async function saveSwitchedToDoneSubtasks(pos) {
   if ((authorized === 'user')) {
     subtasksDone.push(subtasksOpen[pos]);
     subtasksOpen.splice(pos, 1);
-    await saveNewUserDate();
+    await saveNewUserDate();  // outsourced in script.js
   } else {
     tasks[currentOpenTaskId].subtasksDone.push(subtasksOpen[pos]);
     tasks[currentOpenTaskId].subtasksOpen.splice(pos, 1);
@@ -362,11 +362,42 @@ async function saveSwitchedToOpenSubtasks(pos) {
   if ((authorized === 'user')) {
     subtasksOpen.push(subtasksDone[pos]);
     subtasksDone.splice(pos, 1);
-    await saveNewUserDate();
+    await saveNewUserDate();  // outsourced in script.js
   } else {
     tasks[currentOpenTaskId].subtasksOpen.push(subtasksDone[pos]);
     tasks[currentOpenTaskId].subtasksDone.splice(pos, 1);
   }
+}
+
+
+/**
+ * This function closes the opened task
+ * 
+ */
+function closeBoardTaskPopup() {
+  resetAfterClosingOpenedTask();
+  let popup = document.getElementById("boardTaskPopup");
+  let container = document.getElementById("boardTaskPopupContainer");
+  moveContainerOut(container);
+  setTimeout(function () {
+    displayNonePopup(popup);
+    renderBoardTasks();
+    showGuestMessageOnBoard();
+  }, 500);
+}
+
+
+/**
+ * This function resets the default values ​​after closing the open task
+ * 
+ */
+function resetAfterClosingOpenedTask() {
+  checkedCheckboxes = [];
+  let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
+  let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
+  boardTaskEditContainer.style.display = 'none';
+  boardTaskShowContainer.style.display = 'flex';
+  document.body.style.overflow = "scroll";
 }
 
 
@@ -482,11 +513,10 @@ function renderSubtasksPopup() {
 }
 
 
+/////////////////////////// END EDIT TASK ///////////////////////////// 
 
 
-
-
-
+/////////////////////////// MORE OPTIONS FOR TODOS ///////////////////////////// 
 
 
 async function deleteTask() {
@@ -494,38 +524,18 @@ async function deleteTask() {
   document.body.style.overflow = "scroll";
   tasks.splice(currentOpenTaskId, 1);
   showGuestMessageOnBoard();
-  if ((authorized === 'user')) {
-    await saveNewUserDate();
-  }
+  await saveNewUserDate(); // outsourced in script.js
   await renderBoardTasks();
 }
 
 
-function closeBoardTaskPopup() {
-  checkedCheckboxes = [];
-  let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
-  let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
-  boardTaskEditContainer.style.display = 'none';
-  boardTaskShowContainer.style.display = 'flex';
-  let popup = document.getElementById("boardTaskPopup");
-  let container = document.getElementById("boardTaskPopupContainer");
-  moveContainerOut(container);
-  setTimeout(function () {
-    displayNonePopup(popup);
-    renderBoardTasks();
-    showGuestMessageOnBoard();
-  }, 500);
-  document.body.style.overflow = "scroll";
-}
-
-function changeImage(element, src) {
-  element.querySelector(".delete").src = src;
-}
 
 
-function restoreImagePopupTask(element, defaultSrc) {
-  element.querySelector(".delete").src = defaultSrc;
-}
+
+
+
+
+
 
 
 function showSubtasksByHovering(element) {
@@ -777,3 +787,21 @@ function resetMobileTodoSettings() {
 }
 
 /*********************** END MOBILE TODOS ********************************/
+
+
+
+
+
+
+
+
+//////////////////// UNKNOWN FUNCTIONS //////////////////// 
+
+function changeImage(element, src) {
+  element.querySelector(".delete").src = src;
+}
+
+
+function restoreImagePopupTask(element, defaultSrc) {
+  element.querySelector(".delete").src = defaultSrc;
+}
