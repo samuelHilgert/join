@@ -44,8 +44,6 @@
     .mobile-board-task-options {
         padding-top: 0;
     }
-
-
 }
 
 @media screen and (max-width: 900px) {
@@ -71,40 +69,13 @@
     .mobile-clear-btn {
         display: none;
     }
-}
 
-@media screen and (max-width: 600px) {
-    .mobile-add-task-headline {
-        padding-left: 10%;
-    }
-
-    .mobile-box-1 {
-        width: 80%;
-    }
-
-    .mobile-box-2 {
-        width: 80%;
-    }
-
-    .mobile-task-options {
-        padding-left: 10%;
-        padding-right: 10%;
+    .mobile-board-add-task-popup-container {
+        width: 90%;
     }
 }
 
 @media screen and (max-width: 500px) {
-    .mobile-add-task-headline {
-        padding-left: 5%;
-    }
-
-    .mobile-box-1 {
-        width: 90%;
-    }
-
-    .mobile-box-2 {
-        width: 90%;
-    }
-
     .mobile-task-options {
         padding-left: 5%;
         padding-right: 5%;
