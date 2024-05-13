@@ -519,6 +519,7 @@ function closeBoardAddTaskPopup() {
     showGuestMessageOnBoard();
   }, 500);
   document.body.style.overflow = "scroll";
+  templateIndex = 3;
 }
 
 /*********************** END ADD TASK POPUP OPENED ********************************/
