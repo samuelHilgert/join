@@ -245,6 +245,24 @@ function showTaskText(todo) {
 
 
 /**
+ * This function gets the "assignedTo" contacts and initiate the rendering of these 
+ *  
+ * @param {string} todo - curent task
+ */
+function getContactsForPopupTask(todo) {
+  let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
+  const contacts = todo["assignedTo"];
+  taskPopupContentAssignedTo.innerHTML = '';
+  for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    const letters = contactNamesLetters(contact); // outsourced in script.js
+    const backgroundColor = getBgColorTaskPopup(todo, index); // outsourced in script.js
+    taskPopupContentAssignedTo.innerHTML += renderAssignedToContactsForOpenTask(contact, letters, backgroundColor); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
  * This function contains the rendering for the entire subtasks of the task
  *  
  */
@@ -296,27 +314,7 @@ function getAllDoneSubtasks(taskPopupContentSubtasks) {
 }
 
 
-/**
- * This function
- *  
- * @param {string} todo - curent task
- */
-function getContactsForPopupTask(todo) {
-  let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
-  const contacts = todo["assignedTo"];
-  taskPopupContentAssignedTo.innerHTML = '';
-  for (let index = 0; index < contacts.length; index++) {
-    const contact = contacts[index];
-    const letters = contactNamesLetters(contact);
-    const backgroundColor = getBgColorTaskPopup(todo, index);
-    taskPopupContentAssignedTo.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max">
-    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
-    <p>${contact}</p>
-    </div>
-    `;
-  }
-}
+
 
 
 
@@ -366,19 +364,7 @@ async function clickSubtaskDone(currentOpenTaskId, b) {
 
 
 
-function getBgColorTaskPopup(task, index) {
-  const contactName = task.assignedTo[index];
-  let contactInfo;
-  if (authorized === 'user') {
-    contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
-  } else {
-    contactInfo = contacts.find(contact => contact.name === contactName);
-  }
-  if (!contactInfo || !contactInfo.color) {
-    return "blue";  // Standardfarbe, wenn keine Farbe gefunden wurde
-  }
-  return contactInfo.color;
-}
+
 
 
 
