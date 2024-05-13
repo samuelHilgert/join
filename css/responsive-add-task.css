@@ -159,4 +159,18 @@
     font-size: 16px;
     line-height: 19.2px;
   }
+
+  .task-input-style-black::placeholder {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .task-input-style::placeholder {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .task-category {
+    font-size: 16px;
+  }
 }
