@@ -10,20 +10,6 @@ let setCategory = "backlog";
 
 
 /**
- * This function gets the next available ID that's not already used in the tasks array.
- *
- * @returns {string} - the next available ID
- */
-function getNextAvailableTaskId() {
-  let id = 1;
-  while (tasks.some((task) => task.id === id.toString())) {
-    id++;
-  }
-  return id.toString();
-}
-
-
-/**
  * This function sorts the contacts
  * 
  */
@@ -60,10 +46,12 @@ async function initiateFunctionsForAddTaskOnBoard() {
   let editDiv = document.getElementById("boardTaskEditContainer");
   let showDiv = document.getElementById("boardTaskShowContainer");
   let taskInput = readTaskInputEditTask();
-  let formattedInputDate = setFormattedInputDate(formattedInputDate, taskInput);
+  let formattedInputDate;
+  if (taskInput.date !== null) {
+    formattedInputDate = taskInput.date;
+  }
   const prio = determinePriority();
-  let currentTask;
-  setValuesAfterEditing(currentTask);
+  let currentTask = setValuesAfterEditing(taskInput, formattedInputDate, prio);
   let id = currentTask.id;
   await openBoardTaskPopup(id);
   editDiv.style.display = "none";
@@ -84,23 +72,6 @@ function readTaskInputEditTask() {
     description: description,
     date: date.value,
   };
-}
-
-
-/**
- * This function sets the formattedInputDate 
- * 
- * @param {string} formattedInputDate - the variable to be filled with the formattedInputDate value
- * @param {string} taskInput - the input.values from the new task
- */
-function setFormattedInputDate(formattedInputDate, taskInput) {
-  if (taskInput.value !== null) {
-    formattedInputDate = taskInput.date;
-    return formattedInputDate;
-  } else {
-    formattedInputDate = taskInput.date;
-    return formattedInputDate;
-  }
 }
 
 
@@ -127,14 +98,16 @@ function determinePriority() {
  * 
  * @param {string} currentTask - variable to be filled with the new values
  */
-async function setValuesAfterEditing(currentTask) {
+async function setValuesAfterEditing(taskInput, formattedInputDate, prio) {
   if (authorized === "guest") {
     currentTask = tasks[currentOpenTaskId];
-    setValuesFromBoardForm(currentTask);
+    setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio);
+    return currentTask;
   } else {
     currentTask = users[currentUser].tasks[currentOpenTaskId];
-    setValuesFromBoardForm(currentTask);
+    setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio);
     await setItem("users", JSON.stringify(users));
+    return currentTask;
   }
 }
 
@@ -144,7 +117,7 @@ async function setValuesAfterEditing(currentTask) {
  * 
  * @param {string} currentTask - variable to be filled with the new values
  */
-function setValuesFromBoardForm(currentTask) {
+function setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio) {
   currentTask.title = taskInput.title;
   currentTask.description = taskInput.description;
   currentTask.dueDate = formattedInputDate;
@@ -167,34 +140,11 @@ function setValuesFromBoardForm(currentTask) {
  */
 async function initiateFunctionsForAddTaskForm() {
   const taskInput = readTaskInput();
-  const selectedCategory = taskInput.category;
-  if (
-    selectedCategory !== "Technical Task" &&
-    selectedCategory !== "User Story"
-  ) {
-    shakeDiv();
-    toggleCategoryDiv();
-    document
-      .getElementById(`taskCategory-${templateIndex}`)
-      .classList.add("required-input-outline-red");
-    return;
-  }
+  checkCategorySelection(taskInput);
   let formattedInputDate = taskInput.date;
-  // let formattedInputDate = await formatDateCorrect(taskInput.date);
   const prio = determinePriority();
   let id = getNextAvailableTaskId();
-  const task = {
-    id: id,
-    label: taskInput.category,
-    title: taskInput.title,
-    description: taskInput.description,
-    dueDate: formattedInputDate,
-    assignedTo: checkedCheckboxes,
-    priority: prio,
-    subtasksOpen: subtasks,
-    subtasksDone: [],
-    category: setCategory,
-  };
+  const task = getTaskValues(taskInput, formattedInputDate, prio, id);
 
   newTask.push(task);
   if (authorized === "guest") {
@@ -211,7 +161,86 @@ async function initiateFunctionsForAddTaskForm() {
   addTaskToBoardMessage();
 }
 
+function checkCategorySelection(taskInput) {
+  const selectedCategory = taskInput.category;
+  if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
+    shakeDiv();
+    toggleCategoryDiv();
+    document.getElementById(`taskCategory-${templateIndex}`).classList.add("required-input-outline-red");
+    return;
+  }
+}
 
+/**
+ * This function shakes the required Text, when a required inputfield is not be filled
+ * 
+ */
+function shakeDiv() {
+  let container = document.getElementById(`requiredDiv-${templateIndex}`);
+  container.classList.add("shake");
+  setTimeout(() => {
+    container.classList.remove("shake");
+  }, 500);
+}
+
+
+/**
+ * This function opens the selection menu from the category-div, if no selection could be registrated
+ * 
+ */
+function toggleCategoryDiv() {
+  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
+  let dropdownIcon = document.getElementById(
+    `categoryDropIcon-${templateIndex}`
+  );
+  if (
+    categoryDiv.style.display === "none" ||
+    categoryDiv.style.display === ""
+  ) {
+    categoryDiv.style.display = "flex";
+    dropdownIcon.style.transform = "rotate(180deg)";
+  } else {
+    categoryDiv.style.display = "none";
+    dropdownIcon.style.transform = "";
+  }
+}
+
+
+/**
+ * This function gets the next available ID that's not already used in the tasks array.
+ *
+ * @returns {string} - the next available ID
+ */
+function getNextAvailableTaskId() {
+  let id = 1;
+  while (tasks.some((task) => task.id === id.toString())) {
+    id++;
+  }
+  return id.toString();
+}
+
+
+/**
+ * This function
+ *
+ * @param {string} formattedInputDate - 
+ * @param {string} prio - 
+ * @param {number} id - 
+ */
+function getTaskValues(taskInput, formattedInputDate, prio, id) {
+  return {
+    id: id,
+    label: taskInput.category,
+    title: taskInput.title,
+    description: taskInput.description,
+    dueDate: formattedInputDate,
+    assignedTo: checkedCheckboxes,
+    priority: prio,
+    subtasksOpen: subtasks,
+    subtasksDone: [],
+    category: setCategory,
+  };
+}
 ///////////////////////////////// END ADD-TASK FORM ON HTML ////////////////////////////////////
 
 
@@ -225,13 +254,6 @@ async function initiateFunctionsForAddTaskForm() {
 
 
 
-function shakeDiv() {
-  let container = document.getElementById(`requiredDiv-${templateIndex}`);
-  container.classList.add("shake");
-  setTimeout(() => {
-    container.classList.remove("shake");
-  }, 500);
-}
 
 
 function resetAddTaskValues() {
@@ -462,22 +484,7 @@ function chooseCategory(category) {
 }
 
 
-function toggleCategoryDiv() {
-  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
-  let dropdownIcon = document.getElementById(
-    `categoryDropIcon-${templateIndex}`
-  );
-  if (
-    categoryDiv.style.display === "none" ||
-    categoryDiv.style.display === ""
-  ) {
-    categoryDiv.style.display = "flex";
-    dropdownIcon.style.transform = "rotate(180deg)";
-  } else {
-    categoryDiv.style.display = "none";
-    dropdownIcon.style.transform = "";
-  }
-}
+
 
 
 //for subtasks section
