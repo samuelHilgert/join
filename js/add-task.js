@@ -383,6 +383,107 @@ async function initiateFunctionsForAddSubtasksForm() {
 ///////////////////////////////////// END ADD-SUBTASKS //////////////////////////////////////
 
 
+///////////////////////////////////////// ADD-SUBTASKS /////////////////////////////////////////
+
+/**
+ * This function includes all functions for editing the selected subtask
+ * 
+ * @param {string} element - element-div from selected subtask
+ */
+async function editSubtask(element) {
+  if (document.location.pathname === `/board.html`) {
+    await initiateFunctionsForEditSubtasksOnBoard(element); // editing subtasks which are already exist on board
+  } else {
+    await initiateFunctionsForEditSubtasksForm(element); // added new subtasks 
+  }
+}
+
+
+async function initiateFunctionsForEditSubtasksOnBoard(element) {
+  if (authorized === "guest") {
+    editSubtaskAsGuest(element);
+  } else {
+    editSubtaskAsUser(element);
+  }
+}
+
+
+function editSubtaskAsGuest(element) {
+  let currentTask = tasks[currentOpenTaskId];
+  if (element.id.includes("subtasksOpen")) {
+    let index = element.id.split("Open")[1];
+    setSubtaskInputValueOpen(element, index, currentTask);
+  } else {
+    let index = element.id.split("Done")[1];
+    setSubtaskInputValueDone(element, index, currentTask);
+  }
+}
+
+
+function editSubtaskAsUser(element) {
+  let currentTask = users[currentUser].tasks[currentOpenTaskId];
+  if (element.id.includes("subtasksOpen")) {
+    let index = element.id.split("Open")[1];
+    setSubtaskInputValueOpen(element, index, currentTask);
+  } else {
+    let index = element.id.split("Done")[1];
+    setSubtaskInputValueDone(element, index, currentTask);
+  }
+}
+
+
+function setSubtaskInputValueOpen(element, index, currentTask) {
+  currentSubtaskId = element.id;
+  let currentSubtask = currentTask.subtasksOpen[index];
+  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+  if (currentSubtask !== -1) {
+    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+    subtaskInput.value = currentSubtask;
+  }
+  changeIcons();
+}
+
+function setSubtaskInputValueDone(element, index, currentTask) {
+  currentSubtaskId = element.id;
+  let currentSubtask = currentTask.subtasksDone[index];
+  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+  if (currentSubtask !== -1) {
+    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+    subtaskInput.value = currentSubtask;
+  }
+  changeIcons();
+}
+
+
+
+async function initiateFunctionsForEditSubtasksForm(element) {
+  const subtaskContainer = document.getElementById(
+    `subtaskDivAddTask-${templateIndex}`
+  );
+  const subtaskIndex = getSubtaskIndex(element);
+  if (subtaskIndex !== -1) {
+    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+    subtaskInput.value = subtasks[subtaskIndex];
+    subtasks.splice(subtaskIndex, 1);
+    renderSubtasks(subtaskContainer);
+  }
+  changeIcons();
+}
+
+
+function getSubtaskIndex(element) {
+  const subtaskContainer = document.getElementById(
+    `subtaskDivAddTask-${templateIndex}`
+  );
+  const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
+    element.parentNode.parentNode
+  );
+  return subtaskIndex;
+}
+
+
+///////////////////////////////////// END ADD-SUBTASKS //////////////////////////////////////
+
 
 
 
@@ -399,99 +500,6 @@ document.addEventListener("keypress", function (event) {
     }
   }
 });
-
-
-function getSubtaskIndex(element) {
-  const subtaskContainer = document.getElementById(
-    `subtaskDivAddTask-${templateIndex}`
-  );
-  const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
-    element.parentNode.parentNode
-  );
-  return subtaskIndex;
-}
-
-
-function editSubtask(element) {
-  if (document.location.pathname === `/board.html`) {
-    if (authorized === "guest") {
-      let currentTask = tasks[currentOpenTaskId];
-      // currentTask.title = taskInput.title;
-      if (element.id.includes("subtasksOpen")) {
-        currentSubtaskId = element.id; // global var for addSubtask()
-        let index = element.id.split("Open")[1];
-        let currentSubtask = currentTask.subtasksOpen[index];
-        const subtaskContainer = document.getElementById(
-          `subtaskDivAddTask-${templateIndex}`
-        );
-        if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById(
-            `subtask-${templateIndex}`
-          );
-          subtaskInput.value = currentSubtask;
-        }
-        changeIcons(); // 
-      } else {
-        currentSubtaskId = element.id; // global var for addSubtask()
-        let index = element.id.split("Done")[1];
-        let currentSubtask = currentTask.subtasksDone[index];
-        const subtaskContainer = document.getElementById(
-          `subtaskDivAddTask-${templateIndex}`
-        );
-        if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById(
-            `subtask-${templateIndex}`
-          );
-          subtaskInput.value = currentSubtask;
-        }
-        changeIcons();
-      }
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      if (element.id.includes("subtasksOpen")) {
-        currentSubtaskId = element.id; // global var for addSubtask()
-        let index = element.id.split("Open")[1];
-        let currentSubtask = currentTask.subtasksOpen[index];
-        const subtaskContainer = document.getElementById(
-          `subtaskDivAddTask-${templateIndex}`
-        );
-        if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById(
-            `subtask-${templateIndex}`
-          );
-          subtaskInput.value = currentSubtask;
-        }
-        changeIcons();
-      } else {
-        currentSubtaskId = element.id; // global var for addSubtask()
-        let index = element.id.split("Done")[1];
-        let currentSubtask = currentTask.subtasksDone[index];
-        const subtaskContainer = document.getElementById(
-          `subtaskDivAddTask-${templateIndex}`
-        );
-        if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById(
-            `subtask-${templateIndex}`
-          );
-          subtaskInput.value = currentSubtask;
-        }
-        changeIcons();
-      }
-    }
-  } else {
-    const subtaskContainer = document.getElementById(
-      `subtaskDivAddTask-${templateIndex}`
-    );
-    const subtaskIndex = getSubtaskIndex(element);
-    if (subtaskIndex !== -1) {
-      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-      subtaskInput.value = subtasks[subtaskIndex];
-      subtasks.splice(subtaskIndex, 1);
-      renderSubtasks(subtaskContainer);
-    }
-    changeIcons();
-  }
-}
 
 
 function deleteSubtask(i) {
