@@ -1,3 +1,8 @@
+/**
+ * Renders HTML for the initial letter and a parting line.
+ * @param {string} firstLetter - The first letter of the section or list to be displayed.
+ * @returns {string} - HTML content for displaying the first letter with a parting line.
+ */
 function renderLetterAndPartinglineHTML(firstLetter) {
     return `
     <div class="contactlist-letterbox">
@@ -10,6 +15,15 @@ function renderLetterAndPartinglineHTML(firstLetter) {
 }
 
 
+/**
+ * Renders HTML for a small contact list item.
+ * @param {string} id - The unique identifier for the contact.
+ * @param {string} firstLetter - The first letter of the contact's first name.
+ * @param {string} firstLetterSurname - The first letter of the contact's surname.
+ * @param {string} name - The full name of the contact.
+ * @param {string} mail - The email address of the contact.
+ * @returns {string} - HTML content for displaying a contact in a list with basic information.
+ */
 function renderContactListHTML(
     id,
     firstLetter,
@@ -31,6 +45,17 @@ function renderContactListHTML(
 }
 
 
+/**
+ * Renders HTML for displaying detailed contact information.
+ * @param {string} color - Background color for the contact's avatar circle.
+ * @param {string} firstLetter - The first letter of the contact's first name.
+ * @param {string} firstLetterSurname - The first letter of the contact's surname.
+ * @param {string} name - The full name of the contact.
+ * @param {string} contactId - The unique identifier for the contact.
+ * @param {string} mail - The email address of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @returns {string} - HTML content for displaying detailed contact information including actions like edit and delete.
+ */
 function renderContactInformationHTML(
     color,
     firstLetter,
@@ -80,6 +105,12 @@ function renderContactInformationHTML(
 }
 
 
+/**
+ * Renders HTML for adding a new contact form.
+ * This form allows users to input contact information and submit it to create a new contact.
+ * It includes fields for the contact's name, email, and phone number.
+ * @returns {string} - HTML content for the add contact form.
+ */
 function renderAddContactContainerHTML() {
     return `
     <div class="add-contact-container" id="addContactContainer" onclick='doNotClose(event)'>
@@ -122,6 +153,19 @@ function renderAddContactContainerHTML() {
 }
 
 
+/**
+ * Renders HTML for editing an existing contact.
+ * This form is pre-filled with the contact's current information, allowing users to update it.
+ * It includes the contact's name, email, and phone, with options to save changes or delete the contact.
+ * @param {string} color - Background color for the contact's initials circle.
+ * @param {string} firstLetter - First letter of the contact's first name.
+ * @param {string} firstLetterSurname - First letter of the contact's surname.
+ * @param {string} name - Full name of the contact.
+ * @param {string} mail - Email address of the contact.
+ * @param {string} phone - Phone number of the contact.
+ * @param {string} contactId - Unique identifier for the contact.
+ * @returns {string} - HTML content for the edit contact form.
+ */
 function renderEditContactHTML(
     color,
     firstLetter,
@@ -202,6 +246,10 @@ function generateGuestMessageText(div, messageText) {
 }
 
 
+/**
+ * This function renders HTML buttons with urgent, medium, and low priority settings for tasks.
+ * These buttons allow the user to set the priority of a task when creating or editing it.
+ */
 function renderAddTaskFormButton() {
     let urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
     let mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
@@ -254,6 +302,12 @@ function renderAddTaskFormButton() {
 }
 
 
+/**
+ * Renders HTML for the contact information menu in a mobile environment, including buttons for editing and deleting the contact.
+ * This function is designed to be used on mobile devices, providing quick access to contact management features.
+ * @param {string} contactId - The unique identifier for the contact.
+ * @returns {string} - HTML string containing interactive buttons for editing and deleting a contact.
+ */
 function renderMobileContactinfoMenuHTML(contactId) {
     return `
     <div class="d_f_c_c gap-8 header-icons-wrapper" onclick="openEditContactForm('${contactId}')">
@@ -275,7 +329,6 @@ function renderMobileContactinfoMenuHTML(contactId) {
 
 
 /////////// RENDERING FOR BOARD ////////////
-
 /**
  * This function renders the entire text of the task, when it is open
  * 
@@ -415,11 +468,6 @@ function renderDoneSubtasksInEditForm(subtask, index) {
 }
 
 
-
-
-
-
-
 /**
  * This function generates the todo content for the todos on board
  * 
@@ -459,6 +507,11 @@ function renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letter
 }
 
 
+/**
+ * Renders HTML for mobile-specific todo settings options.
+ * @param {number} taskId - The ID of the task for which settings are being rendered.
+ * @returns {string} - HTML content for task settings options on mobile devices.
+ */
 function renderMobileTodoSettings(taskId) {
     return `
     <div class="d_f_sb_c width-max pad-x-20">
@@ -509,9 +562,12 @@ function renderMobileTodoSettings(taskId) {
 }
 
 
+/**
+ * Renders a mobile-friendly category selection option.
+ * @param {string} category - The category name to be displayed and interacted with.
+ * @returns {string} - HTML markup for a mobile-friendly category selector.
+ */
 function renderMobileCategories(category) {
     return `<div class="mobile-category-cursor-style cursor-pointer" id="mobileMove${category}" onclick="mobileMoveToCategory(this)">${category}</div>`;
 }
-
-
 /////////// END OF RENDERING FOR BOARD ////////////
