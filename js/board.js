@@ -529,6 +529,7 @@ function showSubtasksByHovering(element) {
  */
 function openBoardAddTaskPopup(element) {
   clearForm();
+  document.getElementById(`bottomAddTaskEditOptions-4`).style.display = 'none';
   if (element.id.includes('Progress')) {
     setCategory = 'inProgress';
   } else if (element.id.includes('AwaitFeedback')) {

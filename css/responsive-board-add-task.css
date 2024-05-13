@@ -1,0 +1,140 @@
+@media screen and (max-width: 1066px) {
+    .mobile-task-btn-style {
+        font-size: 18px;
+        min-width: 92px;
+    }
+}
+
+@media screen and (max-width: 975px) {
+    .mobile-task-btn-style {
+        font-size: 17px;
+        gap: 5px;
+    }
+
+    .mobile-board-add-task-form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .mobile-board-add-task-parting-line {
+        display: none;
+    }
+
+    .mobile-board-box-1 {
+        padding-bottom: 30px;
+    }
+
+    .mobile-board-add-task-popup-container {
+        gap: 0;
+    }
+
+    .mobile-board-assigned-div {
+        display: none;
+    }
+
+    .mobile-board-box {
+        width: 100%;
+    }
+
+    .mobile-board-task-btn-style {
+        font-size: 20px;
+    }
+
+    .mobile-board-task-options {
+        padding-top: 0;
+    }
+
+
+}
+
+@media screen and (max-width: 900px) {
+    .mobile-task-btn-style {
+        font-size: 18px;
+    }
+
+    .mobile-add-task-form {
+        gap: 20px;
+    }
+
+    .mobile-add-task-main-container {
+        margin-left: 0px;
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .mobile-task-btn-style {
+        font-size: 20px;
+    }
+
+    .mobile-clear-btn {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .mobile-add-task-headline {
+        padding-left: 10%;
+    }
+
+    .mobile-box-1 {
+        width: 80%;
+    }
+
+    .mobile-box-2 {
+        width: 80%;
+    }
+
+    .mobile-task-options {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .mobile-add-task-headline {
+        padding-left: 5%;
+    }
+
+    .mobile-box-1 {
+        width: 90%;
+    }
+
+    .mobile-box-2 {
+        width: 90%;
+    }
+
+    .mobile-task-options {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .mobile-font-size-16 {
+        font-size: 16px;
+        line-height: 19.2px;
+    }
+
+    .mobile-input-font {
+        font-size: 16px;
+        line-height: 19.2px;
+    }
+
+    .task-input-style-black::placeholder {
+        font-size: 16px;
+        line-height: 19.2px;
+    }
+
+    .task-input-style::placeholder {
+        font-size: 16px;
+        line-height: 19.2px;
+    }
+
+    .task-category {
+        font-size: 16px;
+    }
+
+    .mobile-task-btn-style {
+        font-size: 16px;
+    }
+}
