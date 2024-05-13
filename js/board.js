@@ -4,8 +4,8 @@ let currentOpenTaskId;
 let taskId;
 let subtasksOpen = [];
 let subtasksDone = [];
-let touchStartTime;
-
+let timerMobileTodo;
+let longTapDuration = 1000; // time for the long tap
 
 /**
  * This function renders the tasks on board
@@ -181,6 +181,7 @@ function doNotClose(event) {
 
 
 async function openBoardTaskPopup(openId) {
+  console.log('openId = ' + openId);
   let boardTaskPopup = document.getElementById("boardTaskPopup");
   let container = document.getElementById("boardTaskPopupContainer");
   document.body.style.overflow = "hidden";
@@ -524,6 +525,7 @@ function closeBoardAddTaskPopup() {
 
 /*********************** END ADD TASK POPUP OPENED ********************************/
 
+
 /********************** SEARCH FUNCTION **********************************/
 
 let findMatchingIndices = [];
@@ -655,3 +657,62 @@ function showSubtasksByHovering(element) {
 }
 
 
+/*********************** START MOBILE TODOS ********************************/
+
+
+function startTimer(taskId) {
+  timerMobileTodo = setTimeout(function() {
+        mobilePopupFilterTodoSettings.style.display = 'flex';
+        let mobileTodoSettings = document.getElementById('mobilePopupContentTodoSettings');
+        mobileTodoSettings.innerHTML = renderMobileTodoSettings(taskId);
+        getMobileCurrentOpenTaskId(taskId);
+    }, longTapDuration);
+}
+
+function getMobileCurrentOpenTaskId(taskId) {
+  let indexTodoForMobile = -1;
+  for (let i = 0; i < tasks.length; i++) {
+    const searchId = parseInt(tasks[i].id, 10);
+    if (searchId === taskId) {
+      indexTodoForMobile = i;
+      break;
+    }
+  }
+
+  if (indexTodoForMobile !== -1) {
+    currentOpenTaskId = indexTodoForMobile;
+  }
+}
+
+function clearTimer() {
+    clearTimeout(timerMobileTodo);
+}
+
+
+
+function mobileTodoMove() {
+  console.log('Move');
+}
+
+
+
+function mobileTodoEdit(taskId) {
+  console.log(taskId);
+  resetMobileTodoSettings();
+  openBoardTaskPopup(taskId);
+  editTask();
+}
+
+
+
+async function mobileTodoDelete() {
+  await deleteTask();
+  resetMobileTodoSettings();
+}
+
+
+function resetMobileTodoSettings() {
+  mobilePopupFilterTodoSettings.style.display = 'none';
+}
+
+/*********************** END MOBILE TODOS ********************************/

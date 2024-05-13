@@ -450,23 +450,6 @@ li {
   overflow-x: hidden;
 }
 
-.close-popup-button-board {
-  border-radius: 50%;
-  height: 33px;
-  width: 33px;
-  margin-top: -8px;
-}
-
-.close-popup-button-board:hover {
-  background-color: rgba(225, 225, 225, 1);
-  cursor: pointer;
-}
-
-.close-popup-button-board-img {
-  width: 25px;
-  height: 25px;
-}
-
 .close-button-div:hover {
   background-color: rgb(240, 240, 240);
   border-radius: 50%;
