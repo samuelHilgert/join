@@ -274,7 +274,89 @@ function renderMobileContactinfoMenuHTML(contactId) {
 }
 
 
-/////////// START RENDERING FOR BOARD ////////////
+/////////// RENDERING FOR BOARD ////////////
+
+/**
+ * This function renders the entire text of the task, when it is open
+ * 
+ * @param {string} todo - curent task
+ * @param {string} openLabel - element.id for the label 
+ * @param {string} openTitle - element.id for the title
+ * @param {string} openDescription - element.id for the description
+ * @param {string} openDueDate - element.id for the duedate
+ * @param {string} openPriority - element.id for the priority
+ */
+function renderShowTaskContent(todo, openLabel, openTitle, openDescription, openDueDate, openPriority) {
+    openLabel.innerHTML = `${todo["label"]}`;
+    openTitle.innerHTML = `<h2><b>${todo["title"]}</b></h2>`;
+    openDescription.innerHTML = `<p>${todo["description"]}</p>`;
+    openDueDate.innerHTML = `
+      <div class="d_f_fs_c width-20 gap-30">
+          <p>Due date:</p>
+      </div>
+      <div class="d_f_fs_c gap-30">
+          <p>${todo["dueDate"]}</p>
+      </div>
+      `;
+    openPriority.innerHTML = `
+      <div class="d_f_fs_c width-20 gap-30">
+          <p>Priority:</p>
+      </div>
+      <div class="d_f_fs_c gap-10">
+          <p>${todo["priority"]}</p>
+          <div><img src="../assets/img/${getPriorityIcon(todo)}"></img></div>
+      </div>
+      `;
+}
+
+
+/**
+ * This function gets the current priority icon for the selection of priority in the opened task
+ * 
+ * @param {string} todo - curent task
+ */
+function getPriorityIcon(todo) {
+    let imgSrc;
+    if (todo["priority"] === "Urgent") {
+        imgSrc = "prio-urgent.svg";
+    } else if (todo["priority"] === "Medium") {
+        imgSrc = "prio-media.svg";
+    } else if (todo["priority"] === "Low") {
+        imgSrc = "prio-low.svg";
+    }
+    return imgSrc;
+}
+
+
+/**
+ * This function renders the entire subtasks of the opened task, which are not done
+ * 
+ * @param {number} a - index of the current (open) subtask
+ */
+function renderOpenSubtasks(a) {
+    return `
+<div class="d_f_c_c gap-10">
+<div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
+<p>${subtasksOpen[a]}</p>
+</div>
+`;
+}
+
+
+/**
+ * This function renders the entire subtasks of the opened task, which are not done
+ * 
+ * @param {number} b - index of the current (done) subtask
+ */
+function renderDoneSubtasks(b) {
+    return `
+    <div class="d_f_c_c gap-10">
+    <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
+    <p>${subtasksDone[b]}</p>
+    </div>
+    `;
+}
+
 
 /**
  * This function generates the todo content for the todos on board

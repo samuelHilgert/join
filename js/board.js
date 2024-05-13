@@ -198,12 +198,11 @@ function removeHighlight(id) {
 /********************** TODO POPUP OPENED **********************************/
 
 /**
- * This function initiates the rendering of the task when it is open
+ * This function initiates the rendering of the todo when it is open
  * 
  * @param {number} openId - the id of the current todo
  */
 async function openBoardTaskPopup(openId) {
-  console.log(openId);
   let boardTaskPopup = document.getElementById("boardTaskPopup");
   let container = document.getElementById("boardTaskPopupContainer");
   document.body.style.overflow = "hidden";
@@ -215,80 +214,53 @@ async function openBoardTaskPopup(openId) {
     }
   }
   moveContainerIn(container);
-  await renderBoardTaskPopupContent(currentOpenTaskId);
+  await renderBoardTaskPopupContent();
 }
 
 
-async function renderBoardTaskPopupContent(currentOpenTaskId) {
+/**
+ * This function contains the rendering functions for rendering the open todo
+ * 
+ */
+async function renderBoardTaskPopupContent() {
   const todo = tasks[currentOpenTaskId];
   showTaskText(todo, currentOpenTaskId);
   getContactsForPopupTask(todo);
-  await getSubtasksForPopupTask(currentOpenTaskId);
+  await getSubtasksForPopupTask();
 }
 
-
+/**
+ * This function contains the rendering for the entire text of the task
+ *  
+ * @param {string} todo - curent task
+ */
 function showTaskText(todo) {
-  let taskPopupContentLabel = document.getElementById("taskPopupContentLabel");
-  let taskPopupContentTitle = document.getElementById("taskPopupContentTitle");
-  let taskPopupContentDescription = document.getElementById(
-    "taskPopupContentDescription"
-  );
-  let taskPopupContentDueDate = document.getElementById(
-    "taskPopupContentDueDate"
-  );
-  let taskPopupContentPriority = document.getElementById(
-    "taskPopupContentPriority"
-  );
-  taskPopupContentLabel.innerHTML = `${todo["label"]}`;
-  taskPopupContentTitle.innerHTML = `<h2><b>${todo["title"]}</b></h2>`;
-  taskPopupContentDescription.innerHTML = `<p>${todo["description"]}</p>`;
-  taskPopupContentDueDate.innerHTML = `
-    <div class="d_f_fs_c width-20 gap-30">
-        <p>Due date:</p>
-    </div>
-    <div class="d_f_fs_c gap-30">
-        <p>${todo["dueDate"]}</p>
-    </div>
-    `;
-  taskPopupContentPriority.innerHTML = `
-    <div class="d_f_fs_c width-20 gap-30">
-        <p>Priority:</p>
-    </div>
-    <div class="d_f_fs_c gap-10">
-        <p>${todo["priority"]}</p>
-        <div><img src="../assets/img/${getPriorityIcon(todo)}"></img></div>
-    </div>
-    `;
+  let openLabel = document.getElementById("taskPopupContentLabel");
+  let openTitle = document.getElementById("taskPopupContentTitle");
+  let openDescription = document.getElementById("taskPopupContentDescription");
+  let openDueDate = document.getElementById("taskPopupContentDueDate");
+  let openPriority = document.getElementById("taskPopupContentPriority");
+  renderShowTaskContent(todo, openLabel, openTitle, openDescription, openDueDate, openPriority); // outsourced in renderHTML.js
 }
 
 
-async function getSubtasksForPopupTask(currentOpenTaskId) {
+/**
+ * This function contains the rendering for the entire subtasks of the task
+ *  
+ */
+async function getSubtasksForPopupTask() {
   let taskPopupContentSubtasks = document.getElementById("taskPopupContentSubtasks");
-
   await loadSubtasksByOpenTask();
   taskPopupContentSubtasks.innerHTML = "";
-
-  // rendering subtasksOpen with empty check-button
-  for (let a = 0; a < subtasksOpen.length; a++) {
-    taskPopupContentSubtasks.innerHTML += `
-            <div class="d_f_c_c gap-10">
-            <div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
-            <p>${subtasksOpen[a]}</p>
-            </div>
-            `;
-  }
-  // rendering subtasksDone with clicked check-button
-  for (let b = 0; b < subtasksDone.length; b++) {
-    taskPopupContentSubtasks.innerHTML += `
-            <div class="d_f_c_c gap-10">
-            <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
-            <p>${subtasksDone[b]}</p>
-            </div>
-            `;
-  }
+  getAllOpenSubtasks(taskPopupContentSubtasks);
+  getAllDoneSubtasks(taskPopupContentSubtasks);
 }
 
 
+/**
+ * This function loads the subtasks of the current task from the user or the guest
+ * 
+ */
 async function loadSubtasksByOpenTask() {
   if ((authorized === 'user')) {
     subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
@@ -298,6 +270,56 @@ async function loadSubtasksByOpenTask() {
     subtasksDone = tasks[currentOpenTaskId].subtasksDone;
   }
 }
+
+
+/**
+ * This function renders all subtasks, which are not done
+ *  
+ * @param {string} taskPopupContentSubtasks - element.id for the text
+ */
+function getAllOpenSubtasks(taskPopupContentSubtasks) {
+  for (let a = 0; a < subtasksOpen.length; a++) {
+    taskPopupContentSubtasks.innerHTML += renderOpenSubtasks(a); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
+ * This function renders all subtasks, which are already done
+ *  
+ * @param {string} taskPopupContentSubtasks - element.id for the text
+ */
+function getAllDoneSubtasks(taskPopupContentSubtasks) {
+  for (let b = 0; b < subtasksDone.length; b++) {
+    taskPopupContentSubtasks.innerHTML += renderDoneSubtasks(b); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
+ * This function
+ *  
+ * @param {string} todo - curent task
+ */
+function getContactsForPopupTask(todo) {
+  let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
+  const contacts = todo["assignedTo"];
+  taskPopupContentAssignedTo.innerHTML = '';
+  for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    const letters = contactNamesLetters(contact);
+    const backgroundColor = getBgColorTaskPopup(todo, index);
+    taskPopupContentAssignedTo.innerHTML += `
+    <div class="d_f_fs_c gap-10 width-max">
+    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    <p>${contact}</p>
+    </div>
+    `;
+  }
+}
+
+
+
 
 
 async function clickSubtaskOpen(currentOpenTaskId, a) {
@@ -342,22 +364,6 @@ async function clickSubtaskDone(currentOpenTaskId, b) {
 }
 
 
-function getContactsForPopupTask(todo) {
-  let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
-  const contacts = todo["assignedTo"];
-  taskPopupContentAssignedTo.innerHTML = '';
-  for (let index = 0; index < contacts.length; index++) {
-    const contact = contacts[index];
-    const letters = contactNamesLetters(contact);
-    const backgroundColor = getBgColorTaskPopup(todo, index);
-    taskPopupContentAssignedTo.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max">
-    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
-    <p>${contact}</p>
-    </div>
-    `;
-  }
-}
 
 
 function getBgColorTaskPopup(task, index) {
@@ -375,17 +381,7 @@ function getBgColorTaskPopup(task, index) {
 }
 
 
-function getPriorityIcon(todo) {
-  let imgSrc;
-  if (todo["priority"] === "Urgent") {
-    imgSrc = "prio-urgent.svg";
-  } else if (todo["priority"] === "Medium") {
-    imgSrc = "prio-media.svg";
-  } else if (todo["priority"] === "Low") {
-    imgSrc = "prio-low.svg";
-  }
-  return imgSrc;
-}
+
 
 
 async function editTask() {
