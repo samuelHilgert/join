@@ -470,7 +470,7 @@ li {
 }
 
 .board-add-task-popup-container {
-  width: 70%;
+  width: 80%;
   height: 80%;
   overflow: scroll;
   border-radius: 30px;

@@ -1,15 +1,11 @@
 @media screen and (max-width: 1208px) {
-    .mobile-add-task-container {
-      padding-right: 0;
-    }
-  
     .mobile-add-task-main-container {
       padding-left: 18px;
     }
   
     .mobile-add-task-form {
-      gap: 20px;
-    }
+        gap: 20px;
+      }
   
     .mobile-task-options {
       padding-left: 12px;
