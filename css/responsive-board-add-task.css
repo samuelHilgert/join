@@ -115,4 +115,10 @@
         flex-direction: column-reverse;
         gap: 10px
     }
+
+    .mobile-board-task-popup-container {
+        padding: 20px;
+        width: 85%;
+        height: 85%;
+    }
 }
