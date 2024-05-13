@@ -329,6 +329,8 @@ function renderMobileContactinfoMenuHTML(contactId) {
 
 
 /////////// RENDERING FOR BOARD ////////////
+
+
 /**
  * This function renders the entire text of the task, when it is open
  * 
@@ -570,4 +572,47 @@ function renderMobileTodoSettings(taskId) {
 function renderMobileCategories(category) {
     return `<div class="mobile-category-cursor-style cursor-pointer" id="mobileMove${category}" onclick="mobileMoveToCategory(this)">${category}</div>`;
 }
+
+
+/**
+ * This function display the result text for "no found" results after using the search feature
+ *
+ */
+function searchResultMessageNoFound() {
+    return `<div>there were no results for your search</div> 
+            <div>|</div> 
+            <div class="search-back-link" onclick="renderAfterSearch()">
+                <a class="link-style">go back</a>
+            </div>`;
+}
+
+
+/**
+ * This function display the result text for "only one found" result after using the search feature
+ *
+ * @param {string} matchingIndices - array for search matches
+ */
+function searchResultMessageOneFound(matchingIndices) {
+    return `<div>${matchingIndices.length} match found</div> 
+            <div>|</div> 
+            <div class="search-back-link" onclick="renderAfterSearch()">
+                <a class="link-style">go back</a>
+            </div>`;
+}
+
+
+/**
+ * This function display the result text for "more results as one" after using the search feature
+ *
+ * @param {string} matchingIndices - array for search matches
+ */
+function searchResultMessageMoreFound(matchingIndices) {
+    return `<div>${matchingIndices.length} matches found</div> 
+            <div>|</div> 
+            <div class="search-back-link" onclick="renderAfterSearch()">
+                <a class="link-style">go back</a>
+            </div>`;
+}
+
+
 /////////// END OF RENDERING FOR BOARD ////////////

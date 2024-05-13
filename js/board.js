@@ -4,7 +4,6 @@ let currentOpenTaskId;
 let taskId;
 let subtasksOpen = [];
 let subtasksDone = [];
-let timerMobileTodo;
 let longTapDuration = 1000; // time for the long tap
 let widthForMobileSettings = 430; // width For Mobile Settings
 
@@ -144,7 +143,7 @@ function showSubtasksByHovering(element) {
   let statusText = document.getElementById(`statusText${element}`);
   statusText.style.display = 'block';
   statusText.onmouseout = function () {
-  statusText.style.display = 'none';
+    statusText.style.display = 'none';
   };
 }
 
@@ -609,22 +608,11 @@ function closeBoardAddTaskPopup() {
 //////////////////////////////// END ADD-TASK POPUP ////////////////////////////////
 
 
+///////////////////////////////// SEARCH FUNCTION //////////////////////////////////
 
-
-
-
-
-
-
-
-
-
-/********************** SEARCH FUNCTION **********************************/
-
-let findMatchingIndices = [];
 
 /**
- * this function initiate all search functions
+ * This function initiate all search functions
  *
  */
 async function searchTasksOnBoard() {
@@ -638,29 +626,11 @@ async function searchTasksOnBoard() {
 }
 
 
-function displaySearchMessage(matchingIndices) {
-  let resultMessageDiv = document.getElementById("resultMessageDiv");
-  resultMessageDiv.style.display = "flex";
-  if (matchingIndices.length === 0) {
-    resultMessageDiv.innerHTML = `<div>there were no results for your search</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
-  } else if (matchingIndices.length === 1) {
-    resultMessageDiv.innerHTML = `<div>${matchingIndices.length} match found</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
-  } else {
-    resultMessageDiv.innerHTML = `<div>${matchingIndices.length} matches found</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
-  }
-}
-
-
-async function renderAfterSearch() {
-  let resultMessageDiv = document.getElementById("resultMessageDiv");
-  resultMessageDiv.style.display = "none";
-  await renderBoardTasks();
-}
-
-
 /**
- * this function includes search querys whehter a search is allowed or not, here only one query set
+ * This function includes search querys whehter a search is allowed or not, here only one query set
  *
+ * @param {string} matchingIndices - array for search matches
+ * @param {string} search - search input.value
  */
 async function setQueryForSearch(matchingIndices, search) {
   if (search.length >= 2) {
@@ -670,9 +640,11 @@ async function setQueryForSearch(matchingIndices, search) {
 
 
 /**
- * this function iterates all tasks, whether the task description or task name includes the search result
- * the result tasks are pushed in the array after matching
+ * This function iterates all tasks, whether the task description or task name includes the search result
+ * The result tasks are pushed in the array after matching
  *
+ * @param {string} matchingIndices - array for search matches
+ * @param {string} search - search input.value
  */
 async function findTasksIndices(matchingIndices, search) {
   for (let i = 0; i < tasks.length; i++) {
@@ -689,8 +661,38 @@ async function findTasksIndices(matchingIndices, search) {
 
 
 /**
- * this function creates all categegories and the corresponding tasks with the parameter "allTasksSameCategory"
+ * This function includes search querys whehter a search is allowed or not, here only one query set
  *
+ * @param {string} matchingIndices - array for search matches
+ */
+function displaySearchMessage(matchingIndices) {
+  let resultMessageDiv = document.getElementById("resultMessageDiv");
+  resultMessageDiv.style.display = "flex";
+  if (matchingIndices.length === 0) {
+    resultMessageDiv.innerHTML = searchResultMessageNoFound(); // outsourced in renderHTML.js
+  } else if (matchingIndices.length === 1) {
+    resultMessageDiv.innerHTML = searchResultMessageOneFound(matchingIndices); // outsourced in renderHTML.js
+  } else {
+    resultMessageDiv.innerHTML = searchResultMessageMoreFound(matchingIndices); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
+ * This function hides the result message container, after click on the "go back" link  
+ *
+ */
+async function renderAfterSearch() {
+  let resultMessageDiv = document.getElementById("resultMessageDiv");
+  resultMessageDiv.style.display = "none";
+  await renderBoardTasks();
+}
+
+
+/**
+ * This function creates all categegories and the corresponding tasks with the parameter "allTasksSameCategory"
+ *
+ * @param {string} matchingIndices - array for search matches
  */
 async function generateCategoriesBySearch(matchingIndices) {
   for (let i = 0; i < categories.length; i++) {
@@ -710,7 +712,7 @@ async function generateCategoriesBySearch(matchingIndices) {
 
 
 /**
- * after the search results are displayed, the search input field is reset
+ * After the search results are displayed, the search input field will reset
  *
  */
 function resetSearch() {
@@ -719,7 +721,7 @@ function resetSearch() {
 
 
 /**
- * the search function should also start, when the key-button "enter" is pressed
+ * The search function should also start, when the key-button "enter" is pressed
  *
  */
 function searchTasksByKeyPress(event) {
@@ -729,11 +731,19 @@ function searchTasksByKeyPress(event) {
 }
 
 
-/*********************** END SEARCH FUNCTION ********************************/
+/////////////////////////////// END SEARCH FUNCTION ///////////////////////////////
 
 
-/*********************** START MOBILE TODOS ********************************/
+/////////////////////////////////  MOBILE TODOS //////////////////////////////////
 
+let timerMobileTodo;
+
+
+/**
+ * This function initiate the mobile menu for the todo in the mobile version
+ * 
+ * @param {string} taskId - the id of the current task
+ */
 function startTimer(taskId) {
   if (window.innerWidth <= widthForMobileSettings) {
     timerMobileTodo = setTimeout(function () {
@@ -741,10 +751,16 @@ function startTimer(taskId) {
       let mobileTodoSettings = document.getElementById('mobilePopupContentTodoSettings');
       mobileTodoSettings.innerHTML = renderMobileTodoSettings(taskId);
       getMobileCurrentOpenTaskId(taskId);
-    }, longTapDuration);
+    }, longTapDuration); // global variable for set time, see above
   }
 }
 
+
+/**
+ * This function gets the index of the current todo
+ * 
+ * @param {string} taskId - the id of the current task
+ */
 function getMobileCurrentOpenTaskId(taskId) {
   let indexTodoForMobile = -1;
   for (let i = 0; i < tasks.length; i++) {
@@ -754,17 +770,35 @@ function getMobileCurrentOpenTaskId(taskId) {
       break;
     }
   }
+  setCurrentOpenTaskIdByIndex(indexTodoForMobile);
+}
 
+
+/**
+ * This function saves the index value in currentOpenTaskId
+ * 
+ * @param {string} indexTodoForMobile - the index of the current task
+ */
+function setCurrentOpenTaskIdByIndex(indexTodoForMobile) {
   if (indexTodoForMobile !== -1) {
     currentOpenTaskId = indexTodoForMobile;
   }
 }
 
+
+/**
+ * This function stops the timer
+ * 
+ */
 function clearTimer() {
   clearTimeout(timerMobileTodo);
 }
 
 
+/**
+ * This function renders the categories in the mobile menu
+ * 
+ */
 function mobileTodoMove() {
   mobileTodoSettingsCategoryMenu.style.display = 'flex';
   let categoriesMenu = document.getElementById('mobileTodoSettingsCategories');
@@ -775,7 +809,29 @@ function mobileTodoMove() {
   }
 }
 
+
+/**
+ * This function changes the category of the todo after select the category in the menu 
+ * 
+ * @param {string} element - the element-div of the category in the mobile menu
+ */
 async function mobileMoveToCategory(element) {
+  setTheSelectedCategory(element);
+  resetMobileTodoSettings();
+  await renderBoardTasks();
+  await saveNewUserDate(); // outsourced in script.js
+  let div = document.getElementById("guestMessagePopupBoard");
+  let messageText = document.getElementById("guestMessageBoard");
+  showGuestPopupMessage(div, messageText);
+}
+
+
+/**
+ * This function checks which category is clicked and resets the category
+ * 
+ * @param {string} element - the element-div of the category in the mobile menu
+ */
+function setTheSelectedCategory(element) {
   if (element.id.includes('backlog')) {
     tasks[currentOpenTaskId].category = 'backlog';
   }
@@ -788,50 +844,48 @@ async function mobileMoveToCategory(element) {
   if (element.id.includes('done')) {
     tasks[currentOpenTaskId].category = 'done';
   }
-  resetMobileTodoSettings();
-  await renderBoardTasks();
-
-  if ((authorized === 'user')) {
-    await saveNewUserDate();
-  } else {
-    let div = document.getElementById("guestMessagePopupBoard");
-    let messageText = document.getElementById("guestMessageBoard");
-    showGuestPopupMessage(div, messageText);
-  }
 }
 
+
+/**
+ * This function closes the mobile menu container
+ * 
+ */
+function resetMobileTodoSettings() {
+  mobilePopupFilterTodoSettings.style.display = 'none';
+}
+
+
+/**
+ * This function closes the mobile menu container
+ * 
+ * @param {string} taskId - the id of the current task
+ */
 function mobileTodoEdit(taskId) {
   resetMobileTodoSettings();
   openBoardTaskPopup(taskId);
   editTask();
 }
 
+
+/**
+ * This function deletes the current task
+ * 
+ */
 async function mobileTodoDelete() {
   await deleteTask();
   resetMobileTodoSettings();
 }
 
 
-function resetMobileTodoSettings() {
-  mobilePopupFilterTodoSettings.style.display = 'none';
-}
-
-/*********************** END MOBILE TODOS ********************************/
+//////////////////////////////// END MOBILE TODOS ////////////////////////////////
 
 
-
-
-
-
-
-
-//////////////////// UNKNOWN FUNCTIONS //////////////////// 
-
+/* 
 function changeImage(element, src) {
   element.querySelector(".delete").src = src;
 }
 
-
 function restoreImagePopupTask(element, defaultSrc) {
   element.querySelector(".delete").src = defaultSrc;
-}
+}*/
