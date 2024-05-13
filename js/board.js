@@ -182,7 +182,6 @@ function doNotClose(event) {
 
 
 async function openBoardTaskPopup(openId) {
-  console.log('openId = ' + openId);
   let boardTaskPopup = document.getElementById("boardTaskPopup");
   let container = document.getElementById("boardTaskPopupContainer");
   document.body.style.overflow = "hidden";
@@ -692,7 +691,6 @@ function clearTimer() {
 
 
 function mobileTodoMove() {
-  console.log('Move');
   mobileTodoSettingsCategoryMenu.style.display = 'flex';
   let categoriesMenu = document.getElementById('mobileTodoSettingsCategories');
   categoriesMenu.innerHTML = '';
@@ -703,21 +701,16 @@ function mobileTodoMove() {
 }
 
 async function mobileMoveToCategory(element) {
-  console.log(element);
   if (element.id.includes('backlog')) {
-    console.log('backlog');
     tasks[currentOpenTaskId].category = 'backlog';
   }
   if (element.id.includes('inProgress')) {
-    console.log('inProgress');
     tasks[currentOpenTaskId].category = 'inProgress';
   }
   if (element.id.includes('awaitFeedback')) {
-    console.log('awaitFeedback');
     tasks[currentOpenTaskId].category = 'awaitFeedback';
   }
   if (element.id.includes('done')) {
-    console.log('done');
     tasks[currentOpenTaskId].category = 'done';
   }
   resetMobileTodoSettings();
@@ -733,7 +726,6 @@ async function mobileMoveToCategory(element) {
 }
 
 function mobileTodoEdit(taskId) {
-  console.log(taskId);
   resetMobileTodoSettings();
   openBoardTaskPopup(taskId);
   editTask();
