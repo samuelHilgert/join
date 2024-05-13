@@ -10,15 +10,17 @@ let setCategory = "backlog";
 
 
 /**
- * This function sorts the contacts
+ * This function loads the conctacts and saves them to the array "contactsForTasks"
  * 
  */
-function sortContactsForTasks() {
-  contactsForTasks.sort((a, b) => {
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    return nameA.localeCompare(nameB);
-  });
+async function updateTaskContacts() {
+  if (authorized === "guest") {
+    let resp = await fetch("./JSON/contacts.json");
+    contactsForTasks = await resp.json();
+  } else {
+    let currentUserContactsForTasks = users[currentUser].contacts;
+    contactsForTasks = currentUserContactsForTasks;
+  }
 }
 
 
@@ -301,200 +303,6 @@ function resetAddTaskValues() {
 ///////////////////////////////// END ADD-TASK FORM ON HTML ////////////////////////////////////
 
 
-
-
-
-
-
-
-async function updateTaskContacts() {
-  if (authorized === "guest") {
-    let resp = await fetch("./JSON/contacts.json");
-    contactsForTasks = await resp.json();
-  } else {
-    let currentUserContactsForTasks = users[currentUser].contacts;
-    contactsForTasks = currentUserContactsForTasks;
-  }
-}
-
-
-function openDropdown() {
-  sortContactsForTasks();
-  clearAssignToInput();
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
-  if (taskContactDiv.style.display === "flex") {
-    taskContactDiv.style.display = "none";
-  } else {
-    taskContactDiv.style.display = "flex";
-    taskContactDiv.innerHTML = "";
-    //checkedCheckboxes = [];
-    for (let index = 0; index < contactsForTasks.length; index++) {
-      const contact = contactsForTasks[index];
-      renderContactsDropwdown(taskContactDiv, contact, index);
-    }
-    markSelectedContacts();
-  }
-  // contactsByCheckbox(); wird nicht mehr benötigt
-  showContactSelection();
-}
-
-
-function renderContactsDropwdown(taskContactDiv, contact, index) {
-  let letters = contactNamesLetters(contact.name);
-  renderDopdownMenu(taskContactDiv, letters, contact, index);
-}
-
-/* // Funktion wird nicht mehr benötigt
-function getBackgroundColorAssignedContact(contactIndex) {
-  return contacts[contactIndex].color;
-}
-*/
-
-
-function renderDopdownMenu(taskContactDiv, letters, contact, index) {
-  let backgroundColor = contact.color;
-  taskContactDiv.innerHTML += `
-  <div class="d_f_sb_c width-max dropdown-contact-wrapper" id="wrapper${index}">
-    <div class="d_f_fs_c gap-20 dropdown-contact">
-      <div class="d_f_c_c contact-circle-small contact-circle-small-letters" id="contactLetters${index}" style="background-color: ${backgroundColor};">${letters}</div> 
-      <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
-    </div>
-    <div class="d_f_fe_c"> 
-      <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}" onclick="handleCheckboxChange(${index})">
-    </div>
-  </div>
-  `;
-}
-
-
-function handleCheckboxChange(index) {
-  let wrapper = document.getElementById(`wrapper${index}`);
-  let checkbox = document.getElementById(`checkbox${index}`);
-  let contactName = document.getElementById(`contactName${index}`);
-  if (checkbox.checked) {
-    wrapper.style.backgroundColor = "rgba(42, 54, 71, 1)";
-    contactName.style.color = "rgba(255, 255, 255, 1)";
-    if (!checkedCheckboxes.includes(contactName.textContent)) {
-      checkedCheckboxes.push(contactName.textContent);
-    }
-  } else {
-    wrapper.style.backgroundColor = "";
-    contactName.style.color = "rgba(0, 0, 0, 1)";
-    let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
-    if (indexToRemove !== -1) {
-      checkedCheckboxes.splice(indexToRemove, 1);
-    }
-  }
-}
-
-
-function markSelectedContacts() {
-  for (let index = 0; index < contactsForTasks.length; index++) {
-    const contact = contactsForTasks[index];
-    const checkbox = document.getElementById(`checkbox${index}`);
-    if (checkedCheckboxes.includes(contact.name)) {
-      checkbox.checked = true;
-      handleCheckboxChange(index);
-    }
-  }
-}
-
-
-/**
- * This function renders the selected contacts in the contact selection area.
- * Therefore it first loops through the checkedCheckboxes array to find the name of the selected contact.
- * The name is then compared with the contactsForTasks array to find the index of the contact.
- * If the name is found in the array, the initials and background colors are extracted from it.
- */
-function showContactSelection() {
-  let contactSelection = document.getElementById(
-    `contactSelection-${templateIndex}`
-  );
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
-  if (taskContactDiv.style.display === "none") {
-    contactSelection.style.display = "flex";
-  } else {
-    contactSelection.style.display = "none";
-  }
-  contactSelection.innerHTML = ``;
-  for (let index = 0; index < checkedCheckboxes.length; index++) {
-    const contactName = checkedCheckboxes[index];
-    const contactIndex = contactsForTasks.findIndex(
-      (contact) => contact.name === contactName
-    );
-    if (contactIndex !== -1) {
-      const backgroundColor = contactsForTasks[contactIndex].color;
-      const letters = contactNamesLetters(contactName);
-      contactSelection.innerHTML += `<div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>`;
-    }
-  }
-}
-
-
-//Change Prio Btn colors!
-function setPriority(btnId) {
-  removeActiveClasses();
-  setActiveClasses(btnId);
-}
-
-
-function resetPriority() {
-  removeActiveClasses();
-}
-
-
-
-
-
-function setActiveClasses(btnId) {
-  const clickedButton = document.getElementById(`${btnId}-${templateIndex}`);
-  const buttonSVG = clickedButton.querySelector("svg");
-  switch (btnId) {
-    case "urgentBtn":
-      clickedButton.classList.add("active-prio-btn-urgent");
-      buttonSVG.style.fill = "white";
-      break;
-    case "mediumBtn":
-      clickedButton.classList.add("active-prio-btn-medium");
-      buttonSVG.style.fill = "white";
-      break;
-    case "lowBtn":
-      clickedButton.classList.add("active-prio-btn-low");
-      buttonSVG.style.fill = "white";
-      break;
-    default:
-      break;
-  }
-}
-
-
-function removeActiveClasses() {
-  const buttons = [
-    `urgentBtn-${templateIndex}`,
-    `mediumBtn-${templateIndex}`,
-    `lowBtn-${templateIndex}`,
-  ];
-  buttons.forEach((button) => {
-    const buttonElement = document.getElementById(button);
-    buttonElement.classList.remove(
-      "active-prio-btn-urgent",
-      "active-prio-btn-medium",
-      "active-prio-btn-low"
-    );
-    buttonElement.querySelector("svg").style.fill = "";
-  });
-}
-
-
-// for category section
-function chooseCategory(category) {
-  document.getElementById(`taskCategory-${templateIndex}`).value =
-    category.innerText;
-}
 
 
 
@@ -786,6 +594,62 @@ function clearForm() {
 }
 
 
+
+//Change Prio Btn colors!
+function setPriority(btnId) {
+  removeActiveClasses();
+  setActiveClasses(btnId);
+}
+
+
+function resetPriority() {
+  removeActiveClasses();
+}
+
+
+
+function removeActiveClasses() {
+  const buttons = [
+    `urgentBtn-${templateIndex}`,
+    `mediumBtn-${templateIndex}`,
+    `lowBtn-${templateIndex}`,
+  ];
+  buttons.forEach((button) => {
+    const buttonElement = document.getElementById(button);
+    buttonElement.classList.remove(
+      "active-prio-btn-urgent",
+      "active-prio-btn-medium",
+      "active-prio-btn-low"
+    );
+    buttonElement.querySelector("svg").style.fill = "";
+  });
+}
+
+
+
+
+function setActiveClasses(btnId) {
+  const clickedButton = document.getElementById(`${btnId}-${templateIndex}`);
+  const buttonSVG = clickedButton.querySelector("svg");
+  switch (btnId) {
+    case "urgentBtn":
+      clickedButton.classList.add("active-prio-btn-urgent");
+      buttonSVG.style.fill = "white";
+      break;
+    case "mediumBtn":
+      clickedButton.classList.add("active-prio-btn-medium");
+      buttonSVG.style.fill = "white";
+      break;
+    case "lowBtn":
+      clickedButton.classList.add("active-prio-btn-low");
+      buttonSVG.style.fill = "white";
+      break;
+    default:
+      break;
+  }
+}
+
+
 function rotateDropdownIcon(icon, isOpen) {
   if (isOpen) {
     icon.style.transform = "rotate(180deg)";
@@ -863,12 +727,146 @@ function findMatchingContact() {
 }
 
 
+
+function openDropdown() {
+  sortContactsForTasks();
+  clearAssignToInput();
+  let taskContactDiv = document.getElementById(
+    `taskContactDiv-${templateIndex}`
+  );
+  if (taskContactDiv.style.display === "flex") {
+    taskContactDiv.style.display = "none";
+  } else {
+    taskContactDiv.style.display = "flex";
+    taskContactDiv.innerHTML = "";
+    //checkedCheckboxes = [];
+    for (let index = 0; index < contactsForTasks.length; index++) {
+      const contact = contactsForTasks[index];
+      renderContactsDropwdown(taskContactDiv, contact, index);
+    }
+    markSelectedContacts();
+  }
+  // contactsByCheckbox(); wird nicht mehr benötigt
+  showContactSelection();
+}
+
+
+/**
+ * This function sorts the contacts
+ * 
+ */
+function sortContactsForTasks() {
+  contactsForTasks.sort((a, b) => {
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+}
+
+
+function renderContactsDropwdown(taskContactDiv, contact, index) {
+  let letters = contactNamesLetters(contact.name);
+  renderDopdownMenu(taskContactDiv, letters, contact, index);
+}
+
+/* // Funktion wird nicht mehr benötigt
+function getBackgroundColorAssignedContact(contactIndex) {
+  return contacts[contactIndex].color;
+}
+*/
+
+
+function renderDopdownMenu(taskContactDiv, letters, contact, index) {
+  let backgroundColor = contact.color;
+  taskContactDiv.innerHTML += `
+  <div class="d_f_sb_c width-max dropdown-contact-wrapper" id="wrapper${index}">
+    <div class="d_f_fs_c gap-20 dropdown-contact">
+      <div class="d_f_c_c contact-circle-small contact-circle-small-letters" id="contactLetters${index}" style="background-color: ${backgroundColor};">${letters}</div> 
+      <div class="d_f_fs_c" id="contactName${index}">${contact.name}</div> 
+    </div>
+    <div class="d_f_fe_c"> 
+      <input type="checkbox" id="checkbox${index}" name="checkbox${index}" value="${contact.name}" onclick="handleCheckboxChange(${index})">
+    </div>
+  </div>
+  `;
+}
+
+
 function isDropdownOpen() {
   let taskContactDiv = document.getElementById(
     `taskContactDiv-${templateIndex}`
   );
   return taskContactDiv.style.display === "flex";
 }
+
+
+
+function handleCheckboxChange(index) {
+  let wrapper = document.getElementById(`wrapper${index}`);
+  let checkbox = document.getElementById(`checkbox${index}`);
+  let contactName = document.getElementById(`contactName${index}`);
+  if (checkbox.checked) {
+    wrapper.style.backgroundColor = "rgba(42, 54, 71, 1)";
+    contactName.style.color = "rgba(255, 255, 255, 1)";
+    if (!checkedCheckboxes.includes(contactName.textContent)) {
+      checkedCheckboxes.push(contactName.textContent);
+    }
+  } else {
+    wrapper.style.backgroundColor = "";
+    contactName.style.color = "rgba(0, 0, 0, 1)";
+    let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
+    if (indexToRemove !== -1) {
+      checkedCheckboxes.splice(indexToRemove, 1);
+    }
+  }
+}
+
+
+function markSelectedContacts() {
+  for (let index = 0; index < contactsForTasks.length; index++) {
+    const contact = contactsForTasks[index];
+    const checkbox = document.getElementById(`checkbox${index}`);
+    if (checkedCheckboxes.includes(contact.name)) {
+      checkbox.checked = true;
+      handleCheckboxChange(index);
+    }
+  }
+}
+
+
+
+/**
+ * This function renders the selected contacts in the contact selection area.
+ * Therefore it first loops through the checkedCheckboxes array to find the name of the selected contact.
+ * The name is then compared with the contactsForTasks array to find the index of the contact.
+ * If the name is found in the array, the initials and background colors are extracted from it.
+ */
+function showContactSelection() {
+  let contactSelection = document.getElementById(
+    `contactSelection-${templateIndex}`
+  );
+  let taskContactDiv = document.getElementById(
+    `taskContactDiv-${templateIndex}`
+  );
+  if (taskContactDiv.style.display === "none") {
+    contactSelection.style.display = "flex";
+  } else {
+    contactSelection.style.display = "none";
+  }
+  contactSelection.innerHTML = ``;
+  for (let index = 0; index < checkedCheckboxes.length; index++) {
+    const contactName = checkedCheckboxes[index];
+    const contactIndex = contactsForTasks.findIndex(
+      (contact) => contact.name === contactName
+    );
+    if (contactIndex !== -1) {
+      const backgroundColor = contactsForTasks[contactIndex].color;
+      const letters = contactNamesLetters(contactName);
+      contactSelection.innerHTML += `<div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>`;
+    }
+  }
+}
+
 
 
 function updateDropdownMenu(contacts) {
@@ -1011,4 +1009,14 @@ function closeAddTaskMenuDiv() {
 
 function changeTemplateIndex() {
   templateIndex = 4;
+}
+
+
+
+//// OTHER /// 
+
+// for category section
+function chooseCategory(category) {
+  document.getElementById(`taskCategory-${templateIndex}`).value =
+    category.innerText;
 }
