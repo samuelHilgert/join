@@ -1,9 +1,9 @@
 <form class="d_c_c_fs width-max" onsubmit="addTask(); return false;">
 
-  <div class="add-task-form-container d_f_c_fs gap-40 pad-y-40 height-max max-width-1098 mobile-add-task-form" id="addTaskFormContainer">
+  <div class="add-task-form-container d_f_c_fs gap-40 pad-y-40 height-max max-width-1098 mobile-add-task-form mobile-board-add-task-form-container" id="addTaskFormContainer">
     <!--BLOCK 1-->
 
-    <div class="box d_c_fs_fs gap-30 height-max mobile-box-1">
+    <div class="box d_c_fs_fs gap-30 height-max mobile-box-1 mobile-board-box-1">
       <div class="d_c_c_s gap-10 width-max">
         <span class="font-size-20 mobile-font-size-16">Title<span style="color: red">*</span></span>
         <input id="taskTitle" class="task-input-style input-login input-font required-input mobile-input-font" type="text"
@@ -26,14 +26,14 @@
         <div class="input-icon-dropdown-div" id="turnDropdownArrow" onclick="doNotClose(event); handleClickOnDropdown()">
           <img src="../../assets/img/arrow_drop_down.svg" alt="Arrow Down" />
         </div>
-        <div class="assigned-div d_c_fs_fs pad-y-10 gap-10" id="taskContactDiv" onclick="doNotClose(event)"></div>
+        <div class="assigned-div d_c_fs_fs pad-y-10 gap-10 mobile-board-assigned-div" id="taskContactDiv" onclick="doNotClose(event)"></div>
 
         <div class="d_f_fs_c width-max" id="contactSelection"></div>
       </div>
     </div>
 
     <!--LINE-->
-    <div class="add-task-partingline" id="addTaskPartingline"></div>
+    <div class="add-task-partingline mobile-board-add-task-parting-line" id="addTaskPartingline"></div>
 
     <!--BLOCK 2-->
 

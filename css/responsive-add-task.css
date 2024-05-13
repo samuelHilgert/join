@@ -29,6 +29,28 @@
     font-size: 17px;
     gap: 5px;
   }
+
+  .mobile-board-add-task-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .mobile-board-add-task-parting-line {
+    display: none;
+  }
+
+  .mobile-board-box-1 {
+    padding-bottom: 30px;
+  }
+
+  .mobile-board-add-task-popup-container {
+    gap: 0;
+  }
+
+  .mobile-board-assigned-div {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 900px) {
@@ -171,6 +193,10 @@
   }
 
   .task-category {
+    font-size: 16px;
+  }
+
+  .mobile-task-btn-style {
     font-size: 16px;
   }
 }
