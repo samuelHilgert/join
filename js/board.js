@@ -879,13 +879,3 @@ async function mobileTodoDelete() {
 
 
 //////////////////////////////// END MOBILE TODOS ////////////////////////////////
-
-
-/* 
-function changeImage(element, src) {
-  element.querySelector(".delete").src = src;
-}
-
-function restoreImagePopupTask(element, defaultSrc) {
-  element.querySelector(".delete").src = defaultSrc;
-}*/
