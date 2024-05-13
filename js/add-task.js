@@ -830,21 +830,7 @@ function closeDropdown() {
 ///////// SEARCHBAR ENDE /////////
 function addTaskToBoardMessage() {
   if (document.location.pathname.includes("add-task.html")) {
-    const container = document.getElementById("addTaskMessageContainer");
-    container.classList.add("add-board-message-btn");
-    container.style.display = "flex";
-
-    // Timeout verwenden, um die Klasse "show" hinzuzufügen
-    setTimeout(function () {
-      container.classList.add("show");
-
-      // Timeout verwenden, um das Element auszublenden
-      setTimeout(function () {
-        container.classList.remove("show");
-        container.style.display = "none";
-      }, 1500);
-    }, 100);
-
+    showSuccessMessage();
     if (authorized === "guest") {
       let div = document.getElementById("guestMessagePopupAddTask");
       let messageText = document.getElementById("guestMessageAddTask");
@@ -853,15 +839,29 @@ function addTaskToBoardMessage() {
       forwardToBoard();
     }
   }
-
   if (document.location.pathname.includes("board.html")) {
     closeBoardAddTaskPopup();
+    showSuccessMessage();
     if (authorized === "guest") {
       let div = document.getElementById("guestMessagePopupBoard");
       let messageText = document.getElementById("guestMessageBoard");
       showGuestPopupMessage(div, messageText);
     }
   }
+}
+
+
+function showSuccessMessage() {
+  let container = document.getElementById("addTaskMessageContainer");
+  container.classList.add("add-board-message-btn");
+  container.style.display = "flex";
+  setTimeout(function () {
+    container.classList.add("show");
+    setTimeout(function () {
+      container.classList.remove("show");
+      container.style.display = "none";
+    }, 1500);
+  }, 100);
 }
 
 
