@@ -359,6 +359,30 @@ function renderDoneSubtasks(b) {
 
 
 /**
+ * This function renders the "assigendTo" contacts
+ * 
+ * @param {string} contact - current "assignedTo" contact
+ * @param {string} letters - current letters of this contact
+ * @param {string} backgroundColor - background-color for the css style as html tag
+ */
+function renderAssignedToContactsForOpenTask(contact, letters, backgroundColor) {
+    return `
+    <div class="d_f_fs_c gap-10 width-max">
+    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    <p>${contact}</p>
+    </div>
+    `;
+}
+
+
+
+
+
+
+
+
+
+/**
  * This function generates the todo content for the todos on board
  * 
  * @param {string} task - the current task
