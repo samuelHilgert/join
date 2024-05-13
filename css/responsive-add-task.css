@@ -107,6 +107,10 @@
     position: fixed;
     z-index: 999;
   }
+
+  .mobile-add-task-container{
+    padding-right: 0;
+  }
 }
 
 @media screen and (max-width: 600px) {
