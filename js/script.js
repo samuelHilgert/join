@@ -10,7 +10,7 @@ let editCurrentTask = [];
 
 
 /**
- * This is a function to initialize render functions 
+ * This is a function to initiate the render functions 
  * 
  */
 async function init() {
@@ -25,7 +25,7 @@ async function init() {
         await updateOrLoadData();
         await loadLoggedTime();
         await includeHTML();
-        getCurrentlySidebarLink(); // in sidebar.js
+        getCurrentlySidebarLink(); // outsourced in sidebar.js
         renderHeader();
         if ((authorized === 'user')) {
             startExpiryCheckInterval(rememberStatus); // check whether the current time is greater than or equal to the expiration date
@@ -36,8 +36,9 @@ async function init() {
 
 
 /**
- * this function formats the date from add-task input and for the upcoming function in summary
+ * This function formats the date from add-task input and for the upcoming function in summary
  *
+ * @param {string} timeStamp - the date as a timestamp
  */
 async function formatDateCorrect(timeStamp) {
     let dateFormatOptions = {
@@ -94,6 +95,10 @@ function checkFalseOpening() {
 }
 
 
+/**
+ * This function forwarding the user to the login.html
+ * 
+ */
 function firstLogin() {
     return window.location.href = `./login.html`;
 }
@@ -122,6 +127,12 @@ async function includeHTML() {
 }
 
 
+/**
+ * This function generates the ids of the outsourced add-task form dynamic
+ *
+ * @param {string} html - the url of the current page
+ * @param {number} index - the new id number for the element
+ */
 function addDynamicIDs(html, index) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
@@ -129,23 +140,6 @@ function addDynamicIDs(html, index) {
         el.id += `-${index}`;
     });
     return doc.body.innerHTML; // Gibt das modifizierte HTML zurück
-}
-
-
-function modifyEventAttribute(attributeString, index) {
-    // Zerlege den Attributstring in einzelne Funktionen, falls mehrere Aufrufe in einem Attribut sind
-    return attributeString.split(';').map(funcCall => {
-        // Ersetze nur, wenn die Funktion bereits einen Aufruf enthält (öffnende Klammer)
-        if (funcCall.includes('(')) {
-            // Füge den Index als erstes Argument hinzu, falls noch keine Argumente vorhanden sind
-            if (funcCall.includes('()')) {
-                return funcCall.replace('()', `(${index})`);
-            } else {
-                return funcCall.replace('(', `(${index}, `);
-            }
-        }
-        return funcCall;
-    }).join(';'); // Füge die modifizierten Funktionen wieder zu einem String zusammen
 }
 
 
@@ -173,18 +167,7 @@ async function initiateIndividualFunctions() {
         const currentPage = pages[index];
         if (document.location.pathname === `/${currentPage}.html`) {
             await resetExpiryTime();
-            if (currentPage === 'summary') {
-                await renderSummary();
-            } else if (currentPage === 'add-task') {
-                await updateTaskContacts();
-                renderAddTaskFormButton();
-            } else if (currentPage === 'board') {
-                await updateTaskContacts();
-                await renderBoardTasks();
-                renderAddTaskFormButton();
-            } else if (currentPage === 'contacts') {
-                await renderContacts();
-            }
+            await loadIndividualFunctions(currentPage);
         }
     }
 }
@@ -195,8 +178,29 @@ async function initiateIndividualFunctions() {
  * 
  */
 async function resetExpiryTime() {
-    rememberStatus[0].expiryDate = new Date().getMinutes() + setResetExpiryTime; // global variable that can be changed
+    rememberStatus[0].expiryDate = new Date().getMinutes() + setResetExpiryTime; // global variable above, it can be changed individual
     await setItem('remember_status', JSON.stringify(rememberStatus));
+}
+
+
+/**
+ * This function executes the individual functions for the pages
+ * 
+ * @param {string} currentPage - this is the current page title
+ */
+async function loadIndividualFunctions(currentPage) {
+    if (currentPage === 'summary') {
+        await renderSummary();
+    } else if (currentPage === 'add-task') {
+        await updateTaskContacts();
+        renderAddTaskFormButton();
+    } else if (currentPage === 'board') {
+        await updateTaskContacts();
+        await renderBoardTasks();
+        renderAddTaskFormButton();
+    } else if (currentPage === 'contacts') {
+        await renderContacts();
+    }
 }
 
 
@@ -226,19 +230,39 @@ async function updateOrLoadData() {
             contacts = users[currentUser].contacts; // save user contacts in array contacts
             tasks = users[currentUser].tasks;   // save user contacts in array tasks
         } else {
-            if (userData.contacts.length === 0) {
-                let respContacts = await fetch('./JSON/contacts.json');
-                contacts = await respContacts.json();  // load and save example contacts in array contacts
-                await saveNewUserDate(); // save new arrays content in user on the remote server
-            }
-            if (userData.tasks.length === 0) {
-                let respTasks = await fetch('./JSON/tasks.json');
-                tasks = await respTasks.json(); // load and save example tasks in array tasks
-                await saveNewUserDate(); // save new arrays content in user on the remote server
-            }
+            await reloadContactsWhenEmpty(userData);
+            await reloadTasksWhenEmpty(userData);
         }
     } else {
         await loadExamples(); // otherwise only load the example contacts and tasks, if user is a geuest
+    }
+}
+
+
+/**
+ * This function reloads the contacts, when all contacts deleted by user
+ * 
+ * @param {string} userData - the data from current user
+ */
+async function reloadContactsWhenEmpty(userData) {
+    if (userData.contacts.length === 0) {
+        let respContacts = await fetch('./JSON/contacts.json');
+        contacts = await respContacts.json();  // load and save example contacts in array contacts
+        await saveNewUserDate(); // save new arrays content in user on the remote server
+    }
+}
+
+
+/**
+ * This function reloads the tasks, when all tasks deleted by user
+ * 
+ * @param {string} userData - the data from current user
+ */
+async function reloadTasksWhenEmpty(userData) {
+    if (userData.tasks.length === 0) {
+        let respTasks = await fetch('./JSON/tasks.json');
+        tasks = await respTasks.json(); // load and save example tasks in array tasks
+        await saveNewUserDate(); // save new arrays content in user on the remote server
     }
 }
 
@@ -283,6 +307,7 @@ function renderHeader() {
  * This function is included in setInterval in init()
  * It checks whether the time to log out has expired if the user did not use the reminder option.
  *
+ * @param {string} rememberStatus - the array about login informationen. It includes the "remember me" Selection
  */
 function startExpiryCheckInterval(rememberStatus) {
     setInterval(function () {
@@ -294,6 +319,7 @@ function startExpiryCheckInterval(rememberStatus) {
 /**
  * The logout time is reset every time the user clicks on an HTML document
  * 
+ * @param {string} rememberStatus - the array about login informationen. It includes the "remember me" Selection
  */
 function checkExpiryAndReset(rememberStatus) {
     let expiryTime = rememberStatus[0].expiryDate;
@@ -322,6 +348,7 @@ function hideHelpIcon() {
 /**
  * This function generates the initials of the username or guest
  * 
+ * @param {string} lettersDiv - the div, which includes the letters from guest or user
  */
 function renderLettersByName(lettersDiv) {
     if ((authorized === 'guest')) {
@@ -336,6 +363,7 @@ function renderLettersByName(lettersDiv) {
 /**
  * This function renders the letters of first and last name of the user or the contacts
  * 
+ * @param {string} name - the username
  */
 function contactNamesLetters(name) {
     let letters;
@@ -353,6 +381,8 @@ function contactNamesLetters(name) {
 /**
  * This function generate the background-color for the contacts
  * 
+ * @param {string} task - the current task
+ * @param {number} index - the index of the current contact in "assignedTo" of the task
  */
 function getBgColorTaskPopup(task, index) {
     const contactName = task.assignedTo[index];
@@ -363,7 +393,7 @@ function getBgColorTaskPopup(task, index) {
       contactInfo = contacts.find(contact => contact.name === contactName);
     }
     if (!contactInfo || !contactInfo.color) {
-      return "blue";  // Standardfarbe, wenn keine Farbe gefunden wurde
+      return "blue";  // default color, if no color founded
     }
     return contactInfo.color;
   }
@@ -407,6 +437,7 @@ function handleOutsideClick(event) {
 /**
  * This function opens the external links with an extension of the url address
  *
+ * @param {string} link - page title
  */
 function openExternalLink(link) {
     let url = `./${link}.html`;
@@ -418,6 +449,7 @@ function openExternalLink(link) {
 /**
  * This function sets the animation of elements
  *
+ * @param {string} container - container which should gets an animation
  */
 function moveContainerIn(container) {
     container.classList.remove('outside');
@@ -430,6 +462,7 @@ function moveContainerIn(container) {
 /**
  * This function sets the animation of elements
  *
+ * @param {string} container - container which should gets an animation
  */
 function moveContainerOut(container) {
     container.classList.remove('centered');
@@ -442,6 +475,7 @@ function moveContainerOut(container) {
 /**
  * This function sets the animation of elements
  *
+ * @param {string} container - container which should gets an animation
  */
 function moveContainerUp(container) {
     container.classList.remove('outside-down');
@@ -454,6 +488,7 @@ function moveContainerUp(container) {
 /**
  * This function sets the animation of elements
  *
+ * @param {string} container - container which should gets an animation
  */
 function moveContainerDown(container) {
     container.classList.remove('centered-up');
@@ -466,6 +501,7 @@ function moveContainerDown(container) {
 /**
  * This function closes every popup
  * 
+ * @param {string} popup - container which should close
  */
 function displayNonePopup(popup) {
     popup.style.display = 'none';
@@ -489,22 +525,26 @@ function clickLogout() {
 /**
  * This function initialize the popup message after reloading tasks or contacts
  * 
+ * @param {string} div - container background filter which includes the content div
+ * @param {string} messageText - container which includes the message text for reload
  */
 function showGuestPopupMessageForReload(div, messageText) {
     document.body.style.overflow = 'hidden';
     setTimeout(function () {
-        generateGuestMessageTextForReload(div, messageText); // text for message is outsourced in renderHTML.js
+        generateGuestMessageTextForReload(div, messageText); // outsourced in renderHTML.js
         div.style.display = 'flex';
     }, 800);
     setTimeout(function () {
         closePopupAutomaticly(div);
-    }, popupCloseTime);
+    }, popupCloseTime); // global variable to set the individual time until the popup closing
 }
 
 
 /**
  * This function initialize the message popup for the limited access as guest
  * 
+ * @param {string} div - container background filter which includes the content div
+ * @param {string} messageText - container which includes the message text for the guest
  */
 function showGuestPopupMessage(div, messageText) {
     document.body.style.overflow = 'hidden';
@@ -521,6 +561,7 @@ function showGuestPopupMessage(div, messageText) {
 /**
  * This function closes the message popup by onclick
  * 
+ * @param {string} div - container background filter which includes the content div
  */
 function closeGuestPopupMessage(div) {
     div.style.display = 'none';
@@ -531,6 +572,7 @@ function closeGuestPopupMessage(div) {
 /**
  * This function will automatically close the message popup after some time
  * 
+ * @param {string} div - container background filter which includes the content div
  */
 function closePopupAutomaticly(div) {
     div.style.display = 'none';
@@ -545,4 +587,24 @@ function closePopupAutomaticly(div) {
  */
 function doNotClose(event) {
     event.stopPropagation();
+}
+
+
+
+/////////// UNKNOWN //////////
+
+function modifyEventAttribute(attributeString, index) {
+    // Zerlege den Attributstring in einzelne Funktionen, falls mehrere Aufrufe in einem Attribut sind
+    return attributeString.split(';').map(funcCall => {
+        // Ersetze nur, wenn die Funktion bereits einen Aufruf enthält (öffnende Klammer)
+        if (funcCall.includes('(')) {
+            // Füge den Index als erstes Argument hinzu, falls noch keine Argumente vorhanden sind
+            if (funcCall.includes('()')) {
+                return funcCall.replace('()', `(${index})`);
+            } else {
+                return funcCall.replace('(', `(${index}, `);
+            }
+        }
+        return funcCall;
+    }).join(';'); // Füge die modifizierten Funktionen wieder zu einem String zusammen
 }
