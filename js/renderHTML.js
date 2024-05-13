@@ -375,6 +375,44 @@ function renderAssignedToContactsForOpenTask(contact, letters, backgroundColor) 
 }
 
 
+/**
+ * This function renders the "open" subtasks in the edit form
+ * 
+ * @param {string} subtask - current saved subtask text
+ * @param {number} index - index of the current subtask
+ */
+function renderOpenSubtasksInEditForm(subtask, index) {
+    return     `
+    <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
+    <span>• ${subtask}</span>
+    <div class='d_f_c_c gap-5'>
+      <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksOpen${index}" onclick="editSubtask(this)" />
+      <div class="subtask-partingline"></div>
+      <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksOpen${index}" onclick="deleteSubtask(this)" />
+    </div>
+  </div>
+    `;
+}
+
+
+/**
+ * This function renders the "done" subtasks in the edit form
+ * 
+ * @param {string} subtask - current saved subtask text
+ * @param {number} index - index of the current subtask
+ */
+function renderDoneSubtasksInEditForm(subtask, index) {
+   return `
+    <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
+    <span>• ${subtask}</span>
+    <div class='d_f_c_c gap-5'>
+      <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksDone${index}" onclick="editSubtask(this)" />
+      <div class="subtask-partingline"></div>
+      <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksDone${index}" onclick="deleteSubtask(this)"/>
+    </div>
+  </div>
+    `;
+}
 
 
 

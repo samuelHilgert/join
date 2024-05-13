@@ -195,7 +195,8 @@ function removeHighlight(id) {
 }
 
 
-////////////////////// TODO POPUP OPENED ////////////////////// 
+////////////////////// TODO OPENED POPUP ////////////////////// 
+
 
 /**
  * This function initiates the rendering of the todo when it is open
@@ -326,7 +327,6 @@ async function clickSubtaskToSwitch(pos, element) {
     element.innerHTML = `<img src="../assets/img/${clickedButton}">`;
     await saveSwitchedToDoneSubtasks(pos);
   } else {
-    console.log('Done');
     element.innerHTML = `<img src="../assets/img/${emptyButton}">`;
     await saveSwitchedToOpenSubtasks(pos);
   }
@@ -369,46 +369,90 @@ async function saveSwitchedToOpenSubtasks(pos) {
   }
 }
 
-////////////////////// END TODO POPUP OPENED ////////////////////// 
+
+////////////////////// END TODO OPENED POPUP ////////////////////// 
 
 
+/////////////////////////// EDIT TASK ///////////////////////////// 
+
+
+/**
+ * This function initiate the style and rendering for the edit task form
+ * 
+ */
 async function editTask() {
   let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
   let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
-  let btnDivOk = document.getElementById("btnDivOk-3");
-  btnDivOk.style.display = "flex";
   boardTaskEditContainer.style.display = 'flex';
   boardTaskShowContainer.style.display = 'none';
+  hideAndDisplayElementsForEdit();
+  changeFormStyle();
+  renderTextForEdit();
+  getCurrentPriorityBtn();
+  const todo = tasks[currentOpenTaskId];
+  getContactsForPopupTask(todo); // already used for todo opened popup
+  checkedCheckboxes = todo.assignedTo; // global variable in add-task.js
+  showContactSelection(); // outsourced in add-task.js
+  renderSubtasksPopup();
+}
 
-  let addTaskFormContainer = document.getElementById('addTaskFormContainer-3');
-  let addTaskPartingline = document.getElementById('addTaskPartingline-3');
+
+/**
+ * This function hides and displays the elements for a different style than the normal add task form
+ * 
+ */
+function hideAndDisplayElementsForEdit() {
+  let btnDivOk = document.getElementById("btnDivOk-3");
+  let addTaskCategory = document.getElementById('addTaskCategory-3');
   let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions-3');
   let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions-3');
-  let addTaskCategory = document.getElementById('addTaskCategory-3');
-  let taskTitle = document.getElementById('taskTitle-3');
-  let taskDescription = document.getElementById('taskDescription-3');
-  let taskDate = document.getElementById('taskDate-3');
-  let urgentBtn = document.getElementById('urgentBtn-3');
-  let mediumBtn = document.getElementById('mediumBtn-3');
-  let lowBtn = document.getElementById('lowBtn-3');
+  let addTaskPartingline = document.getElementById('addTaskPartingline-3');
+  let taskContactDiv = document.getElementById("taskContactDiv-3");
+  taskContactDiv.style.display = "none";
+  bottomAddTaskEditOptions.style.display = 'flex';
+  bottomAddTaskOptions.style.display = 'none';
+  addTaskCategory.style.display = 'none';
+  addTaskPartingline.style.display = 'none';
+  btnDivOk.style.display = "flex";
+}
 
+
+/**
+ * This function changes the style of the form for a different style than the normal add task form
+ * 
+ */
+function changeFormStyle() {
+  let addTaskFormContainer = document.getElementById('addTaskFormContainer-3');
   let box = document.querySelectorAll('.box');
+  addTaskFormContainer.style.flexFlow = 'column';
   box.forEach(function (boxReplace) {
     boxReplace.classList.replace('box', 'box-edit');
   });
+}
 
-  addTaskCategory.style.display = 'none';
-  bottomAddTaskOptions.style.display = 'none';
-  bottomAddTaskEditOptions.style.display = 'flex';
-  addTaskFormContainer.style.flexFlow = 'column';
-  addTaskPartingline.style.display = 'none';
 
+/**
+ * This function displays the saved title, description and label
+ * 
+ */
+function renderTextForEdit() {
+  let taskTitle = document.getElementById('taskTitle-3');
+  let taskDescription = document.getElementById('taskDescription-3');
+  let taskDate = document.getElementById('taskDate-3');
   taskTitle.value = tasks[currentOpenTaskId].title;
   taskDescription.value = tasks[currentOpenTaskId].description;
-  const todo = tasks[currentOpenTaskId];
-  getContactsForPopupTask(todo);
   taskDate.value = tasks[currentOpenTaskId].dueDate;
+}
 
+
+/**
+ * This function displays the saved category as a button
+ * 
+ */
+function getCurrentPriorityBtn() {
+  let urgentBtn = document.getElementById('urgentBtn-3');
+  let mediumBtn = document.getElementById('mediumBtn-3');
+  let lowBtn = document.getElementById('lowBtn-3');
   let prio = tasks[currentOpenTaskId].priority;
   let prioBtn;
   if (prio === 'Urgent') {
@@ -418,47 +462,31 @@ async function editTask() {
   } else if (prio === 'Low') {
     prioBtn = lowBtn;
   }
-
   prioBtn.click();
-  checkedCheckboxes = todo.assignedTo;
-  let taskContactDiv = document.getElementById("taskContactDiv-3");
-  taskContactDiv.style.display = "none";
-  showContactSelection();
-  renderSubtasksPopup();
 }
 
 
+/**
+ * This function renders the subtasks in the edit form
+ * 
+ */
 function renderSubtasksPopup() {
   let subtaskDivAddTask = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-
   subtaskDivAddTask.innerHTML = ``;
-
   subtasksOpen.forEach((subtask, index) => {
-    subtaskDivAddTask.innerHTML += `
-  <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
-  <span>• ${subtask}</span>
-  <div class='d_f_c_c gap-5'>
-    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksOpen${index}" onclick="editSubtask(this)" />
-    <div class="subtask-partingline"></div>
-    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksOpen${index}" onclick="deleteSubtask(this)" />
-  </div>
-</div>
-  `;
+    subtaskDivAddTask.innerHTML += renderOpenSubtasksInEditForm(subtask, index); // outsourced in renderHTML.js
   });
-
   subtasksDone.forEach((subtask, index) => {
-    subtaskDivAddTask.innerHTML += `
-  <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
-  <span>• ${subtask}</span>
-  <div class='d_f_c_c gap-5'>
-    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksDone${index}" onclick="editSubtask(this)" />
-    <div class="subtask-partingline"></div>
-    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksDone${index}" onclick="deleteSubtask(this)"/>
-  </div>
-</div>
-  `;
+    subtaskDivAddTask.innerHTML += renderDoneSubtasksInEditForm(subtask, index); // outsourced in renderHTML.js
   });
 }
+
+
+
+
+
+
+
 
 
 async function deleteTask() {
