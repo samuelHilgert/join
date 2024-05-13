@@ -1,8 +1,4 @@
 @media screen and (max-width: 1208px) {
-  .mobile-add-task-container {
-    padding-right: 0;
-  }
-
   .mobile-add-task-main-container {
     padding-left: 18px;
   }
@@ -29,6 +25,42 @@
     font-size: 17px;
     gap: 5px;
   }
+
+  .mobile-board-add-task-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .mobile-board-add-task-parting-line {
+    display: none;
+  }
+
+  .mobile-board-box-1 {
+    padding-bottom: 30px;
+  }
+
+  .mobile-board-add-task-popup-container {
+    gap: 0;
+  }
+
+  .mobile-board-assigned-div {
+    display: none;
+  }
+
+  .mobile-board-box {
+    width: 100%;
+  }
+
+  .mobile-board-task-btn-style {
+    font-size: 20px;
+  }
+
+  .mobile-board-task-options {
+    padding-top: 0;
+  }
+
+  
 }
 
 @media screen and (max-width: 900px) {
@@ -149,7 +181,32 @@
     padding-left: 5%;
     padding-right: 5%;
   }
-}
 
-@media screen and (max-width: 500px) {
+  .mobile-font-size-16 {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .mobile-input-font {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .task-input-style-black::placeholder {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .task-input-style::placeholder {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .task-category {
+    font-size: 16px;
+  }
+
+  .mobile-task-btn-style {
+    font-size: 16px;
+  }
 }
