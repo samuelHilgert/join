@@ -210,7 +210,7 @@ function shakeDiv() {
 
 
 /**
- * This function opens the selection menu from the category-div, if no selection could be registrated
+ * This function opens the selection menu from the category-div.
  * 
  */
 function toggleCategoryDiv() {
