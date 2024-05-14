@@ -37,6 +37,7 @@ async function iterateUsers() {
  * @returns {Promise<void>}
  */
 async function handleSuccess() {
+    clearLocalStorageFirst();
     successEmail = true;
     successPassword = true;
     indexByEmail = getUserId(loginEmail.value);
@@ -52,6 +53,16 @@ async function handleSuccess() {
     setTimeout(forwardToSummary, 1500);
 }
 
+
+/**
+ * This function makes sure, that user and guest can not logged in at the same time
+ * It cleans the local storage before it will be filled
+ */
+function clearLocalStorageFirst() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('logged');
+    localStorage.removeItem('remember');
+}
 
 /**
  * Handles the failure scenario of user login.
@@ -270,6 +281,7 @@ function forwardToSummary() {
  * 
  */
 function guestLogin() {
+    clearLocalStorageFirst();
     localStorage.setItem('logged', true);
     setTimeout(forwardSummaryAsGuest, 500);
 }
