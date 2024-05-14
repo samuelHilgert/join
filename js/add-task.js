@@ -512,13 +512,9 @@ function deleteSubtask(i) {
       deleteAndRenderSubtasks(i, currentTask);
     }
   } else {
-    subtasks.splice(i, 1);
-    document.getElementById(`subtask${i}`).remove();
-    const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-    renderSubtasks(subtaskContainer); // outsourced in renderHTML.js
+    deleteAndRenderInForm(i);
   }
 }
-
 
 /**
  * This function delets the subtask from the arrays and renders the subtasks again 
@@ -537,6 +533,18 @@ function deleteAndRenderSubtasks(i, currentTask) {
   }
 }
 
+
+/**
+ * This function delets the subtask in the form directly and renders the subtasks again 
+ * 
+ * @param {number} i - index of the selected subtask
+ */
+function deleteAndRenderInForm(i) {
+  subtasks.splice(i, 1);
+  document.getElementById(`subtask${i}`).remove();
+  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+  renderSubtasks(subtaskContainer); // outsourced in renderHTML.js
+}
 
 /////////////////////////////////// END DELETE SUBTASKS /////////////////////////////////////
 
