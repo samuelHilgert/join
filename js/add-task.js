@@ -673,7 +673,10 @@ function resetPriority() {
 }
 
 
-
+/**
+ * This function removes specific active classes from priority buttons and resets the styles of their contained SVG elements.
+ * It targets buttons by their dynamic IDs based on the template index.
+ */
 function removeActiveClasses() {
   const buttons = [
     `urgentBtn-${templateIndex}`,
