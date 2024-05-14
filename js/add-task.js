@@ -1037,31 +1037,43 @@ function markSelectedContacts() {
 
 
 /**
- * This function renders the selected contacts in the contact selection area.
- * Therefore it first loops through the checkedCheckboxes array to find the name of the selected contact.
- * The name is then compared with the contactsForTasks array to find the index of the contact.
- * If the name is found in the array, the initials and background colors are extracted from it.
+ * This function toggles the display of a contact selection element based on the visibility of the contact list.
+ * @param {HTMLElement} contactSelection - The element to toggle.
+ * @param {HTMLElement} taskContactDiv - The element to check for visibility.
  */
-function showContactSelection() {
-  let contactSelection = document.getElementById(`contactSelection-${templateIndex}`);
-  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
-  if (taskContactDiv.style.display === "none") {
-    contactSelection.style.display = "flex";
-  } else {
-    contactSelection.style.display = "none";
-  }
-  contactSelection.innerHTML = ``;
+function toggleContactDisplay(contactSelection, taskContactDiv) {
+  contactSelection.style.display = taskContactDiv.style.display === "none" ? "flex" : "none";
+  contactSelection.innerHTML = ""; 
+}
+
+
+/**
+ * This function renders a contact selection display for each checked contact.
+ * @param {HTMLElement} contactSelection - The container where contacts should be displayed.
+ * @param {Array} checkedCheckboxes - The list of checked contact names.
+ * @param {Array} contactsList - The list of all contacts.
+ */
+function renderSelectedContacts(contactSelection, checkedCheckboxes, contactsList) {
   for (let index = 0; index < checkedCheckboxes.length; index++) {
     const contactName = checkedCheckboxes[index];
-    const contactIndex = contactsForTasks.findIndex(
-      (contact) => contact.name === contactName
-    );
+    const contactIndex = contactsList.findIndex(contact => contact.name === contactName);
     if (contactIndex !== -1) {
-      const backgroundColor = contactsForTasks[contactIndex].color;
+      const backgroundColor = contactsList[contactIndex].color;
       const letters = contactNamesLetters(contactName);
       contactSelection.innerHTML += `<div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>`;
     }
   }
+}
+
+
+/**
+ * This function handles the display and update of selected contacts in the UI.
+ */
+function showContactSelection() {
+  let contactSelection = document.getElementById(`contactSelection-${templateIndex}`);
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  toggleContactDisplay(contactSelection, taskContactDiv);
+  renderSelectedContacts(contactSelection, checkedCheckboxes, contactsForTasks);
 }
 
 
@@ -1202,7 +1214,6 @@ function closeAddTaskMenuDiv() {
 function changeTemplateIndex() {
   templateIndex = 4;
 }
-
 
 
 //// OTHER /// 
