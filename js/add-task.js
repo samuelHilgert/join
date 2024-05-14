@@ -753,6 +753,10 @@ function rotateDropdownIcon(icon, isOpen) {
 }
 
 
+/**
+ * This function sets the minimum date that can be selected in a date input field to today's date.
+ * It ensures that users cannot select a date earlier than the current date.
+ */
 function setMinimumDate() {
   var currentDate = new Date();
   var minDate = currentDate.toISOString().split("T")[0];
@@ -762,6 +766,14 @@ function setMinimumDate() {
 }
 
 
+/**
+ * This function converts the date from a date input field to a formatted string and sets the input type to text.
+ * It is used to format the date selected by a user into a more readable format
+ * and displays it in a text input for smoother further processing.
+ *
+ * @param {HTMLInputElement} input - The input element that contains the date to be formatted.
+ * @returns {Promise<void>} - A promise that resolves when the date has been formatted and the input has been updated.
+ */
 async function formatInputDate(input) {
   let dateByValue = new Date(input.value);
   let formattedDate = await formatDateCorrect(dateByValue);
