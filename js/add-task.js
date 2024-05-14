@@ -312,9 +312,9 @@ function resetAddTaskValues() {
  */
 async function addSubtask() {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    await initiateFunctionsForAddSubtasksOnBoard(); // editing subtasks which are already exist on board
+    await initiateFunctionsForAddSubtasksOnBoard(); // added new subtasks in the task 
   } else {
-    await initiateFunctionsForAddSubtasksForm(); // added new subtasks 
+    await initiateFunctionsForAddSubtasksForm(); // added new subtasks in the form
   }
 }
 
@@ -508,6 +508,8 @@ function deleteSubtask(i) {
   } else {
     subtasks.splice(i, 1);
     document.getElementById(`subtask${i}`).remove();
+    const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+    renderSubtasks(subtaskContainer); // outsourced in renderHTML.js
   }
 }
 
