@@ -1215,6 +1215,9 @@ function forwardToBoard() {
 }
 
 
+/**
+ * This function closes the "Add Task" menu by hiding its associated contact and category divisions.
+ */
 function closeAddTaskMenuDiv() {
   let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
@@ -1227,6 +1230,9 @@ function closeAddTaskMenuDiv() {
 }
 
 
+/**
+ * This function sets the template index to a specific value.
+ */
 function changeTemplateIndex() {
   templateIndex = 4;
 }
@@ -1234,7 +1240,12 @@ function changeTemplateIndex() {
 
 //// OTHER /// 
 
-// for category section
+
+/**
+ * This function sets the value of the task category input to the selected category.
+ *
+ * @param {Element} category - The category element that was clicked, expected to contain the category name.
+ */
 function chooseCategory(category) {
   document.getElementById(`taskCategory-${templateIndex}`).value =
     category.innerText;
