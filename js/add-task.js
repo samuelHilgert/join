@@ -500,10 +500,10 @@ function deleteSubtask(i) {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
     if (authorized === "guest") {
       let currentTask = tasks[currentOpenTaskId];
-      deleteAndRenderSubtasks(currentTask);
+      deleteAndRenderSubtasks(i, currentTask);
     } else {
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      deleteAndRenderSubtasks(currentTask);
+      deleteAndRenderSubtasks(i, currentTask);
     }
   } else {
     subtasks.splice(i, 1);
@@ -517,7 +517,7 @@ function deleteSubtask(i) {
  * 
  * @param {number} i - index of the selected subtask
  */
-function deleteAndRenderSubtasks(currentTask) {
+function deleteAndRenderSubtasks(i, currentTask) {
   if (i.id.includes("subtasksOpen")) {
     let index = i.id.split("Open")[1];
     currentTask.subtasksOpen.splice([index], 1);
