@@ -194,9 +194,11 @@ function renderEditContactHTML(
                     <div class="add-contact-container-right-bottom">
                         <div class="circle-big d_f_c_c mobile-margin-top-15" style="background-color:${color};">${firstLetter}${firstLetterSurname}</div>
                         <form class="contact-form" onsubmit="event.preventDefault(); editContact('${contactId}')">
-                            <input id="newName" class="contact-input-style input-name input-font placeholder-black" type="text" value="${name}" required>
-                            <input id="newMail" class="contact-input-style input-email input-font placeholder-black" type="email" value="${mail}">
-                            <input id="newPhone" class="contact-input-style input-phone input-font placeholder-black" type="text" value="${phone}">
+                            <input id="newName" class="contact-input-style input-name input-font placeholder-black" type="text" value="${name}" placeholder="Name" pattern="[A-ZÄÖÜ][a-zäöüß]{2,} [A-ZÄÖÜ][a-zäöüß]{2,}"
+                            title="Vorname und Nachname müssen anfangs groß geschrieben werden und je aus mind. 3 Buchstaben bestehen." required>
+                            <input id="newMail" class="contact-input-style input-email input-font placeholder-black" type="email" value="${mail}" required>
+                            <input id="newPhone" class="contact-input-style input-phone input-font placeholder-black" type="text" value="${phone}" pattern="^\\+?\\d{1,15}$" 
+                            title="Geben Sie bitte eine Telefonnummer mit bis zu 15 Ziffern ein, optional beginnend mit einem '+'." required>
                             <div class="btn-wrapper">
                                 <button type="button" class="clear-btn gap-10" onclick="deleteContact('${contactId}')">Delete</button>
                                 <button type="submit" class="btn gap-10">Save
