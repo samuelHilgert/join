@@ -405,4 +405,8 @@
     .mobile-add-contact {
         display: flex;
     }
+
+    .headline-privacy-policy{
+        font-size: 38px;
+    }
 }
