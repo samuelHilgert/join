@@ -1018,6 +1018,12 @@ function handleCheckboxChange(index) {
 }
 
 
+/**
+ * This function iterates over all contacts and marks the checkboxes for those that have been selected.
+ * It checks each contact against a list of already selected contacts (`checkedCheckboxes`).
+ * If a contact is found in the list, its corresponding checkbox is set to checked, and the UI is updated
+ * to reflect this selection via `handleCheckboxChange`.
+ */
 function markSelectedContacts() {
   for (let index = 0; index < contactsForTasks.length; index++) {
     const contact = contactsForTasks[index];
@@ -1028,7 +1034,6 @@ function markSelectedContacts() {
     }
   }
 }
-
 
 
 /**
@@ -1107,6 +1112,7 @@ function closeDropdown() {
 
 
 ///////// SEARCHBAR ENDE /////////
+
 
 /**
  * This function handles the display of success messages and specific actions based on the page URL.
