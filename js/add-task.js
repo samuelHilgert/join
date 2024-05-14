@@ -373,7 +373,7 @@ async function initiateFunctionsForAddSubtasksForm() {
   if (subtaskValue !== "") {
     const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
     subtasks.push(subtaskValue);
-    renderSubtasks(subtaskContainer); // outsourced in board.js
+    renderSubtasks(subtaskContainer); // outsourced in renderHTML.js
     subtaskInput.value = "";
     changeIcons(); // outsourced in renderHTML.js
   }
@@ -383,70 +383,68 @@ async function initiateFunctionsForAddSubtasksForm() {
 ///////////////////////////////////// END ADD-SUBTASKS //////////////////////////////////////
 
 
-///////////////////////////////////////// ADD-SUBTASKS /////////////////////////////////////////
+///////////////////////////////////////// EDIT SUBTASKS /////////////////////////////////////////
+
 
 /**
  * This function includes all functions for editing the selected subtask
  * 
  * @param {string} element - element-div from selected subtask
  */
-async function editSubtask(element) {
-  if (document.location.pathname === `/board.html`  && templateIndex === 3) {
-    await initiateFunctionsForEditSubtasksOnBoard(element); // editing subtasks which are already exist on board
+function editSubtask(element) {
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    initiateFunctionsForEditSubtasksInTask(element); // editing subtasks which are already exist in the task
   } else {
-    await initiateFunctionsForEditSubtasksForm(element); // added new subtasks 
+    initiateFunctionsForEditSubtasksInForm(element); // editing subtasks which are already exist in the form
   }
 }
 
 
-async function initiateFunctionsForEditSubtasksOnBoard(element) {
+/**
+ * This function initiate the functions for the user or the guest
+ * 
+ * @param {string} element - element-div from selected subtask
+ */
+async function initiateFunctionsForEditSubtasksInTask(element) {
   if (authorized === "guest") {
-    editSubtaskAsGuest(element);
+    let currentTask = tasks[currentOpenTaskId];
+    editSubtaskInTask(element, currentTask);
   } else {
-    editSubtaskAsUser(element);
+    let currentTask = users[currentUser].tasks[currentOpenTaskId];
+    editSubtaskInTask(element, currentTask);
   }
 }
 
 
-function editSubtaskAsGuest(element) {
-  let currentTask = tasks[currentOpenTaskId];
+/**
+ * This function checks, whether the selected subtask is open or already done.
+ * 
+ * @param {string} element - element-div from selected subtask
+ * @param {string} currentTask - the current task depends on who is logged in
+ */
+function editSubtaskInTask(element, currentTask) {
   if (element.id.includes("subtasksOpen")) {
     let index = element.id.split("Open")[1];
-    setSubtaskInputValueOpen(element, index, currentTask);
+    currentSubtaskId = element.id;
+    let currentSubtask = currentTask.subtasksOpen[index];
+    setSubtaskInputValue(currentSubtask);
   } else {
     let index = element.id.split("Done")[1];
-    setSubtaskInputValueDone(element, index, currentTask);
+    currentSubtaskId = element.id;
+    let currentSubtask = currentTask.subtasksDone[index];
+    setSubtaskInputValue(currentSubtask);
   }
 }
 
 
-function editSubtaskAsUser(element) {
-  let currentTask = users[currentUser].tasks[currentOpenTaskId];
-  if (element.id.includes("subtasksOpen")) {
-    let index = element.id.split("Open")[1];
-    setSubtaskInputValueOpen(element, index, currentTask);
-  } else {
-    let index = element.id.split("Done")[1];
-    setSubtaskInputValueDone(element, index, currentTask);
-  }
-}
-
-
-function setSubtaskInputValueOpen(element, index, currentTask) {
-  currentSubtaskId = element.id;
-  let currentSubtask = currentTask.subtasksOpen[index];
-  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-  if (currentSubtask !== -1) {
-    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-    subtaskInput.value = currentSubtask;
-  }
-  changeIcons();
-}
-
-function setSubtaskInputValueDone(element, index, currentTask) {
-  currentSubtaskId = element.id;
-  let currentSubtask = currentTask.subtasksDone[index];
-  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+/**
+ * This function checks, whether the selected subtask is open or already done.
+ * 
+ * @param {string} element - element-div from selected subtask
+ * @param {number} index - the position of the "open" or "done" subtask
+ * @param {string} currentTask - the current task depends on who is logged in
+ */
+function setSubtaskInputValue(currentSubtask) {
   if (currentSubtask !== -1) {
     const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
     subtaskInput.value = currentSubtask;
@@ -455,26 +453,31 @@ function setSubtaskInputValueDone(element, index, currentTask) {
 }
 
 
-
-async function initiateFunctionsForEditSubtasksForm(element) {
-  const subtaskContainer = document.getElementById(
-    `subtaskDivAddTask-${templateIndex}`
-  );
-  const subtaskIndex = getSubtaskIndex(element);
+/**
+ * This function edits the selected subtask in the form
+ * 
+ * @param {string} element - element-div from selected subtask
+ */
+async function initiateFunctionsForEditSubtasksInForm(element) {
+  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+  const subtaskIndex = getSubtaskIndex(subtaskContainer, element);
   if (subtaskIndex !== -1) {
     const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
     subtaskInput.value = subtasks[subtaskIndex];
     subtasks.splice(subtaskIndex, 1);
-    renderSubtasks(subtaskContainer);
+    renderSubtasks(subtaskContainer); // outsourced in renderHTML.js
   }
   changeIcons();
 }
 
 
-function getSubtaskIndex(element) {
-  const subtaskContainer = document.getElementById(
-    `subtaskDivAddTask-${templateIndex}`
-  );
+/**
+ * This function gets the index of the selected subtask 
+ * 
+ * @param {string} element - element-div from selected subtask
+ * @param {string} subtaskContainer - parent element-div
+ */
+function getSubtaskIndex(subtaskContainer, element) {
   const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
     element.parentNode.parentNode
   );
@@ -482,7 +485,7 @@ function getSubtaskIndex(element) {
 }
 
 
-///////////////////////////////////// END ADD-SUBTASKS //////////////////////////////////////
+///////////////////////////////////// END EDIT SUBTASKS //////////////////////////////////////
 
 
 
@@ -509,22 +512,22 @@ function deleteSubtask(i) {
       if (i.id.includes("subtasksOpen")) {
         let index = i.id.split("Open")[1];
         currentTask.subtasksOpen.splice([index], 1);
-        renderSubtasksPopup();
+        renderSubtasksPopup(); // outsourced in board.js
       } else {
         let index = i.id.split("Done")[1];
         currentTask.subtasksDone.splice([index], 1);
-        renderSubtasksPopup();
+        renderSubtasksPopup(); // outsourced in board.js
       }
     } else {
       let currentTask = users[currentUser].tasks[currentOpenTaskId];
       if (i.id.includes("subtasksOpen")) {
         let index = i.id.split("Open")[1];
         currentTask.subtasksOpen.splice([index], 1);
-        renderSubtasksPopup();
+        renderSubtasksPopup(); // outsourced in board.js
       } else {
         let index = i.id.split("Done")[1];
         currentTask.subtasksDone.splice([index], 1);
-        renderSubtasksPopup();
+        renderSubtasksPopup(); // outsourced in board.js
       }
     }
   } else {
