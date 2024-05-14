@@ -27,14 +27,10 @@ async function renderSummary() {
  */
 function getValuesForSummary() {
   const allTasksByBacklog = tasks.filter((t) => t["category"] == "backlog");
-  const allTasksByInProgress = tasks.filter(
-    (t) => t["category"] == "inProgress"
-  );
+  const allTasksByInProgress = tasks.filter((t) => t["category"] == "inProgress");
   const allTasksByDone = tasks.filter((t) => t["category"] == "done");
   const allTasksByUrgent = tasks.filter((t) => t["priority"] == "Urgent");
-  const allAwaitFeedbackNumber = tasks.filter(
-    (t) => t["category"] == "awaitFeedback"
-  );
+  const allAwaitFeedbackNumber = tasks.filter((t) => t["category"] == "awaitFeedback");
   allTodos = allTasksByBacklog.length;
   allDones = allTasksByDone.length;
   allUrgents = allTasksByUrgent.length;
@@ -49,6 +45,7 @@ function getValuesForSummary() {
  * Retrieves current date and formats it. Calculates the time differences between current date
  * and task due dates, then finds the task with the smallest difference. Finally, renders the upcoming
  * due date on the page.
+ * 
  * @returns {Promise<void>} A Promise that resolves once the upcoming due date is rendered.
  */
 async function updateUpcomingDate() {
@@ -70,6 +67,7 @@ async function updateUpcomingDate() {
  * Retrieves the timestamps of all tasks asynchronously and calculates the differences 
  * between current date and task due dates. Pushes the differences and timestamps into 
  * arrays for further processing.
+ * 
  * @param {Date[]} allTaskTimeStamps - An array to store the due date timestamps of all tasks.
  * @param {number} timeStampCurrentDate - The timestamp of the current date.
  * @param {number[]} allTimeStampsDifferences - An array to store the differences between current date
@@ -91,10 +89,11 @@ async function getTasksTimeStamps(allTaskTimeStamps, timeStampCurrentDate, allTi
 
 
 /**
- * Berechnet den absoluten Zeitunterschied zwischen zwei Zeitstempeln.
- * @param {number} reference - Der Referenzzeitstempel.
- * @param {number} dueDate - Der Zeitstempel des Fälligkeitsdatums.
- * @returns {number} Der absolute Zeitunterschied zwischen den beiden Zeitstempeln.
+ * This function calculates the absolute time difference between both timestamps
+ * 
+ * @param {number} reference - the reference timestamp
+ * @param {number} dueDate - this timestamp is the dueDates
+ * @returns {number} - the number of the absolute time difference
  */
 function calculateDifferencesOftimeStamps(reference, dueDate) {
   return Math.abs(reference - dueDate);
@@ -102,9 +101,10 @@ function calculateDifferencesOftimeStamps(reference, dueDate) {
 
 
 /**
- * Formatiert ein Datum für die bevorstehende Anzeige.
- * @param {Date} upcomingDate - Das bevorstehende Datum, das formatiert werden soll.
- * @returns {string} Das formatierte Datum im Format "Monat Tag, Jahr".
+ * This function formagetes the upcoming date
+ * 
+ * @param {Date} upcomingDate - the date which should be formatted
+ * @returns {string} the formatted upcoming date
  */
 function formatUpcomingDate(upcomingDate) {
   let monthNames = [
@@ -117,8 +117,9 @@ function formatUpcomingDate(upcomingDate) {
 
 
 /**
- * Rendert das bevorstehende Fälligkeitsdatum auf der Seite.
- * @param {string} formattedUpcomingDate - Das formatierte bevorstehende Datum.
+ * This function renders the formatted upcomming date in summary.html
+ * 
+ * @param {string} formattedUpcomingDate - the formatted upcoming date
  */
 function renderUpcomingDueDate(formattedUpcomingDate) {
   let upcomingDueDate = document.getElementById("upcomingDueDate");
@@ -127,23 +128,37 @@ function renderUpcomingDueDate(formattedUpcomingDate) {
 
 
 /**
- * Rendert die Werte der Zusammenfassung auf der Seite.
+ * This function sets the divs for rendering the values in the summary
+ * 
  */
 function renderSummaryValues() {
-  let allTodosNumber = document.getElementById("allTodosNumber");
-  let allDoneNumber = document.getElementById("allDoneNumber");
-  let allUrgentNumber = document.getElementById("allUrgentNumber");
-  let allTasksNumber = document.getElementById("allTasksNumber");
-  let allInProgressNumber = document.getElementById("allInProgressNumber");
-  let allAwaitFeedbackNumber = document.getElementById(
-    "allAwaitFeedbackNumber"
-  );
-  allTodosNumber.innerHTML = `<h3>${allTodos}</h3>`;
-  allDoneNumber.innerHTML = `<h3>${allDones}</h3>`;
-  allUrgentNumber.innerHTML = `<h3>${allUrgents}</h3><p class="mobile-summary-category-text">Urgent</p>`;
-  allTasksNumber.innerHTML = `<h3>${allTasks}</h3>`;
-  allInProgressNumber.innerHTML = `<h3>${allInProgress}</h3>`;
-  allAwaitFeedbackNumber.innerHTML = `<h3>${allAwaitFeedback}</h3>`;
+  let allTodosDiv = document.getElementById("allTodosNumber");
+  let allDoneDiv = document.getElementById("allDoneNumber");
+  let allUrgentDiv = document.getElementById("allUrgentNumber");
+  let allTasksDiv = document.getElementById("allTasksNumber");
+  let allInProgressDiv = document.getElementById("allInProgressNumber");
+  let allAwaitFeedbackDiv = document.getElementById("allAwaitFeedbackNumber");
+  renderValuesInSummary(allTodosDiv, allDoneDiv, allUrgentDiv, allTasksDiv, allInProgressDiv, allAwaitFeedbackDiv);
+}
+
+
+/**
+ * This function renders the values in the summary
+ * 
+ * @param {string} allTodosDiv - element-div for amount of all "open" todos
+ * @param {string} allDoneDiv - element-div for amount of all "done" todos
+ * @param {string} allUrgentDiv - element-div for amount of all "urgent" todos
+ * @param {string} allTasksDiv - element-div for amount of the rentire amount of todos
+ * @param {string} allInProgressDiv - element-div for amount of all "in progress" todos
+ * @param {string} allAwaitFeedbackDiv - element-div for amount of all "await feedback" todos
+ */
+function renderValuesInSummary(allTodosDiv, allDoneDiv, allUrgentDiv, allTasksDiv, allInProgressDiv, allAwaitFeedbackDiv) {
+  allTodosDiv.innerHTML = `<h3>${allTodos}</h3>`;
+  allDoneDiv.innerHTML = `<h3>${allDones}</h3>`;
+  allUrgentDiv.innerHTML = `<h3>${allUrgents}</h3><p class="mobile-summary-category-text">Urgent</p>`;
+  allTasksDiv.innerHTML = `<h3>${allTasks}</h3>`;
+  allInProgressDiv.innerHTML = `<h3>${allInProgress}</h3>`;
+  allAwaitFeedbackDiv.innerHTML = `<h3>${allAwaitFeedback}</h3>`;
 }
 
 
@@ -175,6 +190,7 @@ function displayGreeting() {
 
 /**
  * This function generates a greeting text based on the current time of day
+ * 
  * @returns {string} - the generated greetings text
  */
 function getGreeting() {
@@ -194,7 +210,8 @@ function getGreeting() {
 
 
 /**
- * Leitet den Benutzer zur Board-Seite weiter.
+ * This function forwards the user to board.html
+ * 
  */
 function forwardingBoard() {
   window.location.href = `./board.html`;
@@ -202,9 +219,10 @@ function forwardingBoard() {
 
 
 /**
- * Ändert die Quelle des Bildes eines Elements.
- * @param {HTMLElement} element - Das HTML-Element, dessen Bildquelle geändert werden soll.
- * @param {string} src - Die neue Bildquelle.
+ * This function changes the source of the images
+ * 
+ * @param {HTMLElement} element - the element-div of the image
+ * @param {string} src - the new source for changing the image
  */
 function changeImage(element, src) {
   element.querySelector(".summary-icon").src = src;
@@ -212,9 +230,10 @@ function changeImage(element, src) {
 
 
 /**
- * Stellt die ursprüngliche Bildquelle eines Elements wieder her.
- * @param {HTMLElement} element - Das HTML-Element, dessen Bildquelle wiederhergestellt werden soll.
- * @param {string} defaultSrc - Die ursprüngliche Bildquelle.
+ * This function resets the source to the default source of the image
+ * 
+ * @param {HTMLElement} element - the element-div of the image
+ * @param {string} defaultSrc - the default source of the start image
  */
 function restoreImage(element, defaultSrc) {
   element.querySelector(".summary-icon").src = defaultSrc;
