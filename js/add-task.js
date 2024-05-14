@@ -541,6 +541,7 @@ function deleteSubtask(i) {
   }
 }
 
+
 /**
  * This function delets the subtask from the arrays and renders the subtasks again 
  * 
@@ -561,12 +562,12 @@ function deleteAndRenderSubtasks(i, currentTask) {
 /////////////////////////////////// END DELETE SUBTASKS /////////////////////////////////////
 
 
-
-
-
-
-
-//Event handler to add subtask with enter-key
+/**
+ * Event listener for handling keypress events across the document.
+ * Specifically, it checks for the 'Enter' key press (keyCode 13) when the focus is on the subtask input.
+ * If the 'Enter' key is pressed while focused on the specified input, it prevents the default form submission
+ * and triggers the addition of a subtask.
+ */
 document.addEventListener("keypress", function (event) {
   if (event.keyCode === 13) {
     if (document.activeElement.id === `subtask-${templateIndex}`) {
@@ -577,7 +578,10 @@ document.addEventListener("keypress", function (event) {
 });
 
 
-
+/**
+ * This function clears the input field for subtasks, removes focus from it, and updates the dropdown icon.
+ * It is typically called to reset the subtask input area after a subtask has been added or when clearing the input is needed.
+ */
 function clearSubtaskInput() {
   let subtaskInput = document.getElementById(`subtask-${templateIndex}`);
   subtaskInput.value = "";
@@ -589,6 +593,11 @@ function clearSubtaskInput() {
 }
 
 
+/**
+ * This function hides the category division if it is currently displayed as a flexbox.
+ * Therefore it checks if the category division (a UI element identified by a specific ID) is visible
+ * and sets its display style to 'none', effectively hiding it from view.
+ */
 function clearCategory() {
   let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
   if (categoryDiv.style.display === "flex") {
@@ -597,6 +606,10 @@ function clearCategory() {
 }
 
 
+/**
+ * This function hides the contact dropdown if it is currently displayed as a flexbox.
+ * It targets a specific UI element for contact details and hides it if it's displayed. 
+ */
 function clearContactDropdown() {
   let taskContactDiv = document.getElementById(
     `taskContactDiv-${templateIndex}`
@@ -607,7 +620,22 @@ function clearContactDropdown() {
 }
 
 
-//clear the whole form
+/**
+ * This function resets the Arrays and is called when the form is 
+ * cleared or submitted to ensure a clean state.
+ */
+function resetArrays() {
+  dropdownContact = [];
+  subtasks = [];
+  checkedCheckboxes = [];
+}
+
+
+/**
+ * This function clears all input fields and resets selections within a form, identified by a dynamic template index.
+ * It resets values and innerHTML of various task-related input fields and elements
+ * to prepare for new data entry or to clear the current state.
+ */
 function clearForm() {
   document.getElementById(`taskTitle-${templateIndex}`).value = "";
   document.getElementById(`taskDescription-${templateIndex}`).value = "";
@@ -620,26 +648,35 @@ function clearForm() {
   resetPriority();
   clearContactDropdown();
   clearCategory();
-  dropdownContact = [];
-  subtasks = [];
-  checkedCheckboxes = [];
+  resetArrays();
 }
 
 
-
-//Change Prio Btn colors!
+/**
+ * This function sets priority for a task based on the provided button ID.
+ * Therefore it adds active classes to the priority button to indicate selection,
+ * while removing active classes from other buttons to maintain exclusive selection.
+ * @param {string} btnId - The ID of the button that is to be marked as active.
+ */
 function setPriority(btnId) {
   removeActiveClasses();
   setActiveClasses(btnId);
 }
 
 
+/**
+ * This function resets the visual indication of task priority by removing active 
+ * classes from priority buttons.
+ */
 function resetPriority() {
   removeActiveClasses();
 }
 
 
-
+/**
+ * This function removes specific active classes from priority buttons and resets the styles of their contained SVG elements.
+ * It targets buttons by their dynamic IDs based on the template index.
+ */
 function removeActiveClasses() {
   const buttons = [
     `urgentBtn-${templateIndex}`,
