@@ -620,7 +620,22 @@ function clearContactDropdown() {
 }
 
 
+/**
+ * This function resets the Arrays and is called when the form is 
+ * cleared or submitted to ensure a clean state.
+ */
+function resetArrays() {
+  dropdownContact = [];
+  subtasks = [];
+  checkedCheckboxes = [];
+}
 
+
+/**
+ * This function clears all input fields and resets selections within a form, identified by a dynamic template index.
+ * It resets values and innerHTML of various task-related input fields and elements
+ * to prepare for new data entry or to clear the current state.
+ */
 function clearForm() {
   document.getElementById(`taskTitle-${templateIndex}`).value = "";
   document.getElementById(`taskDescription-${templateIndex}`).value = "";
@@ -633,16 +648,15 @@ function clearForm() {
   resetPriority();
   clearContactDropdown();
   clearCategory();
-  dropdownContact = [];
-  subtasks = [];
-  checkedCheckboxes = [];
+  resetArrays();
 }
 
 
-
 /**
- * 
- * @param {*} btnId 
+ * This function sets priority for a task based on the provided button ID.
+ * Therefore it adds active classes to the priority button to indicate selection,
+ * while removing active classes from other buttons to maintain exclusive selection.
+ * @param {string} btnId - The ID of the button that is to be marked as active.
  */
 function setPriority(btnId) {
   removeActiveClasses();
@@ -650,6 +664,10 @@ function setPriority(btnId) {
 }
 
 
+/**
+ * This function resets the visual indication of task priority by removing active 
+ * classes from priority buttons.
+ */
 function resetPriority() {
   removeActiveClasses();
 }
