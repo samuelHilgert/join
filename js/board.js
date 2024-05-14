@@ -537,7 +537,6 @@ function getCurrentPriorityBtn() {
   } else if (prio === 'Low') {
     prioBtn = lowBtn;
   }
-  prioBtn.click();
 }
 
 
