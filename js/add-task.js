@@ -30,9 +30,9 @@ async function updateTaskContacts() {
  */
 async function addTask() {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    await initiateFunctionsForAddTaskOnBoard(); // editing an already task on board
+    await initiateFunctionsForAddTaskOnBoard(); 
   } else {
-    await initiateFunctionsForAddTaskForm(); // added a new task to board
+    await initiateFunctionsForAddTaskForm(); 
   }
 }
 
@@ -311,9 +311,9 @@ function resetAddTaskValues() {
  */
 async function addSubtask() {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    await initiateFunctionsForAddSubtasksOnBoard(); // added new subtasks in the task 
+    await initiateFunctionsForAddSubtasksOnBoard(); 
   } else {
-    await initiateFunctionsForAddSubtasksForm(); // added new subtasks in the form
+    await initiateFunctionsForAddSubtasksForm(); 
   }
 }
 
@@ -379,9 +379,9 @@ async function initiateFunctionsForAddSubtasksForm() {
   if (subtaskValue !== "") {
     const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
     subtasks.push(subtaskValue);
-    renderSubtasks(subtaskContainer); // outsourced in renderHTML.js
+    renderSubtasks(subtaskContainer); 
     subtaskInput.value = "";
-    changeIcons(); // outsourced in renderHTML.js
+    changeIcons(); 
   }
 }
 
@@ -399,9 +399,9 @@ async function initiateFunctionsForAddSubtasksForm() {
  */
 function editSubtask(element) {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    initiateFunctionsForEditSubtasksInTask(element); // editing subtasks which are already exist in the task
+    initiateFunctionsForEditSubtasksInTask(element); 
   } else {
-    initiateFunctionsForEditSubtasksInForm(element); // editing subtasks which are already exist in the form
+    initiateFunctionsForEditSubtasksInForm(element); 
   }
 }
 
@@ -471,7 +471,7 @@ async function initiateFunctionsForEditSubtasksInForm(element) {
     const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
     subtaskInput.value = subtasks[subtaskIndex];
     subtasks.splice(subtaskIndex, 1);
-    renderSubtasks(subtaskContainer); // outsourced in renderHTML.js
+    renderSubtasks(subtaskContainer);
   }
   changeIcons();
 }
@@ -498,21 +498,46 @@ function getSubtaskIndex(subtaskContainer, element) {
 
 
 /**
- * This function initiate the delete of the selected subtask
- * 
- * @param {number} i - index of the selected subtask
+ * This function returns the current task based on user authorization level.
+ * @returns {Object} - The current task object.
+ */
+function getCurrentTaskForDeletion() {
+  return authorized === "guest" ? tasks[currentOpenTaskId] : users[currentUser].tasks[currentOpenTaskId];
+}
+
+
+/**
+ * This function deletes a subtask and re-renders the subtasks UI for the board page when templateIndex is 3.
+ * @param {number} index - The index of the subtask to delete.
+ * @param {Object} currentTask - The current task object containing the subtasks.
+ */
+function deleteSubtaskForBoard(index, currentTask) {
+  deleteAndRenderSubtasks(index, currentTask);
+}
+
+
+/**
+ * This function deletes a subtask from the subtasks array and updates the DOM for non-board pages or different template indices.
+ * @param {number} index - The index of the subtask to delete.
+ */
+function deleteSubtaskForOtherPages(index) {
+  subtasks.splice(index, 1);
+  document.getElementById(`subtask${index}`).remove();
+  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+  renderSubtasks(subtaskContainer);
+}
+
+
+/**
+ * This function deletes a subtask based on the page path, template index, and user authorization.
+ * @param {number} i - The index of the subtask to delete.
  */
 function deleteSubtask(i) {
   if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    if (authorized === "guest") {
-      let currentTask = tasks[currentOpenTaskId];
-      deleteAndRenderSubtasks(i, currentTask);
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      deleteAndRenderSubtasks(i, currentTask);
-    }
+    const currentTask = getCurrentTaskForDeletion();
+    deleteSubtaskForBoard(i, currentTask);
   } else {
-    deleteAndRenderInForm(i);
+    deleteSubtaskForOtherPages(i);
   }
 }
 
@@ -525,25 +550,12 @@ function deleteAndRenderSubtasks(i, currentTask) {
   if (i.id.includes("subtasksOpen")) {
     let index = i.id.split("Open")[1];
     currentTask.subtasksOpen.splice([index], 1);
-    renderSubtasksPopup(); // outsourced in board.js
+    renderSubtasksPopup();
   } else {
     let index = i.id.split("Done")[1];
     currentTask.subtasksDone.splice([index], 1);
-    renderSubtasksPopup(); // outsourced in board.js
+    renderSubtasksPopup();
   }
-}
-
-
-/**
- * This function delets the subtask in the form directly and renders the subtasks again 
- * 
- * @param {number} i - index of the selected subtask
- */
-function deleteAndRenderInForm(i) {
-  subtasks.splice(i, 1);
-  document.getElementById(`subtask${i}`).remove();
-  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-  renderSubtasks(subtaskContainer); // outsourced in renderHTML.js
 }
 
 /////////////////////////////////// END DELETE SUBTASKS /////////////////////////////////////
