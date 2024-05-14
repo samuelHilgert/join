@@ -1077,7 +1077,13 @@ function showContactSelection() {
 }
 
 
-
+/**
+ * This function updates the dropdown menu with a given list of contacts.
+ * It clears the existing dropdown content and repopulates it with new contacts,
+ * skipping any invalid entries. If a contact is invalid (null or missing name), it logs an error and continues with others.
+ * 
+ * @param {Array} contacts - Array of contact objects to be displayed in the dropdown menu.
+ */
 function updateDropdownMenu(contacts) {
   let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   taskContactDiv.innerHTML = "";
@@ -1092,12 +1098,19 @@ function updateDropdownMenu(contacts) {
 }
 
 
+/**
+ * This function sets focus to the input field used for assigning tasks to contacts.
+ */
 function setFocusOnInputfield() {
   let inputfield = document.getElementById(`taskAssignedTo-${templateIndex}`);
   inputfield.focus();
 }
 
 
+/**
+ * This function handles click events on the dropdown trigger.
+ * It checks the current state of the dropdown (open or closed) and toggles it.
+ */
 function handleClickOnDropdown() {
   if (!isDropdownOpen()) {
     openDropdown();
@@ -1111,13 +1124,16 @@ function handleClickOnDropdown() {
 }
 
 
+/**
+ * This function closes the dropdown menu and resets the UI changes associated with it being open.
+ * It clears the assignment input, turns the dropdown arrow back to its original state,
+ * and hides the dropdown menu.
+ */
 function closeDropdown() {
   clearAssignToInput();
   turnArrow();
   let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   arrow.classList.remove("rotate-180");
   taskContactDiv.style.display = "none";
 }
