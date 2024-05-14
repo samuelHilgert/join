@@ -541,7 +541,6 @@ function deleteSubtask(i) {
   }
 }
 
-
 /**
  * This function delets the subtask from the arrays and renders the subtasks again 
  * 
@@ -558,7 +557,6 @@ function deleteAndRenderSubtasks(i, currentTask) {
     renderSubtasksPopup();
   }
 }
-
 
 /////////////////////////////////// END DELETE SUBTASKS /////////////////////////////////////
 
