@@ -1,13 +1,233 @@
 let newTask = [];
-// let dropdownContact = [];  Nicht mehr notwendig
 let subtasks = [];
 let contactsForTasks = [];
 let matchingContactNames = [];
-let checkedCheckboxes = []; // Array zur Speicherung der ausgewählten Checkboxen im Dropdown Menü
+let checkedCheckboxes = [];
 let contactsLoaded = false;
 let currentSubtaskId;
 let templateIndex = 3;
 let setCategory = "backlog";
+
+
+/**
+ * This function loads the conctacts and saves them to the array "contactsForTasks"
+ * 
+ */
+async function updateTaskContacts() {
+  if (authorized === "guest") {
+    let resp = await fetch("./JSON/contacts.json");
+    contactsForTasks = await resp.json();
+  } else {
+    let currentUserContactsForTasks = users[currentUser].contacts;
+    contactsForTasks = currentUserContactsForTasks;
+  }
+}
+
+
+/**
+ * This function includes all functions to adds the newly created task to the board
+ * 
+ */
+async function addTask() {
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    await initiateFunctionsForAddTaskOnBoard(); 
+  } else {
+    await initiateFunctionsForAddTaskForm(); 
+  }
+}
+
+
+/////////////////////////////// EDIT ADD-TASK FORM ON BOARD ////////////////////////////////
+
+
+/**
+ * This function resets the values by editing the current task on board.html
+ * 
+ */
+async function initiateFunctionsForAddTaskOnBoard() {
+  let editDiv = document.getElementById("boardTaskEditContainer");
+  let showDiv = document.getElementById("boardTaskShowContainer");
+  let taskInput = readTaskInputEditTask();
+  let formattedInputDate;
+  if (taskInput.date !== null) {
+    formattedInputDate = taskInput.date;
+  }
+  const prio = determinePriority();
+  let currentTask = setValuesAfterEditing(taskInput, formattedInputDate, prio);
+  let id = currentTask.id;
+  await openBoardTaskPopup(id);
+  editDiv.style.display = "none";
+  showDiv.style.display = "flex";
+}
+
+
+/**
+ * This function gets the input.values
+ * 
+ */
+function readTaskInputEditTask() {
+  let title = document.getElementById(`taskTitle-${templateIndex}`).value;
+  let description = document.getElementById(`taskDescription-${templateIndex}`).value;
+  let date = document.getElementById(`taskDate-${templateIndex}`);
+  return {
+    title: title,
+    description: description,
+    date: date.value,
+  };
+}
+
+
+/**
+ * This function returns the value from priority
+ * 
+ */
+function determinePriority() {
+  let prio = "Medium"; // Standardpriorität
+  const urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
+  const mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
+  const lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
+  if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
+    prio = "Urgent";
+  } else if (lowBtn.classList.contains("active-prio-btn-low")) {
+    prio = "Low";
+  }
+  return prio;
+}
+
+
+/**
+ * This function sets and saves the currentTask with the values of taskInput.values
+ * 
+ * @param {string} taskInput - new task with input.values
+ * @param {string} formattedInputDate - formatted date from input.value
+ * @param {string} prio - selected priority
+ */
+async function setValuesAfterEditing(taskInput, formattedInputDate, prio) {
+  if (authorized === "guest") {
+    currentTask = tasks[currentOpenTaskId];
+    setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio);
+    return currentTask;
+  } else {
+    currentTask = users[currentUser].tasks[currentOpenTaskId];
+    setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio);
+    await setItem("users", JSON.stringify(users));
+    return currentTask;
+  }
+}
+
+
+/**
+ * This function sets the currentTask with the values of taskInput.values 
+ * 
+ * @param {string} currentTask - current task
+ * @param {string} taskInput - new task with input.values
+ * @param {string} formattedInputDate - formatted date from input.value
+ * @param {string} prio - selected priority
+ */
+function setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio) {
+  currentTask.title = taskInput.title;
+  currentTask.description = taskInput.description;
+  currentTask.dueDate = formattedInputDate;
+  currentTask.assignedTo = checkedCheckboxes;
+  currentTask.priority = prio;
+  currentTask.subtasksOpen = subtasksOpen;
+  currentTask.subtasksDone = subtasksDone;
+}
+
+
+/////////////////////////////// END EDIT ADD-TASK FORM ON BOARD ////////////////////////////////
+
+
+///////////////////////////////// ADD-TASK FORM ON HTML AND BOARD ////////////////////////////////////
+
+
+/**
+ * This function adds the values by added a new task to board
+ * 
+ */
+async function initiateFunctionsForAddTaskForm() {
+  const taskInput = readTaskInput();
+  checkCategorySelection(taskInput);
+  let formattedInputDate = taskInput.date;
+  const prio = determinePriority();
+  let id = getNextAvailableTaskId();
+  const task = getTaskValues(taskInput, formattedInputDate, prio, id);
+  newTask.push(task);
+  await saveNewTask();
+  resetAddTaskValues();
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    closeBoardAddTaskPopup();
+  }
+  addTaskToBoardMessage();
+}
+
+
+/**
+ * This function gets the input.values from the add-task-form
+ * 
+ */
+function readTaskInput() {
+  const title = document.getElementById(`taskTitle-${templateIndex}`).value;
+  const description = document.getElementById(`taskDescription-${templateIndex}`).value;
+  const date = document.getElementById(`taskDate-${templateIndex}`);
+  const category = document.getElementById(`taskCategory-${templateIndex}`).value;
+  return {
+    title: title,
+    description: description,
+    date: date.value,
+    category: category,
+  };
+}
+
+
+/**
+ * This function checks, whether the category inputfield is selected.
+ * 
+ * @param {string} taskInput - new task with input.values
+ */
+function checkCategorySelection(taskInput) {
+  const selectedCategory = taskInput.category;
+  if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
+    shakeDiv();
+    toggleCategoryDiv();
+    document.getElementById(`taskCategory-${templateIndex}`).classList.add("required-input-outline-red");
+    return;
+  }
+}
+
+
+/**
+ * This function shakes the required Text, when a required inputfield is not be filled
+ * 
+ */
+function shakeDiv() {
+  let container = document.getElementById(`requiredDiv-${templateIndex}`);
+  container.classList.add("shake");
+  setTimeout(() => {
+    container.classList.remove("shake");
+  }, 500);
+}
+
+
+/**
+ * This function opens the selection menu from the category-div, if no selection could be registrated
+ * 
+ */
+function toggleCategoryDiv() {
+  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
+  let dropdownIcon = document.getElementById(`categoryDropIcon-${templateIndex}`);
+  if (
+    categoryDiv.style.display === "none" ||
+    categoryDiv.style.display === ""
+  ) {
+    categoryDiv.style.display = "flex";
+    dropdownIcon.style.transform = "rotate(180deg)";
+  } else {
+    categoryDiv.style.display = "none";
+    dropdownIcon.style.transform = "";
+  }
+}
+
 
 /**
  * This function gets the next available ID that's not already used in the tasks array.
@@ -22,110 +242,49 @@ function getNextAvailableTaskId() {
   return id.toString();
 }
 
-function sortContactsForTasks() {
-  contactsForTasks.sort((a, b) => {
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    return nameA.localeCompare(nameB);
-  });
+
+/**
+ * This function gets the values from input.values
+ *
+ * @param {string} taskInput - new task with input.values
+ * @param {string} formattedInputDate - formatted date from input.value
+ * @param {string} prio - selected priority
+ * @param {number} id - new id for the task
+ */
+function getTaskValues(taskInput, formattedInputDate, prio, id) {
+  return {
+    id: id,
+    label: taskInput.category,
+    title: taskInput.title,
+    description: taskInput.description,
+    dueDate: formattedInputDate,
+    assignedTo: checkedCheckboxes,
+    priority: prio,
+    subtasksOpen: subtasks,
+    subtasksDone: [],
+    category: setCategory,
+  };
 }
 
-// function to add the task 
-async function addTask() {
-  if (document.location.pathname === `/board.html` && templateIndex === 3) {   // edit feature for edit tasks on board
-    let boardTaskEditContainer = document.getElementById('boardTaskEditContainer');
-    let boardTaskShowContainer = document.getElementById('boardTaskShowContainer');
-    const taskInput = readTaskInputEditTask();
-    let formattedInputDate;
-    if (taskInput.value !== null) {
-      formattedInputDate = taskInput.date;
-    } else {
-      formattedInputDate = taskInput.date;
-      // formattedInputDate = await formatDateCorrect(taskInput.date);
-    }
-    const prio = determinePriority();
-    if ((authorized === 'guest')) {
-      let currentTask = tasks[currentOpenTaskId];
-      currentTask.title = taskInput.title;
-      currentTask.description = taskInput.description;
-      currentTask.dueDate = formattedInputDate;
-      currentTask.assignedTo = checkedCheckboxes;
-      currentTask.priority = prio;
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      let id = currentTask.id;
-      await openBoardTaskPopup(id);
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      currentTask.title = taskInput.title;
-      currentTask.description = taskInput.description;
-      currentTask.dueDate = formattedInputDate;
-      currentTask.assignedTo = checkedCheckboxes;
-      currentTask.priority = prio;
-      currentTask.subtasksOpen = subtasksOpen;
-      currentTask.subtasksDone = subtasksDone;
-      await setItem("users", JSON.stringify(users));
-      let id = currentTask.id;
-      await openBoardTaskPopup(id);
-    }
-    boardTaskEditContainer.style.display = 'none';
-    boardTaskShowContainer.style.display = 'flex';
 
-  } else { // add-task feature on add-task.html
-    const taskInput = readTaskInput();
-    const selectedCategory = taskInput.category;
-    if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
-      shakeDiv();
-      toggleCategoryDiv();
-      document.getElementById('taskCategory').classList.add('required-input-outline-red');
-      return;
-    }
-    let formattedInputDate = taskInput.date;
-    // let formattedInputDate = await formatDateCorrect(taskInput.date);
-    const prio = determinePriority();
-    let id = getNextAvailableTaskId();
-    const task = {
-      id: id,
-      label: taskInput.category,
-      title: taskInput.title,
-      description: taskInput.description,
-      dueDate: formattedInputDate,
-      assignedTo: checkedCheckboxes,
-      priority: prio,
-      subtasksOpen: subtasks,
-      subtasksDone: [],
-      category: setCategory,
-    };
-    if (setCategory === 'inProgess') {
-      console.log('Kategorie gewechselt in = ' + setCategory);
-    }
-
-    newTask.push(task);
-    if ((authorized === 'guest')) {
-      tasks.push(...newTask);
-      resetAddTaskValues();
-    } else {
-      users[currentUser].tasks.push(...newTask);
-      await setItem("users", JSON.stringify(users));
-      resetAddTaskValues();
-    }
-    if (document.location.pathname === `/board.html` && templateIndex === 3) {
-      closeBoardAddTaskPopup();
-    } else {
-      addTaskToBoardMessage();
-    }
-
+/**
+ * This function saves the new task in the array tasks and remote for the user
+ * 
+ */
+async function saveNewTask() {
+  if (authorized === "guest") {
+    tasks.push(...newTask);
+  } else {
+    users[currentUser].tasks.push(...newTask);
+    await setItem("users", JSON.stringify(users));
   }
 }
 
-function shakeDiv() {
-  let container = document.getElementById('requiredDiv');
-  container.classList.add('shake');
-  setTimeout(() => {
-    container.classList.remove('shake');
-  }, 500);
-}
 
+/**
+ * This function resets the values from the inputfields
+ * 
+ */
 function resetAddTaskValues() {
   document.getElementById(`taskTitle-${templateIndex}`).value = "";
   document.getElementById(`taskDescription-${templateIndex}`).value = "";
@@ -133,53 +292,562 @@ function resetAddTaskValues() {
   document.getElementById(`taskCategory-${templateIndex}`).value = "";
   document.getElementById(`subtask-${templateIndex}`).value = "";
   document.getElementById(`contactSelection-${templateIndex}`).innerHTML = "";
-  document.getElementById(`taskCategory-${templateIndex}`).classList.remove('required-input-outline-red');
+  document.getElementById(`taskCategory-${templateIndex}`).classList.remove("required-input-outline-red");
   newTask = [];
   subtasks = [];
-  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
-}
-
-//get informations from input
-function readTaskInput() {
-  const title = document.getElementById(`taskTitle-${templateIndex}`).value;
-  const description = document.getElementById(`taskDescription-${templateIndex}`).value;
-  const date = document.getElementById(`taskDate-${templateIndex}`);
-  const category = document.getElementById(`taskCategory-${templateIndex}`).value;
-  return {
-    title: title,
-    description: description,
-    date: date.value,
-    category: category,
-  };
-}
-
-//get informations from input
-function readTaskInputEditTask() {
-  const title = document.getElementById(`taskTitle-${templateIndex}`).value;
-  const description = document.getElementById(`taskDescription-${templateIndex}`).value;
-  const date = document.getElementById(`taskDate-${templateIndex}`);
-  return {
-    title: title,
-    description: description,
-    date: date.value
-  };
+  checkedCheckboxes = [];
 }
 
 
-async function updateTaskContacts() {
-  if ((authorized === 'guest')) {
-    let resp = await fetch("./JSON/contacts.json");
-    contactsForTasks = await resp.json();
+///////////////////////////////// END ADD-TASK FORM ON HTML ////////////////////////////////////
+
+
+///////////////////////////////////////// ADD-SUBTASKS /////////////////////////////////////////
+
+
+/**
+ * This function includes all functions to add the newly subtasks
+ * 
+ */
+async function addSubtask() {
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    await initiateFunctionsForAddSubtasksOnBoard(); 
   } else {
-    let currentUserContactsForTasks = users[currentUser].contacts;
-    contactsForTasks = currentUserContactsForTasks;
+    await initiateFunctionsForAddSubtasksForm(); 
   }
 }
+
+
+/**
+ * This function retrieves the current task based on the user's authorization level.
+ * It decides which task list to access (either a general task list or a user-specific task list)
+ * depending on whether the user is logged in as a guest or as a registered user.
+ *
+ * @returns {Object} - The current task object from either the general task list or the user-specific task list.
+ */
+function getCurrentTask() {
+  return authorized === "guest" ? tasks[currentOpenTaskId] : users[currentUser].tasks[currentOpenTaskId];
+}
+
+
+/**
+ * This function includes all functions for editing the subtasks in existing tasks
+ * 
+ */
+async function initiateFunctionsForAddSubtasksOnBoard() {
+  const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+  const subtaskValue = subtaskInput.value.trim();
+  if (subtaskValue !== "") {
+    let currentTask = getCurrentTask();
+    editExistSubtask(currentTask, subtaskValue);
+    await saveNewUserDate(); 
+    renderSubtasksPopup(); 
+    subtaskInput.value = "";
+    changeIcons(); 
+  }
+}
+
+
+/**
+ * This function includes all functions for editing the subtasks in existing tasks
+ * 
+ * @param {string} currentTask - current task
+ * @param {string} subtaskValue - input.value for new subtask
+ */
+function editExistSubtask(currentTask, subtaskValue) {
+  if (currentSubtaskId !== undefined) {
+    if (currentSubtaskId.includes("subtasksOpen")) {
+      let index = currentSubtaskId.split("Open")[1];
+      currentTask.subtasksOpen[index] = subtaskValue;
+    } else {
+      let index = currentSubtaskId.split("Done")[1];
+      currentTask.subtasksDone[index] = subtaskValue;
+    }
+  } else {
+    currentTask.subtasksOpen.push(subtaskValue);
+  }
+}
+
+
+/**
+ * This function adds new subtasks on the add-task-form
+ * 
+ */
+async function initiateFunctionsForAddSubtasksForm() {
+  const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+  const subtaskValue = subtaskInput.value.trim();
+  if (subtaskValue !== "") {
+    const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+    subtasks.push(subtaskValue);
+    renderSubtasks(subtaskContainer); 
+    subtaskInput.value = "";
+    changeIcons(); 
+  }
+}
+
+
+///////////////////////////////////// END ADD-SUBTASKS //////////////////////////////////////
+
+
+///////////////////////////////////////// EDIT SUBTASKS /////////////////////////////////////////
+
+
+/**
+ * This function includes all functions for editing the selected subtask
+ * 
+ * @param {string} element - element-div from selected subtask
+ */
+function editSubtask(element) {
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    initiateFunctionsForEditSubtasksInTask(element); 
+  } else {
+    initiateFunctionsForEditSubtasksInForm(element); 
+  }
+}
+
+
+/**
+ * This function initiate the functions for the user or the guest
+ * 
+ * @param {string} element - element-div from selected subtask
+ */
+async function initiateFunctionsForEditSubtasksInTask(element) {
+  if (authorized === "guest") {
+    let currentTask = tasks[currentOpenTaskId];
+    editSubtaskInTask(element, currentTask);
+  } else {
+    let currentTask = users[currentUser].tasks[currentOpenTaskId];
+    editSubtaskInTask(element, currentTask);
+  }
+}
+
+
+/**
+ * This function checks, whether the selected subtask is open or already done.
+ * 
+ * @param {string} element - element-div from selected subtask
+ * @param {string} currentTask - the current task depends on who is logged in
+ */
+function editSubtaskInTask(element, currentTask) {
+  if (element.id.includes("subtasksOpen")) {
+    let index = element.id.split("Open")[1];
+    currentSubtaskId = element.id;
+    let currentSubtask = currentTask.subtasksOpen[index];
+    setSubtaskInputValue(currentSubtask);
+  } else {
+    let index = element.id.split("Done")[1];
+    currentSubtaskId = element.id;
+    let currentSubtask = currentTask.subtasksDone[index];
+    setSubtaskInputValue(currentSubtask);
+  }
+}
+
+
+/**
+ * This function checks, whether the selected subtask is open or already done.
+ * 
+ * @param {string} element - element-div from selected subtask
+ * @param {number} index - the position of the "open" or "done" subtask
+ * @param {string} currentTask - the current task depends on who is logged in
+ */
+function setSubtaskInputValue(currentSubtask) {
+  if (currentSubtask !== -1) {
+    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+    subtaskInput.value = currentSubtask;
+  }
+  changeIcons();
+}
+
+
+/**
+ * This function edits the selected subtask in the form
+ * 
+ * @param {string} element - element-div from selected subtask
+ */
+async function initiateFunctionsForEditSubtasksInForm(element) {
+  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+  const subtaskIndex = getSubtaskIndex(subtaskContainer, element);
+  if (subtaskIndex !== -1) {
+    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+    subtaskInput.value = subtasks[subtaskIndex];
+    subtasks.splice(subtaskIndex, 1);
+    renderSubtasks(subtaskContainer);
+  }
+  changeIcons();
+}
+
+
+/**
+ * This function gets the index of the selected subtask 
+ * 
+ * @param {string} element - element-div from selected subtask
+ * @param {string} subtaskContainer - parent element-div
+ */
+function getSubtaskIndex(subtaskContainer, element) {
+  const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
+    element.parentNode.parentNode
+  );
+  return subtaskIndex;
+}
+
+
+///////////////////////////////////// END EDIT SUBTASKS //////////////////////////////////////
+
+
+////////////////////////////////////// DELETE SUBTASKS ///////////////////////////////////////
+
+
+/**
+ * This function returns the current task based on user authorization level.
+ * @returns {Object} - The current task object.
+ */
+function getCurrentTaskForDeletion() {
+  return authorized === "guest" ? tasks[currentOpenTaskId] : users[currentUser].tasks[currentOpenTaskId];
+}
+
+
+/**
+ * This function deletes a subtask and re-renders the subtasks UI for the board page when templateIndex is 3.
+ * @param {number} index - The index of the subtask to delete.
+ * @param {Object} currentTask - The current task object containing the subtasks.
+ */
+function deleteSubtaskForBoard(index, currentTask) {
+  deleteAndRenderSubtasks(index, currentTask);
+}
+
+
+/**
+ * This function deletes a subtask from the subtasks array and updates the DOM for non-board pages or different template indices.
+ * @param {number} index - The index of the subtask to delete.
+ */
+function deleteSubtaskForOtherPages(index) {
+  subtasks.splice(index, 1);
+  document.getElementById(`subtask${index}`).remove();
+  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
+  renderSubtasks(subtaskContainer);
+}
+
+
+/**
+ * This function deletes a subtask based on the page path, template index, and user authorization.
+ * @param {number} i - The index of the subtask to delete.
+ */
+function deleteSubtask(i) {
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    const currentTask = getCurrentTaskForDeletion();
+    deleteSubtaskForBoard(i, currentTask);
+  } else {
+    deleteSubtaskForOtherPages(i);
+  }
+}
+
+
+/**
+ * This function delets the subtask from the arrays and renders the subtasks again 
+ * 
+ * @param {number} i - index of the selected subtask
+ */
+function deleteAndRenderSubtasks(i, currentTask) {
+  if (i.id.includes("subtasksOpen")) {
+    let index = i.id.split("Open")[1];
+    currentTask.subtasksOpen.splice([index], 1);
+    renderSubtasksPopup();
+  } else {
+    let index = i.id.split("Done")[1];
+    currentTask.subtasksDone.splice([index], 1);
+    renderSubtasksPopup();
+  }
+}
+
+/////////////////////////////////// END DELETE SUBTASKS /////////////////////////////////////
+
+
+/**
+ * Event listener for handling keypress events across the document.
+ * Specifically, it checks for the 'Enter' key press (keyCode 13) when the focus is on the subtask input.
+ * If the 'Enter' key is pressed while focused on the specified input, it prevents the default form submission
+ * and triggers the addition of a subtask.
+ */
+document.addEventListener("keypress", function (event) {
+  if (event.keyCode === 13) {
+    if (document.activeElement.id === `subtask-${templateIndex}`) {
+      event.preventDefault();
+      addSubtask();
+    }
+  }
+});
+
+
+/**
+ * This function clears the input field for subtasks, removes focus from it, and updates the dropdown icon.
+ * It is typically called to reset the subtask input area after a subtask has been added or when clearing the input is needed.
+ */
+function clearSubtaskInput() {
+  let subtaskInput = document.getElementById(`subtask-${templateIndex}`);
+  subtaskInput.value = "";
+  subtaskInput.blur();
+  let iconBox = document.getElementById(`dropdownIcon-${templateIndex}`);
+  iconBox.innerHTML = `
+   <div onclick="changeIcons()" class='icon-edit-delete'><img src="assets/img/add.svg" alt="plus" /></div>
+  `;
+}
+
+
+/**
+ * This function hides the category division if it is currently displayed as a flexbox.
+ * Therefore it checks if the category division (a UI element identified by a specific ID) is visible
+ * and sets its display style to 'none', effectively hiding it from view.
+ */
+function clearCategory() {
+  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
+  if (categoryDiv.style.display === "flex") {
+    categoryDiv.style.display = "none";
+  }
+}
+
+
+/**
+ * This function hides the contact dropdown if it is currently displayed as a flexbox.
+ * It targets a specific UI element for contact details and hides it if it's displayed. 
+ */
+function clearContactDropdown() {
+  let taskContactDiv = document.getElementById(
+    `taskContactDiv-${templateIndex}`
+  );
+  if (taskContactDiv.style.display === "flex") {
+    taskContactDiv.style.display = "none";
+  }
+}
+
+
+/**
+ * This function resets the Arrays and is called when the form is 
+ * cleared or submitted to ensure a clean state.
+ */
+function resetArrays() {
+  dropdownContact = [];
+  subtasks = [];
+  checkedCheckboxes = [];
+}
+
+
+/**
+ * This function clears all input fields and resets selections within a form, identified by a dynamic template index.
+ * It resets values and innerHTML of various task-related input fields and elements
+ * to prepare for new data entry or to clear the current state.
+ */
+function clearForm() {
+  document.getElementById(`taskTitle-${templateIndex}`).value = "";
+  document.getElementById(`taskDescription-${templateIndex}`).value = "";
+  document.getElementById(`taskDate-${templateIndex}`).value = "";
+  document.getElementById(`taskCategory-${templateIndex}`).value = "";
+  document.getElementById(`subtask-${templateIndex}`).value = "";
+  document.getElementById(`taskAssignedTo-${templateIndex}`).value = "";
+  document.getElementById(`subtaskDivAddTask-${templateIndex}`).innerHTML = "";
+  document.getElementById(`contactSelection-${templateIndex}`).innerHTML = "";
+  resetPriority();
+  clearContactDropdown();
+  clearCategory();
+  resetArrays();
+}
+
+
+/**
+ * This function sets priority for a task based on the provided button ID.
+ * Therefore it adds active classes to the priority button to indicate selection,
+ * while removing active classes from other buttons to maintain exclusive selection.
+ * @param {string} btnId - The ID of the button that is to be marked as active.
+ */
+function setPriority(btnId) {
+  removeActiveClasses();
+  setActiveClasses(btnId);
+}
+
+
+/**
+ * This function resets the visual indication of task priority by removing active 
+ * classes from priority buttons.
+ */
+function resetPriority() {
+  removeActiveClasses();
+}
+
+
+/**
+ * This function removes specific active classes from priority buttons and resets the styles of their contained SVG elements.
+ * It targets buttons by their dynamic IDs based on the template index.
+ */
+function removeActiveClasses() {
+  const buttons = [
+    `urgentBtn-${templateIndex}`,
+    `mediumBtn-${templateIndex}`,
+    `lowBtn-${templateIndex}`,
+  ];
+  buttons.forEach((button) => {
+    const buttonElement = document.getElementById(button);
+    buttonElement.classList.remove(
+      "active-prio-btn-urgent",
+      "active-prio-btn-medium",
+      "active-prio-btn-low"
+    );
+    buttonElement.querySelector("svg").style.fill = "";
+  });
+}
+
+
+/**
+ * This function adds a specified class to a button and sets the fill color of its SVG element.
+ * @param {HTMLElement} button - The button to modify.
+ * @param {string} className - The class name to add to the button.
+ * @param {string} fill - The color to set as the SVG fill.
+ */
+function activateButton(button, className, fill) {
+  if (button) {
+    button.classList.add(className);
+    const buttonSVG = button.querySelector("svg");
+    if (buttonSVG) {
+      buttonSVG.style.fill = fill;
+    }
+  }
+}
+
+
+/**
+ * This function sets active classes on buttons based on the button ID to indicate priority.
+ * It adjusts the class and style of the button and its contained SVG element
+ * according to the specified priority level.
+ * @param {string} btnId - The ID suffix of the button that is clicked.
+ */
+function setActiveClasses(btnId) {
+  const clickedButton = document.getElementById(`${btnId}-${templateIndex}`);
+  switch (btnId) {
+    case "urgentBtn":
+      activateButton(clickedButton, "active-prio-btn-urgent", "white");
+      break;
+    case "mediumBtn":
+      activateButton(clickedButton, "active-prio-btn-medium", "white");
+      break;
+    case "lowBtn":
+      activateButton(clickedButton, "active-prio-btn-low", "white");
+      break;
+    default:
+      break;
+  }
+}
+
+
+/**
+ * This function rotates the dropdown icon based on whether the dropdown is open or not.
+ * It applies a CSS transform to rotate the icon element by 180 degrees when the dropdown is open,
+ * and resets the transform when it is closed, effectively toggling the icon's orientation.
+ *
+ * @param {HTMLElement} icon - The DOM element representing the dropdown icon.
+ * @param {boolean} isOpen - A boolean value indicating whether the dropdown is currently open.
+ */
+function rotateDropdownIcon(icon, isOpen) {
+  if (isOpen) {
+    icon.style.transform = "rotate(180deg)";
+  } else {
+    icon.style.transform = "";
+  }
+}
+
+
+/**
+ * This function sets the minimum date that can be selected in a date input field to today's date.
+ * It ensures that users cannot select a date earlier than the current date.
+ */
+function setMinimumDate() {
+  var currentDate = new Date();
+  var minDate = currentDate.toISOString().split("T")[0];
+  document
+    .getElementById(`taskDate-${templateIndex}`)
+    .setAttribute("min", minDate);
+}
+
+
+/**
+ * This function converts the date from a date input field to a formatted string and sets the input type to text.
+ * It is used to format the date selected by a user into a more readable format
+ * and displays it in a text input for smoother further processing.
+ *
+ * @param {HTMLInputElement} input - The input element that contains the date to be formatted.
+ * @returns {Promise<void>} - A promise that resolves when the date has been formatted and the input has been updated.
+ */
+async function formatInputDate(input) {
+  let dateByValue = new Date(input.value);
+  let formattedDate = await formatDateCorrect(dateByValue);
+  input.type = "text";
+  input.value = formattedDate;
+}
+
+
+///////// SEARCHBAR /////////
+
+
+/**
+ * This function toggles the placeholder text and the associated class of the "taskAssignedTo" input field.
+ * It alternates the placeholder between "Search contact" and "Select contacts to assign".
+ * This is used to indicate whether the input field is in a search mode or in a selection mode to the user.
+ */
+function clearAssignToInput() {
+  let input = document.getElementById(`taskAssignedTo-${templateIndex}`);
+  if (input.placeholder === "Search contact") {
+    input.placeholder = "Select contacts to assign";
+    input.classList.remove("search-placeholder");
+  } else {
+    input.placeholder = "Search contact";
+    input.classList.add("search-placeholder");
+  }
+}
+
+
+/**
+ * This function 
+ */
+function turnArrow() {
+  let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
+  if (arrow.classList.contains("rotate-180")) {
+    arrow.classList.remove("rotate-180");
+  } else {
+    arrow.classList.add("rotate-180");
+  }
+}
+
+
+function findMatchingContact() {
+  clearAssignToInput();
+  let searchInput = document
+    .getElementById(`taskAssignedTo-${templateIndex}`)
+    .value.trim()
+    .toLowerCase();
+  //console.log("Sucheingabe:", searchInput); // Log der Sucheingabe
+  if (searchInput === "") {
+    openDropdown();
+    updateDropdownMenu(contactsForTasks);
+  } else {
+    let filteredContacts = contactsForTasks.filter((contact) => {
+      let isValidContact =
+        contact && contact.name && typeof contact.name === "string";
+      //console.log("Verarbeiteter Kontakt:", contact); // Log jeden Kontakts vor der Filterung
+      return isValidContact && contact.name.toLowerCase().includes(searchInput);
+    });
+    //console.log("Gefilterte Kontakte:", filteredContacts); // Log der gefilterten Kontakte
+    if (!isDropdownOpen()) {
+      openDropdown();
+    }
+    updateDropdownMenu(filteredContacts);
+  }
+}
+
+
 
 function openDropdown() {
   sortContactsForTasks();
   clearAssignToInput();
-  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  let taskContactDiv = document.getElementById(
+    `taskContactDiv-${templateIndex}`
+  );
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
   } else {
@@ -196,6 +864,20 @@ function openDropdown() {
   showContactSelection();
 }
 
+
+/**
+ * This function sorts the contacts
+ * 
+ */
+function sortContactsForTasks() {
+  contactsForTasks.sort((a, b) => {
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+}
+
+
 function renderContactsDropwdown(taskContactDiv, contact, index) {
   let letters = contactNamesLetters(contact.name);
   renderDopdownMenu(taskContactDiv, letters, contact, index);
@@ -206,6 +888,7 @@ function getBackgroundColorAssignedContact(contactIndex) {
   return contacts[contactIndex].color;
 }
 */
+
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   let backgroundColor = contact.color;
@@ -221,6 +904,16 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   </div>
   `;
 }
+
+
+function isDropdownOpen() {
+  let taskContactDiv = document.getElementById(
+    `taskContactDiv-${templateIndex}`
+  );
+  return taskContactDiv.style.display === "flex";
+}
+
+
 
 function handleCheckboxChange(index) {
   let wrapper = document.getElementById(`wrapper${index}`);
@@ -242,6 +935,7 @@ function handleCheckboxChange(index) {
   }
 }
 
+
 function markSelectedContacts() {
   for (let index = 0; index < contactsForTasks.length; index++) {
     const contact = contactsForTasks[index];
@@ -253,6 +947,8 @@ function markSelectedContacts() {
   }
 }
 
+
+
 /**
  * This function renders the selected contacts in the contact selection area.
  * Therefore it first loops through the checkedCheckboxes array to find the name of the selected contact.
@@ -260,8 +956,12 @@ function markSelectedContacts() {
  * If the name is found in the array, the initials and background colors are extracted from it.
  */
 function showContactSelection() {
-  let contactSelection = document.getElementById(`contactSelection-${templateIndex}`);
-  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  let contactSelection = document.getElementById(
+    `contactSelection-${templateIndex}`
+  );
+  let taskContactDiv = document.getElementById(
+    `taskContactDiv-${templateIndex}`
+  );
   if (taskContactDiv.style.display === "none") {
     contactSelection.style.display = "flex";
   } else {
@@ -281,423 +981,32 @@ function showContactSelection() {
   }
 }
 
-//Change Prio Btn colors!
-function setPriority(btnId) {
-  removeActiveClasses();
-  setActiveClasses(btnId);
-}
 
-function resetPriority() {
-  removeActiveClasses();
-}
-
-//Return Value from Priority!
-function determinePriority() {
-  let prio = "Medium"; // Standardpriorität
-  const urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
-  const mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
-  const lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
-  if (urgentBtn.classList.contains("active-prio-btn-urgent")) {
-    prio = "Urgent";
-  } else if (lowBtn.classList.contains("active-prio-btn-low")) {
-    prio = "Low";
-  }
-  return prio;
-}
-
-function setActiveClasses(btnId) {
-  const clickedButton = document.getElementById(`${btnId}-${templateIndex}`);
-  const buttonSVG = clickedButton.querySelector("svg");
-  switch (btnId) {
-    case "urgentBtn":
-      clickedButton.classList.add("active-prio-btn-urgent");
-      buttonSVG.style.fill = "white";
-      break;
-    case "mediumBtn":
-      clickedButton.classList.add("active-prio-btn-medium");
-      buttonSVG.style.fill = "white";
-      break;
-    case "lowBtn":
-      clickedButton.classList.add("active-prio-btn-low");
-      buttonSVG.style.fill = "white";
-      break;
-    default:
-      break;
-  }
-}
-
-function removeActiveClasses() {
-  const buttons = [`urgentBtn-${templateIndex}`, `mediumBtn-${templateIndex}`, `lowBtn-${templateIndex}`];
-  buttons.forEach((button) => {
-    const buttonElement = document.getElementById(button);
-    buttonElement.classList.remove(
-      "active-prio-btn-urgent",
-      "active-prio-btn-medium",
-      "active-prio-btn-low"
-    );
-    buttonElement.querySelector("svg").style.fill = "";
-  });
-}
-
-// for category section
-function chooseCategory(category) {
-  document.getElementById(`taskCategory-${templateIndex}`).value = category.innerText;
-}
-
-function toggleCategoryDiv() {
-  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
-  let dropdownIcon = document.getElementById(`categoryDropIcon-${templateIndex}`);
-  if (
-    categoryDiv.style.display === "none" ||
-    categoryDiv.style.display === ""
-  ) {
-    categoryDiv.style.display = "flex";
-    dropdownIcon.style.transform = "rotate(180deg)";
-  } else {
-    categoryDiv.style.display = "none";
-    dropdownIcon.style.transform = "";
-  }
-}
-
-//for subtasks section
-function addSubtask() {
-  if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    console.log('board');
-    console.log('3');
-    if ((authorized === 'guest')) {
-      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-      const subtaskValue = subtaskInput.value.trim();
-      if (subtaskValue !== "") {
-        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-        let currentTask = tasks[currentOpenTaskId];
-        if (currentSubtaskId !== undefined) {
-          if (currentSubtaskId.includes('subtasksOpen')) {
-            let index = currentSubtaskId.split('Open')[1];
-            currentTask.subtasksOpen[index] = subtaskValue;
-          } else {
-            let index = currentSubtaskId.split('Done')[1];
-            currentTask.subtasksDone[index] = subtaskValue;
-          }
-        } else {
-          currentTask.subtasksOpen.push(subtaskValue);
-        }
-        renderSubtasksPopup();
-        subtaskInput.value = "";
-        changeIcons();
-      }
-    } else {
-      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-      const subtaskValue = subtaskInput.value.trim();
-      if (subtaskValue !== "") {
-        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-        let currentTask = users[currentUser].tasks[currentOpenTaskId];
-        if (currentSubtaskId !== undefined) {
-          if (currentSubtaskId.includes('subtasksOpen')) {
-            let index = currentSubtaskId.split('Open')[1];
-            currentTask.subtasksOpen[index] = subtaskValue;
-          } else {
-            let index = currentSubtaskId.split('Done')[1];
-            currentTask.subtasksDone[index] = subtaskValue;
-          }
-        } else {
-          currentTask.subtasksOpen.push(subtaskValue);
-          setItem("users", JSON.stringify(users));
-        }
-        renderSubtasksPopup();
-        subtaskInput.value = "";
-        changeIcons();
-      }
-      /*
- 
-      await setItem("users", JSON.stringify(users)); */
-    }
-
-  } else {
-    const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-    const subtaskValue = subtaskInput.value.trim();
-    if (subtaskValue !== "") {
-      const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-      subtasks.push(subtaskValue);
-      renderSubtasks(subtaskContainer);
-      subtaskInput.value = "";
-      changeIcons();
-    }
-  }
-}
-
-//Event handler to add subtask with enter-key
-document.addEventListener("keypress", function (event) {
-  if (event.keyCode === 13) {
-    if (document.activeElement.id === `subtask-${templateIndex}`) {
-      event.preventDefault();
-      addSubtask();
-    }
-  }
-});
-
-function getSubtaskIndex(element) {
-  const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-  const subtaskIndex = Array.from(subtaskContainer.children).indexOf(
-    element.parentNode.parentNode
-  );
-  return subtaskIndex;
-}
-
-function renderSubtasks(container) {
-  container.innerHTML = "";
-  subtasks.forEach((subtask, index) => {
-    container.innerHTML += `
-      <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
-        <span>• ${subtask}</span>
-        <div class='d_f_c_c gap-5'>
-          <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
-          <div class="subtask-partingline"></div>
-          <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
-        </div>
-      </div>
-    `;
-  });
-}
-
-function changeIcons() {
-  let iconBox = document.getElementById(`dropdownIcon-${templateIndex}`);
-  iconBox.classList.remove("input-icon-div");
-  iconBox.classList.add("input-icon");
-
-  iconBox.innerHTML = `
-    <div class="d_f_c_c gap-5 padding-right-36">
-    <div onclick='clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/close.svg" alt="cross" /></div>
-      <div class='input-spacer'></div>
-      <div onclick='addSubtask(),clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/check-black.svg" alt="check" /></div>
-    </div>
-  `;
-}
-
-function editSubtask(element) {
-  if (document.location.pathname === `/board.html`) {
-
-    if ((authorized === 'guest')) {
-      let currentTask = tasks[currentOpenTaskId];
-      // currentTask.title = taskInput.title;
-      if (element.id.includes('subtasksOpen')) {
-        currentSubtaskId = element.id; // global var for addSubtask()
-        let index = element.id.split('Open')[1];
-        let currentSubtask = currentTask.subtasksOpen[index];
-        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-        if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-          subtaskInput.value = currentSubtask;
-        }
-        changeIcons();
-      } else {
-        currentSubtaskId = element.id; // global var for addSubtask()
-        let index = element.id.split('Done')[1];
-        let currentSubtask = currentTask.subtasksDone[index];
-        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-        if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-          subtaskInput.value = currentSubtask;
-        }
-        changeIcons();
-      }
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      if (element.id.includes('subtasksOpen')) {
-        currentSubtaskId = element.id; // global var for addSubtask()
-        let index = element.id.split('Open')[1];
-        let currentSubtask = currentTask.subtasksOpen[index];
-        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-        if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-          subtaskInput.value = currentSubtask;
-        }
-        changeIcons();
-      } else {
-        currentSubtaskId = element.id; // global var for addSubtask()
-        let index = element.id.split('Done')[1];
-        let currentSubtask = currentTask.subtasksDone[index];
-        const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-        if (currentSubtask !== -1) {
-          const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-          subtaskInput.value = currentSubtask;
-        }
-        changeIcons();
-      }
-    }
-  } else {
-    const subtaskContainer = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-    const subtaskIndex = getSubtaskIndex(element);
-    if (subtaskIndex !== -1) {
-      const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-      subtaskInput.value = subtasks[subtaskIndex];
-      subtasks.splice(subtaskIndex, 1);
-      renderSubtasks(subtaskContainer);
-    }
-    changeIcons();
-  }
-}
-
-function deleteSubtask(i) {
-  if (document.location.pathname === `/board.html`) {
-    if ((authorized === 'guest')) {
-      let currentTask = tasks[currentOpenTaskId];
-      if (i.id.includes('subtasksOpen')) {
-        let index = i.id.split('Open')[1];
-        currentTask.subtasksOpen.splice([index], 1);
-        renderSubtasksPopup();
-      } else {
-        let index = i.id.split('Done')[1];
-        currentTask.subtasksDone.splice([index], 1);
-        renderSubtasksPopup();
-      }
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      if (i.id.includes('subtasksOpen')) {
-        let index = i.id.split('Open')[1];
-        currentTask.subtasksOpen.splice([index], 1);
-        renderSubtasksPopup();
-      } else {
-        let index = i.id.split('Done')[1];
-        currentTask.subtasksDone.splice([index], 1);
-        renderSubtasksPopup();
-      }
-    }
-  } else {
-    subtasks.splice(i, 1);
-    document.getElementById(`subtask-${templateIndex}-${i}`).remove();
-  }
-}
-
-function clearSubtaskInput() {
-  let subtaskInput = document.getElementById(`subtask-${templateIndex}`);
-  subtaskInput.value = "";
-  subtaskInput.blur();
-  let iconBox = document.getElementById(`dropdownIcon-${templateIndex}`);
-  iconBox.innerHTML = `
-   <div onclick="changeIcons()" class='icon-edit-delete'><img src="assets/img/add.svg" alt="plus" /></div>
-  `;
-}
-
-function clearCategory() {
-  let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
-  if (categoryDiv.style.display === "flex") {
-    categoryDiv.style.display = "none";
-  }
-}
-
-function clearContactDropdown() {
-  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
-  if (taskContactDiv.style.display === "flex") {
-    taskContactDiv.style.display = "none";
-  }
-}
-
-//clear the whole form
-function clearForm() {
-  document.getElementById(`taskTitle-${templateIndex}`).value = "";
-  document.getElementById(`taskDescription-${templateIndex}`).value = "";
-  document.getElementById(`taskDate-${templateIndex}`).value = "";
-  document.getElementById(`taskCategory-${templateIndex}`).value = "";
-  document.getElementById(`subtask-${templateIndex}`).value = "";
-  document.getElementById(`taskAssignedTo-${templateIndex}`).value = "";
-  document.getElementById(`subtaskDivAddTask-${templateIndex}`).innerHTML = "";
-  document.getElementById(`contactSelection-${templateIndex}`).innerHTML = "";
-  resetPriority();
-  clearContactDropdown();
-  clearCategory();
-  dropdownContact = [];
-  subtasks = [];
-  checkedCheckboxes = [];
-}
-
-function rotateDropdownIcon(icon, isOpen) {
-  if (isOpen) {
-    icon.style.transform = "rotate(180deg)";
-  } else {
-    icon.style.transform = "";
-  }
-}
-
-function setMinimumDate() {
-  var currentDate = new Date();
-  var minDate = currentDate.toISOString().split("T")[0];
-  document.getElementById(`taskDate-${templateIndex}`).setAttribute("min", minDate);
-}
-
-async function formatInputDate(input) {
-  let dateByValue = new Date(input.value);
-  let formattedDate = await formatDateCorrect(dateByValue);
-  input.type = 'text';
-  input.value = formattedDate;
-  // input.valueAsDate = dateByValue;
-}
-
-
-///////// SEARCHBAR /////////
-
-function clearAssignToInput() {
-  let input = document.getElementById(`taskAssignedTo-${templateIndex}`);
-  if (input.placeholder === "Search contact") {
-    input.placeholder = "Select contacts to assign";
-    input.classList.remove("search-placeholder");
-  } else {
-    input.placeholder = "Search contact";
-    input.classList.add("search-placeholder");
-  }
-}
-
-function turnArrow() {
-  let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
-  if (arrow.classList.contains("rotate-180")) {
-    arrow.classList.remove("rotate-180");
-  } else {
-    arrow.classList.add("rotate-180");
-  }
-}
-
-function findMatchingContact() {
-  clearAssignToInput();
-  let searchInput = document.getElementById(`taskAssignedTo-${templateIndex}`).value.trim().toLowerCase();
-  //console.log("Sucheingabe:", searchInput); // Log der Sucheingabe
-  if (searchInput === "") {
-    openDropdown();
-    updateDropdownMenu(contactsForTasks);
-  } else {
-    let filteredContacts = contactsForTasks.filter(contact => {
-      let isValidContact = contact && contact.name && typeof contact.name === 'string';
-      //console.log("Verarbeiteter Kontakt:", contact); // Log jeden Kontakts vor der Filterung
-      return isValidContact && contact.name.toLowerCase().includes(searchInput);
-    });
-    //console.log("Gefilterte Kontakte:", filteredContacts); // Log der gefilterten Kontakte
-    if (!isDropdownOpen()) {
-      openDropdown();
-    }
-    updateDropdownMenu(filteredContacts);
-  }
-}
-
-function isDropdownOpen() {
-  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
-  return taskContactDiv.style.display === "flex";
-}
 
 function updateDropdownMenu(contacts) {
-  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  let taskContactDiv = document.getElementById(
+    `taskContactDiv-${templateIndex}`
+  );
   taskContactDiv.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
     if (!contact || !contact.name) {
-      console.error("Ungültiger Kontakt oder Name bei updateDropdownMenu:", contact);
+      console.error(
+        "Ungültiger Kontakt oder Name bei updateDropdownMenu:",
+        contact
+      );
       continue; // Überspringe ungültige Kontakte
     }
     renderContactsDropwdown(taskContactDiv, contact, i);
   }
 }
 
+
 function setFocusOnInputfield() {
   let inputfield = document.getElementById(`taskAssignedTo-${templateIndex}`);
   inputfield.focus();
 }
+
 
 function handleClickOnDropdown() {
   if (!isDropdownOpen()) {
@@ -711,68 +1020,116 @@ function handleClickOnDropdown() {
   }
 }
 
+
 function closeDropdown() {
   clearAssignToInput();
   turnArrow();
   let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
-  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  let taskContactDiv = document.getElementById(
+    `taskContactDiv-${templateIndex}`
+  );
   arrow.classList.remove("rotate-180");
   taskContactDiv.style.display = "none";
 }
 
+
 ///////// SEARCHBAR ENDE /////////
+
+/**
+ * This function handles the display of success messages and specific actions based on the page URL.
+ * It determines the context (Add Task or Board) and performs actions accordingly.
+ */
 function addTaskToBoardMessage() {
-  if (document.location.pathname.includes('add-task.html')) {
-    const container = document.getElementById("addTaskMessageContainer");
-    container.classList.add("add-board-message-btn");
-    container.style.display = "flex";
-
-    // Timeout verwenden, um die Klasse "show" hinzuzufügen
-    setTimeout(function () {
-      container.classList.add("show");
-
-      // Timeout verwenden, um das Element auszublenden
-      setTimeout(function () {
-        container.classList.remove("show");
-        container.style.display = "none";
-      }, 1500);
-    }, 100);
-
-    if ((authorized === 'guest')) {
-      let div = document.getElementById('guestMessagePopupAddTask');
-      let messageText = document.getElementById('guestMessageAddTask');
-      showGuestPopupMessage(div, messageText);
-    } else {
-      forwardToBoard();
-    }
+  if (document.location.pathname.includes("add-task.html")) {
+    showSuccessMessage();
+    handleAddTaskPageActions();
   }
-
-  if (document.location.pathname.includes('board.html')) {
+  if (document.location.pathname.includes("board.html")) {
     closeBoardAddTaskPopup();
-    if ((authorized === 'guest')) {
-      let div = document.getElementById('guestMessagePopupBoard');
-      let messageText = document.getElementById('guestMessageBoard');
-      showGuestPopupMessage(div, messageText);
-    }
+    showSuccessMessage();
+    handleBoardPageActions();
   }
 }
 
+
+/**
+ * This function handles specific actions on the 'Add Task' page
+ * and manages the guest message popup and navigation for authenticated users.
+ */
+function handleAddTaskPageActions() {
+  if (authorized === "guest") {
+    let div = document.getElementById("guestMessagePopupAddTask");
+    let messageText = document.getElementById("guestMessageAddTask");
+    showGuestPopupMessage(div, messageText);
+  } else {
+    forwardToBoard();
+  }
+}
+
+
+/**
+ * This function handles specific actions on the 'Board' page
+ * and manages the guest message popup and navigation for authenticated users.
+ */
+function handleBoardPageActions() {
+  if (authorized === "guest") {
+    let div = document.getElementById("guestMessagePopupBoard");
+    let messageText = document.getElementById("guestMessageBoard");
+    showGuestPopupMessage(div, messageText);
+  }
+}
+
+
+/**
+ * This function displays a success message with an animation that shows and then hides the message.
+ * It animates the success message container to provide visual feedback to the user.
+ */
+function showSuccessMessage() {
+  let container = document.getElementById("addTaskMessageContainer");
+  container.classList.add("add-board-message-btn");
+  container.style.display = "flex";
+  setTimeout(function () {
+    container.classList.add("show");
+    setTimeout(function () {
+      container.classList.remove("show");
+      container.style.display = "none";
+    }, 1500);
+  }, 100);
+}
+
+
+/**
+ * This function navigates to the board page after a delay.
+ */
 function forwardToBoard() {
   setTimeout(function () {
     window.location.replace("board.html");
   }, 2000);
 }
 
+
 function closeAddTaskMenuDiv() {
   let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
   if (taskContactDiv.style.display === "flex") {
+    handleClickOnDropdown();
     closeDropdown();
   }
   taskContactDiv.style.display = "none";
   categoryDiv.style.display = "none";
 }
 
+
 function changeTemplateIndex() {
   templateIndex = 4;
+}
+
+
+
+//// OTHER /// 
+
+// for category section
+function chooseCategory(category) {
+  document.getElementById(`taskCategory-${templateIndex}`).value =
+    category.innerText;
 }

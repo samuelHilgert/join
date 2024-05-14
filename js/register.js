@@ -1,14 +1,13 @@
-
 let registerSuccess = false;
 let checkbox = false;
 let emailExist = false;
 let displayMessageTime = 2500;
 
+
 /**
  * This function loads all already registered users from remote server
  * 
  */
-
 async function loadUsers() {
     try {
         users = JSON.parse(await getItem('users'));
@@ -16,6 +15,7 @@ async function loadUsers() {
         console.error('Loading error:', e);
     }
 }
+
 
 /**
  * This function checks the individual requirements for successful registration
@@ -26,6 +26,7 @@ function register() {
     registerBtn.disabled = true; // registerBtn ist die id vom button Absenden
     checkboxClicked();
 }
+
 
 /**
  * This function checks whether the checkbox was clicked by user
@@ -48,8 +49,8 @@ function checkboxClicked() {
         }, displayMessageTime);
         signUpErrorReset();
     }
-
 }
+
 
 /**
  * This function checks whether email already exist
@@ -76,40 +77,64 @@ async function checkEmailExist() {
     }
 }
 
+
 /**
- * This function checks whether the two passwords match
+ * Checks if the passwords provided during sign-up match.
  * 
+ * @async
+ * @function signUpPasswordsMatched
+ * @type {HTMLElement}
  */
 async function signUpPasswordsMatched() {
     let container = document.getElementById('messageFormSignUp');
     if (password.value === confirmPassword.value) {
-        registerSuccess = true;
-        pushUserData();
-        showSignUpMessage();
-        messageDisplay(container);
-        moveContainerUp(container);
-        setTimeout(function () {
-            moveContainerDown(container);
-        }, 1500);
-        setTimeout(function () {
-            hideMessageContainer(container);
-        }, displayMessageTime);
-        resetSingUpForm();
-        setTimeout(firstLogin, 1500);
-    }
-    else {
-        showSignUpMessage();
-        messageDisplay(container);
-        moveContainerUp(container);
-        setTimeout(function () {
-            moveContainerDown(container);
-        }, 1500);
-        setTimeout(function () {
-            hideMessageContainer(container);
-        }, displayMessageTime);
-        resetSingUpForm();
+        handleSuccessfulRegistration(container);
+    } else {
+        handlePasswordMismatch(container);
     }
 }
+
+
+/**
+ * Handles the scenario when passwords match during sign-up.
+ * 
+ * @param {HTMLElement} container - The container element for displaying messages.
+ */
+async function handleSuccessfulRegistration(container) {
+    registerSuccess = true;
+    pushUserData();
+    showSignUpMessage();
+    messageDisplay(container);
+    moveContainerUp(container);
+    setTimeout(function () {
+        moveContainerDown(container);
+    }, 1500);
+    setTimeout(function () {
+        hideMessageContainer(container);
+    }, displayMessageTime);
+    resetSingUpForm();
+    setTimeout(firstLogin, 1500);
+}
+
+
+/**
+ * Handles the scenario when passwords do not match during sign-up.
+ * 
+ * @param {HTMLElement} container - The container element for displaying messages.
+ */
+async function handlePasswordMismatch(container) {
+    showSignUpMessage();
+    messageDisplay(container);
+    moveContainerUp(container);
+    setTimeout(function () {
+        moveContainerDown(container);
+    }, 1500);
+    setTimeout(function () {
+        hideMessageContainer(container);
+    }, displayMessageTime);
+    resetSingUpForm();
+}
+
 
 /**
  * This function resets the password values 
@@ -122,6 +147,7 @@ function signUpErrorReset() {
     registerBtn.disabled = false;
 }
 
+
 /**
  * This function set message display to none
  * 
@@ -132,11 +158,19 @@ function messageDisplay(container) {
     container.style.display = 'flex';
 }
 
+
+/**
+ * Hides the message container and its parent container.
+ * 
+ * @param {HTMLElement} container - The container element to be hidden.
+ */
 function hideMessageContainer(container) {
+    /** @type {HTMLElement} */
     let signUpMessageContainer = document.getElementById('signUpMessageContainer');
     signUpMessageContainer.style.display = 'none';
     container.style.display = 'none';
 }
+
 
 /**
  * If the login requirements are successful, the user data are passed to the "users" array.
@@ -146,6 +180,7 @@ async function pushUserData() {
     pushInArray();
     await pushOnRemoteServer();
 }
+
 
 /**
  * The user data are passed to the "users" array.
@@ -161,6 +196,7 @@ function pushInArray() {
     });
 }
 
+
 /**
  * The user data are passed on the remote server.
  * 
@@ -168,6 +204,7 @@ function pushInArray() {
 async function pushOnRemoteServer() {
     await setItem('users', JSON.stringify(users));
 }
+
 
 /**
  * This function includes all output messages in the various cases of the register process.
@@ -190,6 +227,7 @@ function showSignUpMessage() {
     }
 }
 
+
 /**
  * This function resets all values
  * 
@@ -205,12 +243,12 @@ function resetSingUpForm() {
     checkbox = false;
 }
 
+
 /**
  * This function returns the user to login.html with a success message in the URL
  * 
  */
 function backToLogin() {
-    window.location.href = './login.html?msg=Du hast dich erfolgreich registriert'; // queryParameter 
+    window.location.href = './login.html?msg=You Signed Up successfully'; // queryParameter 
 }
-
 

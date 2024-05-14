@@ -75,6 +75,7 @@
         min-height: 0px;
         gap: 15px;
         overflow: scroll;
+        flex-wrap: wrap;
     }
 
     .drag-area-no-tasks {

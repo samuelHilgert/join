@@ -1,7 +1,7 @@
 .input-style {
   width: 100%;
   height: auto;
-  padding: 20px 24px;
+  padding: 16px 24px;
   box-sizing: border-box;
   border: unset;
   border-radius: 10px;
@@ -10,22 +10,7 @@
   background-position-x: calc(100% - 20px);
   background-position-y: 50%;
   background-size: 24px;
-}
-
-.input-style-search {
-  padding: 10px 14px !important;
-  background-color: white;
-}
-
-.search-board-input {
-  padding: 10px 14px;
-  border: unset;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.search-icon img:hover {
-  cursor: pointer;
+  font-size: 16px;
 }
 
 .input-name {
@@ -43,11 +28,6 @@
 .input-phone {
   background-image: url("../assets/img/phone.svg");
 }
-
-/*
-.input-dropdown-arrow {
-  background-image: url("../assets/img/arrow_drop_down.png");
-}*/
 
 .input-style::placeholder {
   color: rgba(209, 209, 209, 1);
@@ -154,18 +134,6 @@
   fill: #29abe2;
 }
 
-.btn-board {
-  border-radius: 8px;
-  padding: 4px 16px;
-  background-color: rgba(0, 56, 255, 1);
-  color: white;
-  line-height: 19.2px;
-  border: none;
-  text-wrap: nowrap;
-  font-size: 16px;
-  font-weight: 400;
-}
-
 .animation-container {
   width: 100%;
   height: 100%;
@@ -176,7 +144,7 @@
 .logo-animation {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 38%;
   transform: translate(0, 0);
   animation: moveLogo 2s 1 forwards, shrinkLogo 0.7s 1 forwards;
   /* Zwei Animationen kombinieren */
@@ -190,7 +158,7 @@
 
 @keyframes moveLogo {
   to {
-    top: -120px;
+    top: -170px;
     left: -76px;
   }
 }
@@ -222,48 +190,6 @@
   height: 100px;
 }
 
-.summary-category-text {
-  white-space: nowrap;
-}
-
-.card {
-  display: flex;
-  border-radius: 30px;
-  padding: 0 40px;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  height: 100%;
-  flex: 1;
-  box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 1);
-  color: rgba(0, 0, 0, 1);
-  transition: transform 0.3s ease;
-}
-
-.card:hover {
-  cursor: pointer;
-  color: rgba(255, 255, 255, 1);
-  background-color: #2a3647;
-  transform: scale(1.07);
-  /* Vergrößern um 7% */
-}
-
-.card-upcoming {
-  border-radius: 30px;
-  padding: 0 20px;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  height: 100%;
-  min-width: 100%;
-  box-sizing: border-box;
-  gap: 20px;
-}
-
-.summary-icon {
-  width: 65px;
-  height: 65px;
-}
-
 .back-arrow {
   width: 32px;
   height: 32px;
@@ -290,99 +216,11 @@
   background-color: rgba(209, 209, 209, 1);
 }
 
-.drag-area-container {
-  gap: 10px;
-}
-
-.drag-area-category {
-  height: 100%;
-  flex: 1;
-  margin: 0 2px;
-  box-sizing: border-box;
-}
-
-.drag-area-no-tasks {
-  padding: 10px;
-  margin: 10px;
-  min-height: 50px;
-  background-color: rgba(231, 231, 231, 1);
-  border-radius: 10px;
-  border: 1px dashed black;
-  box-sizing: border-box;
-}
-
-.drag-area {
-  width: 220px;
-  flex: 1;
-  min-height: 50px;
-  padding: 0 5px;
-  box-sizing: border-box;
-  margin-bottom: 50px;
-  background-color: rgba(231, 231, 231, 1);
-  border-radius: 10px;
-  border: 1px dashed black;
-}
-
-.drag-area-alt {
-  min-height: 600px;
-  height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0;
-  border-radius: 10px;
-}
-
-.add-task-btn-board-header svg {
-  width: 15px;
-  height: 14px;
-}
-
-.task-popup-svg {
-  height: 18px;
-  width: 16px;
-  fill: rgba(42, 54, 71, 1);
-}
-
 .header-icons-wrapper:hover .task-popup-svg,
 .header-icons-wrapper:hover .task-popup-span {
   fill: rgba(41, 171, 226, 1);
   color: rgba(41, 171, 226, 1);
   cursor: pointer;
-}
-
-.task-popup-span {
-  font-family: "Inter";
-  font-weight: 400;
-  font-size: 16px;
-  color: rgba(42, 54, 71, 1);
-}
-
-.drag-area-highlight {
-  padding: 10px;
-  height: auto;
-  width: 100%;
-  background-color: rgba(212, 212, 212, 0.2);
-  border-radius: 10px;
-  box-sizing: border-box;
-}
-
-.todo {
-  background-color: white;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  padding: 20px;
-  margin: 10px 0;
-  width: 100%;
-  max-width: 280px;
-  box-sizing: border-box;
-  height: auto;
-  min-height: 280px;
-  cursor: pointer;
-}
-
-.todo p {
-  color: rgba(168, 168, 168, 1);
-  font-size: 16px;
 }
 
 ol li::marker {
@@ -395,38 +233,8 @@ li {
   margin: 20px 0;
 }
 
-.progress {
-  cursor: pointer;
-  border-radius: 8px;
-  background-color: rgb(230, 230, 230);
-  width: 100%;
-  margin-right: 5px;
-  box-sizing: border-box;
-}
-
-.progress-bar {
-  height: 10px;
-  border-radius: 8px;
-  background-color: rgb(230, 230, 230);
-}
-
-.progress-bar.blue {
-  background-color: rgba(69, 137, 255, 1);
-}
-
-.statusText {
-  display: none;
-  width: 100%;
-  margin-left: 5px;
-  box-sizing: border-box;
-}
-
 .outside {
   right: 0;
-}
-
-#boardTaskPopup {
-  display: none;
 }
 
 .popup-bg-filter {
@@ -438,33 +246,6 @@ li {
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 99;
-}
-
-.board-task-popup-container {
-  width: 35%;
-  height: 80%;
-  border-radius: 30px;
-  position: relative;
-  z-index: 9999;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.close-popup-button-board {
-  border-radius: 50%;
-  height: 33px;
-  width: 33px;
-  margin-top: -8px;
-}
-
-.close-popup-button-board:hover {
-  background-color: rgba(225, 225, 225, 1);
-  cursor: pointer;
-}
-
-.close-popup-button-board-img {
-  width: 25px;
-  height: 25px;
 }
 
 .close-button-div:hover {
@@ -480,23 +261,6 @@ li {
 .delete-style:hover {
   color: #29abe2;
   cursor: pointer;
-}
-
-#boardAddTaskPopup {
-  display: none;
-}
-
-.board-add-task-popup-container {
-  width: 70%;
-  height: 80%;
-  overflow: scroll;
-  border-radius: 30px;
-  position: absolute;
-  z-index: 9999;
-}
-
-.mobile-header-menu {
-  display: none;
 }
 
 #headerSymbolPopup {
@@ -607,14 +371,6 @@ li {
   display: none;
 }
 
-#guestMessagePopupSummary {
-  display: none;
-}
-
-#guestMessagePopupBoard {
-  display: none;
-}
-
 #guestMessagePopupAddTask {
   display: none;
 }
@@ -655,18 +411,10 @@ li {
   height: 200px;
 }
 
-#resultMessageDiv {
-  display: none;
-}
-
 .icon-separator {
   height: 24px;
   width: 1px;
   background-color: #d1d1d1;
-}
-
-#addTaskMobileBtnBoardHeader {
-  display: none;
 }
 
 #btnDivOk-3 {

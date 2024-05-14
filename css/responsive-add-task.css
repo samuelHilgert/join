@@ -1,8 +1,4 @@
 @media screen and (max-width: 1208px) {
-  .mobile-add-task-container {
-    padding-right: 0;
-  }
-
   .mobile-add-task-main-container {
     padding-left: 18px;
   }
@@ -111,6 +107,10 @@
     position: fixed;
     z-index: 999;
   }
+
+  .mobile-add-task-container{
+    padding-right: 0;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -149,7 +149,35 @@
     padding-left: 5%;
     padding-right: 5%;
   }
-}
 
-@media screen and (max-width: 500px) {
+  .mobile-font-size-16 {
+    font-size: 16px;
+    line-height: 19.2px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .mobile-input-font {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .task-input-style-black::placeholder {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .task-input-style::placeholder {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .task-category {
+    font-size: 16px;
+  }
+
+  .mobile-task-btn-style {
+    font-size: 16px;
+  }
 }

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="icon" type="image/x-icon" href="./assets/img/logo.svg" />
   <title>Board</title>
   <script src="./js/script.js"></script>
@@ -12,16 +12,19 @@
   <script src="./js/contacts.js"></script>
   <script src="./js/renderHTML.js"></script>
   <script src="./js/board.js"></script>
+  <script src="./js/mobileBoard.js"></script>
   <script src="./js/add-task.js"></script>
   <link rel="stylesheet" href="./css/standard.css" />
   <link rel="stylesheet" href="./css/fonts.css" />
   <link rel="stylesheet" href="./css/assets.css" />
   <link rel="stylesheet" href="./css/add-task.css" />
   <link rel="stylesheet" href="./css/contacts.css" />
+  <link rel="stylesheet" href="./css/board.css" />
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/responsive-general.css" />
   <link rel="stylesheet" href="./css/responsive-contacts-header-sidebar.css" />
   <link rel="stylesheet" href="./css/responsive-board.css" />
+  <link rel="stylesheet" href="./css/responsive-board-add-task.css" />
 </head>
 
 <body onload="init()">
@@ -109,7 +112,7 @@
 
   <!-- TASK POPUP -->
   <div class="d_c_c_c popup-bg-filter width-max" id="boardTaskPopup" onclick="closeBoardTaskPopup()">
-    <div class="d_c_sb_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70" id="boardTaskPopupContainer"
+    <div class="d_c_sb_c board-task-popup-container bgC-white pad-x-60 pad-y-60 gap-70 mobile-board-task-popup-container" id="boardTaskPopupContainer"
       onclick="doNotClose(event)">
 
       <!-- EDIT TASK CONTENT -->
@@ -182,7 +185,7 @@
 
   <!-- ADD TASK POPUP -->
   <div class="d_c_c_c popup-bg-filter width-max" id="boardAddTaskPopup" onclick="closeBoardAddTaskPopup()">
-    <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-50 gap-30 width-max"
+    <div class="d_c_fs_c board-add-task-popup-container bgC-white pad-y-40 pad-x-50 gap-30 width-max mobile-board-add-task-popup-container"
       id="boardAddTaskPopupContainer" onclick="doNotClose(event)">
       <div class="d_f_sb_fs width-max">
         <h2>Add Task</h2>
@@ -199,10 +202,21 @@
 
   </div>
 
+    <!-- MOBILE SETTINGS FOR TODOS -->
+    <div class="d_c_fs_c popup-bg-filter" id="mobilePopupFilterTodoSettings">
+      <div class="d_c_fs_c popup-content-todo-settings bgC-white pad-y-20 pad-x-40 gap-40 text-center" id="mobilePopupContentTodoSettings">
+      </div>
+    </div>
+
   <!-- GUEST MESSAGES -->
   <div class="d_c_fs_fe pad-x-40 pad-y-40 popup-bg-filter width-max" id="guestMessagePopupBoard">
     <div class="d_c_fs_c popup-guest-message bgC-white pad-y-40 pad-x-40 gap-40 text-center" id="guestMessageBoard">
     </div>
+  </div>
+
+  <div class="d_f_fs_c gap-8 add-board-message-btn" id="addTaskMessageContainer" style="display: none">
+    <a class="btn-message d_c_c_c">Task added to board</a><img src="assets/img/board-icon_grey.svg" alt="icon"
+      style="padding-right: 24px" />
   </div>
 
 </body>

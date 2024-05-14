@@ -1,3 +1,8 @@
+/**
+ * Renders HTML for the initial letter and a parting line.
+ * @param {string} firstLetter - The first letter of the section or list to be displayed.
+ * @returns {string} - HTML content for displaying the first letter with a parting line.
+ */
 function renderLetterAndPartinglineHTML(firstLetter) {
     return `
     <div class="contactlist-letterbox">
@@ -9,6 +14,16 @@ function renderLetterAndPartinglineHTML(firstLetter) {
     `;
 }
 
+
+/**
+ * Renders HTML for a small contact list item.
+ * @param {string} id - The unique identifier for the contact.
+ * @param {string} firstLetter - The first letter of the contact's first name.
+ * @param {string} firstLetterSurname - The first letter of the contact's surname.
+ * @param {string} name - The full name of the contact.
+ * @param {string} mail - The email address of the contact.
+ * @returns {string} - HTML content for displaying a contact in a list with basic information.
+ */
 function renderContactListHTML(
     id,
     firstLetter,
@@ -29,6 +44,18 @@ function renderContactListHTML(
     `;
 }
 
+
+/**
+ * Renders HTML for displaying detailed contact information.
+ * @param {string} color - Background color for the contact's avatar circle.
+ * @param {string} firstLetter - The first letter of the contact's first name.
+ * @param {string} firstLetterSurname - The first letter of the contact's surname.
+ * @param {string} name - The full name of the contact.
+ * @param {string} contactId - The unique identifier for the contact.
+ * @param {string} mail - The email address of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @returns {string} - HTML content for displaying detailed contact information including actions like edit and delete.
+ */
 function renderContactInformationHTML(
     color,
     firstLetter,
@@ -77,6 +104,13 @@ function renderContactInformationHTML(
     `;
 }
 
+
+/**
+ * Renders HTML for adding a new contact form.
+ * This form allows users to input contact information and submit it to create a new contact.
+ * It includes fields for the contact's name, email, and phone number.
+ * @returns {string} - HTML content for the add contact form.
+ */
 function renderAddContactContainerHTML() {
     return `
     <div class="add-contact-container" id="addContactContainer" onclick='doNotClose(event)'>
@@ -89,7 +123,7 @@ function renderAddContactContainerHTML() {
             <div class="add-contact-container-right">
                 <div class="d_f_fe_c close-contact-btn">
                     <div class="add-contact-container-right-img-wrapper d_c_c_c" onclick="closeAddContactForm()">
-                        <img class="add-contact-container-right-img" src="./assets/img/close.svg" alt="">
+                        <img class="add-contact-container-right-img mobile-add-contact-container-right-img" src="./assets/img/close.svg" alt="">
                     </div>
                 </div>
                 <div class="add-contact-container-right-bottom-wrapper">
@@ -118,6 +152,20 @@ function renderAddContactContainerHTML() {
     `;
 }
 
+
+/**
+ * Renders HTML for editing an existing contact.
+ * This form is pre-filled with the contact's current information, allowing users to update it.
+ * It includes the contact's name, email, and phone, with options to save changes or delete the contact.
+ * @param {string} color - Background color for the contact's initials circle.
+ * @param {string} firstLetter - First letter of the contact's first name.
+ * @param {string} firstLetterSurname - First letter of the contact's surname.
+ * @param {string} name - Full name of the contact.
+ * @param {string} mail - Email address of the contact.
+ * @param {string} phone - Phone number of the contact.
+ * @param {string} contactId - Unique identifier for the contact.
+ * @returns {string} - HTML content for the edit contact form.
+ */
 function renderEditContactHTML(
     color,
     firstLetter,
@@ -163,6 +211,7 @@ function renderEditContactHTML(
     `;
 }
 
+
 /**
  * This function returns the text for the pop-up messages when contacts or tasks are reloaded
  * 
@@ -178,6 +227,7 @@ function generateGuestMessageTextForReload(div, messageText) {
     <div><a class="link-style guestPopupLinkStyle" onclick="clickLogout()">Zum Login</a></div>
     `;
 }
+
 
 /**
  * This function returns the text for the popup messages when the user is a guest and has used a function
@@ -195,11 +245,16 @@ function generateGuestMessageText(div, messageText) {
     `;
 }
 
+
+/**
+ * This function renders HTML buttons with urgent, medium, and low priority settings for tasks.
+ * These buttons allow the user to set the priority of a task when creating or editing it.
+ */
 function renderAddTaskFormButton() {
     let urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
     let mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
     let lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
-    
+
     urgentBtn.innerHTML = `
     <p>Urgent</p>
     <svg class="category-svg-urgent">
@@ -246,6 +301,13 @@ function renderAddTaskFormButton() {
 
 }
 
+
+/**
+ * Renders HTML for the contact information menu in a mobile environment, including buttons for editing and deleting the contact.
+ * This function is designed to be used on mobile devices, providing quick access to contact management features.
+ * @param {string} contactId - The unique identifier for the contact.
+ * @returns {string} - HTML string containing interactive buttons for editing and deleting a contact.
+ */
 function renderMobileContactinfoMenuHTML(contactId) {
     return `
     <div class="d_f_c_c gap-8 header-icons-wrapper" onclick="openEditContactForm('${contactId}')">
@@ -263,4 +325,334 @@ function renderMobileContactinfoMenuHTML(contactId) {
         <span class="contact-header-span">Delete</span>
     </div>
     `;
+}
+
+
+/////////// RENDERING FOR BOARD ////////////
+
+
+/**
+ * This function renders the entire text of the task, when it is open
+ * 
+ * @param {string} todo - curent task
+ * @param {string} openLabel - element.id for the label 
+ * @param {string} openTitle - element.id for the title
+ * @param {string} openDescription - element.id for the description
+ * @param {string} openDueDate - element.id for the duedate
+ * @param {string} openPriority - element.id for the priority
+ */
+function renderShowTaskContent(todo, openLabel, openTitle, openDescription, openDueDate, openPriority) {
+    openLabel.innerHTML = `${todo["label"]}`;
+    openTitle.innerHTML = `<h2><b>${todo["title"]}</b></h2>`;
+    openDescription.innerHTML = `<p>${todo["description"]}</p>`;
+    openDueDate.innerHTML = `
+      <div class="d_f_fs_c width-20 gap-30">
+          <p>Due date:</p>
+      </div>
+      <div class="d_f_fs_c gap-30">
+          <p>${todo["dueDate"]}</p>
+      </div>
+      `;
+    openPriority.innerHTML = `
+      <div class="d_f_fs_c width-20 gap-30">
+          <p>Priority:</p>
+      </div>
+      <div class="d_f_fs_c gap-10">
+          <p>${todo["priority"]}</p>
+          <div><img src="../assets/img/${getPriorityIcon(todo)}"></img></div>
+      </div>
+      `;
+}
+
+
+/**
+ * This function gets the current priority icon for the selection of priority in the opened task
+ * 
+ * @param {string} todo - curent task
+ */
+function getPriorityIcon(todo) {
+    let imgSrc;
+    if (todo["priority"] === "Urgent") {
+        imgSrc = "prio-urgent.svg";
+    } else if (todo["priority"] === "Medium") {
+        imgSrc = "prio-media.svg";
+    } else if (todo["priority"] === "Low") {
+        imgSrc = "prio-low.svg";
+    }
+    return imgSrc;
+}
+
+
+/**
+ * This function renders the entire subtasks of the opened task, which are not done
+ * 
+ * @param {number} a - index of the current (open) subtask
+ */
+function renderOpenSubtasks(a) {
+    return `
+<div class="d_f_c_c gap-10">
+<div id="taskId${currentOpenTaskId}SubtaskOpenId${a}" onclick="clickSubtaskToSwitch(${a}, this)"><img src="../assets/img/check-button-empty.svg"></div>
+<p>${subtasksOpen[a]}</p>
+</div>
+`;
+}
+
+
+/**
+ * This function renders the entire subtasks of the opened task, which are not done
+ * 
+ * @param {number} b - index of the current (done) subtask
+ */
+function renderDoneSubtasks(b) {
+    return `
+    <div class="d_f_c_c gap-10">
+    <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}" onclick="clickSubtaskToSwitch(${b}, this)"><img src="../assets/img/check-button-clicked.svg"></div>
+    <p>${subtasksDone[b]}</p>
+    </div>
+    `;
+}
+
+
+/**
+ * This function renders the "assigendTo" contacts
+ * 
+ * @param {string} contact - current "assignedTo" contact
+ * @param {string} letters - current letters of this contact
+ * @param {string} backgroundColor - background-color for the css style as html tag
+ */
+function renderAssignedToContactsForOpenTask(contact, letters, backgroundColor) {
+    return `
+    <div class="d_f_fs_c gap-10 width-max">
+    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    <p>${contact}</p>
+    </div>
+    `;
+}
+
+
+/**
+ * This function renders the "open" subtasks in the edit form
+ * 
+ * @param {string} subtask - current saved subtask text
+ * @param {number} index - index of the current subtask
+ */
+function renderOpenSubtasksInEditForm(subtask, index) {
+    return `
+    <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
+    <span>• ${subtask}</span>
+    <div class='d_f_c_c gap-5'>
+      <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksOpen${index}" onclick="editSubtask(this)" />
+      <div class="subtask-partingline"></div>
+      <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksOpen${index}" onclick="deleteSubtask(this)" />
+    </div>
+  </div>
+    `;
+}
+
+
+/**
+ * This function renders the "done" subtasks in the edit form
+ * 
+ * @param {string} subtask - current saved subtask text
+ * @param {number} index - index of the current subtask
+ */
+function renderDoneSubtasksInEditForm(subtask, index) {
+    return `
+    <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
+    <span>• ${subtask}</span>
+    <div class='d_f_c_c gap-5'>
+      <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksDone${index}" onclick="editSubtask(this)" />
+      <div class="subtask-partingline"></div>
+      <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksDone${index}" onclick="deleteSubtask(this)"/>
+    </div>
+  </div>
+    `;
+}
+
+
+/**
+ * This function generates the todo content for the todos on board
+ * 
+ * @param {string} task - the current task
+ */
+function generateTodoHTML(task) {
+    return `<div class="todo d_c_sb_fs gap-10 width-max" onmousedown="startTimer(${task["id"]})" ontouchstart="startTimer()" onmouseup="clearTimer()" ontouchend="clearTimer()" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
+              <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
+              <h6><b>${task["title"]}</b></h6>
+              <p>${task["description"]}</p>
+              <div class="d_c_fs_fs width-max gap-10" id="progessSubtaskDiv${task["id"]}">
+                  <div class="progress" onmouseover="showSubtasksByHovering(${task["id"]})">
+                      <div class="progress-bar" id="progressBar${task["id"]}"></div>
+                  </div>
+                  <div class="statusText" id="statusText${task["id"]}"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
+              </div>
+              <div class="d_f_sb_c width-max">
+              <div class="d_f_c_c" id="contactsIn${task["id"]}">
+              </div>
+              <div id="prioIn${task["id"]}"></div>
+              </div>`;
+}
+
+
+/**
+ * This function generates the "assignedTo" contacts of the todo
+ * 
+ * @param {string} marginRightClass - the 
+ *  * @param {string} backgroundColor - the backgroundColor for the contacts
+ *  * @param {string} letters - the letters of the contacts
+ */
+function renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters) {
+    return `<div class="d_f_fs_c gap-10 width-max ${marginRightClass}">
+    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
+    </div>
+    `;
+}
+
+
+/**
+ * Renders HTML for mobile-specific todo settings options.
+ * @param {number} taskId - The ID of the task for which settings are being rendered.
+ * @returns {string} - HTML content for task settings options on mobile devices.
+ */
+function renderMobileTodoSettings(taskId) {
+    return `
+    <div class="d_f_sb_c width-max pad-x-20">
+  
+    <div class="options-task-popup d_f_c_c width-max gap-10">
+
+    <div class="d_f_c_c gap-8 header-icons-wrapper cursor-pointer" onclick="mobileTodoMove()">
+    <svg class="task-popup-svg"viewBox="0 0 24 24">
+    <path d="M12 2L3 12h5v10h8V12h5z" fill="currentColor"/>
+  </svg>
+    <span class="task-popup-span">Move</span>
+  </div>
+
+  <div class="icon-separator"></div>
+
+    <div class="d_f_c_c gap-8 header-icons-wrapper cursor-pointer" onclick="mobileTodoDelete()">
+      <svg class="task-popup-svg" viewBox="0 0 16 18">
+        <path
+          d="M3 18C2.45 18 1.97917 17.8042 1.5875 17.4125C1.19583 17.0208 1 16.55 1 16V3C0.716667 3 0.479167 2.90417 0.2875 2.7125C0.0958333 2.52083 0 2.28333 0 2C0 1.71667 0.0958333 1.47917 0.2875 1.2875C0.479167 1.09583 0.716667 1 1 1H5C5 0.716667 5.09583 0.479167 5.2875 0.2875C5.47917 0.0958333 5.71667 0 6 0H10C10.2833 0 10.5208 0.0958333 10.7125 0.2875C10.9042 0.479167 11 0.716667 11 1H15C15.2833 1 15.5208 1.09583 15.7125 1.2875C15.9042 1.47917 16 1.71667 16 2C16 2.28333 15.9042 2.52083 15.7125 2.7125C15.5208 2.90417 15.2833 3 15 3V16C15 16.55 14.8042 17.0208 14.4125 17.4125C14.0208 17.8042 13.55 18 13 18H3ZM3 3V16H13V3H3ZM5 13C5 13.2833 5.09583 13.5208 5.2875 13.7125C5.47917 13.9042 5.71667 14 6 14C6.28333 14 6.52083 13.9042 6.7125 13.7125C6.90417 13.5208 7 13.2833 7 13V6C7 5.71667 6.90417 5.47917 6.7125 5.2875C6.52083 5.09583 6.28333 5 6 5C5.71667 5 5.47917 5.09583 5.2875 5.2875C5.09583 5.47917 5 5.71667 5 6V13ZM9 13C9 13.2833 9.09583 13.5208 9.2875 13.7125C9.47917 13.9042 9.71667 14 10 14C10.2833 14 10.5208 13.9042 10.7125 13.7125C10.9042 13.5208 11 13.2833 11 13V6C11 5.71667 10.9042 5.47917 10.7125 5.2875C10.5208 5.09583 10.2833 5 10 5C9.71667 5 9.47917 5.09583 9.2875 5.2875C9.09583 5.47917 9 5.71667 9 6V13Z" />
+      </svg>
+      <span class="task-popup-span">Delete</span>
+    </div>
+
+    <div class="icon-separator"></div>
+
+    <div class="d_f_c_c gap-8 header-icons-wrapper cursor-pointer popup-btn" data-popup-type="editTask"
+      onclick="mobileTodoEdit(${taskId})">
+      <svg class="task-popup-svg" viewBox="0 0 19 19">
+        <path
+          d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z" />
+      </svg>
+      <span class="task-popup-span">Edit</span>
+    </div>
+
+  </div>
+
+  <div class="d_c_c_c close-popup-todo-settings popup-close-button" onclick="resetMobileTodoSettings()">
+  <img class="close-popup-button-todo-settings-img" src="./assets/img/close.svg" alt="" />
+</div>
+
+</div>
+
+<div class="d_c_fs_fs width-max" id="mobileTodoSettingsCategoryMenu"> 
+<div class="d_c_fs_fs mobile-todo-settings-categories width-max pad-x-40 gap-10" id="mobileTodoSettingsCategories">
+</div>
+</div>
+    `;
+}
+
+
+/**
+ * Renders a mobile-friendly category selection option.
+ * @param {string} category - The category name to be displayed and interacted with.
+ * @returns {string} - HTML markup for a mobile-friendly category selector.
+ */
+function renderMobileCategories(category) {
+    return `<div class="mobile-category-cursor-style cursor-pointer" id="mobileMove${category}" onclick="mobileMoveToCategory(this)">${category}</div>`;
+}
+
+
+/**
+ * This function display the result text for "no found" results after using the search feature
+ *
+ */
+function searchResultMessageNoFound() {
+    return `<div>there were no results for your search</div> 
+            <div>|</div> 
+            <div class="search-back-link" onclick="renderAfterSearch()">
+                <a class="link-style">go back</a>
+            </div>`;
+}
+
+
+/**
+ * This function display the result text for "only one found" result after using the search feature
+ *
+ * @param {string} matchingIndices - array for search matches
+ */
+function searchResultMessageOneFound(matchingIndices) {
+    return `<div>${matchingIndices.length} match found</div> 
+            <div>|</div> 
+            <div class="search-back-link" onclick="renderAfterSearch()">
+                <a class="link-style">go back</a>
+            </div>`;
+}
+
+
+/**
+ * This function display the result text for "more results as one" after using the search feature
+ *
+ * @param {string} matchingIndices - array for search matches
+ */
+function searchResultMessageMoreFound(matchingIndices) {
+    return `<div>${matchingIndices.length} matches found</div> 
+            <div>|</div> 
+            <div class="search-back-link" onclick="renderAfterSearch()">
+                <a class="link-style">go back</a>
+            </div>`;
+}
+
+
+/////////// END OF RENDERING FOR BOARD ////////////
+
+
+/**
+ * This functions changes the icons in the subtask inputfield 
+ * 
+ */
+function changeIcons() {
+    let iconBox = document.getElementById(`dropdownIcon-${templateIndex}`);
+    iconBox.classList.remove("input-icon-div");
+    iconBox.classList.add("input-icon");
+    iconBox.innerHTML = `
+      <div class="d_f_c_c gap-5 padding-right-36">
+      <div onclick='clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/close.svg" alt="cross" /></div>
+        <div class='input-spacer'></div>
+        <div onclick='addSubtask(),clearSubtaskInput()' class="icon-edit-delete"> <img src="assets/img/check-black.svg" alt="check" /></div>
+      </div>
+    `;
+}
+
+
+/**
+* This function renders the subtasks
+*
+* @param {string} container - container for the subtasks
+*/
+function renderSubtasks(container) {
+    container.innerHTML = "";
+    subtasks.forEach((subtask, index) => {
+        container.innerHTML += `
+        <div id="subtask${index}" class="d_f_sb_c pad-x-10 subtask width-max">
+          <span>• ${subtask}</span>
+          <div class='d_f_c_c gap-5'>
+            <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" onclick="editSubtask(this)" />
+            <div class="subtask-partingline"></div>
+            <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" onclick="deleteSubtask(${index})" />
+          </div>
+        </div>
+      `;
+    });
 }

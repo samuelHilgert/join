@@ -4,20 +4,16 @@ let currentOpenTaskId;
 let taskId;
 let subtasksOpen = [];
 let subtasksDone = [];
+let longTapDuration = 1000; // time for the long tap
+let widthForMobileSettings = 430; // width For Mobile Settings
+
 
 /**
- *
+ * This function renders the tasks on board
  *
  */
 async function renderBoardTasks() {
-  hideSearchMessage();
-  if (tasks.length === 0) {
-    let div = document.getElementById("guestMessagePopupBoard");
-    let messageText = document.getElementById("guestMessageBoard");
-    showGuestPopupMessageForReload(div, messageText);
-    await updateOrLoadData();
-  }
-
+  await reloadTasksOnBoard();
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
     const allTasksSameCategory = tasks.filter((t) => t["category"] == category);
@@ -25,28 +21,59 @@ async function renderBoardTasks() {
     categoryTableColumn.innerHTML = '';
     document.getElementById(category).classList.remove('drag-area-highlight');
     if (allTasksSameCategory.length === 0) {
-      categoryTableColumn.innerHTML = `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
+      categoryTableColumn.innerHTML = showNoTaskDiv();
     } else {
       showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
     }
   }
 }
 
+
+/**
+ * This function show the "no tasks" div, when no todos could find in a category
+ *
+ */
+function showNoTaskDiv() {
+  return `<div class="drag-area-no-tasks d_f_c_c width-max">no tasks</div>`;
+}
+
+
+/**
+ * This function checks, whether the tasks are empty.
+ * If its true, the example tasks will load again
+ * 
+ */
+async function reloadTasksOnBoard() {
+  if (tasks.length === 0) {
+    let div = document.getElementById("guestMessagePopupBoard");
+    let messageText = document.getElementById("guestMessageBoard");
+    showGuestPopupMessageForReload(div, messageText);
+    await updateOrLoadData();
+  }
+}
+
+
+/**
+ * This function initiate all functions for generate the todos for each category
+ * 
+ * @param {string} allTasksSameCategory - the category name for the current category 
+ * @param {string} categoryTableColumn - the category column container for the todos
+ */
 function showTasksForEachCategory(allTasksSameCategory, categoryTableColumn) {
   for (let k = 0; k < allTasksSameCategory.length; k++) {
     const task = allTasksSameCategory[k];
-
-
-    categoryTableColumn.innerHTML += generateTodoHTML(task);
-
+    categoryTableColumn.innerHTML += generateTodoHTML(task); // outsourced in renderHTML.js
     updateProgressBar(task);
     getContactsForTask(task);
     getPrioForTask(task);
   }
 }
 
-/********************** GENERAL FUNCTIONS **********************************/
 
+/**
+ * This function initiate the guest message on board
+ * 
+ */
 function showGuestMessageOnBoard() {
   if ((authorized === 'guest')) {
     let div = document.getElementById("guestMessagePopupBoard");
@@ -55,26 +82,12 @@ function showGuestMessageOnBoard() {
   }
 }
 
-/*********************** END GENERAL FUNCTIONS ********************************/
 
-function generateTodoHTML(task) {
-  return `<div class="todo d_c_sb_fs gap-10 width-max" onclick="openBoardTaskPopup(${task["id"]})" draggable="true" ondragstart="startDragging(${task["id"]})">
-            <div class="btn-board d_f_fs_fs" id="">${task["label"]}</div>
-            <h6><b>${task["title"]}</b></h6>
-            <p>${task["description"]}</p>
-            <div class="d_c_fs_fs width-max gap-10" id="progessSubtaskDiv${task["id"]}">
-                <div class="progress" onmouseover="showSubtasksByHovering(${task["id"]})">
-                    <div class="progress-bar" id="progressBar${task["id"]}"></div>
-                </div>
-                <div class="statusText" id="statusText${task["id"]}"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
-            </div>
-            <div class="d_f_sb_c width-max">
-            <div class="d_f_c_c" id="contactsIn${task["id"]}">
-            </div>
-            <div id="prioIn${task["id"]}"></div>
-            </div>`;
-}
-
+/**
+ * This function generates the current priority of the todo
+ * 
+ * @param {string} task - the current task
+ */
 function getPrioForTask(task) {
   let prioForTaskDiv = document.getElementById(`prioIn${task["id"]}`);
   prioForTaskDiv.innerHTML += `
@@ -82,6 +95,12 @@ function getPrioForTask(task) {
     `;
 }
 
+
+/**
+ * This function generates the current "assignedTo" contacts of the todo
+ * 
+ * @param {string} task - the current task
+ */
 function getContactsForTask(task) {
   let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
   contactsForTaskDiv.innerHTML = "";
@@ -89,41 +108,61 @@ function getContactsForTask(task) {
     const backgroundColor = getBgColorTaskPopup(task, index);
     const letters = contactNamesLetters(contactName);
     const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
-    contactsForTaskDiv.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max ${marginRightClass}">
-    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
-    </div>
-    `;
+    contactsForTaskDiv.innerHTML += renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters); // outsourced in renderHTML.js
   });
 }
 
+
+/**
+ * This function generates the progressBar of the todo
+ * 
+ * @param {string} task - the current task
+ */
 function updateProgressBar(task) {
   let stubtasksOpenLength = task.subtasksOpen.length;
   let stubtasksDoneLength = task.subtasksDone.length;
   let allSubtasksByTask = stubtasksOpenLength + stubtasksDoneLength;
-
-  let subtasksLengthDiv = document.getElementById(
-    `subtasksLength${task["id"]}`
-  );
-  subtasksLengthDiv.innerHTML = `${allSubtasksByTask}`;
-
-  let stubtasksDoneLengthDiv = document.getElementById(
-    `stubtasksDoneLength${task["id"]}`
-  );
-  stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
-
-  // progessBar
+  let subtasksLengthDiv = document.getElementById(`subtasksLength${task["id"]}`);
+  let stubtasksDoneLengthDiv = document.getElementById(`stubtasksDoneLength${task["id"]}`);
   let progressBar = document.getElementById(`progressBar${task["id"]}`);
   let percent = (stubtasksDoneLength / allSubtasksByTask) * 100;
   let result = percent.toFixed(2);
+  subtasksLengthDiv.innerHTML = `${allSubtasksByTask}`;
+  stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
   progressBar.style.width = `${result}%`;
   progressBar.classList.add("blue");
 }
 
+
+/**
+ * This function displays the subtasks satus text under the progressbar by hovering
+ * 
+ * @param {string} element - the id of the current todo
+ */
+function showSubtasksByHovering(element) {
+  let statusText = document.getElementById(`statusText${element}`);
+  statusText.style.display = 'block';
+  statusText.onmouseout = function () {
+    statusText.style.display = 'none';
+  };
+}
+
+
+/**
+ * This function starts the drag of the todo
+ * 
+ * @param {number} id - the current todo id
+ */
 function startDragging(id) {
   currentDraggedTaskId = id;
 }
 
+
+/**
+ * This function moves the todo to the new category after drop
+ * 
+ * @param {string} currentCategory - the final category after dragging
+ */
 async function moveTo(currentCategory) {
   const currentDraggedTaskIdString = String(currentDraggedTaskId);
   let foundIndex;
@@ -131,34 +170,52 @@ async function moveTo(currentCategory) {
     if (tasks[id].id === currentDraggedTaskIdString) {
       foundIndex = id;
       tasks[foundIndex].category = currentCategory;
-      if ((authorized === 'user')) {
-        await saveNewUserDate();
-      } else {
-        let div = document.getElementById("guestMessagePopupBoard");
-        let messageText = document.getElementById("guestMessageBoard");
-        showGuestPopupMessage(div, messageText);
-      }
+      await saveNewUserDate();  // outsourced in script.js
+      showGuestMessageOnBoard();
     }
   }
   await renderBoardTasks();
 }
 
+
+/**
+ * This function allows the element only to drop at the final position
+ * 
+ * @param {string} event - the result of current position
+ */
 function allowDrop(event) {
   event.preventDefault();
 }
 
+
+/**
+ * This function adds a class for highlighting the final category column
+ * 
+ * @param {number} id - the current todo id
+ */
 function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
+
+/**
+ * This function removes the class for the highlighting the last category column
+ * 
+ * @param {number} id - the current todo id
+ */
 function removeHighlight(id) {
   document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
-function doNotClose(event) {
-  event.stopPropagation();
-}
 
+////////////////////// TODO OPENED POPUP ////////////////////// 
+
+
+/**
+ * This function initiates the rendering of the todo when it is open
+ * 
+ * @param {number} openId - the id of the current todo
+ */
 async function openBoardTaskPopup(openId) {
   let boardTaskPopup = document.getElementById("boardTaskPopup");
   let container = document.getElementById("boardTaskPopupContainer");
@@ -171,76 +228,71 @@ async function openBoardTaskPopup(openId) {
     }
   }
   moveContainerIn(container);
-  await renderBoardTaskPopupContent(currentOpenTaskId);
+  await renderBoardTaskPopupContent();
 }
 
-async function renderBoardTaskPopupContent(currentOpenTaskId) {
+
+/**
+ * This function contains the rendering functions for rendering the open todo
+ * 
+ */
+async function renderBoardTaskPopupContent() {
   const todo = tasks[currentOpenTaskId];
   showTaskText(todo, currentOpenTaskId);
   getContactsForPopupTask(todo);
-  await getSubtasksForPopupTask(currentOpenTaskId);
+  await getSubtasksForPopupTask();
 }
 
+/**
+ * This function contains the rendering for the entire text of the task
+ *  
+ * @param {string} todo - curent task
+ */
 function showTaskText(todo) {
-  let taskPopupContentLabel = document.getElementById("taskPopupContentLabel");
-  let taskPopupContentTitle = document.getElementById("taskPopupContentTitle");
-  let taskPopupContentDescription = document.getElementById(
-    "taskPopupContentDescription"
-  );
-  let taskPopupContentDueDate = document.getElementById(
-    "taskPopupContentDueDate"
-  );
-  let taskPopupContentPriority = document.getElementById(
-    "taskPopupContentPriority"
-  );
-  taskPopupContentLabel.innerHTML = `${todo["label"]}`;
-  taskPopupContentTitle.innerHTML = `<h2><b>${todo["title"]}</b></h2>`;
-  taskPopupContentDescription.innerHTML = `<p>${todo["description"]}</p>`;
-  taskPopupContentDueDate.innerHTML = `
-    <div class="d_f_fs_c width-20 gap-30">
-        <p>Due date:</p>
-    </div>
-    <div class="d_f_fs_c gap-30">
-        <p>${todo["dueDate"]}</p>
-    </div>
-    `;
-  taskPopupContentPriority.innerHTML = `
-    <div class="d_f_fs_c width-20 gap-30">
-        <p>Priority:</p>
-    </div>
-    <div class="d_f_fs_c gap-10">
-        <p>${todo["priority"]}</p>
-        <div><img src="../assets/img/${getPriorityIcon(todo)}"></img></div>
-    </div>
-    `;
+  let openLabel = document.getElementById("taskPopupContentLabel");
+  let openTitle = document.getElementById("taskPopupContentTitle");
+  let openDescription = document.getElementById("taskPopupContentDescription");
+  let openDueDate = document.getElementById("taskPopupContentDueDate");
+  let openPriority = document.getElementById("taskPopupContentPriority");
+  renderShowTaskContent(todo, openLabel, openTitle, openDescription, openDueDate, openPriority); // outsourced in renderHTML.js
 }
 
-async function getSubtasksForPopupTask(currentOpenTaskId) {
-  let taskPopupContentSubtasks = document.getElementById("taskPopupContentSubtasks");
 
+/**
+ * This function gets the "assignedTo" contacts and initiate the rendering of these 
+ *  
+ * @param {string} todo - curent task
+ */
+function getContactsForPopupTask(todo) {
+  let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
+  const contacts = todo["assignedTo"];
+  taskPopupContentAssignedTo.innerHTML = '';
+  for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    const letters = contactNamesLetters(contact); // outsourced in script.js
+    const backgroundColor = getBgColorTaskPopup(todo, index); // outsourced in script.js
+    taskPopupContentAssignedTo.innerHTML += renderAssignedToContactsForOpenTask(contact, letters, backgroundColor); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
+ * This function contains the rendering for the entire subtasks of the task
+ *  
+ */
+async function getSubtasksForPopupTask() {
+  let taskPopupContentSubtasks = document.getElementById("taskPopupContentSubtasks");
   await loadSubtasksByOpenTask();
   taskPopupContentSubtasks.innerHTML = "";
-
-  // rendering subtasksOpen with empty check-button
-  for (let a = 0; a < subtasksOpen.length; a++) {
-    taskPopupContentSubtasks.innerHTML += `
-            <div class="d_f_c_c gap-10">
-            <div id="taskId${currentOpenTaskId}SubtaskOpenId${a}"><img src="../assets/img/check-button-empty.svg" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${a})"></img></div>
-            <p>${subtasksOpen[a]}</p>
-            </div>
-            `;
-  }
-  // rendering subtasksDone with clicked check-button
-  for (let b = 0; b < subtasksDone.length; b++) {
-    taskPopupContentSubtasks.innerHTML += `
-            <div class="d_f_c_c gap-10">
-            <div id="taskId${currentOpenTaskId}SubtaskDoneId${b}"><img src="../assets/img/check-button-clicked.svg" onclick="clickSubtaskDone(${currentOpenTaskId}, ${b})"></img></div>
-            <p>${subtasksDone[b]}</p>
-            </div>
-            `;
-  }
+  getAllOpenSubtasks(taskPopupContentSubtasks);
+  getAllDoneSubtasks(taskPopupContentSubtasks);
 }
 
+
+/**
+ * This function loads the subtasks of the current task from the user or the guest
+ * 
+ */
 async function loadSubtasksByOpenTask() {
   if ((authorized === 'user')) {
     subtasksOpen = users[currentUser].tasks[currentOpenTaskId].subtasksOpen;
@@ -251,126 +303,200 @@ async function loadSubtasksByOpenTask() {
   }
 }
 
-async function clickSubtaskOpen(currentOpenTaskId, a) {
-  let divSubtaskOpen = document.getElementById(
-    `taskId${currentOpenTaskId}SubtaskOpenId${a}`
-  );
+
+/**
+ * This function renders all subtasks, which are not done
+ *  
+ * @param {string} taskPopupContentSubtasks - element.id for the text
+ */
+function getAllOpenSubtasks(taskPopupContentSubtasks) {
+  for (let a = 0; a < subtasksOpen.length; a++) {
+    taskPopupContentSubtasks.innerHTML += renderOpenSubtasks(a); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
+ * This function renders all subtasks, which are already done
+ *  
+ * @param {string} taskPopupContentSubtasks - element.id for the text
+ */
+function getAllDoneSubtasks(taskPopupContentSubtasks) {
+  for (let b = 0; b < subtasksDone.length; b++) {
+    taskPopupContentSubtasks.innerHTML += renderDoneSubtasks(b); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
+ * This function switches the subtask status between open and done
+ *  
+ * @param {number} pos - index of the current subtask
+ */
+async function clickSubtaskToSwitch(pos, element) {
   let clickedButton = "check-button-clicked.svg";
-  divSubtaskOpen.innerHTML = `
-    <img src="../assets/img/${clickedButton}" id="taskId${currentOpenTaskId}checkButtonDoneId${a}" onclick="clickSubtaskDone(${currentOpenTaskId}, ${a})"></img>
-    `;
-  if ((authorized === 'user')) {
-    subtasksDone.push(subtasksOpen[a]);
-    subtasksOpen.splice(a, 1);
-    await saveNewUserDate();
-    getSubtasksForPopupTask(currentOpenTaskId);
-  } else {
-    tasks[currentOpenTaskId].subtasksDone.push(subtasksOpen[a]);
-    tasks[currentOpenTaskId].subtasksOpen.splice(a, 1);
-    getSubtasksForPopupTask(currentOpenTaskId);
-  }
-}
-
-async function clickSubtaskDone(currentOpenTaskId, b) {
-  let divSubtaskDone = document.getElementById(
-    `taskId${currentOpenTaskId}SubtaskDoneId${b}`
-  );
   let emptyButton = "check-button-empty.svg";
-  divSubtaskDone.innerHTML = `
-    <img src="../assets/img/${emptyButton}" id="taskId${currentOpenTaskId}checkButtonOpenId${b}" onclick="clickSubtaskOpen(${currentOpenTaskId}, ${b})"></img>
-    `;
+  if (element.id.includes('Open')) {
+    element.innerHTML = `<img src="../assets/img/${clickedButton}">`;
+    await saveSwitchedToDoneSubtasks(pos);
+  } else {
+    element.innerHTML = `<img src="../assets/img/${emptyButton}">`;
+    await saveSwitchedToOpenSubtasks(pos);
+  }
+  getSubtasksForPopupTask();
+}
+
+
+/**
+ * This function removes the current subtask from the "open" subtasks array and moves it to the "done" subtasks array.
+ * If the user is registered, the data is stored remotely
+ * 
+ * @param {number} pos - index of the current subtask
+ */
+async function saveSwitchedToDoneSubtasks(pos) {
   if ((authorized === 'user')) {
-    subtasksOpen.push(subtasksDone[b]);
-    subtasksDone.splice(b, 1);
-    await saveNewUserDate();
-    getSubtasksForPopupTask(currentOpenTaskId);
+    subtasksDone.push(subtasksOpen[pos]);
+    subtasksOpen.splice(pos, 1);
+    await saveNewUserDate();  // outsourced in script.js
   } else {
-    tasks[currentOpenTaskId].subtasksOpen.push(subtasksDone[b]);
-    tasks[currentOpenTaskId].subtasksDone.splice(b, 1);
-    getSubtasksForPopupTask(currentOpenTaskId);
+    tasks[currentOpenTaskId].subtasksDone.push(subtasksOpen[pos]);
+    tasks[currentOpenTaskId].subtasksOpen.splice(pos, 1);
   }
 }
 
-function getContactsForPopupTask(todo) {
-  let taskPopupContentAssignedTo = document.getElementById("taskPopupContentAssignedTo");
-  const contacts = todo["assignedTo"];
-  taskPopupContentAssignedTo.innerHTML = '';
-  for (let index = 0; index < contacts.length; index++) {
-    const contact = contacts[index];
-    const letters = contactNamesLetters(contact);
-    const backgroundColor = getBgColorTaskPopup(todo, index);
-    taskPopupContentAssignedTo.innerHTML += `
-    <div class="d_f_fs_c gap-10 width-max">
-    <div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>
-    <p>${contact}</p>
-    </div>
-    `;
-  }
-}
 
-function getBgColorTaskPopup(task, index) {
-  const contactName = task.assignedTo[index];
-  let contactInfo;
-  if (authorized === 'user') {
-    contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
+/**
+ * This function removes the current subtask from the "done" ubtasks array and moves it to the "open" subtasks array.
+ * If the user is registered, the data is stored remotely
+ * 
+ * @param {number} pos - index of the current subtask
+ */
+async function saveSwitchedToOpenSubtasks(pos) {
+  if ((authorized === 'user')) {
+    subtasksOpen.push(subtasksDone[pos]);
+    subtasksDone.splice(pos, 1);
+    await saveNewUserDate();  // outsourced in script.js
   } else {
-    contactInfo = contacts.find(contact => contact.name === contactName);
+    tasks[currentOpenTaskId].subtasksOpen.push(subtasksDone[pos]);
+    tasks[currentOpenTaskId].subtasksDone.splice(pos, 1);
   }
-  if (!contactInfo || !contactInfo.color) {
-    return "blue";  // Standardfarbe, wenn keine Farbe gefunden wurde
-  }
-  return contactInfo.color;
 }
 
-function getPriorityIcon(todo) {
-  let imgSrc;
-  if (todo["priority"] === "Urgent") {
-    imgSrc = "prio-urgent.svg";
-  } else if (todo["priority"] === "Medium") {
-    imgSrc = "prio-media.svg";
-  } else if (todo["priority"] === "Low") {
-    imgSrc = "prio-low.svg";
-  }
-  return imgSrc;
+
+/**
+ * This function closes the opened task
+ * 
+ */
+function closeBoardTaskPopup() {
+  resetAfterClosingOpenedTask();
+  let popup = document.getElementById("boardTaskPopup");
+  let container = document.getElementById("boardTaskPopupContainer");
+  moveContainerOut(container);
+  setTimeout(function () {
+    displayNonePopup(popup);
+    renderBoardTasks();
+    showGuestMessageOnBoard();
+  }, 500);
 }
 
+
+/**
+ * This function resets the default values ​​after closing the open task
+ * 
+ */
+function resetAfterClosingOpenedTask() {
+  checkedCheckboxes = [];
+  let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
+  let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
+  boardTaskEditContainer.style.display = 'none';
+  boardTaskShowContainer.style.display = 'flex';
+  document.body.style.overflow = "scroll";
+}
+
+
+////////////////////// END TODO OPENED POPUP ////////////////////// 
+
+
+/////////////////////////// EDIT TASK ///////////////////////////// 
+
+
+/**
+ * This function initiate the style and rendering for the edit task form
+ * 
+ */
 async function editTask() {
   let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
   let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
-  let btnDivOk = document.getElementById("btnDivOk-3");
-  btnDivOk.style.display = "flex";
   boardTaskEditContainer.style.display = 'flex';
   boardTaskShowContainer.style.display = 'none';
+  hideAndDisplayElementsForEdit();
+  changeFormStyle();
+  renderTextForEdit();
+  getCurrentPriorityBtn();
+  const todo = tasks[currentOpenTaskId];
+  getContactsForPopupTask(todo); // already used for todo opened popup
+  checkedCheckboxes = todo.assignedTo; // global variable in add-task.js
+  showContactSelection(); // outsourced in add-task.js
+  renderSubtasksPopup();
+}
 
-  let addTaskFormContainer = document.getElementById('addTaskFormContainer-3');
-  let addTaskPartingline = document.getElementById('addTaskPartingline-3');
+
+/**
+ * This function hides and displays the elements for a different style than the normal add task form
+ * 
+ */
+function hideAndDisplayElementsForEdit() {
+  let btnDivOk = document.getElementById("btnDivOk-3");
+  let addTaskCategory = document.getElementById('addTaskCategory-3');
   let bottomAddTaskOptions = document.getElementById('bottomAddTaskOptions-3');
   let bottomAddTaskEditOptions = document.getElementById('bottomAddTaskEditOptions-3');
-  let addTaskCategory = document.getElementById('addTaskCategory-3');
-  let taskTitle = document.getElementById('taskTitle-3');
-  let taskDescription = document.getElementById('taskDescription-3');
-  let taskDate = document.getElementById('taskDate-3');
-  let urgentBtn = document.getElementById('urgentBtn-3');
-  let mediumBtn = document.getElementById('mediumBtn-3');
-  let lowBtn = document.getElementById('lowBtn-3');
+  let addTaskPartingline = document.getElementById('addTaskPartingline-3');
+  let taskContactDiv = document.getElementById("taskContactDiv-3");
+  taskContactDiv.style.display = "none";
+  bottomAddTaskEditOptions.style.display = 'flex';
+  bottomAddTaskOptions.style.display = 'none';
+  addTaskCategory.style.display = 'none';
+  addTaskPartingline.style.display = 'none';
+  btnDivOk.style.display = "flex";
+}
 
+
+/**
+ * This function changes the style of the form for a different style than the normal add task form
+ * 
+ */
+function changeFormStyle() {
+  let addTaskFormContainer = document.getElementById('addTaskFormContainer-3');
   let box = document.querySelectorAll('.box');
+  addTaskFormContainer.style.flexFlow = 'column';
   box.forEach(function (boxReplace) {
     boxReplace.classList.replace('box', 'box-edit');
   });
+}
 
-  addTaskCategory.style.display = 'none';
-  bottomAddTaskOptions.style.display = 'none';
-  bottomAddTaskEditOptions.style.display = 'flex';
-  addTaskFormContainer.style.flexFlow = 'column';
-  addTaskPartingline.style.display = 'none';
 
+/**
+ * This function displays the saved title, description and label
+ * 
+ */
+function renderTextForEdit() {
+  let taskTitle = document.getElementById('taskTitle-3');
+  let taskDescription = document.getElementById('taskDescription-3');
+  let taskDate = document.getElementById('taskDate-3');
   taskTitle.value = tasks[currentOpenTaskId].title;
   taskDescription.value = tasks[currentOpenTaskId].description;
-  const todo = tasks[currentOpenTaskId];
-  getContactsForPopupTask(todo);
   taskDate.value = tasks[currentOpenTaskId].dueDate;
+}
 
+
+/**
+ * This function displays the saved category as a button
+ * 
+ */
+function getCurrentPriorityBtn() {
+  let urgentBtn = document.getElementById('urgentBtn-3');
+  let mediumBtn = document.getElementById('mediumBtn-3');
+  let lowBtn = document.getElementById('lowBtn-3');
   let prio = tasks[currentOpenTaskId].priority;
   let prioBtn;
   if (prio === 'Urgent') {
@@ -380,97 +506,92 @@ async function editTask() {
   } else if (prio === 'Low') {
     prioBtn = lowBtn;
   }
-
   prioBtn.click();
-  checkedCheckboxes = todo.assignedTo;
-  let taskContactDiv = document.getElementById("taskContactDiv-3");
-  taskContactDiv.style.display = "none";
-  showContactSelection();
-  renderSubtasksPopup();
 }
 
+
+/**
+ * This function renders the subtasks in the edit form
+ * 
+ */
 function renderSubtasksPopup() {
   let subtaskDivAddTask = document.getElementById(`subtaskDivAddTask-${templateIndex}`);
-
   subtaskDivAddTask.innerHTML = ``;
-
   subtasksOpen.forEach((subtask, index) => {
-    subtaskDivAddTask.innerHTML += `
-  <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
-  <span>• ${subtask}</span>
-  <div class='d_f_c_c gap-5'>
-    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksOpen${index}" onclick="editSubtask(this)" />
-    <div class="subtask-partingline"></div>
-    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksOpen${index}" onclick="deleteSubtask(this)" />
-  </div>
-</div>
-  `;
+    subtaskDivAddTask.innerHTML += renderOpenSubtasksInEditForm(subtask, index); // outsourced in renderHTML.js
   });
-
   subtasksDone.forEach((subtask, index) => {
-    subtaskDivAddTask.innerHTML += `
-  <div id='subtask${index}' class='d_f_sb_c pad-x-10 subtask'>
-  <span>• ${subtask}</span>
-  <div class='d_f_c_c gap-5'>
-    <img src="assets/img/pen_dark.svg" alt="pen" class="subtask-icon" id="subtasksDone${index}" onclick="editSubtask(this)" />
-    <div class="subtask-partingline"></div>
-    <img src="assets/img/trash_dark.svg" alt="trash" class="subtask-icon" id="subtasksDone${index}" onclick="deleteSubtask(this)"/>
-  </div>
-</div>
-  `;
+    subtaskDivAddTask.innerHTML += renderDoneSubtasksInEditForm(subtask, index); // outsourced in renderHTML.js
   });
 }
 
+
+/////////////////////////// END EDIT TASK ///////////////////////////// 
+
+
+/////////////////////////// MORE OPTIONS FOR TODOS ///////////////////////////// 
+
+
+/**
+ * This functions deletes the current todo from board 
+ * 
+ */
 async function deleteTask() {
   document.getElementById("boardTaskPopup").style.display = "none";
   document.body.style.overflow = "scroll";
   tasks.splice(currentOpenTaskId, 1);
   showGuestMessageOnBoard();
-  if ((authorized === 'user')) {
-    await saveNewUserDate();
-  }
+  await saveNewUserDate(); // outsourced in script.js
   await renderBoardTasks();
 }
 
-function closeBoardTaskPopup() {
-  let boardTaskEditContainer = document.getElementById("boardTaskEditContainer");
-  let boardTaskShowContainer = document.getElementById("boardTaskShowContainer");
-  boardTaskEditContainer.style.display = 'none';
-  boardTaskShowContainer.style.display = 'flex';
-  let popup = document.getElementById("boardTaskPopup");
-  let container = document.getElementById("boardTaskPopupContainer");
-  moveContainerOut(container);
-  setTimeout(function () {
-    displayNonePopup(popup);
-    renderBoardTasks();
-    showGuestMessageOnBoard();
-  }, 500);
-  document.body.style.overflow = "scroll";
-}
 
-/********************** ADD-TASK POPUP OPENED **********************************/
+/////////////////////////// END MORE OPTIONS FOR TODOS ///////////////////////////// 
+
+
+///////////////////////////////// ADD-TASK POPUP /////////////////////////////////// 
+
 
 /**
- * this functions initiate all functions for the popup add-task
- *
+ * This functions initiate all functions for the popup add-task form on board.html
+ * 
+ * @param {string} element - the div-element of the clicked add-task-button
  */
 function openBoardAddTaskPopup(element) {
-  console.log(element.id);
+  clearForm(); // outsourced in add-task.js
+  document.getElementById(`bottomAddTaskEditOptions-4`).style.display = 'none';
+  changeTodoCategoryByColumn(element);
+  changeTemplateIndex(); // outsourced in add-task.js
+  renderAddTaskFormButton(); // outsourced in renderHTML.js
+  let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
+  let container = document.getElementById("boardAddTaskPopupContainer");
+  boardAddTaskPopup.style.display = "flex";
+  document.body.style.overflow = "hidden";
+  moveContainerIn(container); // outsourced in script.js
+}
+
+
+/**
+ * This functions changes the category after clicking the Add Task button from the category
+ * 
+ * @param {string} element - the div-element of the clicked add-task-button
+ */
+function changeTodoCategoryByColumn(element) {
   if (element.id.includes('Progress')) {
     setCategory = 'inProgress';
   } else if (element.id.includes('AwaitFeedback')) {
     setCategory = 'awaitFeedback';
   }
-  changeTemplateIndex();
-  renderAddTaskFormButton();
-  let boardAddTaskPopup = document.getElementById("boardAddTaskPopup");
-  let container = document.getElementById("boardAddTaskPopupContainer");
-  boardAddTaskPopup.style.display = "flex";
-  document.body.style.overflow = "hidden";
-  moveContainerIn(container);
 }
 
+
+/**
+ * This functions closes the popup add-task form
+ * 
+ */
 function closeBoardAddTaskPopup() {
+  clearForm();
+  checkedCheckboxes = [];
   let popup = document.getElementById("boardAddTaskPopup");
   let container = document.getElementById("boardAddTaskPopupContainer");
   moveContainerOut(container);
@@ -480,16 +601,18 @@ function closeBoardAddTaskPopup() {
     showGuestMessageOnBoard();
   }, 500);
   document.body.style.overflow = "scroll";
+  templateIndex = 3;
 }
 
-/*********************** END ADD TASK POPUP OPENED ********************************/
 
-/********************** SEARCH FUNCTION **********************************/
+//////////////////////////////// END ADD-TASK POPUP ////////////////////////////////
 
-let findMatchingIndices = [];
+
+///////////////////////////////// SEARCH FUNCTION //////////////////////////////////
+
 
 /**
- * this function initiate all search functions
+ * This function initiate all search functions
  *
  */
 async function searchTasksOnBoard() {
@@ -502,30 +625,12 @@ async function searchTasksOnBoard() {
   resetSearch();
 }
 
-function displaySearchMessage(matchingIndices) {
-  let resultMessageDiv = document.getElementById("resultMessageDiv");
-  resultMessageDiv.style.display = "flex";
-  if (matchingIndices.length === 0) {
-    resultMessageDiv.innerHTML = `<div>there were no results for your search</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
-  } else if (matchingIndices.length === 1) {
-    resultMessageDiv.innerHTML = `<div>${matchingIndices.length} match found</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
-  } else {
-    resultMessageDiv.innerHTML = `<div>${matchingIndices.length} matches found</div> <div>|</div> <div class="search-back-link" onclick="renderAfterSearch()"><a class="link-style">go back</a></div>`;
-  }
-}
-
-async function renderAfterSearch() {
-  await renderBoardTasks();
-}
-
-function hideSearchMessage() {
-  let resultMessageDiv = document.getElementById("resultMessageDiv");
-  resultMessageDiv.style.display = "none";
-}
 
 /**
- * this function includes search querys whehter a search is allowed or not, here only one query set
+ * This function includes search querys whehter a search is allowed or not, here only one query set
  *
+ * @param {string} matchingIndices - array for search matches
+ * @param {string} search - search input.value
  */
 async function setQueryForSearch(matchingIndices, search) {
   if (search.length >= 2) {
@@ -533,10 +638,13 @@ async function setQueryForSearch(matchingIndices, search) {
   }
 }
 
+
 /**
- * this function iterates all tasks, whether the task description or task name includes the search result
- * the result tasks are pushed in the array after matching
+ * This function iterates all tasks, whether the task description or task name includes the search result
+ * The result tasks are pushed in the array after matching
  *
+ * @param {string} matchingIndices - array for search matches
+ * @param {string} search - search input.value
  */
 async function findTasksIndices(matchingIndices, search) {
   for (let i = 0; i < tasks.length; i++) {
@@ -551,9 +659,40 @@ async function findTasksIndices(matchingIndices, search) {
   }
 }
 
+
 /**
- * this function creates all categegories and the corresponding tasks with the parameter "allTasksSameCategory"
+ * This function includes search querys whehter a search is allowed or not, here only one query set
  *
+ * @param {string} matchingIndices - array for search matches
+ */
+function displaySearchMessage(matchingIndices) {
+  let resultMessageDiv = document.getElementById("resultMessageDiv");
+  resultMessageDiv.style.display = "flex";
+  if (matchingIndices.length === 0) {
+    resultMessageDiv.innerHTML = searchResultMessageNoFound(); // outsourced in renderHTML.js
+  } else if (matchingIndices.length === 1) {
+    resultMessageDiv.innerHTML = searchResultMessageOneFound(matchingIndices); // outsourced in renderHTML.js
+  } else {
+    resultMessageDiv.innerHTML = searchResultMessageMoreFound(matchingIndices); // outsourced in renderHTML.js
+  }
+}
+
+
+/**
+ * This function hides the result message container, after click on the "go back" link  
+ *
+ */
+async function renderAfterSearch() {
+  let resultMessageDiv = document.getElementById("resultMessageDiv");
+  resultMessageDiv.style.display = "none";
+  await renderBoardTasks();
+}
+
+
+/**
+ * This function creates all categegories and the corresponding tasks with the parameter "allTasksSameCategory"
+ *
+ * @param {string} matchingIndices - array for search matches
  */
 async function generateCategoriesBySearch(matchingIndices) {
   for (let i = 0; i < categories.length; i++) {
@@ -571,16 +710,18 @@ async function generateCategoriesBySearch(matchingIndices) {
   }
 }
 
+
 /**
- * after the search results are displayed, the search input field is reset
+ * After the search results are displayed, the search input field will reset
  *
  */
 function resetSearch() {
   document.getElementById("searchBoardInput").value = '';
 }
 
+
 /**
- * the search function should also start, when the key-button "enter" is pressed
+ * The search function should also start, when the key-button "enter" is pressed
  *
  */
 function searchTasksByKeyPress(event) {
@@ -589,21 +730,5 @@ function searchTasksByKeyPress(event) {
   }
 }
 
-/*********************** END SEARCH FUNCTION ********************************/
 
-function changeImage(element, src) {
-  element.querySelector(".delete").src = src;
-}
-
-function restoreImagePopupTask(element, defaultSrc) {
-  element.querySelector(".delete").src = defaultSrc;
-}
-
-function showSubtasksByHovering(element) {
-  let statusText = document.getElementById(`statusText${element}`);
-  statusText.style.display = 'block';
-
-  statusText.onmouseout = function () {
-    statusText.style.display = 'none';
-  };
-}
+/////////////////////////////// END SEARCH FUNCTION ///////////////////////////////
