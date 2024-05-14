@@ -695,23 +695,40 @@ function removeActiveClasses() {
 }
 
 
+/**
+ * This function adds a specified class to a button and sets the fill color of its SVG element.
+ * @param {HTMLElement} button - The button to modify.
+ * @param {string} className - The class name to add to the button.
+ * @param {string} fill - The color to set as the SVG fill.
+ */
+function activateButton(button, className, fill) {
+  if (button) {
+    button.classList.add(className);
+    const buttonSVG = button.querySelector("svg");
+    if (buttonSVG) {
+      buttonSVG.style.fill = fill;
+    }
+  }
+}
 
 
+/**
+ * This function sets active classes on buttons based on the button ID to indicate priority.
+ * It adjusts the class and style of the button and its contained SVG element
+ * according to the specified priority level.
+ * @param {string} btnId - The ID suffix of the button that is clicked.
+ */
 function setActiveClasses(btnId) {
   const clickedButton = document.getElementById(`${btnId}-${templateIndex}`);
-  const buttonSVG = clickedButton.querySelector("svg");
   switch (btnId) {
     case "urgentBtn":
-      clickedButton.classList.add("active-prio-btn-urgent");
-      buttonSVG.style.fill = "white";
+      activateButton(clickedButton, "active-prio-btn-urgent", "white");
       break;
     case "mediumBtn":
-      clickedButton.classList.add("active-prio-btn-medium");
-      buttonSVG.style.fill = "white";
+      activateButton(clickedButton, "active-prio-btn-medium", "white");
       break;
     case "lowBtn":
-      clickedButton.classList.add("active-prio-btn-low");
-      buttonSVG.style.fill = "white";
+      activateButton(clickedButton, "active-prio-btn-low", "white");
       break;
     default:
       break;
@@ -719,6 +736,14 @@ function setActiveClasses(btnId) {
 }
 
 
+/**
+ * This function rotates the dropdown icon based on whether the dropdown is open or not.
+ * It applies a CSS transform to rotate the icon element by 180 degrees when the dropdown is open,
+ * and resets the transform when it is closed, effectively toggling the icon's orientation.
+ *
+ * @param {HTMLElement} icon - The DOM element representing the dropdown icon.
+ * @param {boolean} isOpen - A boolean value indicating whether the dropdown is currently open.
+ */
 function rotateDropdownIcon(icon, isOpen) {
   if (isOpen) {
     icon.style.transform = "rotate(180deg)";
@@ -742,7 +767,6 @@ async function formatInputDate(input) {
   let formattedDate = await formatDateCorrect(dateByValue);
   input.type = "text";
   input.value = formattedDate;
-  // input.valueAsDate = dateByValue;
 }
 
 
