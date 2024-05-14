@@ -167,6 +167,18 @@ function updateProgressBar(task) {
   stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
   progressBar.style.width = `${result}%`;
   progressBar.classList.add("blue");
+  resetProgressBar(allSubtasksByTask, progressBar);
+}
+
+
+/**
+ * This function resets the progressbar, when there are no subtasks anymore
+ * 
+ */
+function resetProgressBar(allSubtasksByTask, progressBar) {
+  if (allSubtasksByTask === 0) {
+    progressBar.classList.remove("blue");
+  }
 }
 
 
