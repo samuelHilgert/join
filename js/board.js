@@ -202,7 +202,7 @@ async function moveTo(currentCategory) {
       foundIndex = id;
       tasks[foundIndex].category = currentCategory;
       await saveNewUserDate();  // outsourced in script.js
-      showGuestMessageOnBoard();
+      // showGuestMessageOnBoard();
     }
   }
   await renderBoardTasks();
@@ -426,7 +426,7 @@ function closeBoardTaskPopup() {
   setTimeout(function () {
     displayNonePopup(popup);
     renderBoardTasks();
-    showGuestMessageOnBoard();
+    // showGuestMessageOnBoard();
   }, 500);
 }
 
@@ -570,7 +570,7 @@ async function deleteTask() {
   document.getElementById("boardTaskPopup").style.display = "none";
   document.body.style.overflow = "scroll";
   tasks.splice(currentOpenTaskId, 1);
-  showGuestMessageOnBoard();
+  // showGuestMessageOnBoard();
   await saveNewUserDate(); // outsourced in script.js
   await renderBoardTasks();
 }
@@ -628,7 +628,7 @@ function closeBoardAddTaskPopup() {
   setTimeout(function () {
     displayNonePopup(popup);
     renderBoardTasks();
-    showGuestMessageOnBoard();
+    // showGuestMessageOnBoard();
   }, 500);
   document.body.style.overflow = "scroll";
   templateIndex = 3;

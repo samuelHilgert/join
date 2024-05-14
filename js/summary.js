@@ -172,7 +172,7 @@ function getUserNameForGreet() {
     userNameDiv.innerHTML = "Guest";
     let div = document.getElementById("guestMessagePopupSummary");
     let messageText = document.getElementById("guestMessageSummary");
-    showGuestPopupMessage(div, messageText);
+    // showGuestPopupMessage(div, messageText);
   } else {
     userNameDiv.innerHTML = users[currentUser]["name"];
   }

@@ -312,7 +312,7 @@ async function validateAndAddContact(event) {
     } else {
         let div = document.getElementById('guestMessagePopupContacts');
         let messageText = document.getElementById('guestMessageContacts');
-        showGuestPopupMessage(div, messageText);
+        // showGuestPopupMessage(div, messageText);
     }
 }
 
@@ -410,7 +410,7 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         } else {
             let div = document.getElementById('guestMessagePopupContacts');
             let messageText = document.getElementById('guestMessageContacts');
-            showGuestPopupMessage(div, messageText);
+           // showGuestPopupMessage(div, messageText);
         }
         await renderContactList();
     }
@@ -517,7 +517,7 @@ async function deleteContact(contactId) {
             contacts.splice(index, 1);
             let div = document.getElementById('guestMessagePopupContacts');
             let messageText = document.getElementById('guestMessageContacts');
-            showGuestPopupMessage(div, messageText);
+            // showGuestPopupMessage(div, messageText);
         }
         await renderContactList();
         keepCircleBackgroundcolor();

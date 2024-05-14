@@ -1155,12 +1155,13 @@ function closeDropdown() {
 function addTaskToBoardMessage() {
   if (document.location.pathname.includes("add-task.html")) {
     showSuccessMessage();
-    handleAddTaskPageActions();
+    // handleAddTaskPageActions(); // guest message when limited access
+    forwardToBoard();
   }
   if (document.location.pathname.includes("board.html")) {
     closeBoardAddTaskPopup();
     showSuccessMessage();
-    handleBoardPageActions();
+    // handleBoardPageActions(); // guest message when limited access
   }
 }
 

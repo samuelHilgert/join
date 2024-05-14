@@ -73,14 +73,11 @@ function setAuthorizedStatus() {
     let userId = localStorage.getItem('user');
     if (loggedStatus === null && userId === null) {
         authorized = 'none';
-    } /* else if (localStorage.getItem('logged')) { // activate it, when guest should not get admin status
+    } else if (localStorage.getItem('logged')) {
         authorized = 'guest'; 
-    } */ else if (localStorage.getItem('user')) {
+    } else if (localStorage.getItem('user')) {
         authorized = 'user';
         currentUser = userId;
-    } else if (localStorage.getItem('logged')) { // remove it when guest should not get full access
-        authorized = 'user';
-        currentUser = 0;
     }
 }
 
