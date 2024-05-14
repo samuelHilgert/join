@@ -195,6 +195,7 @@ function checkCategorySelection(taskInput) {
   }
 }
 
+
 /**
  * This function shakes the required Text, when a required inputfield is not be filled
  * 
@@ -214,9 +215,7 @@ function shakeDiv() {
  */
 function toggleCategoryDiv() {
   let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
-  let dropdownIcon = document.getElementById(
-    `categoryDropIcon-${templateIndex}`
-  );
+  let dropdownIcon = document.getElementById(`categoryDropIcon-${templateIndex}`);
   if (
     categoryDiv.style.display === "none" ||
     categoryDiv.style.display === ""
@@ -296,7 +295,7 @@ function resetAddTaskValues() {
   document.getElementById(`taskCategory-${templateIndex}`).classList.remove("required-input-outline-red");
   newTask = [];
   subtasks = [];
-  checkedCheckboxes = []; // zum Zurücksetzen von den ausgewählten Kontakten im Dropdown Menü
+  checkedCheckboxes = [];
 }
 
 
@@ -320,6 +319,18 @@ async function addSubtask() {
 
 
 /**
+ * This function retrieves the current task based on the user's authorization level.
+ * It decides which task list to access (either a general task list or a user-specific task list)
+ * depending on whether the user is logged in as a guest or as a registered user.
+ *
+ * @returns {Object} - The current task object from either the general task list or the user-specific task list.
+ */
+function getCurrentTask() {
+  return authorized === "guest" ? tasks[currentOpenTaskId] : users[currentUser].tasks[currentOpenTaskId];
+}
+
+
+/**
  * This function includes all functions for editing the subtasks in existing tasks
  * 
  */
@@ -327,17 +338,12 @@ async function initiateFunctionsForAddSubtasksOnBoard() {
   const subtaskInput = document.getElementById(`subtask-${templateIndex}`);
   const subtaskValue = subtaskInput.value.trim();
   if (subtaskValue !== "") {
-    if (authorized === "guest") {
-      let currentTask = tasks[currentOpenTaskId];
-      editExistSubtask(currentTask, subtaskValue);
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      editExistSubtask(currentTask, subtaskValue);
-    }
-    await saveNewUserDate(); // outsourced in script.js
-    renderSubtasksPopup(); // outsourced in board.js
+    let currentTask = getCurrentTask();
+    editExistSubtask(currentTask, subtaskValue);
+    await saveNewUserDate(); 
+    renderSubtasksPopup(); 
     subtaskInput.value = "";
-    changeIcons(); // outsourced in renderHTML.js
+    changeIcons(); 
   }
 }
 
