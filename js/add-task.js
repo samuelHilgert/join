@@ -1001,11 +1001,10 @@ function forwardToBoard() {
 
 
 function closeAddTaskMenuDiv() {
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
   if (taskContactDiv.style.display === "flex") {
+    handleClickOnDropdown();
     closeDropdown();
   }
   taskContactDiv.style.display = "none";
