@@ -129,7 +129,7 @@ async function pushRememberStatusOnRemoteServer() {
  */
 function verificateEmail() {
     let container = document.getElementById('messageFormLogin');
-    if (emailNotFound()) {
+    if (emailNotFound() || users.length === 0) {
         successEmail = false;
         showLoginMessage();
         loginMessageDisplay(container);
@@ -143,7 +143,6 @@ function verificateEmail() {
         loginErrorReset();
     }
 }
-
 
 /**
  * This is a function to check whether the email address matches the password
