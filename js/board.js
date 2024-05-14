@@ -101,6 +101,7 @@ function getPrioForTask(task) {
  * 
  * @param {string} task - the current task
  */
+/*
 function getContactsForTask(task) {
   let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
   contactsForTaskDiv.innerHTML = "";
@@ -110,6 +111,41 @@ function getContactsForTask(task) {
     const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
     contactsForTaskDiv.innerHTML += renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters); // outsourced in renderHTML.js
   });
+} */
+
+
+/**
+ * This function generates the current "assignedTo" contacts of the todo
+ * 
+ * @param {string} task - the current task
+ */
+function getContactsForTask(task) {
+  let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
+  contactsForTaskDiv.innerHTML = "";
+  let renderedContacts = 0; // number of rendered contacts
+  task.assignedTo.forEach((contactName, index) => {
+    if (renderedContacts < 5) { // only rendering, if less than 5 contacts
+      const backgroundColor = getBgColorTaskPopup(task, index);
+      const letters = contactNamesLetters(contactName);
+      const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
+      contactsForTaskDiv.innerHTML += renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters); // outsourced in renderHTML.js
+      renderedContacts++;
+    }
+  });
+  addAnPlusForMoreContacts(task, contactsForTaskDiv);
+}
+
+
+/**
+ * This function generates an plus symbol, if there are more than five contacts in the task
+ * 
+ * @param {string} task - the current task
+ * @param {string} contactsForTaskDiv - the element-div for the contacts
+ */
+function addAnPlusForMoreContacts(task, contactsForTaskDiv) {
+  if (task.assignedTo.length > 5) {
+    contactsForTaskDiv.innerHTML += `<div class="d_f_c_c plus-icon-task">+</div>`;
+  }
 }
 
 

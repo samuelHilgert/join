@@ -18,7 +18,7 @@
         "description": "Build start page with recipe recommendation.",
         "dueDate": "02/06/2024",
         "priority": "Medium",
-        "assignedTo": ["Anna Müller", "Olivia Shaun", "Paul Lee"],
+        "assignedTo": ["Anna Müller", "Max Baumgart", "Alex Maier", "Olivia Shaun", "Paul Lee", "Eva Grace"],
         "subtasksOpen": ["create page with HTML and CSS"],
         "subtasksDone": ["looking for a recipe"],
         "category": "inProgress"
