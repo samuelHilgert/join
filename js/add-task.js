@@ -391,7 +391,7 @@ async function initiateFunctionsForAddSubtasksForm() {
  * @param {string} element - element-div from selected subtask
  */
 async function editSubtask(element) {
-  if (document.location.pathname === `/board.html`) {
+  if (document.location.pathname === `/board.html`  && templateIndex === 3) {
     await initiateFunctionsForEditSubtasksOnBoard(element); // editing subtasks which are already exist on board
   } else {
     await initiateFunctionsForEditSubtasksForm(element); // added new subtasks 
@@ -503,7 +503,7 @@ document.addEventListener("keypress", function (event) {
 
 
 function deleteSubtask(i) {
-  if (document.location.pathname === `/board.html`) {
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
     if (authorized === "guest") {
       let currentTask = tasks[currentOpenTaskId];
       if (i.id.includes("subtasksOpen")) {
@@ -529,7 +529,7 @@ function deleteSubtask(i) {
     }
   } else {
     subtasks.splice(i, 1);
-    document.getElementById(`subtask-${templateIndex}-${i}`).remove();
+    document.getElementById(`subtask${i}`).remove();
   }
 }
 
