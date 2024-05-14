@@ -132,7 +132,7 @@ async function handlePasswordMismatch(container) {
     setTimeout(function () {
         hideMessageContainer(container);
     }, displayMessageTime);
-    resetSingUpForm();
+    resetSingUpFormPasswords();
 }
 
 
@@ -236,6 +236,20 @@ function resetSingUpForm() {
     let registerBtn = document.getElementById('registerBtn');
     signUpName.value = '';
     registerEmail.value = '';
+    password.value = '';
+    confirmPassword.value = '';
+    registerBtn.disabled = false;
+    registerSuccess = false;
+    checkbox = false;
+}
+
+
+/**
+ * This function resets only passwords
+ * 
+ */
+function resetSingUpFormPasswords() {
+    let registerBtn = document.getElementById('registerBtn');
     password.value = '';
     confirmPassword.value = '';
     registerBtn.disabled = false;
