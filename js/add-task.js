@@ -858,26 +858,21 @@ function findMatchingContact() {
 }
 
 
-
 function openDropdown() {
   sortContactsForTasks();
   clearAssignToInput();
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   if (taskContactDiv.style.display === "flex") {
     taskContactDiv.style.display = "none";
   } else {
     taskContactDiv.style.display = "flex";
     taskContactDiv.innerHTML = "";
-    //checkedCheckboxes = [];
     for (let index = 0; index < contactsForTasks.length; index++) {
       const contact = contactsForTasks[index];
       renderContactsDropwdown(taskContactDiv, contact, index);
     }
     markSelectedContacts();
   }
-  // contactsByCheckbox(); wird nicht mehr benötigt
   showContactSelection();
 }
 
