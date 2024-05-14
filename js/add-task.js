@@ -784,6 +784,12 @@ async function formatInputDate(input) {
 
 ///////// SEARCHBAR /////////
 
+
+/**
+ * This function toggles the placeholder text and the associated class of the "taskAssignedTo" input field.
+ * It alternates the placeholder between "Search contact" and "Select contacts to assign".
+ * This is used to indicate whether the input field is in a search mode or in a selection mode to the user.
+ */
 function clearAssignToInput() {
   let input = document.getElementById(`taskAssignedTo-${templateIndex}`);
   if (input.placeholder === "Search contact") {
@@ -796,6 +802,9 @@ function clearAssignToInput() {
 }
 
 
+/**
+ * This function 
+ */
 function turnArrow() {
   let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
   if (arrow.classList.contains("rotate-180")) {
