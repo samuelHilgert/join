@@ -1,5 +1,25 @@
-let profileCircleColors = ['teal', 'lightseagreen', 'purple', 'slategrey', 'pink', 'orange', 'navy', 'indigo', 'fuchsia', 'skyblue', 'forestgreen', 'dodgerblue', 'darkgreen', 'blue', 'indianred', 'seagreen', 'lightsteelblue', 'cadetblue'];
-let nextId = 1;
+let profileCircleColors = 
+[
+    'teal',
+    'lightseagreen',
+    'purple',
+    'slategrey',
+    'pink',
+    'orange',
+    'navy',
+    'indigo',
+    'fuchsia',
+    'skyblue',
+    'forestgreen',
+    'dodgerblue',
+    'darkgreen',
+    'blue',
+    'indianred',
+    'seagreen',
+    'lightsteelblue',
+    'cadetblue'
+]
+  let nextId = 1;
 
 
 /**
