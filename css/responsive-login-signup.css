@@ -14,14 +14,14 @@
   }
 
   .mobile-logo {
-    width: 80px;
+    width: 70px;
   }
 
   .mobile-checkbox-policy {
     width: 244px;
   }
 
-  .mobile-login-body {
+  .mobile-login-container {
     padding-top: 20px;
     padding-bottom: 26px;
     height: 100vh;
@@ -37,12 +37,13 @@
   .mobile-login-form-container {
     padding-right: 0;
     padding-left: 0;
+    padding-top:20px;
     width: inherit;
   }
 
-  .mobile-login-body {
-    padding-right: 20px;
-    padding-left: 20px;
+  .mobile-login-container {
+      padding:0 20px;
+      padding-top:5px;
   }
 
   .mobile-inputs {
@@ -73,8 +74,8 @@
   }
 
   .mobile-links {
-    padding-bottom: 32px;
-    padding-top: 0;
+    padding:0;
+    padding-top:10px;
   }
 }
 
@@ -112,4 +113,5 @@
   .mobile-login-signup-headline {
     font-size: 48px;
   }
+
 }
