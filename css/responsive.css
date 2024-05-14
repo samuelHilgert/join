@@ -273,6 +273,36 @@
     .contact-right-wrapper {
         width: 50%;
     }
+
+    .mobile-policy-main-container{
+        margin-left: 0;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .mobile-policy-header{
+        position: fixed;
+      }
+
+      .mobile-policy-headline{
+        position: fixed;
+        margin-top: 48px;
+        background-color: rgb(246, 247, 249);
+      }
+
+      .mobile-start-policity-content{
+        margin-top: 138px;
+      }
+
+      .mobile-legal-arrow{
+        padding-top: 72px;
+        right: 18px;
+      }
+
+      .mobile-policy-end{
+        margin-bottom: 70px;
+     }
 }
 
 @media screen and (max-width: 685px) {
