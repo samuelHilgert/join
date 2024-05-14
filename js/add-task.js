@@ -858,22 +858,46 @@ function findMatchingContact() {
 }
 
 
+/**
+ * This function toggles the display of the dropdown menu for assigning contacts to tasks.
+ * @param {HTMLElement} element - The dropdown menu element.
+ */
+function toggleDropdownDisplay(element) {
+  if (element.style.display === "flex") {
+    element.style.display = "none";
+  } else {
+    element.style.display = "flex";
+    element.innerHTML = ""; // Clear previous content when opening.
+  }
+}
+
+
+/**
+ * This function renders contacts in the dropdown.
+ * @param {HTMLElement} container - The container where contacts should be displayed.
+ * @param {Array} contacts - Array of contact objects.
+ */
+function populateDropdownWithContacts(container, contacts) {
+  for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    renderContactsDropwdown(container, contact, index);
+  }
+}
+
+
+/**
+ * This function handles the opening and population of the dropdown menu for task contact selection.
+ */
 function openDropdown() {
   sortContactsForTasks();
   clearAssignToInput();
   let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
-  if (taskContactDiv.style.display === "flex") {
-    taskContactDiv.style.display = "none";
-  } else {
-    taskContactDiv.style.display = "flex";
-    taskContactDiv.innerHTML = "";
-    for (let index = 0; index < contactsForTasks.length; index++) {
-      const contact = contactsForTasks[index];
-      renderContactsDropwdown(taskContactDiv, contact, index);
-    }
+  toggleDropdownDisplay(taskContactDiv);
+  if (taskContactDiv.style.display === "flex") { 
+    populateDropdownWithContacts(taskContactDiv, contactsForTasks);
     markSelectedContacts();
   }
-  showContactSelection();
+  showContactSelection(); 
 }
 
 
