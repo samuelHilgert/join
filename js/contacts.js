@@ -534,7 +534,6 @@ async function deleteContact(contactId) {
  * @returns {Promise<void>} - A Promise that resolves once the deletion process is complete.
  */
 async function deleteContactInAssignedTo(deletedContactName) {
-    console.log('suche nach = ' + deletedContactName)
     for (let a = 0; a < tasks.length; a++) {
         const contactName = tasks[a].assignedTo;
         const indexOfName = contactName.findIndex(searchName => searchName === deletedContactName);
