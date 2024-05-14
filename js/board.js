@@ -126,7 +126,7 @@ function getContactsForTask(task) {
  */
 function addAnPlusForMoreContacts(task, contactsForTaskDiv) {
   if (task.assignedTo.length > 5) {
-    contactsForTaskDiv.innerHTML += `<div class="d_f_c_c plus-icon-task">+</div>`;
+    contactsForTaskDiv.innerHTML += `<div class="d_f_c_c gap-5"><span class="plus-icon-task">+</span><span class="plus-icon-task plus-contacts-text">${task.assignedTo.length - 5}</span></div>`;
   }
 }
 
@@ -537,7 +537,6 @@ function getCurrentPriorityBtn() {
   } else if (prio === 'Low') {
     prioBtn = lowBtn;
   }
-  prioBtn.click();
 }
 
 

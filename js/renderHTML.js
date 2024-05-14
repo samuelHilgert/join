@@ -256,7 +256,7 @@ function renderAddTaskFormButton() {
     let urgentBtn = document.getElementById(`urgentBtn-${templateIndex}`);
     let mediumBtn = document.getElementById(`mediumBtn-${templateIndex}`);
     let lowBtn = document.getElementById(`lowBtn-${templateIndex}`);
-
+    
     urgentBtn.innerHTML = `
     <p>Urgent</p>
     <svg class="category-svg-urgent">
@@ -301,6 +301,7 @@ function renderAddTaskFormButton() {
     </svg>
     `;
 
+    document.getElementById(`mediumBtn-${templateIndex}`).click();
 }
 
 
