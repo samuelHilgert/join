@@ -902,8 +902,9 @@ function openDropdown() {
 
 
 /**
- * This function sorts the contacts
- * 
+ * This function sorts the global `contactsForTasks` array alphabetically by contact names.
+ * It modifies the array by sorting its elements based on the lowercase comparison
+ * of contact names, ensuring a consistent, case-insensitive alphabetical order.
  */
 function sortContactsForTasks() {
   contactsForTasks.sort((a, b) => {
@@ -915,22 +916,16 @@ function sortContactsForTasks() {
 
 
 /**
- * This 
- * 
- * @param {Array} taskContactDiv - 
- * @param {Array} contact - 
- * @param {Array} index -
+ * This function renders contacts within a specified HTML container.
+ *
+ * @param {HTMLElement} taskContactDiv - The DOM element where contacts should be rendered.
+ * @param {Object} contact - The contact object containing details like name and other properties.
+ * @param {number} index - The index of the current contact in the contacts array, used for unique DOM IDs.
  */
 function renderContactsDropwdown(taskContactDiv, contact, index) {
   let letters = contactNamesLetters(contact.name);
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
-
-/* // Funktion wird nicht mehr benötigt
-function getBackgroundColorAssignedContact(contactIndex) {
-  return contacts[contactIndex].color;
-}
-*/
 
 
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
