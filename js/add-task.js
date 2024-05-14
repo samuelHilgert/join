@@ -541,6 +541,7 @@ function deleteSubtask(i) {
   }
 }
 
+
 /**
  * This function delets the subtask from the arrays and renders the subtasks again 
  * 
@@ -592,6 +593,11 @@ function clearSubtaskInput() {
 }
 
 
+/**
+ * This function hides the category division if it is currently displayed as a flexbox.
+ * Therefore it checks if the category division (a UI element identified by a specific ID) is visible
+ * and sets its display style to 'none', effectively hiding it from view.
+ */
 function clearCategory() {
   let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
   if (categoryDiv.style.display === "flex") {
@@ -600,6 +606,10 @@ function clearCategory() {
 }
 
 
+/**
+ * This function hides the contact dropdown if it is currently displayed as a flexbox.
+ * It targets a specific UI element for contact details and hides it if it's displayed. 
+ */
 function clearContactDropdown() {
   let taskContactDiv = document.getElementById(
     `taskContactDiv-${templateIndex}`
@@ -610,7 +620,7 @@ function clearContactDropdown() {
 }
 
 
-//clear the whole form
+
 function clearForm() {
   document.getElementById(`taskTitle-${templateIndex}`).value = "";
   document.getElementById(`taskDescription-${templateIndex}`).value = "";
@@ -630,7 +640,10 @@ function clearForm() {
 
 
 
-//Change Prio Btn colors!
+/**
+ * 
+ * @param {*} btnId 
+ */
 function setPriority(btnId) {
   removeActiveClasses();
   setActiveClasses(btnId);
