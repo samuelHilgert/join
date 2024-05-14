@@ -928,6 +928,14 @@ function renderContactsDropwdown(taskContactDiv, contact, index) {
 }
 
 
+/**
+ * This function renders a dropdown menu item for a contact in the specified container.
+ *
+ * @param {HTMLElement} taskContactDiv - The container where the dropdown menu is being rendered.
+ * @param {string} letters - Initials or letters to display in the contact circle.
+ * @param {Object} contact - The contact data, including properties like name and color.
+ * @param {number} index - The index of the contact in the list to provide unique IDs for HTML elements.
+ */
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   let backgroundColor = contact.color;
   taskContactDiv.innerHTML += `
@@ -944,6 +952,13 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
 }
 
 
+/**
+ * This function checks if the dropdown menu is currently open.
+ * It determines the visibility of the dropdown menu by checking the display style
+ * of the dropdown container.
+ *
+ * @returns {boolean} - True if the dropdown menu is displayed ('flex'), otherwise false.
+ */
 function isDropdownOpen() {
   let taskContactDiv = document.getElementById(
     `taskContactDiv-${templateIndex}`
