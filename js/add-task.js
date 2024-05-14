@@ -563,12 +563,12 @@ function deleteAndRenderSubtasks(i, currentTask) {
 /////////////////////////////////// END DELETE SUBTASKS /////////////////////////////////////
 
 
-
-
-
-
-
-//Event handler to add subtask with enter-key
+/**
+ * Event listener for handling keypress events across the document.
+ * Specifically, it checks for the 'Enter' key press (keyCode 13) when the focus is on the subtask input.
+ * If the 'Enter' key is pressed while focused on the specified input, it prevents the default form submission
+ * and triggers the addition of a subtask.
+ */
 document.addEventListener("keypress", function (event) {
   if (event.keyCode === 13) {
     if (document.activeElement.id === `subtask-${templateIndex}`) {
@@ -579,7 +579,10 @@ document.addEventListener("keypress", function (event) {
 });
 
 
-
+/**
+ * This function clears the input field for subtasks, removes focus from it, and updates the dropdown icon.
+ * It is typically called to reset the subtask input area after a subtask has been added or when clearing the input is needed.
+ */
 function clearSubtaskInput() {
   let subtaskInput = document.getElementById(`subtask-${templateIndex}`);
   subtaskInput.value = "";
