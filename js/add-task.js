@@ -142,12 +142,17 @@ function setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio
 
 
 /**
- * This function adds the values by added a new task to board
- * 
+ * This function initiates the process of adding a new task from the task form. 
+ * It gathers task input, validates the category selection, determines task priority, 
+ * and manages the creation and saving of the new task.
+ * It also handles form cleanup and UI updates based on the operation's context 
+ * (specifically, if on the board page).
  */
 async function initiateFunctionsForAddTaskForm() {
   const taskInput = readTaskInput();
-  checkCategorySelection(taskInput);
+  if (!checkCategorySelection(taskInput)) {
+    return;
+  }
   let formattedInputDate = taskInput.date;
   const prio = determinePriority();
   let id = getNextAvailableTaskId();
@@ -187,12 +192,13 @@ function readTaskInput() {
  */
 function checkCategorySelection(taskInput) {
   const selectedCategory = taskInput.category;
-  if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
+  if (!selectedCategory || (selectedCategory !== "Technical Task" && selectedCategory !== "User Story")) {
     shakeDiv();
-    toggleCategoryDiv();
+    toggleCategoryDiv(); 
     document.getElementById(`taskCategory-${templateIndex}`).classList.add("required-input-outline-red");
-    return;
+    return false; 
   }
+  return true; 
 }
 
 
