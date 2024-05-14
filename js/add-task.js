@@ -803,7 +803,8 @@ function clearAssignToInput() {
 
 
 /**
- * This function 
+ * This function toggles the rotation state of an arrow icon.
+ * It checks if the arrow icon currently has the "rotate-180" class and toggles it.
  */
 function turnArrow() {
   let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
@@ -821,7 +822,6 @@ function findMatchingContact() {
     .getElementById(`taskAssignedTo-${templateIndex}`)
     .value.trim()
     .toLowerCase();
-  //console.log("Sucheingabe:", searchInput); // Log der Sucheingabe
   if (searchInput === "") {
     openDropdown();
     updateDropdownMenu(contactsForTasks);
@@ -829,10 +829,8 @@ function findMatchingContact() {
     let filteredContacts = contactsForTasks.filter((contact) => {
       let isValidContact =
         contact && contact.name && typeof contact.name === "string";
-      //console.log("Verarbeiteter Kontakt:", contact); // Log jeden Kontakts vor der Filterung
       return isValidContact && contact.name.toLowerCase().includes(searchInput);
     });
-    //console.log("Gefilterte Kontakte:", filteredContacts); // Log der gefilterten Kontakte
     if (!isDropdownOpen()) {
       openDropdown();
     }
