@@ -488,6 +488,50 @@ function getSubtaskIndex(subtaskContainer, element) {
 ///////////////////////////////////// END EDIT SUBTASKS //////////////////////////////////////
 
 
+////////////////////////////////////// DELETE SUBTASKS ///////////////////////////////////////
+
+
+/**
+ * This function initiate the delete of the selected subtask
+ * 
+ * @param {number} i - index of the selected subtask
+ */
+function deleteSubtask(i) {
+  if (document.location.pathname === `/board.html` && templateIndex === 3) {
+    if (authorized === "guest") {
+      let currentTask = tasks[currentOpenTaskId];
+      deleteAndRenderSubtasks(currentTask);
+    } else {
+      let currentTask = users[currentUser].tasks[currentOpenTaskId];
+      deleteAndRenderSubtasks(currentTask);
+    }
+  } else {
+    subtasks.splice(i, 1);
+    document.getElementById(`subtask${i}`).remove();
+  }
+}
+
+
+/**
+ * This function delets the subtask from the arrays and renders the subtasks again 
+ * 
+ * @param {number} i - index of the selected subtask
+ */
+function deleteAndRenderSubtasks(currentTask) {
+  if (i.id.includes("subtasksOpen")) {
+    let index = i.id.split("Open")[1];
+    currentTask.subtasksOpen.splice([index], 1);
+    renderSubtasksPopup(); // outsourced in board.js
+  } else {
+    let index = i.id.split("Done")[1];
+    currentTask.subtasksDone.splice([index], 1);
+    renderSubtasksPopup(); // outsourced in board.js
+  }
+}
+
+
+/////////////////////////////////// END DELETE SUBTASKS /////////////////////////////////////
+
 
 
 
@@ -504,37 +548,6 @@ document.addEventListener("keypress", function (event) {
   }
 });
 
-
-function deleteSubtask(i) {
-  if (document.location.pathname === `/board.html` && templateIndex === 3) {
-    if (authorized === "guest") {
-      let currentTask = tasks[currentOpenTaskId];
-      if (i.id.includes("subtasksOpen")) {
-        let index = i.id.split("Open")[1];
-        currentTask.subtasksOpen.splice([index], 1);
-        renderSubtasksPopup(); // outsourced in board.js
-      } else {
-        let index = i.id.split("Done")[1];
-        currentTask.subtasksDone.splice([index], 1);
-        renderSubtasksPopup(); // outsourced in board.js
-      }
-    } else {
-      let currentTask = users[currentUser].tasks[currentOpenTaskId];
-      if (i.id.includes("subtasksOpen")) {
-        let index = i.id.split("Open")[1];
-        currentTask.subtasksOpen.splice([index], 1);
-        renderSubtasksPopup(); // outsourced in board.js
-      } else {
-        let index = i.id.split("Done")[1];
-        currentTask.subtasksDone.splice([index], 1);
-        renderSubtasksPopup(); // outsourced in board.js
-      }
-    }
-  } else {
-    subtasks.splice(i, 1);
-    document.getElementById(`subtask${i}`).remove();
-  }
-}
 
 
 function clearSubtaskInput() {
