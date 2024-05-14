@@ -249,6 +249,6 @@ function resetSingUpForm() {
  * 
  */
 function backToLogin() {
-    window.location.href = './login.html?msg=Du hast dich erfolgreich registriert'; // queryParameter 
+    window.location.href = './login.html?msg=You Signed Up successfully'; // queryParameter 
 }
 
