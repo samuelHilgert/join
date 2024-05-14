@@ -967,25 +967,54 @@ function isDropdownOpen() {
 }
 
 
-
-function handleCheckboxChange(index) {
-  let wrapper = document.getElementById(`wrapper${index}`);
-  let checkbox = document.getElementById(`checkbox${index}`);
-  let contactName = document.getElementById(`contactName${index}`);
-  if (checkbox.checked) {
+/**
+ * This function updates the UI based on the checkbox state.
+ * 
+ * @param {HTMLElement} wrapper - The wrapper element of the contact.
+ * @param {HTMLElement} contactName - The element displaying the contact's name.
+ * @param {boolean} isChecked - The state of the checkbox, either checked or not.
+ */
+function updateCheckboxUI(wrapper, contactName, isChecked) {
+  if (isChecked) {
     wrapper.style.backgroundColor = "rgba(42, 54, 71, 1)";
     contactName.style.color = "rgba(255, 255, 255, 1)";
-    if (!checkedCheckboxes.includes(contactName.textContent)) {
-      checkedCheckboxes.push(contactName.textContent);
-    }
   } else {
     wrapper.style.backgroundColor = "";
     contactName.style.color = "rgba(0, 0, 0, 1)";
-    let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
+  }
+}
+
+/**
+ * This function manages the list of checked checkboxes.
+ * 
+ * @param {string} contactName - The name of the contact to add or remove from the list.
+ * @param {boolean} isChecked - Whether to add or remove the contact.
+ */
+function manageCheckedList(contactName, isChecked) {
+  if (isChecked) {
+    if (!checkedCheckboxes.includes(contactName)) {
+      checkedCheckboxes.push(contactName);
+    }
+  } else {
+    let indexToRemove = checkedCheckboxes.indexOf(contactName);
     if (indexToRemove !== -1) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
   }
+}
+
+
+/**
+ * This function handles changes to the checkbox state and updates both UI and the list of checked checkboxes.
+ * 
+ * @param {number} index - The index of the checkbox being changed.
+ */
+function handleCheckboxChange(index) {
+  let wrapper = document.getElementById(`wrapper${index}`);
+  let checkbox = document.getElementById(`checkbox${index}`);
+  let contactName = document.getElementById(`contactName${index}`);
+  updateCheckboxUI(wrapper, contactName, checkbox.checked);
+  manageCheckedList(contactName.textContent, checkbox.checked);
 }
 
 
@@ -1009,12 +1038,8 @@ function markSelectedContacts() {
  * If the name is found in the array, the initials and background colors are extracted from it.
  */
 function showContactSelection() {
-  let contactSelection = document.getElementById(
-    `contactSelection-${templateIndex}`
-  );
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
+  let contactSelection = document.getElementById(`contactSelection-${templateIndex}`);
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   if (taskContactDiv.style.display === "none") {
     contactSelection.style.display = "flex";
   } else {
@@ -1037,18 +1062,13 @@ function showContactSelection() {
 
 
 function updateDropdownMenu(contacts) {
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   taskContactDiv.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
     if (!contact || !contact.name) {
-      console.error(
-        "Ungültiger Kontakt oder Name bei updateDropdownMenu:",
-        contact
-      );
-      continue; // Überspringe ungültige Kontakte
+      console.error("Ungültiger Kontakt oder Name bei updateDropdownMenu:", contact);
+      continue;
     }
     renderContactsDropwdown(taskContactDiv, contact, i);
   }
