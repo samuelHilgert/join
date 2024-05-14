@@ -16,7 +16,11 @@ function setBackgroundcolorSidebarLinks() {
     });
 }
 
-
+/**
+ * This function gets all elements with classes ".sidebar-links" and ".sidebar-menu".
+ * @returns {Element} - element of the founded classes
+ * 
+ */
 function getSidebarLinks() {
     return document.querySelectorAll('.sidebar-links .sidebar-menu');
 }
@@ -162,6 +166,7 @@ function changeBgColorSidebarLink(position) {
 
 /**
  * Opens a legal link in the sidebar, considering if it's an external link.
+ * 
  * @param {string} link The link to open.
  */
 function openSidebarLegalLink(link) {
