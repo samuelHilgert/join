@@ -516,6 +516,7 @@ function clickLogout() {
     localStorage.removeItem('user');
     localStorage.removeItem('logged');
     localStorage.removeItem('remember');
+    localStorage.removeItem('tasks');
     setTimeout(() => {
         window.location.href = `./login.html?msg=you are logged out`;
     }, 500);

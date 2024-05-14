@@ -14,6 +14,7 @@ let widthForMobileSettings = 430; // width For Mobile Settings
  */
 async function renderBoardTasks() {
   await reloadTasksOnBoard();
+  loadAddedTasksAsGuest();
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
     const allTasksSameCategory = tasks.filter((t) => t["category"] == category);
@@ -26,6 +27,19 @@ async function renderBoardTasks() {
       showTasksForEachCategory(allTasksSameCategory, categoryTableColumn);
     }
   }
+}
+
+
+/**
+ * This function loads the new added task as guest as well
+ *
+ */
+function loadAddedTasksAsGuest() {
+  if (authorized === "guest") {
+    if (localStorage.getItem('tasks')) {
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+  } 
 }
 
 

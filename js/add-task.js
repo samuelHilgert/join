@@ -280,6 +280,7 @@ function getTaskValues(taskInput, formattedInputDate, prio, id) {
 async function saveNewTask() {
   if (authorized === "guest") {
     tasks.push(...newTask);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   } else {
     users[currentUser].tasks.push(...newTask);
     await setItem("users", JSON.stringify(users));
