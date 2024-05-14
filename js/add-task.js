@@ -816,6 +816,35 @@ function turnArrow() {
 }
 
 
+/**
+ * This function filters contacts based on the provided search input.
+ * @param {Array} contacts - The array of contact objects.
+ * @param {string} searchInput - The search term used to filter contacts.
+ * @returns {Array} - An array of contacts that match the search term.
+ */
+function filterContacts(contacts, searchInput) {
+  return contacts.filter(contact => {
+    let isValidContact = contact && contact.name && typeof contact.name === "string";
+    return isValidContact && contact.name.toLowerCase().includes(searchInput);
+  });
+}
+
+
+/**
+ * This function ensures the dropdown is open and updates it with the provided data.
+ * @param {Array} contacts - The contacts to display in the dropdown menu.
+ */
+function manageDropdown(contacts) {
+  if (!isDropdownOpen()) {
+    openDropdown();
+  }
+  updateDropdownMenu(contacts);
+}
+
+
+/**
+ * This function handles search operations to find matching contacts and update the dropdown menu accordingly.
+ */
 function findMatchingContact() {
   clearAssignToInput();
   let searchInput = document.getElementById(`taskAssignedTo-${templateIndex}`).value.trim().toLowerCase();
@@ -823,15 +852,8 @@ function findMatchingContact() {
     openDropdown();
     updateDropdownMenu(contactsForTasks);
   } else {
-    let filteredContacts = contactsForTasks.filter((contact) => {
-      let isValidContact =
-        contact && contact.name && typeof contact.name === "string";
-      return isValidContact && contact.name.toLowerCase().includes(searchInput);
-    });
-    if (!isDropdownOpen()) {
-      openDropdown();
-    }
-    updateDropdownMenu(filteredContacts);
+    let filteredContacts = filterContacts(contactsForTasks, searchInput);
+    manageDropdown(filteredContacts);
   }
 }
 
