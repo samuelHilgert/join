@@ -101,24 +101,6 @@ function getPrioForTask(task) {
  * 
  * @param {string} task - the current task
  */
-/*
-function getContactsForTask(task) {
-  let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
-  contactsForTaskDiv.innerHTML = "";
-  task.assignedTo.forEach((contactName, index) => {
-    const backgroundColor = getBgColorTaskPopup(task, index);
-    const letters = contactNamesLetters(contactName);
-    const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
-    contactsForTaskDiv.innerHTML += renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters); // outsourced in renderHTML.js
-  });
-} */
-
-
-/**
- * This function generates the current "assignedTo" contacts of the todo
- * 
- * @param {string} task - the current task
- */
 function getContactsForTask(task) {
   let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
   contactsForTaskDiv.innerHTML = "";
@@ -167,7 +149,7 @@ function updateProgressBar(task) {
   stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
   progressBar.style.width = `${result}%`;
   progressBar.classList.add("blue");
-  resetProgressBar(allSubtasksByTask, progressBar);
+  resetProgressBar(task, allSubtasksByTask, progressBar);
 }
 
 
@@ -175,9 +157,10 @@ function updateProgressBar(task) {
  * This function resets the progressbar, when there are no subtasks anymore
  * 
  */
-function resetProgressBar(allSubtasksByTask, progressBar) {
+function resetProgressBar(task, allSubtasksByTask) {
   if (allSubtasksByTask === 0) {
-    progressBar.classList.remove("blue");
+    let progressBarDiv = document.getElementById(`progessSubtaskDiv${task["id"]}`);
+    progressBarDiv.remove();
   }
 }
 
