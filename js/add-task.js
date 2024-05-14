@@ -914,6 +914,13 @@ function sortContactsForTasks() {
 }
 
 
+/**
+ * This 
+ * 
+ * @param {Array} taskContactDiv - 
+ * @param {Array} contact - 
+ * @param {Array} index -
+ */
 function renderContactsDropwdown(taskContactDiv, contact, index) {
   let letters = contactNamesLetters(contact.name);
   renderDopdownMenu(taskContactDiv, letters, contact, index);
