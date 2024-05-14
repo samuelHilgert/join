@@ -1,0 +1,45 @@
+.summary-category-text {
+    white-space: nowrap;
+}
+
+.summary-icon {
+    width: 65px;
+    height: 65px;
+}
+
+.card {
+    display: flex;
+    border-radius: 30px;
+    padding: 0 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: 100%;
+    flex: 1;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 1);
+    background-color: #2a3647;
+    transform: scale(1.07);
+    /* Vergrößern um 7% */
+}
+
+.card-upcoming {
+    border-radius: 30px;
+    padding: 0 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+    gap: 20px;
+}
+
+#guestMessagePopupSummary {
+    display: none;
+}
