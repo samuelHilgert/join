@@ -818,10 +818,7 @@ function turnArrow() {
 
 function findMatchingContact() {
   clearAssignToInput();
-  let searchInput = document
-    .getElementById(`taskAssignedTo-${templateIndex}`)
-    .value.trim()
-    .toLowerCase();
+  let searchInput = document.getElementById(`taskAssignedTo-${templateIndex}`).value.trim().toLowerCase();
   if (searchInput === "") {
     openDropdown();
     updateDropdownMenu(contactsForTasks);
