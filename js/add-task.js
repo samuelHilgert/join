@@ -142,12 +142,17 @@ function setValuesFromBoardForm(currentTask, taskInput, formattedInputDate, prio
 
 
 /**
- * This function adds the values by added a new task to board
- * 
+ * This function initiates the process of adding a new task from the task form. 
+ * It gathers task input, validates the category selection, determines task priority, 
+ * and manages the creation and saving of the new task.
+ * It also handles form cleanup and UI updates based on the operation's context 
+ * (specifically, if on the board page).
  */
 async function initiateFunctionsForAddTaskForm() {
   const taskInput = readTaskInput();
-  checkCategorySelection(taskInput);
+  if (!checkCategorySelection(taskInput)) {
+    return;
+  }
   let formattedInputDate = taskInput.date;
   const prio = determinePriority();
   let id = getNextAvailableTaskId();
@@ -187,12 +192,13 @@ function readTaskInput() {
  */
 function checkCategorySelection(taskInput) {
   const selectedCategory = taskInput.category;
-  if (selectedCategory !== "Technical Task" && selectedCategory !== "User Story") {
+  if (!selectedCategory || (selectedCategory !== "Technical Task" && selectedCategory !== "User Story")) {
     shakeDiv();
-    toggleCategoryDiv();
+    toggleCategoryDiv(); 
     document.getElementById(`taskCategory-${templateIndex}`).classList.add("required-input-outline-red");
-    return;
+    return false; 
   }
+  return true; 
 }
 
 
@@ -210,7 +216,7 @@ function shakeDiv() {
 
 
 /**
- * This function opens the selection menu from the category-div, if no selection could be registrated
+ * This function opens the selection menu from the category-div.
  * 
  */
 function toggleCategoryDiv() {
@@ -803,7 +809,8 @@ function clearAssignToInput() {
 
 
 /**
- * This function 
+ * This function toggles the rotation state of an arrow icon.
+ * It checks if the arrow icon currently has the "rotate-180" class and toggles it.
  */
 function turnArrow() {
   let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
@@ -815,59 +822,95 @@ function turnArrow() {
 }
 
 
-function findMatchingContact() {
-  clearAssignToInput();
-  let searchInput = document
-    .getElementById(`taskAssignedTo-${templateIndex}`)
-    .value.trim()
-    .toLowerCase();
-  //console.log("Sucheingabe:", searchInput); // Log der Sucheingabe
-  if (searchInput === "") {
-    openDropdown();
-    updateDropdownMenu(contactsForTasks);
-  } else {
-    let filteredContacts = contactsForTasks.filter((contact) => {
-      let isValidContact =
-        contact && contact.name && typeof contact.name === "string";
-      //console.log("Verarbeiteter Kontakt:", contact); // Log jeden Kontakts vor der Filterung
-      return isValidContact && contact.name.toLowerCase().includes(searchInput);
-    });
-    //console.log("Gefilterte Kontakte:", filteredContacts); // Log der gefilterten Kontakte
-    if (!isDropdownOpen()) {
-      openDropdown();
-    }
-    updateDropdownMenu(filteredContacts);
-  }
-}
-
-
-
-function openDropdown() {
-  sortContactsForTasks();
-  clearAssignToInput();
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
-  if (taskContactDiv.style.display === "flex") {
-    taskContactDiv.style.display = "none";
-  } else {
-    taskContactDiv.style.display = "flex";
-    taskContactDiv.innerHTML = "";
-    //checkedCheckboxes = [];
-    for (let index = 0; index < contactsForTasks.length; index++) {
-      const contact = contactsForTasks[index];
-      renderContactsDropwdown(taskContactDiv, contact, index);
-    }
-    markSelectedContacts();
-  }
-  // contactsByCheckbox(); wird nicht mehr benötigt
-  showContactSelection();
+/**
+ * This function filters contacts based on the provided search input.
+ * @param {Array} contacts - The array of contact objects.
+ * @param {string} searchInput - The search term used to filter contacts.
+ * @returns {Array} - An array of contacts that match the search term.
+ */
+function filterContacts(contacts, searchInput) {
+  return contacts.filter(contact => {
+    let isValidContact = contact && contact.name && typeof contact.name === "string";
+    return isValidContact && contact.name.toLowerCase().includes(searchInput);
+  });
 }
 
 
 /**
- * This function sorts the contacts
- * 
+ * This function ensures the dropdown is open and updates it with the provided data.
+ * @param {Array} contacts - The contacts to display in the dropdown menu.
+ */
+function manageDropdown(contacts) {
+  if (!isDropdownOpen()) {
+    openDropdown();
+  }
+  updateDropdownMenu(contacts);
+}
+
+
+/**
+ * This function handles search operations to find matching contacts and update the dropdown menu accordingly.
+ */
+function findMatchingContact() {
+  clearAssignToInput();
+  let searchInput = document.getElementById(`taskAssignedTo-${templateIndex}`).value.trim().toLowerCase();
+  if (searchInput === "") {
+    openDropdown();
+    updateDropdownMenu(contactsForTasks);
+  } else {
+    let filteredContacts = filterContacts(contactsForTasks, searchInput);
+    manageDropdown(filteredContacts);
+  }
+}
+
+
+/**
+ * This function toggles the display of the dropdown menu for assigning contacts to tasks.
+ * @param {HTMLElement} element - The dropdown menu element.
+ */
+function toggleDropdownDisplay(element) {
+  if (element.style.display === "flex") {
+    element.style.display = "none";
+  } else {
+    element.style.display = "flex";
+    element.innerHTML = ""; // Clear previous content when opening.
+  }
+}
+
+
+/**
+ * This function renders contacts in the dropdown.
+ * @param {HTMLElement} container - The container where contacts should be displayed.
+ * @param {Array} contacts - Array of contact objects.
+ */
+function populateDropdownWithContacts(container, contacts) {
+  for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    renderContactsDropwdown(container, contact, index);
+  }
+}
+
+
+/**
+ * This function handles the opening and population of the dropdown menu for task contact selection.
+ */
+function openDropdown() {
+  sortContactsForTasks();
+  clearAssignToInput();
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  toggleDropdownDisplay(taskContactDiv);
+  if (taskContactDiv.style.display === "flex") { 
+    populateDropdownWithContacts(taskContactDiv, contactsForTasks);
+    markSelectedContacts();
+  }
+  showContactSelection(); 
+}
+
+
+/**
+ * This function sorts the global `contactsForTasks` array alphabetically by contact names.
+ * It modifies the array by sorting its elements based on the lowercase comparison
+ * of contact names, ensuring a consistent, case-insensitive alphabetical order.
  */
 function sortContactsForTasks() {
   contactsForTasks.sort((a, b) => {
@@ -878,18 +921,27 @@ function sortContactsForTasks() {
 }
 
 
+/**
+ * This function renders contacts within a specified HTML container.
+ *
+ * @param {HTMLElement} taskContactDiv - The DOM element where contacts should be rendered.
+ * @param {Object} contact - The contact object containing details like name and other properties.
+ * @param {number} index - The index of the current contact in the contacts array, used for unique DOM IDs.
+ */
 function renderContactsDropwdown(taskContactDiv, contact, index) {
   let letters = contactNamesLetters(contact.name);
   renderDopdownMenu(taskContactDiv, letters, contact, index);
 }
 
-/* // Funktion wird nicht mehr benötigt
-function getBackgroundColorAssignedContact(contactIndex) {
-  return contacts[contactIndex].color;
-}
-*/
 
-
+/**
+ * This function renders a dropdown menu item for a contact in the specified container.
+ *
+ * @param {HTMLElement} taskContactDiv - The container where the dropdown menu is being rendered.
+ * @param {string} letters - Initials or letters to display in the contact circle.
+ * @param {Object} contact - The contact data, including properties like name and color.
+ * @param {number} index - The index of the contact in the list to provide unique IDs for HTML elements.
+ */
 function renderDopdownMenu(taskContactDiv, letters, contact, index) {
   let backgroundColor = contact.color;
   taskContactDiv.innerHTML += `
@@ -906,6 +958,13 @@ function renderDopdownMenu(taskContactDiv, letters, contact, index) {
 }
 
 
+/**
+ * This function checks if the dropdown menu is currently open.
+ * It determines the visibility of the dropdown menu by checking the display style
+ * of the dropdown container.
+ *
+ * @returns {boolean} - True if the dropdown menu is displayed ('flex'), otherwise false.
+ */
 function isDropdownOpen() {
   let taskContactDiv = document.getElementById(
     `taskContactDiv-${templateIndex}`
@@ -914,21 +973,36 @@ function isDropdownOpen() {
 }
 
 
-
-function handleCheckboxChange(index) {
-  let wrapper = document.getElementById(`wrapper${index}`);
-  let checkbox = document.getElementById(`checkbox${index}`);
-  let contactName = document.getElementById(`contactName${index}`);
-  if (checkbox.checked) {
+/**
+ * This function updates the UI based on the checkbox state.
+ * 
+ * @param {HTMLElement} wrapper - The wrapper element of the contact.
+ * @param {HTMLElement} contactName - The element displaying the contact's name.
+ * @param {boolean} isChecked - The state of the checkbox, either checked or not.
+ */
+function updateCheckboxUI(wrapper, contactName, isChecked) {
+  if (isChecked) {
     wrapper.style.backgroundColor = "rgba(42, 54, 71, 1)";
     contactName.style.color = "rgba(255, 255, 255, 1)";
-    if (!checkedCheckboxes.includes(contactName.textContent)) {
-      checkedCheckboxes.push(contactName.textContent);
-    }
   } else {
     wrapper.style.backgroundColor = "";
     contactName.style.color = "rgba(0, 0, 0, 1)";
-    let indexToRemove = checkedCheckboxes.indexOf(contactName.textContent);
+  }
+}
+
+/**
+ * This function manages the list of checked checkboxes.
+ * 
+ * @param {string} contactName - The name of the contact to add or remove from the list.
+ * @param {boolean} isChecked - Whether to add or remove the contact.
+ */
+function manageCheckedList(contactName, isChecked) {
+  if (isChecked) {
+    if (!checkedCheckboxes.includes(contactName)) {
+      checkedCheckboxes.push(contactName);
+    }
+  } else {
+    let indexToRemove = checkedCheckboxes.indexOf(contactName);
     if (indexToRemove !== -1) {
       checkedCheckboxes.splice(indexToRemove, 1);
     }
@@ -936,6 +1010,26 @@ function handleCheckboxChange(index) {
 }
 
 
+/**
+ * This function handles changes to the checkbox state and updates both UI and the list of checked checkboxes.
+ * 
+ * @param {number} index - The index of the checkbox being changed.
+ */
+function handleCheckboxChange(index) {
+  let wrapper = document.getElementById(`wrapper${index}`);
+  let checkbox = document.getElementById(`checkbox${index}`);
+  let contactName = document.getElementById(`contactName${index}`);
+  updateCheckboxUI(wrapper, contactName, checkbox.checked);
+  manageCheckedList(contactName.textContent, checkbox.checked);
+}
+
+
+/**
+ * This function iterates over all contacts and marks the checkboxes for those that have been selected.
+ * It checks each contact against a list of already selected contacts (`checkedCheckboxes`).
+ * If a contact is found in the list, its corresponding checkbox is set to checked, and the UI is updated
+ * to reflect this selection via `handleCheckboxChange`.
+ */
 function markSelectedContacts() {
   for (let index = 0; index < contactsForTasks.length; index++) {
     const contact = contactsForTasks[index];
@@ -948,33 +1042,29 @@ function markSelectedContacts() {
 }
 
 
+/**
+ * This function toggles the display of a contact selection element based on the visibility of the contact list.
+ * @param {HTMLElement} contactSelection - The element to toggle.
+ * @param {HTMLElement} taskContactDiv - The element to check for visibility.
+ */
+function toggleContactDisplay(contactSelection, taskContactDiv) {
+  contactSelection.style.display = taskContactDiv.style.display === "none" ? "flex" : "none";
+  contactSelection.innerHTML = ""; 
+}
+
 
 /**
- * This function renders the selected contacts in the contact selection area.
- * Therefore it first loops through the checkedCheckboxes array to find the name of the selected contact.
- * The name is then compared with the contactsForTasks array to find the index of the contact.
- * If the name is found in the array, the initials and background colors are extracted from it.
+ * This function renders a contact selection display for each checked contact.
+ * @param {HTMLElement} contactSelection - The container where contacts should be displayed.
+ * @param {Array} checkedCheckboxes - The list of checked contact names.
+ * @param {Array} contactsList - The list of all contacts.
  */
-function showContactSelection() {
-  let contactSelection = document.getElementById(
-    `contactSelection-${templateIndex}`
-  );
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
-  if (taskContactDiv.style.display === "none") {
-    contactSelection.style.display = "flex";
-  } else {
-    contactSelection.style.display = "none";
-  }
-  contactSelection.innerHTML = ``;
+function renderSelectedContacts(contactSelection, checkedCheckboxes, contactsList) {
   for (let index = 0; index < checkedCheckboxes.length; index++) {
     const contactName = checkedCheckboxes[index];
-    const contactIndex = contactsForTasks.findIndex(
-      (contact) => contact.name === contactName
-    );
+    const contactIndex = contactsList.findIndex(contact => contact.name === contactName);
     if (contactIndex !== -1) {
-      const backgroundColor = contactsForTasks[contactIndex].color;
+      const backgroundColor = contactsList[contactIndex].color;
       const letters = contactNamesLetters(contactName);
       contactSelection.innerHTML += `<div class="d_f_c_c contact-circle-small contact-circle-small-letters" style="background-color: ${backgroundColor};">${letters}</div>`;
     }
@@ -982,32 +1072,51 @@ function showContactSelection() {
 }
 
 
+/**
+ * This function handles the display and update of selected contacts in the UI.
+ */
+function showContactSelection() {
+  let contactSelection = document.getElementById(`contactSelection-${templateIndex}`);
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
+  toggleContactDisplay(contactSelection, taskContactDiv);
+  renderSelectedContacts(contactSelection, checkedCheckboxes, contactsForTasks);
+}
 
+
+/**
+ * This function updates the dropdown menu with a given list of contacts.
+ * It clears the existing dropdown content and repopulates it with new contacts,
+ * skipping any invalid entries. If a contact is invalid (null or missing name), it logs an error and continues with others.
+ * 
+ * @param {Array} contacts - Array of contact objects to be displayed in the dropdown menu.
+ */
 function updateDropdownMenu(contacts) {
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   taskContactDiv.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
     if (!contact || !contact.name) {
-      console.error(
-        "Ungültiger Kontakt oder Name bei updateDropdownMenu:",
-        contact
-      );
-      continue; // Überspringe ungültige Kontakte
+      console.error("Ungültiger Kontakt oder Name bei updateDropdownMenu:", contact);
+      continue;
     }
     renderContactsDropwdown(taskContactDiv, contact, i);
   }
 }
 
 
+/**
+ * This function sets focus to the input field used for assigning tasks to contacts.
+ */
 function setFocusOnInputfield() {
   let inputfield = document.getElementById(`taskAssignedTo-${templateIndex}`);
   inputfield.focus();
 }
 
 
+/**
+ * This function handles click events on the dropdown trigger.
+ * It checks the current state of the dropdown (open or closed) and toggles it.
+ */
 function handleClickOnDropdown() {
   if (!isDropdownOpen()) {
     openDropdown();
@@ -1021,19 +1130,23 @@ function handleClickOnDropdown() {
 }
 
 
+/**
+ * This function closes the dropdown menu and resets the UI changes associated with it being open.
+ * It clears the assignment input, turns the dropdown arrow back to its original state,
+ * and hides the dropdown menu.
+ */
 function closeDropdown() {
   clearAssignToInput();
   turnArrow();
   let arrow = document.getElementById(`turnDropdownArrow-${templateIndex}`);
-  let taskContactDiv = document.getElementById(
-    `taskContactDiv-${templateIndex}`
-  );
+  let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   arrow.classList.remove("rotate-180");
   taskContactDiv.style.display = "none";
 }
 
 
 ///////// SEARCHBAR ENDE /////////
+
 
 /**
  * This function handles the display of success messages and specific actions based on the page URL.
@@ -1108,6 +1221,9 @@ function forwardToBoard() {
 }
 
 
+/**
+ * This function closes the "Add Task" menu by hiding its associated contact and category divisions.
+ */
 function closeAddTaskMenuDiv() {
   let taskContactDiv = document.getElementById(`taskContactDiv-${templateIndex}`);
   let categoryDiv = document.getElementById(`categoryDiv-${templateIndex}`);
@@ -1120,15 +1236,22 @@ function closeAddTaskMenuDiv() {
 }
 
 
+/**
+ * This function sets the template index to a specific value.
+ */
 function changeTemplateIndex() {
   templateIndex = 4;
 }
 
 
-
 //// OTHER /// 
 
-// for category section
+
+/**
+ * This function sets the value of the task category input to the selected category.
+ *
+ * @param {Element} category - The category element that was clicked, expected to contain the category name.
+ */
 function chooseCategory(category) {
   document.getElementById(`taskCategory-${templateIndex}`).value =
     category.innerText;
