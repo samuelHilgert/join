@@ -588,23 +588,3 @@ function closePopupAutomaticly(div) {
 function doNotClose(event) {
     event.stopPropagation();
 }
-
-
-
-/////////// UNKNOWN //////////
-
-function modifyEventAttribute(attributeString, index) {
-    // Zerlege den Attributstring in einzelne Funktionen, falls mehrere Aufrufe in einem Attribut sind
-    return attributeString.split(';').map(funcCall => {
-        // Ersetze nur, wenn die Funktion bereits einen Aufruf enthält (öffnende Klammer)
-        if (funcCall.includes('(')) {
-            // Füge den Index als erstes Argument hinzu, falls noch keine Argumente vorhanden sind
-            if (funcCall.includes('()')) {
-                return funcCall.replace('()', `(${index})`);
-            } else {
-                return funcCall.replace('(', `(${index}, `);
-            }
-        }
-        return funcCall;
-    }).join(';'); // Füge die modifizierten Funktionen wieder zu einem String zusammen
-}
