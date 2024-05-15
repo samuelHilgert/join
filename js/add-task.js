@@ -54,11 +54,26 @@ async function initiateFunctionsForAddTaskOnBoard() {
   }
   const prio = determinePriority();
   let currentTask = setValuesAfterEditing(taskInput, formattedInputDate, prio);
+  saveEditChangesForGuest();
   let id = currentTask.id;
   await openBoardTaskPopup(id);
   editDiv.style.display = "none";
   showDiv.style.display = "flex";
 }
+
+
+/**
+ * This function saves the changes in the localStorage for the guest
+ *
+ */
+function saveEditChangesForGuest() {
+  if (authorized === "guest") {
+    if (localStorage.getItem('tasks')) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+  } 
+}
+
 
 
 /**
