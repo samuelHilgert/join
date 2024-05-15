@@ -30,8 +30,8 @@
       transform: translate(-50%, -50%) scale(1); 
     }
     100% {
-      top: -112px;
-      left: -34px;
+      top: -111px;
+      left: -35px;
       transform: scale(0.25); 
     }
   }
@@ -61,7 +61,7 @@
       transform: translate(-50%, -50%) scale(1); 
     }
     100% {
-      top: -110px;
+      top: -111px;
       left: -95px;
       transform: scale(0.25); 
     }
