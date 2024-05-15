@@ -491,7 +491,7 @@ function generateTodoHTML(task) {
                   </div>
                   <div class="statusText" id="statusText${task["id"]}"><span id="stubtasksDoneLength${task["id"]}">X</span>/<span id="subtasksLength${task["id"]}">XX</span><span>&nbsp;Subtasks</span></div>
               </div>
-              <div class="d_f_sb_c width-max">
+              <div class="d_f_sb_c width-max gap-5">
               <div class="d_f_c_c" id="contactsIn${task["id"]}">
               </div>
               <div id="prioIn${task["id"]}"></div>
