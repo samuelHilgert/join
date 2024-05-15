@@ -2,6 +2,7 @@
   .mobile-signup-inputs {
     min-width: 332px;
   }
+  
 }
 
 @media screen and (max-width: 620px) {
@@ -29,8 +30,8 @@
       transform: translate(-50%, -50%) scale(1); 
     }
     100% {
-      top: -100px;
-      left: -100px;
+      top: -111px;
+      left: -35px;
       transform: scale(0.25); 
     }
   }
@@ -52,6 +53,19 @@
 }
 
 @media screen and (max-width: 500px) {
+  
+  @keyframes moveAndShrinkLogo {
+    0% {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1); 
+    }
+    100% {
+      top: -111px;
+      left: -95px;
+      transform: scale(0.25); 
+    }
+  }
   .mobile-login-form-container {
     padding-right: 0;
     padding-left: 0;
@@ -60,8 +74,8 @@
   }
 
   .mobile-login-container {
-      padding:0 20px;
-      padding-top:5px;
+      padding-right: 20px;
+      padding-left: 20px;
   }
 
   .mobile-inputs {

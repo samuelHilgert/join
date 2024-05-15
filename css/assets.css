@@ -157,8 +157,8 @@
     transform: translate(-50%, -50%) scale(1); 
   }
   100% {
-    top: -80px;
-    left: -80px;
+    top: -169px;
+    left: -70px;
     transform: scale(0.25); 
   }
 }
