@@ -26,12 +26,12 @@
     0% {
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(1); /* Startposition zentriert und normale Größe */
+      transform: translate(-50%, -50%) scale(1); 
     }
     100% {
       top: -100px;
       left: -100px;
-      transform: scale(0.25); /* Bewege und verkleinere */
+      transform: scale(0.25); 
     }
   }
 

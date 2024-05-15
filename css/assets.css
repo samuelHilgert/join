@@ -145,21 +145,21 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%); /* Zentriert das Element auf seiner Position */
+  transform: translate(-50%, -50%); 
   animation: moveAndShrinkLogo 2s 1 forwards;
-  animation-delay: 0.5s; /* Beginne die Animation nach 0.5 Sekunden */
+  animation-delay: 0.5s; 
 }
 
 @keyframes moveAndShrinkLogo {
   0% {
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1); /* Startposition zentriert und normale Größe */
+    transform: translate(-50%, -50%) scale(1); 
   }
   100% {
     top: -80px;
     left: -80px;
-    transform: scale(0.25); /* Bewege und verkleinere */
+    transform: scale(0.25); 
   }
 }
 
