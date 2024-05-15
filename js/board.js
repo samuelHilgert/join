@@ -585,6 +585,7 @@ async function deleteTask() {
   document.body.style.overflow = "scroll";
   tasks.splice(currentOpenTaskId, 1);
   // showGuestMessageOnBoard();
+  saveEditChangesForGuest();
   await saveNewUserDate(); // outsourced in script.js
   await renderBoardTasks();
 }
