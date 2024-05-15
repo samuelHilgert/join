@@ -112,3 +112,14 @@
         height: 70%;
     }
 }
+
+@media screen and (max-width: 430px) {
+    .mobile-drag-area-alt {
+        flex-wrap: nowrap;
+    }
+
+    .todo {
+        min-width: 270px !important;
+
+    }
+}
