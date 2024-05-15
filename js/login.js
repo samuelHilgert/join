@@ -63,6 +63,7 @@ function clearLocalStorageFirst() {
     localStorage.removeItem('logged');
     localStorage.removeItem('remember');
     localStorage.removeItem('tasks');
+    localStorage.removeItem('contacts');
 }
 
 /**

@@ -82,7 +82,7 @@ async function mobileMoveToCategory(element) {
   resetMobileTodoSettings();
   await renderBoardTasks();
   await saveNewUserDate(); // outsourced in script.js
-  showGuestMessageOnBoard();
+  // showGuestMessageOnBoard();
 }
 
 
