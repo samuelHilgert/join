@@ -32,7 +32,7 @@ async function init() {
         }
         await initiateIndividualFunctions();
     }
-    animateUserWelcome();
+        animateUserWelcome();
 }
 
 
@@ -53,9 +53,16 @@ async function formatDateCorrect(timeStamp) {
 }
 
 
+/**
+ * This function animates the users welcome message on summary.html. 
+ */
 function animateUserWelcome() {
- let container = document.getElementById('summaryWelcome');
- container.classList.add('animate');
+    if (window.location.pathname.endsWith('/summary.html')) {
+        let container = document.getElementById('summaryWelcome');
+        if (container) {
+            container.classList.add('animate');
+        }
+    }
 }
 
 
@@ -81,7 +88,7 @@ function setAuthorizedStatus() {
     if (loggedStatus === null && userId === null) {
         authorized = 'none';
     } else if (localStorage.getItem('logged')) {
-        authorized = 'guest'; 
+        authorized = 'guest';
     } else if (localStorage.getItem('user')) {
         authorized = 'user';
         currentUser = userId;
@@ -395,15 +402,15 @@ function getBgColorTaskPopup(task, index) {
     const contactName = task.assignedTo[index];
     let contactInfo;
     if (authorized === 'user') {
-      contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
+        contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
     } else {
-      contactInfo = contacts.find(contact => contact.name === contactName);
+        contactInfo = contacts.find(contact => contact.name === contactName);
     }
     if (!contactInfo || !contactInfo.color) {
-      return "blue";  // default color, if no color founded
+        return "blue";  // default color, if no color founded
     }
     return contactInfo.color;
-  }
+}
 
 /**
  * This function creates the popup menu with links for header
