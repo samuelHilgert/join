@@ -239,3 +239,15 @@
   display: none;
 }
 
+.plus-icon-task {
+  margin-left:10px;
+  margin-bottom:4px;
+  font-size:32px;
+  color: #29ABE2;
+}
+
+.plus-contacts-text {
+  font-size:24px;
+  font-weight:500;
+  margin:0;
+}

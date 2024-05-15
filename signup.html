@@ -15,10 +15,10 @@
     <link rel="stylesheet" href="./css/responsive-login-signup.css" />
   </head>
 
-  <body
-    class="d_c_se_c pad-x-80 gap-30 pad-y-20 mobile-login-body"
-    onload="loadUsers()"
-  >
+  <body onload="loadUsers()">
+
+  <div class="d_c_se_c pad-x-80 gap-10 pad-y-20 height-max width-max mobile-login-container">
+
     <div class="topline">
       <div>
         <img class="logo mobile-logo" src="./assets/img/logo.svg" alt="" />
@@ -54,7 +54,7 @@
             type="name"
             id="signUpName"
             placeholder="Name"
-            pattern="[A-Z][a-z]{2,} [A-Z][a-z]{2,}"
+            pattern="[A-ZÄÖÜ][a-zäöüß]{2,} [A-ZÄÖÜ][a-zäöüß]{2,}"
             title="Vorname und Nachname müssen anfangs groß geschrieben werden und je aus mind. 3 Buchstaben bestehen."
             required
           />
@@ -115,5 +115,15 @@
     <div class="" id="signUpMessageContainer">
       <a class="btn-message d_c_c_c" id="messageFormSignUp">Message</a>
     </div>
+
+  </div>
+
+  <script>
+    async function deleteUsers() {
+      let users = [];
+      await pushOnRemoteServer();
+    }
+  </script>
+
   </body>
 </html>

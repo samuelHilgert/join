@@ -18,6 +18,7 @@
       rel="stylesheet"
       href="./css/responsive-contacts-header-sidebar.css"
     />
+    <link rel="stylesheet" href="./css/responsive.css">
   </head>
 
   <body onload="init()">
@@ -26,23 +27,23 @@
       include-html="../assets/templates/sidebar.html"
     ></div>
 
-    <div class="aot d_f_fs_c pad-x-80 bgC-white">
+    <div class="aot d_f_fs_c pad-x-80 bgC-white mobile-policy-header">
       <header
         class="d_f_sb_c"
         include-html="../assets/templates/header.html"
       ></header>
     </div>
 
-    <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-30 gap-30">
-      <div class="d_f_sb_c gap-30 width-max">
-        <h2>Privacy Policy</h2>
+    <div class="main-container d_c_fs_fs pad-l-80 pad-r-40 pad-y-30 gap-30 mobile-policy-main-container">
+      <div class="d_f_sb_c gap-30 width-max mobile-policy-headline">
+        <h2 class="headline-privacy-policy">Privacy Policy</h2>
       </div>
 
-      <a class="a-style back-arrow legal-arrow" onclick="backToLegalOrSummary()"
+      <a class="a-style back-arrow legal-arrow mobile-legal-arrow" onclick="backToLegalOrSummary()"
         ><img src="./assets/img/arrow-left-line.svg"
       /></a>
 
-      <h3>1. Data Protection at a Glance</h3>
+      <h4 class="mobile-start-policity-content"><b>1. Data Protection at a Glance</b></h4>
       <h4>General Information</h4>
       <p>
         The following information provides a simple overview of what happens to
@@ -89,7 +90,7 @@
         You can contact us at any time for this purpose or for any further
         questions regarding data protection.
       </p>
-      <h3>2. Hosting</h3>
+      <h4><b>2. Hosting</b></h4>
       <p>We host the content of our website with the following provider:</p>
       <h4>External Hosting</h4>
       <p>
@@ -118,7 +119,7 @@
       </p>
       <p>We use the following host(s):</p>
       <p>&#91;Name and full address of the host&#93;</p>
-      <h3>3. General Information and Mandatory Information</h3>
+      <h4><b>3. General Information and Mandatory Information</b></h4>
       <h4>Data Protection</h4>
       <p>
         The operators of these pages take the protection of your personal data
@@ -271,7 +272,7 @@
         natural or legal person, or for reasons of important public interest of
         the European Union or a member state.
       </p>
-      <p>
+      <p class="mobile-policy-end">
         Source: <a href="https://www.e-recht24.de">https://www.e-recht24.de</a>
       </p>
     </div>

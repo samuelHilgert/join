@@ -135,38 +135,31 @@
 }
 
 .animation-container {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   box-sizing: border-box;
   position: relative;
 }
 
 .logo-animation {
   position: absolute;
+  left: 50%;
   top: 50%;
-  left: 38%;
-  transform: translate(0, 0);
-  animation: moveLogo 2s 1 forwards, shrinkLogo 0.7s 1 forwards;
-  /* Zwei Animationen kombinieren */
-  animation-delay: 0.5s;
-  /* Pause von 1 Sekunde vor Beginn der Animation */
+  transform: translate(-50%, -50%); 
+  animation: moveAndShrinkLogo 2s 1 forwards;
+  animation-delay: 0.5s; 
 }
 
-.move {
-  position: absolute;
-}
-
-@keyframes moveLogo {
-  to {
-    top: -170px;
-    left: -76px;
+@keyframes moveAndShrinkLogo {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1); 
   }
-}
-
-@keyframes shrinkLogo {
-  to {
-    transform: translate(0, 0) scale(0.25);
-    /* Verkleinere das Logo auf die Hälfte */
+  100% {
+    top: -80px;
+    left: -80px;
+    transform: scale(0.25); 
   }
 }
 

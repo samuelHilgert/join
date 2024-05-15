@@ -22,6 +22,9 @@ async function init() {
         if ((authorized === 'user')) {
             await loadUserData();
         }
+        if ((authorized === 'guest')) {
+            await loadGuestData();
+        }
         await updateOrLoadData();
         await loadLoggedTime();
         await includeHTML();
@@ -32,6 +35,7 @@ async function init() {
         }
         await initiateIndividualFunctions();
     }
+    animateUserWelcome();
 }
 
 
@@ -49,6 +53,19 @@ async function formatDateCorrect(timeStamp) {
     let formattedTimeStamp = timeStamp.toLocaleDateString("de-DE", dateFormatOptions);
     formattedDate = formattedTimeStamp.replace(/\./g, '/');  // replace the period with a slash
     return formattedDate;
+}
+
+
+/**
+ * This function animates the users welcome message on summary.html. 
+ */
+function animateUserWelcome() {
+    if (window.location.pathname.endsWith('/summary.html')) {
+        let container = document.getElementById('summaryWelcome');
+        if (container) {
+            container.classList.add('animate');
+        }
+    }
 }
 
 
@@ -218,6 +235,28 @@ async function loadUserData() {
 
 
 /**
+ * This function loads the new added task as guest as well
+ *
+ */
+async function loadGuestData() {
+    if (authorized === "guest") {
+        if (localStorage.getItem('tasks')) {
+            tasks = JSON.parse(localStorage.getItem('tasks'));
+        } else {
+            await loadExamples();
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+        if (localStorage.getItem('contacts')) {
+            contacts = JSON.parse(localStorage.getItem('contacts'));
+        } else {
+            await loadExamples();
+            localStorage.setItem('contacts', JSON.stringify(contacts));
+        }
+    }
+}
+
+
+/**
  * This is a function that checks whether a guest or user has logged in
  * The data is only saved remotely if the user is logged in
  * In both cases sample contacts and tasks are also loaded
@@ -225,16 +264,63 @@ async function loadUserData() {
  */
 async function updateOrLoadData() {
     if ((authorized === 'user')) {
-        let userData = users[currentUser];
-        if (userData.contacts.length !== 0 && userData.tasks.length !== 0) {
-            contacts = users[currentUser].contacts; // save user contacts in array contacts
-            tasks = users[currentUser].tasks;   // save user contacts in array tasks
-        } else {
-            await reloadContactsWhenEmpty(userData);
-            await reloadTasksWhenEmpty(userData);
-        }
+        await checkAndLoadUserData();
     } else {
-        await loadExamples(); // otherwise only load the example contacts and tasks, if user is a geuest
+        await checkAndLoadGuestData();
+    }
+}
+
+
+/**
+ * This function checks and load the guest data 
+ * 
+ */
+async function checkAndLoadUserData() {
+    let userData = users[currentUser];
+    if (userData.contacts.length !== 0 && userData.tasks.length !== 0) {
+        contacts = users[currentUser].contacts; // save user contacts in array contacts
+        tasks = users[currentUser].tasks;   // save user contacts in array tasks
+    } else {
+        await reloadContactsWhenEmpty(userData);
+        await reloadTasksWhenEmpty(userData);
+    }
+}
+
+
+/**
+ * This function checks and load the guest data 
+ * 
+ */
+async function checkAndLoadGuestData() {
+    if (authorized === "guest") {
+        let contactsGuest = JSON.parse(localStorage.getItem('contacts'));
+        let tasksGuest = JSON.parse(localStorage.getItem('tasks'));
+        if (contactsGuest.length !== 0 && tasksGuest.length !== 0) {
+            contacts = contactsGuest;
+            tasks = tasksGuest;
+        } else {
+            await reloadGuestData(contactsGuest, tasksGuest);
+        }
+    }
+}
+
+
+/**
+ * This function reloads the contacts or the tasks, when them are empty
+ * 
+ * @param {string} contactsGuest - the data from current user
+ * @param {string} contactsGuest - the data from current user
+ */
+async function reloadGuestData(contactsGuest, tasksGuest) {
+    if (contactsGuest.length === 0) {
+        let respContacts = await fetch('./JSON/contacts.json');
+        contacts = await respContacts.json();
+        localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+    if (tasksGuest.length === 0) {
+        let respTasks = await fetch('./JSON/tasks.json');
+        tasks = await respTasks.json();
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 }
 
@@ -288,6 +374,11 @@ async function saveNewUserDate() {
         users[currentUser].contacts = contacts;
         users[currentUser].tasks = tasks;
         await setItem('users', JSON.stringify(users));
+    } else {
+        if (authorized === "guest") {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            localStorage.setItem('contacts', JSON.stringify(contacts));
+        }
     }
 }
 
@@ -388,15 +479,15 @@ function getBgColorTaskPopup(task, index) {
     const contactName = task.assignedTo[index];
     let contactInfo;
     if (authorized === 'user') {
-      contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
+        contactInfo = users[currentUser].contacts.find(contact => contact.name === contactName);
     } else {
-      contactInfo = contacts.find(contact => contact.name === contactName);
+        contactInfo = contacts.find(contact => contact.name === contactName);
     }
     if (!contactInfo || !contactInfo.color) {
-      return "blue";  // default color, if no color founded
+        return "blue";  // default color, if no color founded
     }
     return contactInfo.color;
-  }
+}
 
 /**
  * This function creates the popup menu with links for header
@@ -516,6 +607,8 @@ function clickLogout() {
     localStorage.removeItem('user');
     localStorage.removeItem('logged');
     localStorage.removeItem('remember');
+    localStorage.removeItem('tasks');
+    localStorage.removeItem('contacts');
     setTimeout(() => {
         window.location.href = `./login.html?msg=you are logged out`;
     }, 500);

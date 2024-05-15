@@ -104,12 +104,30 @@ function getPrioForTask(task) {
 function getContactsForTask(task) {
   let contactsForTaskDiv = document.getElementById(`contactsIn${task.id}`);
   contactsForTaskDiv.innerHTML = "";
+  let renderedContacts = 0; // number of rendered contacts
   task.assignedTo.forEach((contactName, index) => {
-    const backgroundColor = getBgColorTaskPopup(task, index);
-    const letters = contactNamesLetters(contactName);
-    const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
-    contactsForTaskDiv.innerHTML += renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters); // outsourced in renderHTML.js
+    if (renderedContacts < 5) { // only rendering, if less than 5 contacts
+      const backgroundColor = getBgColorTaskPopup(task, index);
+      const letters = contactNamesLetters(contactName);
+      const marginRightClass = task.assignedTo.length > 1 ? "mar-r--8" : "";
+      contactsForTaskDiv.innerHTML += renderContactsForBoardTaskDiv(marginRightClass, backgroundColor, letters); // outsourced in renderHTML.js
+      renderedContacts++;
+    }
   });
+  addAnPlusForMoreContacts(task, contactsForTaskDiv);
+}
+
+
+/**
+ * This function generates an plus symbol, if there are more than five contacts in the task
+ * 
+ * @param {string} task - the current task
+ * @param {string} contactsForTaskDiv - the element-div for the contacts
+ */
+function addAnPlusForMoreContacts(task, contactsForTaskDiv) {
+  if (task.assignedTo.length > 5) {
+    contactsForTaskDiv.innerHTML += `<div class="d_f_c_c gap-5"><span class="plus-icon-task">+</span><span class="plus-icon-task plus-contacts-text">${task.assignedTo.length - 5}</span></div>`;
+  }
 }
 
 
@@ -131,6 +149,19 @@ function updateProgressBar(task) {
   stubtasksDoneLengthDiv.innerHTML = `${stubtasksDoneLength}`;
   progressBar.style.width = `${result}%`;
   progressBar.classList.add("blue");
+  resetProgressBar(task, allSubtasksByTask, progressBar);
+}
+
+
+/**
+ * This function resets the progressbar, when there are no subtasks anymore
+ * 
+ */
+function resetProgressBar(task, allSubtasksByTask) {
+  if (allSubtasksByTask === 0) {
+    let progressBarDiv = document.getElementById(`progessSubtaskDiv${task["id"]}`);
+    progressBarDiv.remove();
+  }
 }
 
 
@@ -171,7 +202,7 @@ async function moveTo(currentCategory) {
       foundIndex = id;
       tasks[foundIndex].category = currentCategory;
       await saveNewUserDate();  // outsourced in script.js
-      showGuestMessageOnBoard();
+      // showGuestMessageOnBoard();
     }
   }
   await renderBoardTasks();
@@ -395,7 +426,7 @@ function closeBoardTaskPopup() {
   setTimeout(function () {
     displayNonePopup(popup);
     renderBoardTasks();
-    showGuestMessageOnBoard();
+    // showGuestMessageOnBoard();
   }, 500);
 }
 
@@ -506,7 +537,6 @@ function getCurrentPriorityBtn() {
   } else if (prio === 'Low') {
     prioBtn = lowBtn;
   }
-  prioBtn.click();
 }
 
 
@@ -540,7 +570,8 @@ async function deleteTask() {
   document.getElementById("boardTaskPopup").style.display = "none";
   document.body.style.overflow = "scroll";
   tasks.splice(currentOpenTaskId, 1);
-  showGuestMessageOnBoard();
+  // showGuestMessageOnBoard();
+  saveEditChangesForGuest();
   await saveNewUserDate(); // outsourced in script.js
   await renderBoardTasks();
 }
@@ -598,7 +629,7 @@ function closeBoardAddTaskPopup() {
   setTimeout(function () {
     displayNonePopup(popup);
     renderBoardTasks();
-    showGuestMessageOnBoard();
+    // showGuestMessageOnBoard();
   }, 500);
   document.body.style.overflow = "scroll";
   templateIndex = 3;

@@ -11,14 +11,15 @@
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/assets.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/responsive-login-signup.css">
 </head>
 
 <body onload="indexHTMLAnimation()" class="animation-container d_c_c_c pad-x-80 pad-y-70">
-    <div class=" d_c_c_c">
+    
         <svg class="index-logo logo-animation">
             <image xlink:href="./assets/img/logo.svg" class="index-logo" />
         </svg>
-    </div>
+    
 
 </body>
 
@@ -30,7 +31,7 @@
     function indexHTMLAnimation() {
         let logoAnimation = document.querySelector('.logo-animation');
         logoAnimation.addEventListener('animationend', function () { // "animationend" is the name of the event. Its a fixed term.
-            setTimeout(forward, 1000);
+            setTimeout(forward, 10);
         });
     }
 
@@ -38,7 +39,7 @@
      * this function forwards the user to login after the animation 
      * 
      */
-    function forward() {
+   function forward() {
         window.location.href = '/login.html';
     }
 </script>

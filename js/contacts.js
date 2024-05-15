@@ -1,5 +1,25 @@
-let profileCircleColors = ['teal', 'lightseagreen', 'purple', 'slategrey', 'pink', 'orange', 'navy', 'indigo', 'fuchsia', 'skyblue', 'forestgreen', 'dodgerblue', 'darkgreen', 'blue', 'indianred', 'seagreen', 'lightsteelblue', 'cadetblue'];
-let nextId = 1;
+let profileCircleColors = 
+[
+    'teal',
+    'lightseagreen',
+    'purple',
+    'slategrey',
+    'pink',
+    'orange',
+    'navy',
+    'indigo',
+    'fuchsia',
+    'skyblue',
+    'forestgreen',
+    'dodgerblue',
+    'darkgreen',
+    'blue',
+    'indianred',
+    'seagreen',
+    'lightsteelblue',
+    'cadetblue'
+]
+  let nextId = 1;
 
 
 /**
@@ -287,13 +307,12 @@ async function validateAndAddContact(event) {
         return; // If the form is invalid, the standard error message is displayed
     }
     await addNewContactToArray(); // contacted is added, if form is valid
-    if ((authorized === 'user')) {
-        await saveNewUserDate();
-    } else {
+    if ((authorized === 'guest')) {
         let div = document.getElementById('guestMessagePopupContacts');
         let messageText = document.getElementById('guestMessageContacts');
-        showGuestPopupMessage(div, messageText);
+        // showGuestPopupMessage(div, messageText);
     }
+    await saveNewUserDate();
 }
 
 
@@ -385,13 +404,12 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         contacts[index]['name'] = newName;
         contacts[index]['mail'] = newMail;
         contacts[index]['phone'] = newPhone;
-        if ((authorized === 'user')) {
-            await saveNewUserDate();
-        } else {
+        if ((authorized === 'guest')) {
             let div = document.getElementById('guestMessagePopupContacts');
             let messageText = document.getElementById('guestMessageContacts');
-            showGuestPopupMessage(div, messageText);
+           // showGuestPopupMessage(div, messageText);
         }
+        await saveNewUserDate();
         await renderContactList();
     }
 }
@@ -492,13 +510,13 @@ async function deleteContact(contactId) {
         if ((authorized === 'user')) {
             await deleteContactInAssignedTo(deletedContactName);
             contacts.splice(index, 1);
-            await saveNewUserDate();
         } else {
             contacts.splice(index, 1);
             let div = document.getElementById('guestMessagePopupContacts');
             let messageText = document.getElementById('guestMessageContacts');
-            showGuestPopupMessage(div, messageText);
+            // showGuestPopupMessage(div, messageText);
         }
+        await saveNewUserDate();
         await renderContactList();
         keepCircleBackgroundcolor();
         clearContactInfoAndHideMask();

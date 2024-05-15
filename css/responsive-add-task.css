@@ -180,4 +180,8 @@
   .mobile-task-btn-style {
     font-size: 16px;
   }
+
+  .mobile-dropdown-icon{
+    top: 40px;
+  }
 }

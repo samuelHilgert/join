@@ -121,4 +121,8 @@
         width: 85%;
         height: 85%;
     }
+
+    .mobile-dropdown-icon{
+    top: 40px;
+    }
 }

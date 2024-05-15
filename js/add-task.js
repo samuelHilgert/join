@@ -54,11 +54,26 @@ async function initiateFunctionsForAddTaskOnBoard() {
   }
   const prio = determinePriority();
   let currentTask = setValuesAfterEditing(taskInput, formattedInputDate, prio);
+  saveEditChangesForGuest();
   let id = currentTask.id;
   await openBoardTaskPopup(id);
   editDiv.style.display = "none";
   showDiv.style.display = "flex";
 }
+
+
+/**
+ * This function saves the changes in the localStorage for the guest
+ *
+ */
+function saveEditChangesForGuest() {
+  if (authorized === "guest") {
+    if (localStorage.getItem('tasks')) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+  } 
+}
+
 
 
 /**
@@ -280,6 +295,7 @@ function getTaskValues(taskInput, formattedInputDate, prio, id) {
 async function saveNewTask() {
   if (authorized === "guest") {
     tasks.push(...newTask);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   } else {
     users[currentUser].tasks.push(...newTask);
     await setItem("users", JSON.stringify(users));
@@ -1155,12 +1171,13 @@ function closeDropdown() {
 function addTaskToBoardMessage() {
   if (document.location.pathname.includes("add-task.html")) {
     showSuccessMessage();
-    handleAddTaskPageActions();
+    // handleAddTaskPageActions(); // guest message when limited access
+    forwardToBoard();
   }
   if (document.location.pathname.includes("board.html")) {
     closeBoardAddTaskPopup();
     showSuccessMessage();
-    handleBoardPageActions();
+    // handleBoardPageActions(); // guest message when limited access
   }
 }
 
