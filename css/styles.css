@@ -211,6 +211,23 @@ header {
 
 .summary-welcome {
   width: calc(100% - 63%);
+  visibility: hidden;
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#summaryWelcome.animate {
+  visibility: visible;
+  animation: slideInFromRight 1s ease-out;
 }
 
 .add-task-form-container {

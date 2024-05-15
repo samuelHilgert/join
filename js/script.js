@@ -32,6 +32,7 @@ async function init() {
         }
         await initiateIndividualFunctions();
     }
+    animateUserWelcome();
 }
 
 
@@ -49,6 +50,12 @@ async function formatDateCorrect(timeStamp) {
     let formattedTimeStamp = timeStamp.toLocaleDateString("de-DE", dateFormatOptions);
     formattedDate = formattedTimeStamp.replace(/\./g, '/');  // replace the period with a slash
     return formattedDate;
+}
+
+
+function animateUserWelcome() {
+ let container = document.getElementById('summaryWelcome');
+ container.classList.add('animate');
 }
 
 
