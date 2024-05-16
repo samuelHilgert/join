@@ -96,7 +96,10 @@ async function renderContactList() {
     for (let i = 0; i < contacts.length; i++) {
         const { name, mail, id } = contacts[i];
         const firstLetter = name.charAt(0);
-        const firstLetterSurname = name.split(' ')[1].charAt(0);
+        const nameParts = name.split(' ');
+        const lastName = nameParts[nameParts.length - 1];
+        const lastNameParts = lastName.split('-');
+        const firstLetterSurname = lastNameParts[0].charAt(0);
         if (firstLetter !== previousFirstLetter) {
             contactList.innerHTML += renderLetterAndPartinglineHTML(firstLetter);
             previousFirstLetter = firstLetter;
