@@ -54,8 +54,8 @@
             type="name"
             id="signUpName"
             placeholder="Name"
-            pattern="[A-ZÄÖÜ][a-zäöüß]{2,} [A-ZÄÖÜ][a-zäöüß]{2,}"
-            title="Vorname und Nachname müssen anfangs groß geschrieben werden und je aus mind. 3 Buchstaben bestehen."
+            pattern="([A-ZÄÖÜ][a-zäöüß]{2,})([-\s][A-ZÄÖÜ][a-zäöüß]{2,})*"
+            title="Vorname und Nachname müssen anfangs groß geschrieben werden und je aus mind. 3 Buchstaben bestehen. Bindestriche und Leerzeichen sind erlaubt, um mehrere Namen zu trennen."
             required
           />
           <input
