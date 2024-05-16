@@ -1,25 +1,25 @@
-let profileCircleColors = 
-[
-    'teal',
-    'lightseagreen',
-    'purple',
-    'slategrey',
-    'pink',
-    'orange',
-    'navy',
-    'indigo',
-    'fuchsia',
-    'skyblue',
-    'forestgreen',
-    'dodgerblue',
-    'darkgreen',
-    'blue',
-    'indianred',
-    'seagreen',
-    'lightsteelblue',
-    'cadetblue'
-]
-  let nextId = 1;
+let profileCircleColors =
+    [
+        'teal',
+        'lightseagreen',
+        'purple',
+        'slategrey',
+        'pink',
+        'orange',
+        'navy',
+        'indigo',
+        'fuchsia',
+        'skyblue',
+        'forestgreen',
+        'dodgerblue',
+        'darkgreen',
+        'blue',
+        'indianred',
+        'seagreen',
+        'lightsteelblue',
+        'cadetblue'
+    ]
+let nextId = 1;
 
 
 /**
@@ -56,7 +56,7 @@ function setRandomColor() {
             let randomColor;
             do {
                 randomColor = getRandomColor();
-            } while (circle.style.backgroundColor === randomColor); 
+            } while (circle.style.backgroundColor === randomColor);
             circle.style.backgroundColor = randomColor;
             contacts[index]['color'] = randomColor;
         } else {
@@ -135,7 +135,10 @@ function removeActiveClasslist() {
 function renderContactInfo(contact, contactId, removeAnimation) {
     const { name, mail, phone, color } = contact;
     const firstLetter = name.charAt(0);
-    const firstLetterSurname = name.split(' ')[1].charAt(0);
+    const nameParts = name.split(' ');
+    const lastName = nameParts[nameParts.length - 1];
+    const lastNameParts = lastName.split('-');
+    const firstLetterSurname = lastNameParts[0].charAt(0);
     let contactInfoHTML = renderContactInformationHTML(color, firstLetter, firstLetterSurname, name, contactId, mail, phone);
     if (removeAnimation) {
         contactInfoHTML = contactInfoHTML.replace('class="animation-in"', '');
@@ -382,7 +385,10 @@ function openEditContactForm(contactId) {
     if (contact) {
         const { name, mail, phone, color } = contact;
         const firstLetter = name.charAt(0);
-        const firstLetterSurname = name.split(' ')[1].charAt(0);
+        const nameParts = name.split(' ');
+        const lastName = nameParts[nameParts.length - 1];
+        const lastNameParts = lastName.split('-');
+        const firstLetterSurname = lastNameParts[0].charAt(0);
         let wrapper = document.getElementById('editContactMask');
         wrapper.innerHTML = renderEditContactHTML(color, firstLetter, firstLetterSurname, name, mail, phone, contactId);
         let editContactContainer = document.getElementById('editContactContainer');
@@ -410,7 +416,7 @@ async function updateContactInformation(contactId, newName, newMail, newPhone) {
         if ((authorized === 'guest')) {
             let div = document.getElementById('guestMessagePopupContacts');
             let messageText = document.getElementById('guestMessageContacts');
-           // showGuestPopupMessage(div, messageText);
+            // showGuestPopupMessage(div, messageText);
         }
         await saveNewUserDate();
         await renderContactList();
