@@ -130,8 +130,8 @@ function renderAddContactContainerHTML() {
                     <div class="add-contact-container-right-bottom">
                         <img class="contact-grey-svg" src="./assets/img/contact-picture.svg" alt="">
                         <form class="contact-form" id="contactForm" onsubmit="validateAndAddContact(event); return false;">
-                            <input id="inputAddContactName" class="contact-input-style input-name input-font" type="text" placeholder="Name" pattern="[A-ZÄÖÜ][a-zäöüß]{2,} [A-ZÄÖÜ][a-zäöüß]{2,}"
-                            title="Vorname und Nachname müssen anfangs groß geschrieben werden und je aus mind. 3 Buchstaben bestehen." required>
+                            <input id="inputAddContactName" class="contact-input-style input-name input-font" type="text" placeholder="Name" pattern="([A-ZÄÖÜ][a-zäöüß]{2,})([\\-\\s][A-ZÄÖÜ][a-zäöüß]{2,})*"
+                            title="Vorname und Nachname müssen anfangs groß geschrieben werden und je aus mind. 3 Buchstaben bestehen. Bindestriche und Leerzeichen sind erlaubt, um mehrere Namen zu trennen." required>
                             <input id="inputAddContactMail" class="contact-input-style input-email input-font" type="email" placeholder="Email" required>
                             <input id="inputAddContactPhone" class="contact-input-style input-phone input-font" type="text" placeholder="Phone" pattern="^\\+?\\d{1,15}$" 
                             title="Geben Sie bitte eine Telefonnummer mit bis zu 15 Ziffern ein, optional beginnend mit einem '+'." required>
