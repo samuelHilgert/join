@@ -1,5 +1,5 @@
 const STORAGE_TOKEN = 'MU3TF9XZZPG6WRHN43HDM4XULHV4L5L4J71N3YEH';
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
+const STORAGE_URL = 'https://remotestoragejoin-default-rtdb.europe-west1.firebasedatabase.app/';
 
 
 /**
