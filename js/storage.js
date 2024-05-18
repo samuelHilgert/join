@@ -27,8 +27,9 @@ async function setItem(key, value) {
  * 
  */
 async function getItem(key) {
-let responsive = (await fetch(STORAGE_URL)).json();
-console.log(responsive);
+let response = (await fetch(STORAGE_URL)).json();
+let responseToJson = await response.json();
+console.log(responseToJson);
 }
 
 
