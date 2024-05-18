@@ -8,9 +8,9 @@ const STORAGE_URL = 'https://remotestoragejoin-default-rtdb.europe-west1.firebas
  * @param {*} value - 
  * @returns 
  */
-/*
+
 async function setItem(key, value) {
-  const url = ${STORAGE_URL}/${key}.json;
+  const url =  `${STORAGE_URL}/${key}.json`;
   return fetch(url, {
     method: "PUT", // Use PUT to create or replace data at a specific location
     body: JSON.stringify(value), // Just the value, no need for a payload object
@@ -18,7 +18,7 @@ async function setItem(key, value) {
       "Content-Type": "application/json",
     },
   }).then((res) => res.json());
-} */
+} 
 
 
 /**
@@ -27,11 +27,16 @@ async function setItem(key, value) {
  * 
  */
 async function getItem(key) {
-let response = (await fetch(STORAGE_URL)).json();
-let responseToJson = await response.json();
-console.log(responseToJson);
-}
-
+    const url = `${STORAGE_URL}/${key}.json`;
+    return fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          return data;
+        }
+        throw new Error(`Could not find data with key ${key}.`);
+      });
+  }
 
 /**
  * This function posts the user data from the login form (from array "users") to the remote server
